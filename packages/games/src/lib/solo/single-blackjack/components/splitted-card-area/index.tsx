@@ -13,7 +13,6 @@ import {
   calcTotalAmounts,
 } from "../../../blackjack";
 import { SingleBJActiveGameHands, SingleBlackjackHandIndex } from "../..";
-import { BetArea } from "../bet-area";
 
 interface SplittedCardAreaProps {
   handType: SingleBlackjackHandIndex;

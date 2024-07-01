@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
-import { RPSGameResult, RockPaperScissors } from "../types";
+import { RPSGameResult } from "../types";
 
 interface RPSLastBetsState {
   lastBets: RPSGameResult[];

@@ -6,7 +6,6 @@ export enum GAME_HUB_GAMES {
   rps = "rps",
   dice = "dice",
   keno = "keno",
-  slot = "slot",
   limbo = "limbo",
   mines = "mines",
   range = "range",

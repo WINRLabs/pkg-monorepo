@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LUCK_MULTIPLIER, MAX_BET_COUNT, MIN_BET_COUNT } from "../constant";
 import { BetController } from "./bet-controller";
 import { toDecimals } from "../../../utils/web3";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { cn } from "../../../../lib/utils/style";
 import { Form } from "../../../ui/form";
 import { DiceFormFields } from "../types";

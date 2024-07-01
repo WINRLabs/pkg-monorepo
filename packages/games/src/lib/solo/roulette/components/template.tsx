@@ -5,7 +5,6 @@ import { Form } from "../../../ui/form";
 import {
   RouletteFormFields,
   RouletteGameProps,
-  RouletteGameResult,
 } from "../types";
 import { Chip } from "../../../common/chip-controller/types";
 import * as z from "zod";

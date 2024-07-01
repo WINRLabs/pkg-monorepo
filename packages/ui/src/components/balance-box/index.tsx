@@ -12,12 +12,11 @@ export const BalanceBox = () => {
     balancesToRead: appTokens.map((t) => t.tokenAddress),
     account: address || "0x0",
   });
-  console.log("balance", balance.data);
 
   return (
     <div>
       weth:{" "}
-      {formatUnits(balance.data?.[0]?.result || '0n', 18)?.toString() || "0"}
+      {formatUnits(balance.data?.[0]?.result || "0n", 18)?.toString() || "0"}
     </div>
   );
 };

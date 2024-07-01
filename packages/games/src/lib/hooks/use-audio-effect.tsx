@@ -18,6 +18,7 @@ export enum SoundEffects {
   ROULETTE,
   LIMBO_TICK,
   KENO_OUTCOME_NUMBER,
+  WHEEL_STEP,
 }
 
 export interface AudioContextType {
@@ -96,6 +97,8 @@ effects.set(SoundEffects.BALL_BUMP, "ball_bump.mp3");
 effects.set(SoundEffects.ROULETTE, "roulette.mp3");
 effects.set(SoundEffects.LIMBO_TICK, "limbo-tick.mp3");
 effects.set(SoundEffects.KENO_OUTCOME_NUMBER, "outcome-number.wav");
+// todo: wheel step
+effects.set(SoundEffects.WHEEL_STEP, "limbo-tick.mp3");
 
 type PlayOptions = {
   playbackRate?: number;

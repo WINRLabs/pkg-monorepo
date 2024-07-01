@@ -8,7 +8,6 @@ import { Chip } from "../../../common/chip-controller/types";
 import { TotalWager, MaxPayout } from "../../../common/wager";
 import {
   UnityWagerFormField,
-  WagerFormField,
 } from "../../../common/controller";
 
 export interface BaccaratBetControllerProps {

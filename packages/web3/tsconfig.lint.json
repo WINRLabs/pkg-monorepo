@@ -11,7 +11,8 @@
     "turbo",
     "tailwind.config.ts",
     "postcss.config.js",
-    "jest.config.cjs"
+    "jest.config.cjs",
+    "tsup.config.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

@@ -9,7 +9,6 @@ import {
   WagerSetterButtons,
 } from "./wager";
 import * as React from "react";
-import { WagerCurrencyIcon } from "./wager";
 import { cn } from "../utils/style";
 import {
   FormField,

@@ -9,13 +9,13 @@ module.exports = {
   globals: {
     NodeJS: true,
   },
-  overrides: [
-    {
-      files: ["jest.config.js", "jest.config.cjs"],
-      parserOptions: {
-        sourceType: "script", // CommonJS files should use 'script' as the source type
-        project: "./tsconfig.lint.json", // Specify your tsconfig for linting
-      },
-    },
-  ],
+  // overrides: [
+  //   {
+  //     files: ["jest.config.js", "jest.config.cjs"],
+  //     parserOptions: {
+  //       sourceType: "script", // CommonJS files should use 'script' as the source type
+  //       project: "./packages/ui/tsconfig.lint.json",
+  //     },
+  //   },
+  // ],
 };

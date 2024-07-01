@@ -1,0 +1,128 @@
+.container {
+  width: 464px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 0 0;
+}
+.cursor {
+  width: 150px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+.circle {
+  width: 465px;
+  height: 465px;
+  position: relative;
+}
+.circle:before,
+.circle:after {
+  content: "";
+  display: block;
+}
+.circle:after {
+  width: 343px;
+  height: 343px;
+  background: black;
+  position: absolute;
+  border-radius: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 1;
+}
+.field {
+  width: 1px;
+  height: 50%;
+  position: absolute;
+  left: 50%;
+  transform-origin: bottom;
+}
+.field div {
+  position: absolute;
+  width: 1px;
+  height: 40px;
+  top: 0;
+  left: 0;
+}
+.field div:before,
+.field div:after {
+  content: "";
+  display: block;
+}
+.field div:before {
+  height: 10px;
+}
+.field div:after {
+  height: 14px;
+}
+.grey {
+  background-color: #27272a;
+}
+.red {
+  background-color: #dc2626;
+}
+.blue {
+  background-color: #2563eb;
+}
+.green {
+  background-color: #65a30d;
+}
+.black {
+  background-color: #232d40;
+}
+.wheelContent {
+  position: relative;
+}
+.status {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 2;
+  text-align: center;
+}
+.multiplier:before {
+  content: "";
+  display: block;
+  position: absolute;
+  filter: blur(30px);
+  background: #27272a;
+  border-radius: 46.7368px;
+  width: 250px;
+  height: 250px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.m3x:before {
+  background: #2563eb;
+}
+.m6x:before {
+  background: #65a30d;
+}
+.m48x:before {
+  background: #dc2626;
+}
+.multiplier div {
+  position: relative;
+  z-index: 1;
+}
+.countdownText {
+  font-size: 25px;
+  margin-top: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    transform: scale(0.8);
+    margin-top: -35px;
+  }
+}

@@ -51,7 +51,7 @@ declare global {
   }
 }
 
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 // Assuming UnityEventData is properly defined elsewhere
 type UnityEventData = {
