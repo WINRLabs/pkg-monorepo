@@ -61,7 +61,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     "board",
   ]);
 
-  const { refetch, data, dataUpdatedAt } = useReadContract({
+  const { data, dataUpdatedAt } = useReadContract({
     abi: minesAbi,
     address: gameAddresses.mines as Address,
     functionName: "getGame",
@@ -73,7 +73,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   });
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || data.status === 3) return;
 
     if (data.numMines !== 0) {
       const newBoard = data.revealedCells.map((cell) => {
@@ -83,21 +83,14 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           isRevealed: cell,
         };
       });
+      // FIX ME
+      const wagerInGameCurrency = formatUnits(data.wager, 18);
 
-      const token = getContractName({
-        network: "arbitrum",
-        contractAddress: data.token,
-      }) as GameCurrency;
+      // LAST PRICE SET 1
 
-      const tokenDecimal = tokenDecimals[token];
-
-      const wagerInGameCurrency = formatUnits(data.wager, tokenDecimal);
-
-      const wager = Number(wagerInGameCurrency) * lastPriceFeed[token];
+      const wager = Number(wagerInGameCurrency) * 1;
 
       const _wager = wager < 1 ? Math.ceil(wager) : wager;
-
-      // <button onClick={() => setFormSetValue({ key: "minesCount", value: 10 })}>
 
       setFormSetValue({ key: "wager", value: toDecimals(_wager, 2) });
 
@@ -108,8 +101,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
       setFormSetValue({ key: "minesCount", value: data?.numMines });
 
-      console.log("game set to progress");
-
       updateMinesGameState({
         board: newBoard,
         gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
@@ -117,17 +108,14 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   }, [dataUpdatedAt]);
 
-  console.log("contract read data", data, gameAddresses.mines);
-
   const gameEvent = useListenGameEvent();
 
   const encodedParams = useMemo(() => {
-    const { tokenAddress, wagerInWei, stopGainInWei, stopLossInWei } =
-      prepareGameTransaction({
-        wager: formValues.wager,
-        selectedCurrency: selectedTokenAddress,
-        lastPrice: 1,
-      });
+    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+      wager: formValues.wager,
+      selectedCurrency: selectedTokenAddress,
+      lastPrice: 1,
+    });
 
     const encodedGameData = encodeAbiParameters(
       [
@@ -142,7 +130,11 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         formValues.selectedCells.length
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
-        submitType === MINES_SUBMIT_TYPE.CASHOUT ? true : false,
+        submitType === MINES_SUBMIT_TYPE.CASHOUT ||
+        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ||
+        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
+          ? true
+          : false,
       ]
     );
     const encodedData: `0x${string}` = encodeFunctionData({
@@ -157,6 +149,18 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       ],
     });
 
+    const encodedCashoutData: `0x${string}` = encodeFunctionData({
+      abi: controllerAbi,
+      functionName: "perform",
+      args: [
+        gameAddresses.mines as Address,
+        tokenAddress,
+        uiOperatorAddress as Address,
+        "endGame",
+        "0x",
+      ],
+    });
+
     const encodedRevealCellData = encodeAbiParameters(
       [
         { name: "cellsPicked", type: "bool[25]" },
@@ -166,7 +170,11 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         formValues.selectedCells.length
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
-        submitType === MINES_SUBMIT_TYPE.CASHOUT ? true : false,
+        submitType === MINES_SUBMIT_TYPE.CASHOUT ||
+        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ||
+        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
+          ? true
+          : false,
       ]
     );
 
@@ -188,6 +196,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       encodedTxData: encodedData,
       encodedRevealCellData,
       encodedTxRevealCellData,
+      encodedCashoutData,
     };
   }, [
     formValues.minesCount,
@@ -227,7 +236,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       address: controllerAddress as Address,
     },
     options: {},
-    encodedTxData: encodedParams.encodedTxData,
+    encodedTxData: encodedParams.encodedCashoutData,
   });
 
   const handleReveal = useHandleTx<typeof controllerAbi, "perform">({
@@ -256,7 +265,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   });
 
   const onGameSubmit = async () => {
-    console.log("onsubmit triggered");
     try {
       if (!allowance.hasAllowance) {
         const handledAllowance = await allowance.handleAllowance({
@@ -294,15 +302,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           return cell.isRevealed ? false : formValues.selectedCells[idx];
         });
 
-        console.log("revealedCells", revealedCells);
-
         await handleReveal.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
         });
       } else if (submitType === MINES_SUBMIT_TYPE.CASHOUT) {
-        console.log("cashout");
         console.log("submit Type:", submitType);
 
         await handleCashout.mutateAsync();
@@ -315,6 +320,9 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       console.log("error", e);
     }
   };
+
+  console.log("gameEvent:", gameEvent);
+  // console.log("contract read data", data, gameAddresses.mines);
 
   return (
     <div>
@@ -337,9 +345,9 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         }}
         minWager={props.minWager}
         maxWager={props.maxWager}
-        handleReveal={() => console.log("reveal")}
-        handleRevealAndCashout={() => console.log("reveal and cash out")}
-        handleGet={() => console.log("handle get")}
+        handleReveal={() => console.log()}
+        handleRevealAndCashout={() => console.log()}
+        handleGet={() => console.log()}
       />
     </div>
   );
