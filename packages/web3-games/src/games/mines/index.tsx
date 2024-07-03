@@ -72,6 +72,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     },
   });
 
+  console.log("getGame:", data);
   useEffect(() => {
     if (!data || data.status === 3) return;
 
@@ -170,10 +171,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         formValues.selectedCells.length
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
-        submitType === MINES_SUBMIT_TYPE.CASHOUT ||
-        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT
-          ? true
-          : false,
+        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false,
       ]
     );
 
@@ -183,10 +181,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       formValues.selectedCells.length
         ? formValues.selectedCells
         : (Array(25).fill(false) as any),
-      submitType === MINES_SUBMIT_TYPE.CASHOUT ||
-        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT
-        ? true
-        : false
+      submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
     );
 
     const encodedTxRevealCellData: `0x${string}` = encodeFunctionData({
@@ -301,7 +296,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
         );
 
-        await handleTx.mutateAsync();
+        await handleReveal.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.ENDED,
