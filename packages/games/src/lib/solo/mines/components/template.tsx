@@ -18,10 +18,6 @@ type TemplateProps = MinesGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: MinesFormField) => void;
   onFormChange?: (fields: MinesFormField) => void;
-  handleReveal: () => void;
-  handleRevealAndCashout: () => void;
-  handleGet: () => void;
-
   formSetValue?: FormSetValue;
 };
 

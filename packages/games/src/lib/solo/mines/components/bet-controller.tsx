@@ -23,18 +23,12 @@ type Props = {
   maxWager: number;
   currentMultiplier: number;
   currentCashoutAmount: number;
-  handleReveal: () => void;
-  handleRevealAndCashout: () => void;
-  handleGet: () => void;
 };
 
 export const MinesBetController: React.FC<Props> = ({
   minWager,
   maxWager,
   currentCashoutAmount,
-  handleReveal,
-  handleRevealAndCashout,
-  handleGet,
 }) => {
   const form = useFormContext() as MinesForm;
 
@@ -195,7 +189,6 @@ export const MinesBetController: React.FC<Props> = ({
                   form.formState.isSubmitting || form.formState.isLoading
                 }
                 onClick={() => {
-                  handleReveal();
                   updateMinesGameState({
                     submitType:
                       gameStatus === MINES_GAME_STATUS.IDLE
@@ -225,7 +218,6 @@ export const MinesBetController: React.FC<Props> = ({
                     form.formState.isSubmitting || form.formState.isLoading
                   }
                   onClick={() => {
-                    handleRevealAndCashout();
                     updateMinesGameState({
                       submitType: MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT,
                     });
@@ -250,10 +242,6 @@ export const MinesBetController: React.FC<Props> = ({
                     form.formState.isSubmitting || form.formState.isLoading
                   }
                   onClick={() => {
-                    console.log("cashout");
-
-                    console.log("form", form.getValues());
-                    handleGet();
                     updateMinesGameState({
                       submitType: MINES_SUBMIT_TYPE.CASHOUT,
                     });

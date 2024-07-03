@@ -351,9 +351,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         }}
         minWager={props.minWager}
         maxWager={props.maxWager}
-        handleReveal={() => console.log()}
-        handleRevealAndCashout={() => console.log()}
-        handleGet={() => console.log()}
       />
     </div>
   );
