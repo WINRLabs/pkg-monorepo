@@ -64,7 +64,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const { data, dataUpdatedAt } = useReadContract({
     abi: minesAbi,
     address: gameAddresses.mines as Address,
-    functionName: "getGame",
+    functionName: "getPlayerStatus",
     args: [currentAccount.address || "0x0"],
     config: wagmiConfig,
     query: {
@@ -131,11 +131,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         formValues.selectedCells.length
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
-        submitType === MINES_SUBMIT_TYPE.CASHOUT ||
-        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ||
-        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
-          ? true
-          : false,
+        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ? true : false,
       ]
     );
     const encodedData: `0x${string}` = encodeFunctionData({
@@ -173,15 +169,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           : (Array(25).fill(false) as any),
         submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false,
       ]
-    );
-
-    console.log(
-      "encodedReveal",
-      encodedRevealCellData,
-      formValues.selectedCells.length
-        ? formValues.selectedCells
-        : (Array(25).fill(false) as any),
-      submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
     );
 
     const encodedTxRevealCellData: `0x${string}` = encodeFunctionData({
@@ -295,8 +282,9 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           "revealing and cashing out",
           MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
         );
+        console.log("submit Type:", submitType);
 
-        await handleReveal.mutateAsync();
+        await handleTx.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.ENDED,
@@ -327,6 +315,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   };
 
+  console.log(
+    "isCashout:",
+    submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
+  );
   console.log("gameEvent:", gameEvent);
   // console.log("contract read data", data, gameAddresses.mines);
 

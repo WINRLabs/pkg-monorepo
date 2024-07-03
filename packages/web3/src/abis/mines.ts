@@ -444,9 +444,9 @@ export default [
         type: "address",
       },
       {
-        internalType: "uint256",
+        internalType: "uint128",
         name: "wager",
-        type: "uint256",
+        type: "uint128",
       },
       {
         internalType: "uint64",
@@ -462,72 +462,6 @@ export default [
         internalType: "bool",
         name: "isCashout",
         type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "player",
-        type: "address",
-      },
-    ],
-    name: "getGame",
-    outputs: [
-      {
-        components: [
-          {
-            internalType: "enum Mines.Status",
-            name: "status",
-            type: "uint8",
-          },
-          {
-            internalType: "address",
-            name: "client",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "token",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "wager",
-            type: "uint256",
-          },
-          {
-            internalType: "uint64",
-            name: "currentMultiplier",
-            type: "uint64",
-          },
-          {
-            internalType: "uint8",
-            name: "numMines",
-            type: "uint8",
-          },
-          {
-            internalType: "bool[25]",
-            name: "revealedCells",
-            type: "bool[25]",
-          },
-          {
-            internalType: "bool[25]",
-            name: "cellsPicked",
-            type: "bool[25]",
-          },
-          {
-            internalType: "bool",
-            name: "isCashout",
-            type: "bool",
-          },
-        ],
-        internalType: "struct Mines.Game",
-        name: "",
-        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -552,6 +486,77 @@ export default [
         internalType: "uint256",
         name: "multiplier_",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+    ],
+    name: "getPlayerStatus",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "enum Mines.Status",
+            name: "status",
+            type: "uint8",
+          },
+          {
+            internalType: "address",
+            name: "client",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint128",
+            name: "wager",
+            type: "uint128",
+          },
+          {
+            internalType: "uint64",
+            name: "currentMultiplier",
+            type: "uint64",
+          },
+          {
+            internalType: "uint8",
+            name: "numMines",
+            type: "uint8",
+          },
+          {
+            internalType: "bool[25]",
+            name: "revealedCells",
+            type: "bool[25]",
+          },
+          {
+            internalType: "bool[25]",
+            name: "cellsPicked",
+            type: "bool[25]",
+          },
+          {
+            internalType: "bool[25]",
+            name: "mines",
+            type: "bool[25]",
+          },
+          {
+            internalType: "bool",
+            name: "isCashout",
+            type: "bool",
+          },
+        ],
+        internalType: "struct Mines.Game",
+        name: "",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
