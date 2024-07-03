@@ -1,7 +1,47 @@
 import type { Config } from "tailwindcss";
+const plugin = require("tailwindcss/plugin");
+
+const backfaceVisibility = plugin(function ({ addUtilities }: any) {
+  addUtilities({
+    ".backface-visible": {
+      "backface-visibility": "visible",
+      "-moz-backface-visibility": "visible",
+      "-webkit-backface-visibility": "visible",
+      "-ms-backface-visibility": "visible",
+    },
+    ".backface-hidden": {
+      "backface-visibility": "hidden",
+      "-moz-backface-visibility": "hidden",
+      "-webkit-backface-visibility": "hidden",
+      "-ms-backface-visibility": "hidden",
+    },
+  });
+});
+
+const overflowScrolling = plugin(function ({ addUtilities }: any) {
+  addUtilities({
+    ".overflow-scroll-touch": {
+      "-webkit-overflow-scrolling": "touch",
+    },
+    ".overflow-scroll-unset": {
+      "-webkit-overflow-scrolling": "unset",
+    },
+  });
+});
+
+const perspective = plugin(function ({ addUtilities }: any) {
+  addUtilities({
+    ".perspective-none": {
+      perspective: "none",
+    },
+    ".perspective-1000": {
+      perspective: "1000px",
+    },
+  });
+});
 
 const config: Omit<Config, "content"> = {
-  plugins: [],
+  plugins: [backfaceVisibility, overflowScrolling, perspective],
   prefix: "wr-",
   theme: {
     extend: {
@@ -399,6 +439,16 @@ const config: Omit<Config, "content"> = {
           "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/plinko/plinko-button-disabled.png)",
         "keno-cell-bg":
           "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/keno/keno-cell-bg.png)",
+        "card-bg":
+          "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/baccarat/jb-card-bg.svg)",
+        "card-bg-black":
+          "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/baccarat/card-bg-black.png)",
+        "royal-flush":
+          "linear-gradient(96.9deg, #FACC15 6.45%, #FFE26D 31.6%, #FACC15 51.59%)",
+        "jacks-or-better":
+          "radial-gradient(122.01% 129.55% at 85.62% -11.36%, #FFA05E 24.51%, #F97316 73.05%)",
+        "videopoker-result":
+          "radial-gradient(122.01% 129.55% at 85.62% -11.36%, #A3E635 24.51%, #65A30D 73.05%)",
       },
     },
   },

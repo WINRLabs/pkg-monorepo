@@ -5,6 +5,7 @@
     ".": "./tailwind.config.ts"
   },
   "devDependencies": {
+    "@types/node": "^20.10.6",
     "@winrlabs/typescript-config": "workspace:*",
     "tailwindcss": "^3.4.3"
   }

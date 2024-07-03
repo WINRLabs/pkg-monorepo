@@ -347,6 +347,9 @@ importers:
 
   packages/tailwind-config:
     devDependencies:
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.12.10
       '@winrlabs/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

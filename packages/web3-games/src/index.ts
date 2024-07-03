@@ -24,6 +24,8 @@ export { default as WinrBonanzaWithWeb3 } from "./games/winr-bonanza";
 
 export { default as MinesTemplateWithWeb3 } from "./games/mines";
 
+export { default as VideoPokerTemplateWithWeb3 } from "./games/video-poker";
+
 export * from "./games/hooks";
 
 export * from "./providers";

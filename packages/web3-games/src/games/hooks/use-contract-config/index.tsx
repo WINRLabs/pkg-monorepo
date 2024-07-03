@@ -21,6 +21,7 @@ export interface GameAddresses {
   keno: `0x${string}`;
   winrBonanza: `0x${string}`;
   mines: `0x${string}`;
+  videoPoker: `0x${string}`;
 }
 
 interface ContractConfigContext extends ContractConfig {
@@ -41,6 +42,7 @@ const ContractConfigContext = React.createContext<ContractConfigContext>({
     keno: "0x",
     winrBonanza: "0x",
     mines: "0x",
+    videoPoker: "0x",
   },
   selectedTokenAddress: "0x",
   controllerAddress: "0x",
