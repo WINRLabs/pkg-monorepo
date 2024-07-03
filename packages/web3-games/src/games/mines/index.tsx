@@ -171,11 +171,22 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
         submitType === MINES_SUBMIT_TYPE.CASHOUT ||
-        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ||
-        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
+        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT
           ? true
           : false,
       ]
+    );
+
+    console.log(
+      "encodedReveal",
+      encodedRevealCellData,
+      formValues.selectedCells.length
+        ? formValues.selectedCells
+        : (Array(25).fill(false) as any),
+      submitType === MINES_SUBMIT_TYPE.CASHOUT ||
+        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT
+        ? true
+        : false
     );
 
     const encodedTxRevealCellData: `0x${string}` = encodeFunctionData({
