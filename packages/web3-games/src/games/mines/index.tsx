@@ -53,13 +53,17 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     selectedCells: [],
   });
 
+  const gameEvent = useListenGameEvent();
+
   const currentAccount = useCurrentAccount();
 
-  const { submitType, updateMinesGameState, board } = useMinesGameStateStore([
-    "submitType",
-    "updateMinesGameState",
-    "board",
-  ]);
+  const { submitType, updateMinesGameState, board, gameStatus } =
+    useMinesGameStateStore([
+      "submitType",
+      "updateMinesGameState",
+      "board",
+      "gameStatus",
+    ]);
 
   const { data, dataUpdatedAt } = useReadContract({
     abi: minesAbi,
@@ -108,8 +112,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       });
     }
   }, [dataUpdatedAt]);
-
-  const gameEvent = useListenGameEvent();
 
   const encodedParams = useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
@@ -321,6 +323,99 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   );
   console.log("gameEvent:", gameEvent);
   // console.log("contract read data", data, gameAddresses.mines);
+
+  useEffect(() => {
+    if (!gameEvent) return;
+
+    const gameData = gameEvent.program[0]?.data;
+
+    console.log("useefect gameData", gameData);
+
+    if (gameData.status === 3) {
+      console.log("status 3");
+
+      const hasMine = gameData.mines?.some((cell: boolean) => cell === true);
+
+      const mineIndex = gameData.mines.findIndex(
+        (cell: boolean) => cell === true
+      );
+
+      if (hasMine) {
+        const newBoard = gameData.revealedCells.map(
+          (cell: boolean, idx: number) => {
+            return {
+              isSelected: cell,
+              isBomb: idx === mineIndex,
+              isRevealed: cell,
+            };
+          }
+        );
+
+        updateMinesGameState({
+          gameStatus: MINES_GAME_STATUS.ENDED,
+          board: newBoard,
+        });
+
+        console.log("OOPS You hit a mine");
+      } else {
+        console.log("status: 0 , 1 ,2");
+        const newBoard = gameData.revealedCells.map((cell: boolean) => {
+          return {
+            isSelected: cell,
+            isBomb: false,
+            isRevealed: cell,
+          };
+        });
+
+        updateMinesGameState({
+          gameStatus: MINES_GAME_STATUS.ENDED,
+          board: newBoard,
+        });
+
+        console.log("Congrats! You win!!!");
+      }
+    } else {
+      if (gameStatus === MINES_GAME_STATUS.ENDED) return;
+
+      const hasMine = gameData?.mines?.some((cell: boolean) => cell === true);
+
+      const mineIndex = gameData.mines.findIndex(
+        (cell: boolean) => cell === true
+      );
+
+      if (hasMine) {
+        const newBoard = gameData.revealedCells.map(
+          (cell: boolean, idx: number) => {
+            return {
+              isSelected: cell,
+              isBomb: idx === mineIndex,
+              isRevealed: cell,
+            };
+          }
+        );
+
+        updateMinesGameState({
+          gameStatus: MINES_GAME_STATUS.ENDED,
+          board: newBoard,
+        });
+
+        console.log("OOPS You hit a mine");
+      } else {
+        const newBoard = gameData.revealedCells.map((cell: boolean) => {
+          return {
+            isSelected: cell,
+            isBomb: false,
+            isRevealed: cell,
+          };
+        });
+
+        updateMinesGameState({
+          gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
+          board: newBoard,
+        });
+      }
+    }
+  }, [gameEvent]);
 
   return (
     <div>
