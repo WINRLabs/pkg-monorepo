@@ -47,6 +47,8 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
   const [formSetValue, setFormSetValue] = useState<FormSetValue>();
 
+  const [revealCells, setRevealCells] = useState<boolean[]>([]);
+
   const [formValues, setFormValues] = useState<MinesFormField>({
     wager: 1,
     minesCount: 1,
@@ -76,7 +78,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     },
   });
 
-  console.log("getGame:", data);
   useEffect(() => {
     if (!data || data.status === 3) return;
 
@@ -133,9 +134,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         formValues.selectedCells.length
           ? formValues.selectedCells
           : (Array(25).fill(false) as any),
-        MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT ? true : false,
+        submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false,
       ]
     );
+
     const encodedData: `0x${string}` = encodeFunctionData({
       abi: controllerAbi,
       functionName: "perform",
@@ -166,9 +168,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         { name: "isCashout", type: "bool" },
       ],
       [
-        formValues.selectedCells.length
-          ? formValues.selectedCells
-          : (Array(25).fill(false) as any),
+        revealCells.length ? revealCells : (Array(25).fill(false) as any),
         submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false,
       ]
     );
@@ -198,6 +198,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     formValues.selectedCells,
     formValues.wager,
     submitType,
+    revealCells,
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
@@ -259,7 +260,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     showDefaultToasts: false,
   });
 
-  const onGameSubmit = async () => {
+  const onGameSubmit = async (values: any) => {
     try {
       if (!allowance.hasAllowance) {
         const handledAllowance = await allowance.handleAllowance({
@@ -268,44 +269,34 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           },
         });
 
-        console.log("handle allowance", handledAllowance);
-
         if (!handledAllowance) return;
       }
+      console.log("submit Type:", submitType);
+
       if (submitType === MINES_SUBMIT_TYPE.FIRST_REVEAL) {
-        console.log("submit Type:", MINES_SUBMIT_TYPE.FIRST_REVEAL);
         await handleTx.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
         });
-      } else if (submitType === MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT) {
-        console.log(
-          "revealing and cashing out",
-          MINES_SUBMIT_TYPE.FIRST_REVEAL_AND_CASHOUT
-        );
-        console.log("submit Type:", submitType);
-
+      } else if (submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT) {
         await handleTx.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.ENDED,
         });
       } else if (submitType === MINES_SUBMIT_TYPE.REVEAL) {
-        console.log("submit Type:", submitType);
-
         const revealedCells = board.map((cell, idx) => {
-          return cell.isRevealed ? false : formValues.selectedCells[idx];
+          return cell.isRevealed ? false : values.selectedCells[idx];
         });
 
+        setRevealCells(revealedCells as boolean[]);
         await handleReveal.mutateAsync();
 
         updateMinesGameState({
           gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
         });
       } else if (submitType === MINES_SUBMIT_TYPE.CASHOUT) {
-        console.log("submit Type:", submitType);
-
         await handleCashout.mutateAsync();
 
         updateMinesGameState({
@@ -317,23 +308,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   };
 
-  console.log(
-    "isCashout:",
-    submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
-  );
-  console.log("gameEvent:", gameEvent);
-  // console.log("contract read data", data, gameAddresses.mines);
-
   useEffect(() => {
     if (!gameEvent) return;
 
     const gameData = gameEvent.program[0]?.data;
 
-    console.log("useefect gameData", gameData);
-
     if (gameData.status === 3) {
-      console.log("status 3");
-
       const hasMine = gameData.mines?.some((cell: boolean) => cell === true);
 
       const mineIndex = gameData.mines.findIndex(
@@ -355,10 +335,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           gameStatus: MINES_GAME_STATUS.ENDED,
           board: newBoard,
         });
-
-        console.log("OOPS You hit a mine");
       } else {
-        console.log("status: 0 , 1 ,2");
         const newBoard = gameData.revealedCells.map((cell: boolean) => {
           return {
             isSelected: cell,
@@ -417,6 +394,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   }, [gameEvent]);
 
+  console.log("gameEvent:", gameEvent);
+  console.log("getPlayerStatus:", data);
+  console.log(
+    "isCashout:",
+    submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
+  );
   return (
     <div>
       <button onClick={() => setFormSetValue({ key: "minesCount", value: 10 })}>
