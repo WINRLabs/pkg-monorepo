@@ -30,6 +30,13 @@ import { useReadContract } from "wagmi";
 import { prepareGameTransaction } from "../utils";
 import { useListenGameEvent } from "../hooks/use-listen-game-event";
 
+enum Status {
+  None = 0, // No game
+  Awaiting = 1, // Awaiting fill
+  Revealed = 2, // filled
+  Final = 3, // Game ended
+}
+
 interface TemplateWithWeb3Props {
   minWager?: number;
   maxWager?: number;
@@ -80,7 +87,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   });
 
   useEffect(() => {
-    if (!data || data.status === 3) return;
+    if (!data || data.status === Status.Final) return;
 
     if (data.numMines !== 0) {
       const newBoard = data.revealedCells.map((cell) => {
@@ -325,7 +332,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
     const gameData = gameEvent.program[0]?.data;
 
-    if (gameData.status === 3) {
+    if (gameData.status === Status.Final) {
       const hasMine = gameData.mines?.some((cell: boolean) => cell === true);
 
       const mineIndex = gameData.mines.findIndex(
@@ -412,6 +419,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     "isCashout:",
     submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
   );
+
   return (
     <div>
       <button onClick={() => setFormSetValue({ key: "minesCount", value: 10 })}>
