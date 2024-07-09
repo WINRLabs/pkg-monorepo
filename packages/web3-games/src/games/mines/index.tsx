@@ -24,6 +24,7 @@ import {
   encodeAbiParameters,
   encodeFunctionData,
   formatUnits,
+  decodeAbiParameters,
 } from "viem";
 import { useReadContract } from "wagmi";
 import { prepareGameTransaction } from "../utils";
@@ -291,6 +292,17 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         });
 
         setRevealCells(revealedCells as boolean[]);
+
+        console.log(
+          "decodedAbiParams",
+          decodeAbiParameters(
+            [
+              { name: "cellsPicked", type: "bool[25]" },
+              { name: "isCashout", type: "bool" },
+            ],
+            encodedParams.encodedRevealCellData
+          )
+        );
         await handleReveal.mutateAsync();
 
         updateMinesGameState({
