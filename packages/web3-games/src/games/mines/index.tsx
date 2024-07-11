@@ -15,6 +15,7 @@ import {
   minesAbi,
   useCurrentAccount,
   useHandleTx,
+  usePriceFeed,
   useTokenAllowance,
   useTokenStore,
 } from "@winrlabs/web3";
@@ -53,6 +54,8 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     uiOperatorAddress,
     wagmiConfig,
   } = useContractConfigContext();
+
+  const { getPrice } = usePriceFeed();
 
   const selectedTokenAddress = useTokenStore((s) => s.selectedToken);
 
@@ -100,12 +103,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           isRevealed: cell,
         };
       });
-      // FIX ME
       const wagerInGameCurrency = formatUnits(data.wager, 18);
 
-      // LAST PRICE SET 1
-
-      const wager = Number(wagerInGameCurrency) * 1;
+      const wager =
+        Number(wagerInGameCurrency) * getPrice(selectedTokenAddress.address);
 
       const _wager = wager < 1 ? Math.ceil(wager) : wager;
 
@@ -129,7 +130,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedTokenAddress.address,
-      lastPrice: 1,
+      lastPrice: getPrice(selectedTokenAddress.address),
     });
 
     const encodedGameData = encodeAbiParameters(
@@ -154,7 +155,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -166,7 +167,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "endGame",
         "0x",
@@ -189,7 +190,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "revealCells",
         encodedRevealCellData,
@@ -218,7 +219,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,
@@ -235,7 +236,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "endGame",
         "0x",
@@ -252,7 +253,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.mines,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "revealCells",
         encodedParams.encodedRevealCellData,
