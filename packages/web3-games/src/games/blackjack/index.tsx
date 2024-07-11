@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   ActiveGameHands,
   BlackjackFormFields,
@@ -8,7 +7,6 @@ import {
   BlackjackTemplate,
   GameStruct,
 } from "@winrlabs/games";
-import { useContractConfigContext } from "../hooks/use-contract-config";
 import {
   blackjackReaderAbi,
   controllerAbi,
@@ -19,9 +17,12 @@ import {
   useTokenBalances,
   useTokenStore,
 } from "@winrlabs/web3";
-import { prepareGameTransaction } from "../utils";
+import React from "react";
 import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
 import { useReadContract } from "wagmi";
+
+import { useContractConfigContext } from "../hooks/use-contract-config";
+import { prepareGameTransaction } from "../utils";
 
 type TemplateOptions = {
   scene?: {

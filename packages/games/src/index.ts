@@ -4,6 +4,7 @@ export { GameProvider } from "./lib/game-provider";
 export { AudioContextProvider } from "./lib/hooks/use-audio-effect";
 export * from "./lib/hooks/use-web3";
 export * from "./lib/multiplayer/core/type";
+export * from "./lib/multiplayer/horse-race";
 export * from "./lib/multiplayer/wheel";
 export * from "./lib/solo/baccarat";
 export * from "./lib/solo/blackjack";
