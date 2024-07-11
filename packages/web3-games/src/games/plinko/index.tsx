@@ -41,7 +41,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: PlinkoGameResult[]) => void;
 }
 
-export default function PlinkoTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function PlinkoGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

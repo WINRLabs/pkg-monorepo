@@ -37,7 +37,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: RollGameResult[]) => void;
 }
 
-export default function RollTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function RollGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

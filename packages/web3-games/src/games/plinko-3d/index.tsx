@@ -45,7 +45,7 @@ interface TemplateWithWeb3Props {
   onAnimationCompleted?: (result: Plinko3dGameResult[]) => void;
 }
 
-export default function Plinko3DTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function Plinko3DGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

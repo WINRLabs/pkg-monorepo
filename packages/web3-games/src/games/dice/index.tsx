@@ -42,7 +42,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: DiceGameResult[]) => void;
 }
 
-export default function DiceTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function DiceGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

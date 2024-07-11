@@ -1,10 +1,10 @@
 "use client";
 
-import { CoinFlip3DTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { CoinFlip3DGame } from "@winrlabs/web3-games";
 
 export default function CoinFlip3DPage() {
   return (
-    <CoinFlip3DTemplateWithWeb3
+    <CoinFlip3DGame
       minWager={0.1}
       maxWager={100}
       options={{

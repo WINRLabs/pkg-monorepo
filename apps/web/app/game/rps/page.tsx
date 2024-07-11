@@ -1,10 +1,10 @@
 "use client";
 
-import { RpsTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { RpsGame } from "@winrlabs/web3-games";
 
 const RpsPage = () => {
   return (
-    <RpsTemplateWithWeb3
+    <RpsGame
       options={{
         scene: {
           backgroundImage: "url(/coin-flip/coin-flip-bg.png)",

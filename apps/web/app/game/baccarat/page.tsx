@@ -5,7 +5,7 @@ import {
   BaccaratGameSettledResult,
   BaccaratTemplate,
 } from "@winrlabs/games";
-import { BaccaratTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { BaccaratGame } from "@winrlabs/web3-games";
 import React from "react";
 
 const baccaratResult = {
@@ -43,7 +43,7 @@ export default function BaccaratPage() {
   // }, []);
 
   return (
-    <BaccaratTemplateWithWeb3
+    <BaccaratGame
       minWager={0.1}
       maxWager={2000}
       onAnimationCompleted={() => {

@@ -32,7 +32,7 @@ interface TemplateWithWeb3Props {
   onAnimationCompleted?: (result: BaccaratGameSettledResult) => void;
 }
 
-export default function BaccaratTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function BaccaratGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

@@ -41,7 +41,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: LimboGameResult[]) => void;
 }
 
-export default function LimboTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function LimboGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

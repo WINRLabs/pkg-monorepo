@@ -1,11 +1,11 @@
 "use client";
 
-import { Plinko3DTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { Plinko3DGame } from "@winrlabs/web3-games";
 import React from "react";
 
 const Plinko3d = () => {
   return (
-    <Plinko3DTemplateWithWeb3
+    <Plinko3DGame
       buildedGameUrl={"https://jbassets.fra1.digitaloceanspaces.com"}
       options={{
         scene: {

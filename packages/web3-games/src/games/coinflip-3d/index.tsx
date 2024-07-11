@@ -45,9 +45,7 @@ interface TemplateWithWeb3Props {
   onAnimationCompleted?: (result: CoinFlip3dGameResult[]) => void;
 }
 
-export default function CoinFlip3DTemplateWithWeb3(
-  props: TemplateWithWeb3Props
-) {
+export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

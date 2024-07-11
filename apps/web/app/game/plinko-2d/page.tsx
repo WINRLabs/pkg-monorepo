@@ -1,10 +1,10 @@
 "use client";
 
-import { PlinkoTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { PlinkoGame } from "@winrlabs/web3-games";
 
 export default function PlinkoPage() {
   return (
-    <PlinkoTemplateWithWeb3
+    <PlinkoGame
       options={{
         scene: {
           backgroundImage: "url(/coin-flip/coin-flip-bg.png)",

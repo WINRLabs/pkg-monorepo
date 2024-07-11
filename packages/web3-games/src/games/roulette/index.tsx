@@ -41,7 +41,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: RouletteGameResult[]) => void;
 }
 
-export default function RouletteTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function RouletteGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

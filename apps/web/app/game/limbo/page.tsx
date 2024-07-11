@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { LimboTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { LimboGame } from "@winrlabs/web3-games";
 
 const LimboPage = () => {
   return (
-    <LimboTemplateWithWeb3
+    <LimboGame
       options={{
         scene: {
           backgroundImage: "url(/coin-flip/coin-flip-bg.png)",

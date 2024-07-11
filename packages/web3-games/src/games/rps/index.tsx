@@ -41,7 +41,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: RPSGameResult[]) => void;
 }
 
-export default function RpsTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function RpsGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

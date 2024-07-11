@@ -36,7 +36,7 @@ interface TemplateWithWeb3Props {
   onAnimationCompleted?: (result: KenoGameResult[]) => void;
 }
 
-export default function KenoTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function KenoGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

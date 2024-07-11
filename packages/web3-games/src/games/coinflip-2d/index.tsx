@@ -42,7 +42,7 @@ interface TemplateWithWeb3Props {
   onAnimationSkipped?: (result: CoinFlipGameResult[]) => void;
 }
 
-export default function CoinFlipTemplateWithWeb3(props: TemplateWithWeb3Props) {
+export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

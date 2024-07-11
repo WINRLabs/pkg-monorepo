@@ -29,9 +29,7 @@ interface TemplateWithWeb3Props {
   onAnimationCompleted?: (payout: number) => void;
 }
 
-export default function VideoPokerTemplateWithWeb3(
-  props: TemplateWithWeb3Props
-) {
+export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const {
     gameAddresses,
     controllerAddress,

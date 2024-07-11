@@ -1,10 +1,10 @@
 "use client";
 
-import { DiceTemplateWithWeb3 } from "@winrlabs/web3-games";
+import { DiceGame } from "@winrlabs/web3-games";
 
 export default function DicePage() {
   return (
-    <DiceTemplateWithWeb3
+    <DiceGame
       options={{
         scene: {
           backgroundImage: "url(/coin-flip/coin-flip-bg.png)",
