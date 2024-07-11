@@ -16,19 +16,21 @@ import {
   useCurrentAccount,
   useHandleTx,
   useTokenAllowance,
+  useTokenStore,
 } from "@winrlabs/web3";
 import { useEffect, useMemo, useState } from "react";
-import { useContractConfigContext } from "../hooks/use-contract-config";
 import {
   Address,
+  decodeAbiParameters,
   encodeAbiParameters,
   encodeFunctionData,
   formatUnits,
-  decodeAbiParameters,
 } from "viem";
 import { useReadContract } from "wagmi";
-import { prepareGameTransaction } from "../utils";
+
+import { useContractConfigContext } from "../hooks/use-contract-config";
 import { useListenGameEvent } from "../hooks/use-listen-game-event";
+import { prepareGameTransaction } from "../utils";
 
 enum Status {
   None = 0, // No game
@@ -49,9 +51,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     controllerAddress,
     cashierAddress,
     uiOperatorAddress,
-    selectedTokenAddress,
     wagmiConfig,
   } = useContractConfigContext();
+
+  const selectedTokenAddress = useTokenStore((s) => s.selectedToken);
 
   const [formSetValue, setFormSetValue] = useState<FormSetValue>();
 
@@ -125,7 +128,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const encodedParams = useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedTokenAddress,
+      selectedCurrency: selectedTokenAddress.address,
       lastPrice: 1,
     });
 
@@ -264,7 +267,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     amountToApprove: 999,
     owner: currentAccount.address || "0x0000000",
     spender: cashierAddress,
-    tokenAddress: selectedTokenAddress as Address,
+    tokenAddress: selectedTokenAddress.address,
     showDefaultToasts: false,
   });
 
