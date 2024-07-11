@@ -3,23 +3,23 @@ export type Item<K extends string, T> = {
   data: T;
 };
 
-interface GameProgram {
+export interface GameProgram {
   cooldownFinish: number;
   joinningFinish: number;
   joinningStart: number;
   result: number;
 }
 
-interface BetProgram {
+export interface BetProgram {
   wager: bigint;
   converted: {
     wager: number;
     choice: number;
   };
-  choice: number;
+  choice: 1 | 2 | 3 | 4;
 }
 
-interface SessionContext {
+export interface SessionContext {
   endblock: bigint;
   operator: string;
   player: string;
@@ -30,14 +30,15 @@ interface SessionContext {
   token: string;
 }
 
-interface ReceiptContext {
+export interface ReceiptContext {
   payin: bigint;
   payout: bigint;
   receipent: string;
   token: string;
+  player: string;
 }
 
-type RandomsContext = [bigint];
+export type RandomsContext = [bigint];
 
 export interface MultiplayerGameMessage {
   context: {
@@ -46,11 +47,11 @@ export interface MultiplayerGameMessage {
     type: string;
     version: number;
     context: [
-      | Item<"Session", SessionContext>
-      | Item<"Receipt", ReceiptContext>
-      | Item<"Randoms", RandomsContext>,
+      Item<"Session", SessionContext>,
+      Item<"Receipt", ReceiptContext>,
+      Item<"Randoms", RandomsContext>,
     ];
-    program: [Item<"Game", GameProgram> | Item<"Bet", BetProgram>];
+    program: [Item<"Game", GameProgram>, Item<"Bet", BetProgram>];
   };
   id: string;
   program: string;

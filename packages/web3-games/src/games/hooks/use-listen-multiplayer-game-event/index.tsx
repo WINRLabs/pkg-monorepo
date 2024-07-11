@@ -6,6 +6,10 @@ import { useCurrentAccount } from "@winrlabs/web3";
 import {
   MultiplayerGameMessage,
   MultiplayerUpdateMessage,
+  BetProgram,
+  GameProgram,
+  RandomsContext,
+  SessionContext,
 } from "../../multiplayer/type";
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || "";
 
@@ -20,7 +24,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     randoms: bigint;
     participants: [];
     result: number;
-    bet: any;
+    bet: BetProgram | undefined;
     player: any;
   }>({
     joiningStart: 0,
@@ -29,7 +33,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     randoms: 0n,
     participants: [],
     result: 0,
-    bet: {},
+    bet: undefined,
     player: {},
   });
 
@@ -104,10 +108,16 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
       return;
     }
 
-    const gameProgram = _e.context?.program.find((p) => p.type == "Game");
-    const randoms = _e.context?.context.find((c) => c.type == "Randoms");
-    const session = _e.context?.context.find((c) => c.type == "Session");
-    const bet = _e.context?.program.find((c) => c.type == "Bet");
+    // TODO: fix types here
+    const gameProgram = _e.context?.program.find((p) => p.type == "Game")
+      ?.data as GameProgram;
+    const randoms = _e.context?.context.find((c) => c.type == "Randoms")
+      ?.data as RandomsContext;
+    const session = _e.context?.context.find((c) => c.type == "Session")
+      ?.data as SessionContext;
+    const bet = _e.context?.program.find((c) => c.type == "Bet")
+      ?.data as BetProgram;
+
     if (!gameProgram) {
       return;
     }
@@ -117,7 +127,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
       joinningFinish: joiningFinish,
       joinningStart: joiningStart,
       result,
-    } = gameProgram?.data || {};
+    } = gameProgram;
 
     setGameState((prev) => ({
       ...prev,
@@ -125,9 +135,9 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
       joiningFinish,
       joiningStart,
       result: result,
-      randoms: randoms?.data[0]!,
-      player: session?.data.player,
-      bet: bet?.data,
+      randoms: randoms[0]!,
+      player: session.player,
+      bet: bet,
       participants: [],
     }));
   };

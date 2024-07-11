@@ -4,6 +4,7 @@ import {
   ANGLE_SCALE,
   CoinFlipGameResult,
   MultiplayerGameStatus,
+  Multiplier,
   useWheelGameStore,
   WheelColor,
   WheelFormFields,
@@ -14,6 +15,7 @@ import {
   useCurrentAccount,
   useHandleTx,
   useTokenAllowance,
+  useTokenStore,
 } from "@winrlabs/web3";
 import React, { useMemo, useState } from "react";
 import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
@@ -41,8 +43,10 @@ export default function WheelTemplateWithWeb3(props: TemplateWithWeb3Props) {
     controllerAddress,
     cashierAddress,
     uiOperatorAddress,
-    selectedTokenAddress,
   } = useContractConfigContext();
+  const selectedToken = useTokenStore((s) => s.selectedToken);
+  const selectedTokenAddress = selectedToken.address;
+
   const { updateState, setWheelParticipant, setIsGamblerParticipant } =
     useWheelGameStore([
       "updateState",
@@ -255,7 +259,7 @@ export default function WheelTemplateWithWeb3(props: TemplateWithWeb3Props) {
         4: "48x",
       };
 
-      setWheelParticipant(multiplers[bet.choice as number], {
+      setWheelParticipant(multiplers[bet.choice] as Multiplier, {
         player: player,
         bet: bet.converted.wager,
       });
