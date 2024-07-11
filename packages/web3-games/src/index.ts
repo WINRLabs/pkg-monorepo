@@ -5,6 +5,7 @@ export { default as DiceGame } from "./games/dice";
 export * from "./games/hooks";
 export { default as KenoGame } from "./games/keno";
 export { default as LimboGame } from "./games/limbo";
+export { default as MinesGame } from "./games/mines";
 export { default as PlinkoGame } from "./games/plinko";
 export { default as Plinko3DGame } from "./games/plinko-3d";
 export { default as RollGame } from "./games/roll";
