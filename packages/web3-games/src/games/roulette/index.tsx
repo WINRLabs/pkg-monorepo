@@ -127,7 +127,7 @@ export default function RouletteTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roulette as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -152,7 +152,7 @@ export default function RouletteTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roulette,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

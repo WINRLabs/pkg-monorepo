@@ -123,7 +123,7 @@ export default function RollTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roll as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -150,7 +150,7 @@ export default function RollTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roll as Address,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

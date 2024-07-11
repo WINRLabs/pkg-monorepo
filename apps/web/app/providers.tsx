@@ -60,7 +60,7 @@ export function Providers(props: { children: ReactNode }) {
           }}
           tokens={[
             {
-              address: "0x4b45108FfBb6d87aEAF59aCeeADb205C605F3125",
+              address: "0x91E59f0e29269A471290d69546F175F1115d1cdf",
               displayDecimals: 6,
               decimals: 18,
               icon: "/tokens/weth.png",
@@ -68,7 +68,7 @@ export function Providers(props: { children: ReactNode }) {
               playable: true,
             },
             {
-              address: "0x4b45108FfBb6d87aEAF59aCeeADb205C605F3125",
+              address: "0x91E59f0e29269A471290d69546F175F1115d1cdfc",
               displayDecimals: 6,
               decimals: 18,
               icon: "/tokens/weth.png",
@@ -77,7 +77,7 @@ export function Providers(props: { children: ReactNode }) {
             },
           ]}
           selectedToken={{
-            address: "0x4b45108FfBb6d87aEAF59aCeeADb205C605F3125",
+            address: "0x91E59f0e29269A471290d69546F175F1115d1cdf",
             displayDecimals: 6,
             decimals: 18,
             icon: "/tokens/weth.png",

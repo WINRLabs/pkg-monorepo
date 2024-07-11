@@ -131,7 +131,7 @@ export default function Plinko3DTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.plinko as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -158,7 +158,7 @@ export default function Plinko3DTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.plinko as Address,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

@@ -65,9 +65,7 @@ export default function CoinFlipTemplateWithWeb3(props: TemplateWithWeb3Props) {
     selectedToken: s.selectedToken,
   }));
 
-  const { priceFeed, getPrice } = usePriceFeed();
-
-  console.log(priceFeed, "price feed");
+  const { getPrice } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent>>();
@@ -133,7 +131,7 @@ export default function CoinFlipTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.coinFlip as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -160,7 +158,7 @@ export default function CoinFlipTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.coinFlip,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

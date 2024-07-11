@@ -139,7 +139,7 @@ export default function DiceTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.dice as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -159,7 +159,7 @@ export default function DiceTemplateWithWeb3(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.dice as Address,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

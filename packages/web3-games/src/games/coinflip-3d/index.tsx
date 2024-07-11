@@ -133,7 +133,7 @@ export default function CoinFlip3DTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.coinFlip as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -160,7 +160,7 @@ export default function CoinFlip3DTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.coinFlip as Address,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

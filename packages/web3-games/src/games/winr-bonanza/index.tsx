@@ -103,7 +103,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -138,7 +138,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "buyFreeSpins",
         encodedGameData,
@@ -164,7 +164,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "freeSpin",
         "0x",
@@ -183,7 +183,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,
@@ -200,7 +200,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        encodedBuyFreeSpinParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "buyFreeSpins",
         encodedBuyFreeSpinParams.encodedGameData,
@@ -217,7 +217,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        encodedBuyFreeSpinParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "freeSpin",
         encodedFreeSpinParams.encodedTxData,

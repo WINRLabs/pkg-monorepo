@@ -84,7 +84,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "start",
         encodedGameData,
@@ -104,7 +104,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "start",
         encodedParams.encodedGameData,
@@ -139,7 +139,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "finish",
         encodedGameData,
@@ -159,7 +159,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        encodedFinishParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "finish",
         encodedFinishParams.encodedGameData,
