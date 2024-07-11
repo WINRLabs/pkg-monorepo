@@ -1,16 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlinkoFormFields } from "../types";
-import { PlinkoGameProps } from "./game";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { MAX_BET_COUNT, MIN_BET_COUNT } from "../constants";
-import { GameContainer, SceneContainer } from "../../../common/containers";
-import { cn } from "../../../utils/style";
-import { BetController } from "./bet-controller";
-import { Form } from "../../../ui/form";
-import { Plinko } from "..";
 import debounce from "debounce";
 import React from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { GameContainer, SceneContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { Plinko } from "..";
+import { MAX_BET_COUNT, MIN_BET_COUNT } from "../constants";
+import { PlinkoFormFields } from "../types";
+import { BetController } from "./bet-controller";
+import { PlinkoGameProps } from "./game";
 
 type TemplateOptions = {
   scene?: {

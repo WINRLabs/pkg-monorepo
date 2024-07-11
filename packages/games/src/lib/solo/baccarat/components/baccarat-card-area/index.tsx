@@ -1,25 +1,26 @@
+import { Player } from "@lottiefiles/react-lottie-player";
+import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
+
+import { CDN_URL } from "../../../../constants";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
+import { wait } from "../../../../utils/promise";
+import { cn } from "../../../../utils/style";
+import {
+  BaccaratGameResult,
+  BaccaratGameSettledResult,
+  BaccaratSuit,
+} from "../../types";
+import styles from "./baccarat-card.module.css";
 import {
   BaccaratCard,
   countCalculator,
   generateBaccaratSuits,
   getBaccaratIcon,
 } from "./card";
-import { AnimatePresence, motion } from "framer-motion";
-import styles from "./baccarat-card.module.css";
-import {
-  BaccaratGameResult,
-  BaccaratGameSettledResult,
-  BaccaratSuit,
-} from "../../types";
-import { cn } from "../../../../utils/style";
-import {
-  useAudioEffect,
-  SoundEffects,
-} from "../../../../hooks/use-audio-effect";
-import { wait } from "../../../../utils/promise";
-import { CDN_URL } from "../../../../constants";
-import { Player } from "@lottiefiles/react-lottie-player";
 import Confetti from "./lottie/confetti.json";
 
 const TIMEOUT = 500;

@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import useModalsStore from "../modals/modals.store";
-import { cn } from "../../utils";
+import * as React from "react";
+
 import { Close } from "../../svgs";
+import { cn } from "../../utils";
+import useModalsStore from "../modals/modals.store";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -153,11 +154,11 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
   DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 };

@@ -1,16 +1,6 @@
 import { createContext, useContext } from "react";
 
-export interface AppTokens {
-  tokenAddress: `0x${string}`;
-  tokenSymbol: string;
-  icon: string;
-  tokenDecimals: number;
-  displayDecimals: number;
-}
-
-const AppConfigContext = createContext({
-  appTokens: [] as AppTokens[],
-});
+const AppConfigContext = createContext({});
 
 export const useAppConfig = () => {
   const appConfig = useContext(AppConfigContext);
@@ -19,14 +9,10 @@ export const useAppConfig = () => {
 
 export const AppConfigProvider = ({
   children,
-  appTokens,
 }: {
   children: React.ReactNode;
-  appTokens: AppTokens[];
 }) => {
   return (
-    <AppConfigContext.Provider value={{ appTokens }}>
-      {children}
-    </AppConfigContext.Provider>
+    <AppConfigContext.Provider value={{}}>{children}</AppConfigContext.Provider>
   );
 };

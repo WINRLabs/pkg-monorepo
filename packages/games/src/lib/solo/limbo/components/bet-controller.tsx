@@ -1,8 +1,11 @@
 "use client";
 
+import * as Slider from "@radix-ui/react-slider";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { toDecimals } from "../../../utils/web3";
+
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
@@ -11,6 +14,10 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
+import { PreBetButton } from "../../../common/pre-bet-button";
+import { SkipButton } from "../../../common/skip-button";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+import { Button } from "../../../ui/button";
 import {
   FormControl,
   FormField,
@@ -20,15 +27,9 @@ import {
 } from "../../../ui/form";
 import { NumberInput } from "../../../ui/number-input";
 import { cn } from "../../../utils/style";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
-import { Advanced } from "../../../common/advanced";
-import { PreBetButton } from "../../../common/pre-bet-button";
-import { Button } from "../../../ui/button";
-import { AudioController } from "../../../common/audio-controller";
-import * as Slider from "@radix-ui/react-slider";
-import { LimboForm } from "../types";
-import { SkipButton } from "../../../common/skip-button";
+import { toDecimals } from "../../../utils/web3";
 import useLimboGameStore from "../store";
+import { LimboForm } from "../types";
 
 interface Props {
   minWager: number;

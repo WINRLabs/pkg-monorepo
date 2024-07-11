@@ -1,6 +1,9 @@
 "use client";
 import * as React from "react";
+import { useFormContext } from "react-hook-form";
 
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
@@ -9,18 +12,15 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
-import { Advanced } from "../../../common/advanced";
-import { useFormContext } from "react-hook-form";
-import { toDecimals, toFormatted } from "../../../utils/web3";
-import { DiceForm } from "../types";
 import { PreBetButton } from "../../../common/pre-bet-button";
-import { useDiceGameStore } from "..";
 import { SkipButton } from "../../../common/skip-button";
-import { AudioController } from "../../../common/audio-controller";
-import { cn } from "../../../utils/style";
-import { FormLabel } from "../../../ui/form";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
 import { Button } from "../../../ui/button";
+import { FormLabel } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { toDecimals, toFormatted } from "../../../utils/web3";
+import { useDiceGameStore } from "..";
+import { DiceForm } from "../types";
 // import { AudioController } from "@/components/common/audio-controller";
 // import { PreBetButton } from "@/app/(games)/_components/bet-button";
 

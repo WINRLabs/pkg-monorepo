@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { useReadContract } from "wagmi";
 import { encodeFunctionData, formatUnits, parseEther } from "viem";
-import { useHandleTx } from "./use-handle-tx";
+import { useReadContract } from "wagmi";
+
 import { erc20Abi } from "../abis";
+import { useHandleTx } from "./use-handle-tx";
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 

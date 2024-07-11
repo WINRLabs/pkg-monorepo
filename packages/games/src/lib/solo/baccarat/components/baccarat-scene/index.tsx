@@ -1,16 +1,17 @@
 import React from "react";
-import styles from "./baccarat-scene.module.css";
 import { useFormContext } from "react-hook-form";
-import { CardArea } from "../baccarat-card-area";
+
+import { Chip } from "../../../../common/chip-controller/types";
 import { renderChipIcon } from "../../../../common/chip-controller/utils";
+import { CDN_URL } from "../../../../constants";
+import { cn } from "../../../../utils/style";
 import {
   BaccaratBetType,
   BaccaratGameResult,
   BaccaratGameSettledResult,
 } from "../../types";
-import { Chip } from "../../../../common/chip-controller/types";
-import { cn } from "../../../../utils/style";
-import { CDN_URL } from "../../../../constants";
+import { CardArea } from "../baccarat-card-area";
+import styles from "./baccarat-scene.module.css";
 
 // canvas width 900px
 // canvas height 900px

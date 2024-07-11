@@ -1,8 +1,10 @@
 "use client";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { FormControl, FormField, FormItem, FormLabel } from "../../../ui/form";
-import { useFormContext } from "react-hook-form";
 import React from "react";
+import { useFormContext } from "react-hook-form";
+
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
@@ -11,17 +13,16 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
-import { toDecimals } from "../../../utils/web3";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
-import { cn } from "../../../utils/style";
-import { Advanced } from "../../../common/advanced";
 import { PreBetButton } from "../../../common/pre-bet-button";
+import { SkipButton } from "../../../common/skip-button";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
 import { Button } from "../../../ui/button";
-import { AudioController } from "../../../common/audio-controller";
-import { RPSForm, RockPaperScissors } from "../types";
+import { FormControl, FormField, FormItem, FormLabel } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { toDecimals } from "../../../utils/web3";
 import { ALL_RPS_CHOICES, rpsChoiceMap } from "../constant";
 import useRpsGameStore from "../store";
-import { SkipButton } from "../../../common/skip-button";
+import { RockPaperScissors,RPSForm } from "../types";
 
 interface BetControllerProps {
   minWager: number;

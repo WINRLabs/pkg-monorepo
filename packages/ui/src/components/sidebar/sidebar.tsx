@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { useSidebarStore } from "./sidebar.store";
-import { AlignLeft, WinrCoin } from "../../svgs";
-import { useOutsideClick } from "../../hooks/use-outside-click";
 import { useSwipeable } from "react-swipeable";
+
+import { useOutsideClick } from "../../hooks/use-outside-click";
+import { AlignLeft, WinrCoin } from "../../svgs";
 import { cn, toFormatted } from "../../utils";
 import { Button } from "../button";
+import { useSidebarStore } from "./sidebar.store";
 
 export interface SidebarProps {
   sidebarItems?: React.ReactNode;

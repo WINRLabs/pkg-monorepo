@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import { genNumberArray } from "../../../../utils/number";
 
 interface PlinkoDotRowsProps {

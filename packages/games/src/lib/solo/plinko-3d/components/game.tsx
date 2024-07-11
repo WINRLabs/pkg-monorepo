@@ -1,6 +1,7 @@
 import React from "react";
-import { Plinko3dGameResult } from "../types";
+
 import usePlinko3dGameStore from "../store";
+import { Plinko3dGameResult } from "../types";
 
 export type Plinko3dGameProps = React.ComponentProps<"div"> & {
   devicePixelRatio?: number;

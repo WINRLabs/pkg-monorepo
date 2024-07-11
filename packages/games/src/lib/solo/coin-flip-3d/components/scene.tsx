@@ -1,12 +1,13 @@
 import * as Progress from "@radix-ui/react-progress";
 import React from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+
 import { useListenUnityEvent } from "../../../hooks/use-listen-unity-event";
 import { useEqualizeUnitySound } from "../../../hooks/use-unity-sound";
 import { toFormatted } from "../../../utils/web3";
+import { COIN_SIDE } from "../constants";
 import useCoinFlipGameStore from "../store";
 import { CoinFlip3dGameProps } from "./game";
-import { COIN_SIDE } from "../constants";
 
 const UnityFlipEndEvent = "CF_FlipEnd";
 

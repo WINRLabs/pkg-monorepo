@@ -1,4 +1,5 @@
 import { UseFormReturn } from "react-hook-form";
+
 import { COIN_SIDE } from "../constants";
 
 export interface CoinFlip3dFormFields {

@@ -1,7 +1,8 @@
 import React from "react";
-import { ChipControllerProps, ChipProps } from "./types";
-import { chips } from "./constants";
+
 import { cn } from "../../utils/style";
+import { chips } from "./constants";
+import { ChipControllerProps, ChipProps } from "./types";
 
 export const ChipController: React.FC<ChipControllerProps> = ({
   selectedChip,

@@ -1,12 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
+import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Form } from "../../../ui/form";
+
+import { Chip } from "../../../common/chip-controller/types";
 import { GameContainer, SceneContainer } from "../../../common/containers";
-import { BaccaratBetController } from "./baccarat-bet-controller";
-import React from "react";
+import { CDN_URL } from "../../../constants";
+import { Form } from "../../../ui/form";
 import { MULTIPLIER_BANKER, MULTIPLIER_TIE } from "../constants";
 import {
   BaccaratBetType,
@@ -15,9 +18,7 @@ import {
   BaccaratGameResult,
   BaccaratGameSettledResult,
 } from "../types";
-import { Chip } from "../../../common/chip-controller/types";
-import debounce from "debounce";
-import { CDN_URL } from "../../../constants";
+import { BaccaratBetController } from "./baccarat-bet-controller";
 import { BaccaratScene } from "./baccarat-scene";
 
 type TemplateProps = BaccaratGameProps & {

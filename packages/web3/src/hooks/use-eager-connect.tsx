@@ -1,4 +1,3 @@
-import { reconnect } from "@wagmi/core";
 import { useEffect } from "react";
 import { useClient, useConnect } from "wagmi";
 

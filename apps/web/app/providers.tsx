@@ -35,6 +35,7 @@ export const gameAddresses = {
   roulette: process.env.NEXT_PUBLIC_ROULETTE_ADDRESS as Address,
   baccarat: process.env.NEXT_PUBLIC_BACCARAT_ADDRESS as Address,
   keno: process.env.NEXT_PUBLIC_KENO_ADDRESS as Address,
+  wheel: process.env.NEXT_PUBLIC_WHEEL_ADDRESS as Address,
   winrBonanza: process.env.NEXT_PUBLIC_WINR_BONANZA_ADDRESS as Address,
   mines: process.env.NEXT_PUBLIC_MINES_ADDRESS as Address,
   videoPoker: process.env.NEXT_PUBLIC_VIDEO_POKER_ADDRESS as Address,
@@ -58,19 +59,34 @@ export function Providers(props: { children: ReactNode }) {
             entryPointAddress,
             factoryAddress,
           }}
+          tokens={[
+            {
+              address: "0x91E59f0e29269A471290d69546F175F1115d1cdf",
+              displayDecimals: 6,
+              decimals: 18,
+              icon: "/tokens/weth.png",
+              symbol: "wETH",
+              playable: true,
+            },
+            {
+              address: "0x91E59f0e29269A471290d69546F175F1115d1cdfc",
+              displayDecimals: 6,
+              decimals: 18,
+              icon: "/tokens/weth.png",
+              symbol: "wETH",
+              playable: true,
+            },
+          ]}
+          selectedToken={{
+            address: "0x91E59f0e29269A471290d69546F175F1115d1cdf",
+            displayDecimals: 6,
+            decimals: 18,
+            icon: "/tokens/weth.png",
+            symbol: "wETH",
+            playable: true,
+          }}
         >
-          <AppUiProviders
-            wagmiConfig={config}
-            appTokens={[
-              {
-                tokenAddress: "0x4b45108FfBb6d87aEAF59aCeeADb205C605F3125",
-                displayDecimals: 6,
-                tokenDecimals: 18,
-                icon: "/tokens/weth.png",
-                tokenSymbol: "wETH",
-              },
-            ]}
-          >
+          <AppUiProviders wagmiConfig={config}>
             <WinrLabsWeb3GamesProvider
               config={{
                 wagmiConfig: config,
@@ -80,8 +96,6 @@ export function Providers(props: { children: ReactNode }) {
                   controllerAddress,
                   cashierAddress,
                   uiOperatorAddress,
-                  selectedTokenAddress:
-                    "0x4b45108FfBb6d87aEAF59aCeeADb205C605F3125",
                 },
               }}
             >

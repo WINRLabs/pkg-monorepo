@@ -1,5 +1,6 @@
 import * as Slider from "@radix-ui/react-slider";
 import { useFormContext } from "react-hook-form";
+
 import {
   FormControl,
   FormField,
@@ -9,8 +10,8 @@ import {
 } from "../../../ui/form";
 import { NumberInput } from "../../../ui/number-input";
 import { cn } from "../../../utils/style";
-import { Plinko3dForm } from "../types";
 import usePlinko3dGameStore from "../store";
+import { Plinko3dForm } from "../types";
 
 const PlinkoRow = () => {
   const form = useFormContext() as Plinko3dForm;

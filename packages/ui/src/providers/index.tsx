@@ -1,18 +1,17 @@
 import { Config } from "wagmi";
+
+import { AppConfigProvider } from "./app-config";
 import { WagmiConfigProvider } from "./wagmi-config";
-import { AppConfigProvider, AppTokens } from "./app-config";
 
 export const AppUiProviders = ({
   children,
   wagmiConfig,
-  appTokens,
 }: {
   children?: React.ReactNode;
   wagmiConfig: Config;
-  appTokens: AppTokens[];
 }) => {
   return (
-    <AppConfigProvider appTokens={appTokens}>
+    <AppConfigProvider>
       <WagmiConfigProvider wagmiConfig={wagmiConfig}>
         {children}
       </WagmiConfigProvider>

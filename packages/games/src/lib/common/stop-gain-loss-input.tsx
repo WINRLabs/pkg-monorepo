@@ -1,7 +1,8 @@
 "use client";
 
-import { INumberInputContext, NumberInput } from "../ui/number-input";
 import React from "react";
+
+import { INumberInputContext, NumberInput } from "../ui/number-input";
 import { cn } from "../utils/style";
 
 interface Props extends INumberInputContext {

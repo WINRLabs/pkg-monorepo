@@ -1,9 +1,9 @@
 import { Body } from "./components/body";
-import { RangeGame } from "./components/game";
-import { Slider } from "./components/slider";
 import { Controller } from "./components/controller";
-import { TextRandomizer } from "./components/text-randomizer";
+import { RangeGame } from "./components/game";
 import { RangeLastBets } from "./components/last-bets";
+import { Slider } from "./components/slider";
+import { TextRandomizer } from "./components/text-randomizer";
 
 export const Dice = {
   Game: RangeGame,
@@ -15,7 +15,5 @@ export const Dice = {
 };
 
 export { default as DiceTemplate } from "./components/template";
-
 export * from "./store";
-
 export * from "./types";

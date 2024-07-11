@@ -1,20 +1,21 @@
-import React from "react";
-import { cn } from "../../../utils/style";
-import { FormControl, FormField, FormItem } from "../../../ui/form";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import React from "react";
+import { useFormContext } from "react-hook-form";
+
+import { CDN_URL } from "../../../constants";
+import { useGameSkip } from "../../../game-provider";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { FormControl, FormField, FormItem } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { ALL_RPS_CHOICES } from "../constant";
+import useRpsGameStore from "../store";
 import {
   GameAreaProps,
+  RockPaperScissors,
   RPSForm,
   RPSGameResult,
-  RockPaperScissors,
 } from "../types";
-import { ALL_RPS_CHOICES } from "../constant";
 import { RPSChoiceRadio } from "./bet-controller";
-import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
-import { useFormContext } from "react-hook-form";
-import { useGameSkip } from "../../../game-provider";
-import useRpsGameStore from "../store";
-import { CDN_URL } from "../../../constants";
 
 const Scene: React.FC<GameAreaProps> = ({
   onAnimationCompleted,

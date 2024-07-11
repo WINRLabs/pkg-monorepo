@@ -1,4 +1,5 @@
 import * as THREE from "three";
+
 import { CDN_URL } from "../../../../constants";
 
 const getMaterials = () => {

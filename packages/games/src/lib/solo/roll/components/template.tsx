@@ -1,9 +1,16 @@
 "use client";
 
-import z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
 import React from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+import { GameContainer, SceneContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { toDecimals } from "../../../utils/web3";
+import { Roll } from "..";
 import {
   ALL_DICES,
   LUCK_MULTIPLIER,
@@ -11,14 +18,8 @@ import {
   MIN_BET_COUNT,
 } from "../constant";
 import { DICE, RollFormFields } from "../types";
-import { toDecimals } from "../../../utils/web3";
-import { Form } from "../../../ui/form";
-import { GameContainer, SceneContainer } from "../../../common/containers";
 import { BetController } from "./bet-controller";
-import { Roll } from "..";
-import { cn } from "../../../utils/style";
 import { RollGameProps } from "./game";
-import debounce from "debounce";
 
 type TemplateOptions = {
   scene?: {

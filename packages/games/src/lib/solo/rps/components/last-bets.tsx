@@ -1,4 +1,6 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
+
 import { LastBetsContainer } from "../../../common/last-bets-container";
 import {
   RpsArrowRightSm,
@@ -7,9 +9,8 @@ import {
   RpsScissorsSm,
 } from "../../../svgs";
 import { cn } from "../../../utils/style";
-import { RPSForm, RockPaperScissors } from "../types";
 import useRpsGameStore from "../store";
-import { useFormContext } from "react-hook-form";
+import { RockPaperScissors,RPSForm } from "../types";
 
 const MiniRPSIcon = ({ rps }: { rps: string }) => {
   switch (rps) {

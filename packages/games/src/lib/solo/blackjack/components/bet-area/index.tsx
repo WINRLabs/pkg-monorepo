@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import styles from "./bet-area.module.css";
-import { cn } from "../../../../utils/style";
+
 import { renderChipIcon } from "../../../../common/chip-controller/utils";
 import { CDN_URL } from "../../../../constants";
+import { cn } from "../../../../utils/style";
+import styles from "./bet-area.module.css";
 
 interface BetAreaProps {
   onClick: () => void;

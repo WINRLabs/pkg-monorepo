@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
+
 import { CoinFlipGameResult } from "../types";
-import { CoinSide } from "../constants";
 
 interface CoinFlipGameState {
   lastBets: CoinFlipGameResult[];

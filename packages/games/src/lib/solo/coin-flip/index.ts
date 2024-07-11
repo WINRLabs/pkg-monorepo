@@ -1,7 +1,7 @@
-import { CoinFlipGame } from "./components/game";
 import { Body } from "./components/body";
 import { Coin } from "./components/coin";
 import { CoinFlipController } from "./components/controller";
+import { CoinFlipGame } from "./components/game";
 import { CoinFlipLastBets } from "./components/last-bets";
 
 export const CoinFlip = {
@@ -13,9 +13,6 @@ export const CoinFlip = {
 };
 
 export { default as CoinFlipTemplate } from "./components/template";
-
-export * from "./store";
-
-export * from "./types";
-
 export * from "./constants";
+export * from "./store";
+export * from "./types";

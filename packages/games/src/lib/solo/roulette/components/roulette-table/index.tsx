@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { RouletteForm } from "../../types";
+
+import { Chip } from "../../../../common/chip-controller/types";
 import { renderChipIcon } from "../../../../common/chip-controller/utils";
 import { cn } from "../../../../utils/style";
 import {
@@ -9,7 +10,7 @@ import {
   redNumbers,
   rouletteNumbers,
 } from "../../constants";
-import { Chip } from "../../../../common/chip-controller/types";
+import { RouletteForm } from "../../types";
 
 export interface RouletteTableProps {
   selectedChip: Chip;

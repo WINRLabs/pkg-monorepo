@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useUnityContext } from "react-unity-webgl";
+
 import { useEqualizeUnitySound } from "../../../hooks/use-unity-sound";
 
 const GenerateTable = "P_GenerateTable";

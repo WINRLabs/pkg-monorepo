@@ -1,15 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { Form } from "../../../ui/form";
-import { COIN_SIDE, MAX_BET_COUNT_3D, MIN_BET_COUNT_3D } from "../constants";
-import { CoinFlip3dFormFields } from "../types";
-import { CoinFlip3dGameProps } from "./game";
-import { UnityGameContainer } from "../../../common/containers";
-import { BetController } from "./bet-controller";
-import { CoinFlip3D } from "..";
 import debounce from "debounce";
 import React from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+import { UnityGameContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
+import { CoinFlip3D } from "..";
+import { COIN_SIDE, MAX_BET_COUNT_3D, MIN_BET_COUNT_3D } from "../constants";
+import { CoinFlip3dFormFields } from "../types";
+import { BetController } from "./bet-controller";
+import { CoinFlip3dGameProps } from "./game";
 
 type TemplateOptions = {
   scene?: {

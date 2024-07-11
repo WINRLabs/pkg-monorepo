@@ -1,7 +1,7 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { Keno } from "../..";
+
 import { CDN_URL } from "../../../../constants";
 import {
   SoundEffects,
@@ -9,6 +9,7 @@ import {
 } from "../../../../hooks/use-audio-effect";
 import { FormControl, FormField, FormItem } from "../../../../ui/form";
 import { cn } from "../../../../utils/style";
+import { Keno } from "../..";
 import { initialKenoCells } from "../../constants";
 import useKenoGameStore from "../../store";
 import { KenoForm, KenoGameResult } from "../../types";

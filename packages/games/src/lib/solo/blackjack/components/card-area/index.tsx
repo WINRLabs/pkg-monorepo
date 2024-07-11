@@ -1,5 +1,9 @@
+import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { Card } from "../card";
+
+import { CDN_URL } from "../../../../constants";
+import { genNumberArray } from "../../../../utils/number";
+import { cn } from "../../../../utils/style";
 import {
   ActiveGameHands,
   BlackjackGameResult,
@@ -7,12 +11,9 @@ import {
   BlackjackHandStatus,
   GameStruct,
 } from "../..";
-import { AnimatePresence, motion } from "framer-motion";
-import { genNumberArray } from "../../../../utils/number";
-import { cn } from "../../../../utils/style";
-import styles from "./card-area.module.css";
 import { BlackjackCard, calcTotalAmounts } from "../../utils";
-import { CDN_URL } from "../../../../constants";
+import { Card } from "../card";
+import styles from "./card-area.module.css";
 
 interface CardAreaProps {
   handType: BlackjackHandIndex;

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
+
 import { PlinkoGameResult } from "../types";
 
 export interface PlinkoLastBet extends PlinkoGameResult {

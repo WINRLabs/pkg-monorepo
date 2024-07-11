@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { rouletteWheelNumbers } from "../../constants";
-import { cn } from "../../../../utils/style";
-import { genNumberArray } from "../../../../utils/number";
-import { RouletteWheelColor } from "../../types";
+
 import { CDN_URL } from "../../../../constants";
+import { genNumberArray } from "../../../../utils/number";
+import { cn } from "../../../../utils/style";
+import { rouletteWheelNumbers } from "../../constants";
+import { RouletteWheelColor } from "../../types";
 
 interface RouletteWheelProps {
   isPrepared: boolean;

@@ -1,4 +1,14 @@
+import * as React from "react";
 import { useFormContext } from "react-hook-form";
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { cn } from "../utils/style";
 import { BetCount } from "./bet-count";
 import { BetCountSlider } from "./containers";
 import { StopGainLossInput } from "./stop-gain-loss-input";
@@ -8,16 +18,6 @@ import {
   WagerInput,
   WagerSetterButtons,
 } from "./wager";
-import * as React from "react";
-import { WagerCurrencyIcon } from "./wager";
-import { cn } from "../utils/style";
-import {
-  FormField,
-  FormControl,
-  FormLabel,
-  FormItem,
-  FormMessage,
-} from "../ui/form";
 
 interface WagerFormFieldProps {
   minWager: number;

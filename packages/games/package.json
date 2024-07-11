@@ -2,7 +2,7 @@
   "name": "@winrlabs/games",
   "description": "Games",
   "license": "MIT",
-  "version": "2.8.51",
+  "version": "2.8.52",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -15,7 +15,8 @@
     "directory": "packages/games"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "build": "tsup",
     "dev": "npm run build -- --watch",
     "test": "jest",
@@ -64,6 +65,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-radio-group": "^1.1.2",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",

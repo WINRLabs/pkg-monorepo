@@ -1,19 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { CardStatus, VideoPokerFormFields, parseCards } from "../types";
-import useVideoPokerGameStore, { VideoPokerStatus } from "../store";
-import { VideoPokerResult } from "../constants";
-import { Form, FormField } from "../../../ui/form";
+
 import { GameContainer, SceneContainer } from "../../../common/containers";
+import { CDN_URL } from "../../../constants";
+import { Form, FormField } from "../../../ui/form";
+import { VideoPokerResult } from "../constants";
+import useVideoPokerGameStore, { VideoPokerStatus } from "../store";
+import { CardStatus, parseCards,VideoPokerFormFields } from "../types";
 import { VideoPokerBetController } from "./bet-controller";
 import { VideoPokerResults } from "./game-scene";
 import { CardComponent } from "./game-scene/card";
-import { CDN_URL } from "../../../constants";
-import debounce from "debounce";
 
 interface TemplateProps {
   minWager?: number;
@@ -151,7 +152,7 @@ const VideoPokerTemplate = ({
 
       setTimeout(() => {
         updateState({
-          gameResult: Number(0),
+          gameResult: Number(settledCards.result),
         });
 
         onAnimationCompleted && onAnimationCompleted(settledCards.payout);

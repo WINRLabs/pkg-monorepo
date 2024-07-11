@@ -13,7 +13,5 @@ export const Roulette = {
 };
 
 export { default as RouletteTemplate } from "./components/template";
-
 export * from "./store";
-
 export * from "./types";

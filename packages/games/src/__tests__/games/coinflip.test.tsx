@@ -1,6 +1,7 @@
 // write me a test for the coinflip game keep in mind that it uses game provider
 
 import { render } from "@testing-library/react";
+
 import { GameProvider } from "../../lib/game-provider";
 import { CoinFlipTemplate, CoinSide } from "../../lib/solo/coin-flip";
 

@@ -1,13 +1,14 @@
 "use client";
 
+import * as Slider from "@radix-ui/react-slider";
 import React from "react";
 import { NumericFormat } from "react-number-format";
+
 // import { ArrowDown, ArrowUp } from 'src/components/icons';
 // import { TokenAddress, getTokenDisplayDecimal } from "@winrlabs/chain-config";
 import { ChevronDown } from "../../svgs";
-import * as Slider from "@radix-ui/react-slider";
-import { toFormatted } from "../../utils/web3";
 import { cn } from "../../utils/style";
+import { toFormatted } from "../../utils/web3";
 
 // min max tool
 // label

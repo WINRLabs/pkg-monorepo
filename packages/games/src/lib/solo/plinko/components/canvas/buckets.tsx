@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { genNumberArray } from "../../../../utils/number";
-import { cn } from "../../../../utils/style";
+
 import {
   SoundEffects,
   useAudioEffect,
 } from "../../../../hooks/use-audio-effect";
+import { genNumberArray } from "../../../../utils/number";
+import { cn } from "../../../../utils/style";
 
 const getBucketClassName = (multiplier: number): string | undefined => {
   if (multiplier > 0 && multiplier <= 0.25) {

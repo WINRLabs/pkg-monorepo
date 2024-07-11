@@ -1,32 +1,33 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+import { GameContainer, SceneContainer } from "../../../common/containers";
+import { CDN_URL } from "../../../constants";
+import { useGameOptions } from "../../../game-provider";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { Form } from "../../../ui/form";
+import { wait } from "../../../utils/promise";
+import { cn } from "../../../utils/style";
+import {
+  BlackjackCard,
+  BlackjackGameStatus,
+  distributeNewCards,
+  getBlackjackSuit,
+  TIMEOUT,
+} from "../../blackjack";
 import {
   SingleBJDealFormFields,
   SingleBlackjackGameProps,
   SingleBlackjackHandIndex,
 } from "..";
-import { GameContainer, SceneContainer } from "../../../common/containers";
-import { cn } from "../../../utils/style";
 import { BetController } from "./bet-controller";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Form } from "../../../ui/form";
-import { CDN_URL } from "../../../constants";
-import styles from "./single-styles.module.css";
-import {
-  BlackjackCard,
-  BlackjackGameStatus,
-  TIMEOUT,
-  distributeNewCards,
-  getBlackjackSuit,
-} from "../../blackjack";
-import { wait } from "../../../utils/promise";
-import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
-import { useGameOptions } from "../../../game-provider";
-import { DealerCardArea } from "./dealer-card-area";
 import { CardArea } from "./card-area";
+import { DealerCardArea } from "./dealer-card-area";
+import styles from "./single-styles.module.css";
 import { SplittedCardArea } from "./splitted-card-area";
 
 type TemplateOptions = {

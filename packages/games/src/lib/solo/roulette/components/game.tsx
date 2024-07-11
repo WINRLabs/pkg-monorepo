@@ -1,7 +1,8 @@
 import React from "react";
-import { RouletteGameProps } from "../types";
-import useRouletteGameStore from "../store";
+
 import { useGameSkip } from "../../../game-provider";
+import useRouletteGameStore from "../store";
+import { RouletteGameProps } from "../types";
 
 export const RouletteGame = ({
   gameResults,

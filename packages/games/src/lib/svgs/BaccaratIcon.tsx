@@ -1,5 +1,5 @@
-import * as React from "react";
 import type { SVGProps } from "react";
+import * as React from "react";
 
 const SvgBaccaratIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg

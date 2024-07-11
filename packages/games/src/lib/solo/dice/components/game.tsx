@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+
+import { useGameSkip } from "../../../game-provider";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 import useRangeGameStore from "../store";
 import { DiceGameResult } from "../types";
-import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
-import { useGameSkip } from "../../../game-provider";
 
 export type RangeGameProps = React.ComponentProps<"div"> & {
   gameResults?: DiceGameResult[];

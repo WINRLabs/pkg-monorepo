@@ -1,18 +1,19 @@
-import React from "react";
-import { Card } from "../card";
 import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
+
+import { CDN_URL } from "../../../../constants";
 import { genNumberArray } from "../../../../utils/number";
 import { cn } from "../../../../utils/style";
-import styles from "./splitted-card-area.module.css";
-import { BlackjackCard, calcTotalAmounts } from "../../utils";
 import {
-  BlackjackGameResult,
-  BlackjackHandStatus,
-  BlackjackHandIndex,
   ActiveGameHands,
+  BlackjackGameResult,
+  BlackjackHandIndex,
+  BlackjackHandStatus,
   GameStruct,
 } from "../..";
-import { CDN_URL } from "../../../../constants";
+import { BlackjackCard, calcTotalAmounts } from "../../utils";
+import { Card } from "../card";
+import styles from "./splitted-card-area.module.css";
 
 interface SplittedCardAreaProps {
   handType: BlackjackHandIndex;

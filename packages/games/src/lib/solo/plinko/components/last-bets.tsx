@@ -1,6 +1,6 @@
-import { usePlinkoGameStore } from "..";
 import { LastBetsContainer } from "../../../common/last-bets-container";
 import { cn } from "../../../utils/style";
+import { usePlinkoGameStore } from "..";
 
 export const PlinkoLastBets = () => {
   const { lastBets } = usePlinkoGameStore(["lastBets"]);

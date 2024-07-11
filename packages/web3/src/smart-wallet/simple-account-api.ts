@@ -1,9 +1,10 @@
 // @ts-nocheck
 import { Address, encodeFunctionData, toBytes, WalletClient } from 'viem';
-import { BaseApiParams, BaseAccountAPI, FactoryParams } from './base-account-api';
+import { Hex } from 'viem';
+
 import simpleAccountAbi from './abis/simple-account-abi';
 import simpleAccountFactoryAbi from './abis/simple-account-factory-abi';
-import { Hex } from 'viem';
+import { BaseAccountAPI, BaseApiParams, FactoryParams } from './base-account-api';
 
 /**
  * constructor params, added no top of base params:

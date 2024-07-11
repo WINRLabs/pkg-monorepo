@@ -1,16 +1,17 @@
 import React from "react";
-import { RouletteGameResult } from "../../types";
+
+import { CDN_URL } from "../../../../constants";
+import { useGameSkip } from "../../../../game-provider";
 import {
   SoundEffects,
   useAudioEffect,
 } from "../../../../hooks/use-audio-effect";
-import useRouletteGameStore from "../../store";
-import { useGameSkip } from "../../../../game-provider";
-import { rouletteWheelNumbers } from "../../constants";
 import { wait } from "../../../../utils/promise";
 import { cn } from "../../../../utils/style";
+import { rouletteWheelNumbers } from "../../constants";
+import useRouletteGameStore from "../../store";
+import { RouletteGameResult } from "../../types";
 import { RouletteWheel } from "../roulette-wheel";
-import { CDN_URL } from "../../../../constants";
 
 const ANIMATION_TIMEOUT = 5000;
 

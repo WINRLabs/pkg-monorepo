@@ -1,6 +1,6 @@
-import { useDiceGameStore } from "..";
-import { LastBetsContainer } from "../../../common/last-bets-container";
 import { cn } from "../../../../lib/utils/style";
+import { LastBetsContainer } from "../../../common/last-bets-container";
+import { useDiceGameStore } from "..";
 
 export const RangeLastBets: React.FC = () => {
   const { lastBets } = useDiceGameStore(["lastBets"]);

@@ -1,7 +1,8 @@
-import { CoinCanvas, EasingFunction } from "../../types";
 import TWEEN, { Easing } from "@tweenjs/tween.js";
-import createCylinder from "./cylinder";
+
 import { CoinSide } from "../../constants";
+import { CoinCanvas, EasingFunction } from "../../types";
+import createCylinder from "./cylinder";
 
 class CoinRotate {
   private canvas!: CoinCanvas;

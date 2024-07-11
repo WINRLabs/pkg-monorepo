@@ -1,7 +1,8 @@
 import React from "react";
+
 import { useGameSkip } from "../../../game-provider";
-import { LimboGameResult } from "../types";
 import useLimboGameStore from "../store";
+import { LimboGameResult } from "../types";
 
 export type LimboGameProps = React.ComponentProps<"div"> & {
   gameResults: LimboGameResult[];

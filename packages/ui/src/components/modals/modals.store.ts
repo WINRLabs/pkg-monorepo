@@ -1,4 +1,5 @@
 import { create, SetState } from "zustand";
+
 import { ModalsStore, ModalsStoreActions } from "./types";
 
 const actions = (set: SetState<ModalsStore>): ModalsStoreActions => ({

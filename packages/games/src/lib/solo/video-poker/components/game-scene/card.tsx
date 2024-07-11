@@ -1,16 +1,17 @@
-import styles from "./video-poker-card.module.css";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { ControllerRenderProps, useFormContext } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
+import { ControllerRenderProps, useFormContext } from "react-hook-form";
+
+import { CDN_URL } from "../../../../constants";
 import {
   SoundEffects,
   useAudioEffect,
 } from "../../../../hooks/use-audio-effect";
-import { Card, CardStatus, VideoPokerForm } from "../../types";
-import { CDN_URL } from "../../../../constants";
-import useVideoPokerGameStore, { VideoPokerStatus } from "../../store";
 import { cn } from "../../../../utils/style";
+import useVideoPokerGameStore, { VideoPokerStatus } from "../../store";
+import { Card, CardStatus, VideoPokerForm } from "../../types";
+import styles from "./video-poker-card.module.css";
 
 const BigDiamonds = <img src={`${CDN_URL}/blackjack/suits/big-diamonds.svg`} />;
 const BigClubs = <img src={`${CDN_URL}/blackjack/suits/big-clubs.svg`} />;

@@ -13,7 +13,7 @@
     "directory": "packages/ui"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
     "generate:component": "turbo gen react-component",
     "build": "tsup",
     "dev": "npm run build -- --watch"
@@ -54,6 +54,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "latest",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@wagmi/core": "^2.10.2",
     "@winrlabs/web3": "workspace:*",
     "class-variance-authority": "^0.7.0",

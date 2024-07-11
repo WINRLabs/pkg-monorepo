@@ -1,6 +1,6 @@
-import { CoinFlipGameResult, CoinSide, useCoinFlipGameStore } from "..";
 import { CDN_URL } from "../../../constants";
 import { cn } from "../../../utils/style";
+import { CoinFlipGameResult, CoinSide, useCoinFlipGameStore } from "..";
 
 const LastBet = ({ result }: { result: CoinFlipGameResult }) => {
   return (

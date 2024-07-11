@@ -1,7 +1,8 @@
 import React from "react";
-import { useGameSocketContext } from "../use-game-socket";
-import { DecodedEvent, Event } from "../../utils";
 import SuperJSON from "superjson";
+
+import { DecodedEvent, Event } from "../../utils";
+import { useGameSocketContext } from "../use-game-socket";
 
 export const useListenGameEvent = () => {
   const [gameEvent, setGameEvent] = React.useState<DecodedEvent<

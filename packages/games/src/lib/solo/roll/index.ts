@@ -10,7 +10,5 @@ export const Roll = {
 };
 
 export { default as RollTemplate } from "./components/template";
-
 export * from "./store";
-
 export * from "./types";

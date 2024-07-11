@@ -3,9 +3,10 @@ import debounce from "debounce";
 import React from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { Limbo, LimboFormField } from "..";
+
 import { GameContainer, SceneContainer } from "../../../common/containers";
 import { Form } from "../../../ui/form";
+import { Limbo, LimboFormField } from "..";
 import { BetController } from "./bet-controller";
 import { LimboGameProps } from "./game";
 

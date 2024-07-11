@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Spinner } from "../spinner";
+import * as React from "react";
+
 import { cn } from "../../utils";
+import { Spinner } from "../spinner";
 
 const buttonVariants = cva(
   "focus-visible:wr-ring-ring wr-inline-flex wr-h-2 wr-items-center wr-justify-center wr-rounded-md wr-px-3 wr-py-0 wr-text-[15px] wr-font-semibold wr-leading-4 wr-transition wr-duration-300 wr-ease-out hover:wr-ease-in focus-visible:wr-outline-none focus-visible:wr-ring-2 focus-visible:wr-ring-offset-2 disabled:wr-pointer-events-none disabled:wr-cursor-not-allowed",

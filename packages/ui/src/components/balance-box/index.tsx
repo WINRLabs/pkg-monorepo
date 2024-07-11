@@ -1,8 +1,9 @@
 "use client";
 
-import { formatUnits } from "viem";
-import { useAppConfig } from "../../providers/app-config";
 import { useCurrentAccount, useTokenBalances } from "@winrlabs/web3";
+import { formatUnits } from "viem";
+
+import { useAppConfig } from "../../providers/app-config";
 
 export const BalanceBox = () => {
   // const {}

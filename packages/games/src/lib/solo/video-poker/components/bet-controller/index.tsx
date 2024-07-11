@@ -2,19 +2,20 @@
 
 import React from "react";
 import { useFormContext } from "react-hook-form";
+
+import { AudioController } from "../../../../common/audio-controller";
 import { BetControllerContainer } from "../../../../common/containers";
 import {
   BetControllerTitle,
   WagerFormField,
 } from "../../../../common/controller";
-import { cn } from "../../../../utils/style";
 import { PreBetButton } from "../../../../common/pre-bet-button";
-import { VideoPokerForm } from "../../types";
-import useVideoPokerGameStore, { VideoPokerStatus } from "../../store";
-import { FormLabel } from "../../../../ui/form";
 import { TotalWager, WagerCurrencyIcon } from "../../../../common/wager";
 import { Button } from "../../../../ui/button";
-import { AudioController } from "../../../../common/audio-controller";
+import { FormLabel } from "../../../../ui/form";
+import { cn } from "../../../../utils/style";
+import useVideoPokerGameStore, { VideoPokerStatus } from "../../store";
+import { VideoPokerForm } from "../../types";
 
 interface Props {
   minWager: number;

@@ -1,22 +1,23 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
+import React from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
+
+import { GameContainer, SceneContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { CoinFlip, CoinFlipFormFields } from "..";
 import {
   CoinSide,
   MAX_BET_COUNT,
   MIN_BET_COUNT,
   WIN_MULTIPLIER,
 } from "../constants";
-import { CoinFlipGameProps } from "./game";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { GameContainer, SceneContainer } from "../../../common/containers";
 import { BetController } from "./bet-controller";
-import { CoinFlip, CoinFlipFormFields } from "..";
-import { cn } from "../../../utils/style";
-import { Form } from "../../../ui/form";
-import debounce from "debounce";
-import React from "react";
+import { CoinFlipGameProps } from "./game";
 
 type TemplateOptions = {
   scene?: {

@@ -1,16 +1,17 @@
 "use client";
 
-import { Config, useConfig, useConnectors, useDisconnect } from "wagmi";
+import { delay, useCurrentAccount } from "@winrlabs/web3";
+import { Config, useConnectors, useDisconnect } from "wagmi";
+
+import { useWagmiConfig } from "../../providers/wagmi-config";
 import { LogoMain, Wallet } from "../../svgs";
 import { cn } from "../../utils";
 import { Button } from "../button";
 import { Chat } from "../chat";
 import useModalsStore from "../modals/modals.store";
-import { delay, useCurrentAccount } from "@winrlabs/web3";
-import { useWagmiConfig } from "../../providers/wagmi-config";
-import { Spinner } from "../spinner";
 import { Skeleton } from "../skeleton";
-import { BalanceBox } from "../balance-box";
+import { Spinner } from "../spinner";
+import { SelectGameCurrency } from "../wallet/token-dropdown";
 
 export interface HeaderProps {
   appLogo?: React.ReactNode;
@@ -68,7 +69,7 @@ export const Header = ({
         {account.address && !account.isGettingAddress && (
           <>
             <div className="wr-mx-4 wr-flex wr-items-center lg:wr-absolute lg:wr-left-[50%] lg:wr-top-[50%] lg:wr-mx-0 lg:wr-translate-x-[-50%] lg:wr-translate-y-[-50%]">
-              <BalanceBox />
+              <SelectGameCurrency />
             </div>
             <Button
               disabled={isPending}

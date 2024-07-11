@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { KenoForm } from "../types";
-import { cn } from "../../../utils/style";
-import { Card, CardContent } from "../../../ui/card";
+
 import { IconChevronLeft } from "../../../svgs";
+import { Card, CardContent } from "../../../ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -10,7 +9,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../../ui/carousel";
+import { cn } from "../../../utils/style";
 import { kenoMultipliers } from "../constants";
+import { KenoForm } from "../types";
 
 const MultiplierCarousel: React.FC<{ currentNumbers: number[][] }> = ({
   currentNumbers,

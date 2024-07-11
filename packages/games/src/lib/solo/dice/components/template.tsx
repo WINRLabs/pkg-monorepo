@@ -1,20 +1,21 @@
 "use client";
 
-import { GameContainer, SceneContainer } from "../../../common/containers";
-import { RangeGameProps } from "./game";
-import { Dice } from "../index";
-import { SliderTrackOptions } from "./slider";
-import z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LUCK_MULTIPLIER, MAX_BET_COUNT, MIN_BET_COUNT } from "../constant";
-import { BetController } from "./bet-controller";
-import { toDecimals } from "../../../utils/web3";
-import React, { useMemo, useState } from "react";
-import { cn } from "../../../../lib/utils/style";
-import { Form } from "../../../ui/form";
-import { DiceFormFields } from "../types";
 import debounce from "debounce";
+import React, { useMemo } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+import { cn } from "../../../../lib/utils/style";
+import { GameContainer, SceneContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
+import { toDecimals } from "../../../utils/web3";
+import { LUCK_MULTIPLIER, MAX_BET_COUNT, MIN_BET_COUNT } from "../constant";
+import { Dice } from "../index";
+import { DiceFormFields } from "../types";
+import { BetController } from "./bet-controller";
+import { RangeGameProps } from "./game";
+import { SliderTrackOptions } from "./slider";
 
 type TemplateOptions = {
   slider?: {

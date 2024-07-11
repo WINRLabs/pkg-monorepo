@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Canvas from "./canvas";
-import CoinRotate from "./coin-rotate";
-import { CoinCanvas, CoinFlipForm, CoinProps } from "../../types";
-import { useFormContext } from "react-hook-form";
-import { useCoinFlipGameStore } from "../..";
 import { Player } from "@lottiefiles/react-lottie-player";
-import CoinConfetti from "./lottie/coins-confetti.json";
+import React, { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+
+import { useGameSkip } from "../../../../game-provider";
 import {
   SoundEffects,
   useAudioEffect,
 } from "../../../../hooks/use-audio-effect";
-import { useGameSkip } from "../../../../game-provider";
+import { useCoinFlipGameStore } from "../..";
+import { CoinCanvas, CoinFlipForm, CoinProps } from "../../types";
+import Canvas from "./canvas";
+import CoinRotate from "./coin-rotate";
+import CoinConfetti from "./lottie/coins-confetti.json";
 
 export const Coin: React.FC<CoinProps> = ({
   width,

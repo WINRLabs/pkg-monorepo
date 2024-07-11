@@ -2,9 +2,10 @@
 
 import React, { useEffect } from "react";
 import { useUnityContext } from "react-unity-webgl";
+
 import { useEqualizeUnitySound } from "../../../hooks/use-unity-sound";
-import { Bonanza_Unity_Methods } from "../types";
 import { useBonanzaGameStore } from "../store";
+import { Bonanza_Unity_Methods } from "../types";
 
 interface UseUnityBonanzaParams {
   buildedGameUrl: string;

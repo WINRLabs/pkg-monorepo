@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3-games",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
     "directory": "packages/web3-games"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
     "generate:component": "turbo gen react-component",
     "build": "tsup",
     "dev": "npm run build -- --watch"

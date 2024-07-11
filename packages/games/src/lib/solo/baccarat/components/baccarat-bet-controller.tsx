@@ -1,15 +1,15 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { PreBetButton } from "../../../common/pre-bet-button";
-import { CDN_URL } from "../../../constants";
-import { Button } from "../../../ui/button";
+
 import { ChipController } from "../../../common/chip-controller";
 import { Chip } from "../../../common/chip-controller/types";
-import { TotalWager, MaxPayout } from "../../../common/wager";
 import {
   UnityWagerFormField,
-  WagerFormField,
 } from "../../../common/controller";
+import { PreBetButton } from "../../../common/pre-bet-button";
+import { MaxPayout,TotalWager } from "../../../common/wager";
+import { CDN_URL } from "../../../constants";
+import { Button } from "../../../ui/button";
 
 export interface BaccaratBetControllerProps {
   totalWager: number;

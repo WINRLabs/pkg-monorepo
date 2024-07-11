@@ -1,5 +1,6 @@
-import { useGameSkip } from "../../../game-provider";
 import React from "react";
+
+import { useGameSkip } from "../../../game-provider";
 import useRpsGameStore from "../store";
 import { RPSGameResult } from "../types";
 

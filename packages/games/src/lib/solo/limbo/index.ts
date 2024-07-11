@@ -12,6 +12,5 @@ export const Limbo = {
   Slider: LimboSlider,
 };
 
-export * from "./types";
-
 export { default as LimboTemplate } from "./components/template";
+export * from "./types";

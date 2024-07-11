@@ -1,10 +1,10 @@
-import { BlackjackGameStatus } from "..";
 import { ChipController } from "../../../common/chip-controller";
 import { Chip } from "../../../common/chip-controller/types";
 import { PreBetButton } from "../../../common/pre-bet-button";
 import { TotalWager } from "../../../common/wager";
 import { CDN_URL } from "../../../constants";
 import { Button } from "../../../ui/button";
+import { BlackjackGameStatus } from "..";
 
 interface BetControllerProps {
   totalWager: number;

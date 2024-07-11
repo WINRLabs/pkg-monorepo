@@ -1,12 +1,11 @@
 // Import necessary modules and types
-import { Web3AuthNoModal } from "@web3auth/no-modal";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import {
   CHAIN_NAMESPACES,
-  IWeb3AuthCoreOptions,
   IProvider,
+  IWeb3AuthCoreOptions,
 } from "@web3auth/base";
-import { Chain } from "wagmi/chains";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import { Web3AuthNoModal } from "@web3auth/no-modal";
 import {
   CUSTOM_LOGIN_PROVIDER_TYPE,
   LOGIN_PROVIDER_TYPE,
@@ -14,6 +13,8 @@ import {
   OpenloginAdapterOptions,
 } from "@web3auth/openlogin-adapter";
 import { CreateConnectorFn } from "wagmi";
+import { Chain } from "wagmi/chains";
+
 import { Web3AuthConnector } from "../utils/web3-auth";
 
 interface Web3AuthConnectorInstanceParams {

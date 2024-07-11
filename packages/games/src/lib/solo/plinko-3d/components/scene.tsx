@@ -4,13 +4,14 @@ import * as Progress from "@radix-ui/react-progress";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { Unity } from "react-unity-webgl";
+
 import { useListenUnityEvent } from "../../../hooks/use-listen-unity-event";
 import { toFormatted } from "../../../utils/web3";
+import { Plinko3d } from "..";
 import { useUnityPlinko } from "../hooks/use-unity-plinko";
 import usePlinko3dGameStore from "../store";
 import { Plinko3dForm } from "../types";
 import { Plinko3dGameProps } from "./game";
-import { Plinko3d } from "..";
 
 const UnityScoreEvent = "Score";
 

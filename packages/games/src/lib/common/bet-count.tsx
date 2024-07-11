@@ -1,6 +1,6 @@
 "use client";
 
-import { NumberInput, INumberInputContext } from "../ui/number-input";
+import { INumberInputContext,NumberInput } from "../ui/number-input";
 import { cn } from "../utils/style";
 
 interface Props extends INumberInputContext {

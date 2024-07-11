@@ -2,22 +2,18 @@
 // import { ethers, BigNumber, BigNumberish, BytesLike } from 'ethers'
 // import { Provider } from '@ethersproject/providers'
 
-import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
 // import { defaultAbiCoder } from 'ethers/lib/utils'
-import { PaymasterAPI } from "./paymaster-api";
-import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
+import { Address, decodeAbiParameters, Hex, parseAbiParameters } from "viem";
+
 import {
   calcPreVerificationGas,
   GasOverheads,
 } from "./calc-pre-verification-gas";
-import {
-  PublicClient,
-  Hex,
-  Address,
-  decodeAbiParameters,
-  zeroAddress,
-  parseAbiParameters,
-} from "viem";
+import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
+import { PaymasterAPI } from "./paymaster-api";
+import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
+
+// import { defaultAbiCoder } from 'ethers/lib/utils'
 
 export interface FactoryParams {
   factory: Address;

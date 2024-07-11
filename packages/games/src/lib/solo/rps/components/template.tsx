@@ -1,16 +1,17 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { Form } from "../../../ui/form";
+
 import { GameContainer, SceneContainer } from "../../../common/containers";
+import { Form } from "../../../ui/form";
 import { Rps } from "..";
-import { BetController } from "./bet-controller";
 import { RockPaperScissors, RpsFormFields } from "../types";
+import { BetController } from "./bet-controller";
 import { RpsGameProps } from "./game";
-import debounce from "debounce";
 
 type TemplateOptions = {
   scene?: {

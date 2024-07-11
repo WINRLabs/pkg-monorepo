@@ -1,15 +1,15 @@
 import React, {
-  FocusEventHandler,
   MouseEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { useFormContext } from "react-hook-form";
-import { LimboForm } from "../types";
-import { cn } from "../../../utils/style";
 import useDimensions from "react-cool-dimensions";
+import { useFormContext } from "react-hook-form";
+
+import { cn } from "../../../utils/style";
 import useLimboGameStore from "../store";
+import { LimboForm } from "../types";
 
 type ScalePoint = {
   value: number;

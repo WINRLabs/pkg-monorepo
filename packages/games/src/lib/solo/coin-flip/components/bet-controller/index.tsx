@@ -1,8 +1,10 @@
 "use client";
 import * as React from "react";
 import { useFormContext } from "react-hook-form";
+
 import { Advanced } from "../../../../common/advanced";
-import { TotalWager, WagerCurrencyIcon } from "../../../../common/wager";
+import { AudioController } from "../../../../common/audio-controller";
+import { BetControllerContainer } from "../../../../common/containers";
 import {
   BetControllerTitle,
   BetCountFormField,
@@ -10,16 +12,15 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../../common/controller";
-import { BetControllerContainer } from "../../../../common/containers";
-import { CoinFlipForm } from "../../types";
 import { PreBetButton } from "../../../../common/pre-bet-button";
-import { AudioController } from "../../../../common/audio-controller";
-import { useCoinFlipGameStore } from "../..";
 import { SkipButton } from "../../../../common/skip-button";
+import { TotalWager, WagerCurrencyIcon } from "../../../../common/wager";
+import { Button } from "../../../../ui/button";
+import { FormLabel } from "../../../../ui/form";
 import { cn } from "../../../../utils/style";
 import { toDecimals, toFormatted } from "../../../../utils/web3";
-import { FormLabel } from "../../../../ui/form";
-import { Button } from "../../../../ui/button";
+import { useCoinFlipGameStore } from "../..";
+import { CoinFlipForm } from "../../types";
 
 interface Props {
   minWager: number;

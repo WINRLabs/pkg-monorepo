@@ -1,7 +1,8 @@
 import React from "react";
-import useRouletteGameStore from "../../store";
+
 import { cn } from "../../../../utils/style";
 import { redNumbers } from "../../constants";
+import useRouletteGameStore from "../../store";
 
 export const RouletteLastBets: React.FC = () => {
   const { lastBets } = useRouletteGameStore(["lastBets"]);

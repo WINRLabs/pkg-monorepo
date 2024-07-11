@@ -6,19 +6,22 @@ import {
   VideoPokerStatus,
   VideoPokerTemplate,
 } from "@winrlabs/games";
-import { useContractConfigContext } from "../hooks/use-contract-config";
-import React from "react";
-import { useListenGameEvent } from "../hooks";
 import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  usePriceFeed,
   useTokenAllowance,
+  useTokenStore,
   videoPokerAbi,
 } from "@winrlabs/web3";
+import React from "react";
 import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
-import { prepareGameTransaction } from "../utils";
 import { useReadContract } from "wagmi";
+
+import { useListenGameEvent } from "../hooks";
+import { useContractConfigContext } from "../hooks/use-contract-config";
+import { prepareGameTransaction } from "../utils";
 
 interface TemplateWithWeb3Props {
   minWager?: number;
@@ -34,7 +37,6 @@ export default function VideoPokerTemplateWithWeb3(
     controllerAddress,
     cashierAddress,
     uiOperatorAddress,
-    selectedTokenAddress,
     wagmiConfig,
   } = useContractConfigContext();
 
@@ -51,12 +53,16 @@ export default function VideoPokerTemplateWithWeb3(
 
   const gameEvent = useListenGameEvent();
   const currentAccount = useCurrentAccount();
+  const { selectedToken } = useTokenStore((s) => ({
+    selectedToken: s.selectedToken,
+  }));
+  const { getPrice } = usePriceFeed();
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,
     owner: currentAccount.address || "0x0000000",
     spender: cashierAddress,
-    tokenAddress: selectedTokenAddress,
+    tokenAddress: selectedToken.address,
     showDefaultToasts: false,
   });
 
@@ -65,8 +71,8 @@ export default function VideoPokerTemplateWithWeb3(
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
-      selectedCurrency: selectedTokenAddress,
-      lastPrice: 1,
+      selectedCurrency: selectedToken.address,
+      lastPrice: getPrice(selectedToken.address),
     });
 
     const encodedGameData = encodeAbiParameters(
@@ -79,7 +85,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "start",
         encodedGameData,
@@ -91,7 +97,7 @@ export default function VideoPokerTemplateWithWeb3(
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues.wager]);
+  }, [formValues.wager, selectedToken.address]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
@@ -99,7 +105,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        encodedParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "start",
         encodedParams.encodedGameData,
@@ -113,7 +119,7 @@ export default function VideoPokerTemplateWithWeb3(
   const encodedFinishParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedTokenAddress,
+      selectedCurrency: selectedToken.address,
       lastPrice: 1,
     });
 
@@ -134,7 +140,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "finish",
         encodedGameData,
@@ -154,7 +160,7 @@ export default function VideoPokerTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        encodedFinishParams.tokenAddress,
+        "0x0000000000000000000000000000000000000001",
         uiOperatorAddress as Address,
         "finish",
         encodedFinishParams.encodedGameData,
@@ -238,7 +244,7 @@ export default function VideoPokerTemplateWithWeb3(
         cards: data.game.cards,
         status: data.game.status,
         result: data.detail.win,
-        payout: data.detail.win,
+        payout: data.detail.payout,
       });
     }
   }, [gameEvent]);

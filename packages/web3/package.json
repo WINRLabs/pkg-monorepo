@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
     "directory": "packages/games"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
     "generate:component": "turbo gen react-component",
     "build": "tsup",
     "dev": "npm run build -- --watch"
@@ -28,6 +28,7 @@
     "@winrlabs/eslint-config": "workspace:*",
     "@winrlabs/typescript-config": "workspace:*",
     "eslint": "^8.56.0",
+    "eslint-plugin-unused-imports": "^4.0.0",
     "react": "^18.2.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",

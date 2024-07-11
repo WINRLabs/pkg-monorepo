@@ -1,6 +1,7 @@
 import React from "react";
-import { useAudioContext } from "./use-audio-effect";
+
 import { toDecimals } from "../utils/web3";
+import { useAudioContext } from "./use-audio-effect";
 
 export const useEqualizeUnitySound = ({
   sendMessage,

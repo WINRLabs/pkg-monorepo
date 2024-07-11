@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
+
 import { CoinFlip3dGameResult } from "../types";
 
 interface CoinFlip3dGameState {

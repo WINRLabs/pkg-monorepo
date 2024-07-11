@@ -1,23 +1,24 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogHeader,
-  DialogFooter,
-  DialogBody,
-} from "../../dialog";
-import Link from "next/link";
-import useModalsStore from "../modals.store";
-import { Google, IconWallet } from "../../../svgs";
-import { Connector, useConnect, useConnectors } from "wagmi";
 import { SmartWalletConnectorWagmiType } from "@winrlabs/web3";
-import { Button } from "../../button";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import React from "react";
+import { Connector, useConnect, useConnectors } from "wagmi";
+
 import { useWagmiConfig } from "../../../providers/wagmi-config";
+import { Google, IconWallet } from "../../../svgs";
+import { Button } from "../../button";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../dialog";
 import { Spinner } from "../../spinner";
+import useModalsStore from "../modals.store";
 
 const Connecting = () => {
   return (

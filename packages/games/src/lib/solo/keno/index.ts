@@ -11,9 +11,6 @@ export const Keno = {
 };
 
 export { default as KenoTemplate } from "./components/template";
-
-export * from "./store";
-
-export * from "./types";
-
 export * from "./constants";
+export * from "./store";
+export * from "./types";

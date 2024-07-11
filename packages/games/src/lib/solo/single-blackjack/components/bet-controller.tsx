@@ -1,13 +1,14 @@
 import React from "react";
-import { SingleBJActiveGameHands } from "..";
+import { useFormContext } from "react-hook-form";
+
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import { BetControllerTitle, WagerFormField } from "../../../common/controller";
 import { PreBetButton } from "../../../common/pre-bet-button";
+import { useGameOptions } from "../../../game-provider";
 import { Button } from "../../../ui/button";
 import { BlackjackGameStatus } from "../../blackjack";
-import { useGameOptions } from "../../../game-provider";
-import { useFormContext } from "react-hook-form";
-import { AudioController } from "../../../common/audio-controller";
+import { SingleBJActiveGameHands } from "..";
 
 interface Props {
   minWager: number;

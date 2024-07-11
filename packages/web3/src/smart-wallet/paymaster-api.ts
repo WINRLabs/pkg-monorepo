@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { Hex } from 'viem';
-import { UserOperation } from './erc4337-utils';
 import { JSONRPCClient } from 'json-rpc-2.0';
+import { Hex } from 'viem';
+
+import { UserOperation } from './erc4337-utils';
 // import { BigNumberish, BytesLike } from 'ethers'
 
 /**

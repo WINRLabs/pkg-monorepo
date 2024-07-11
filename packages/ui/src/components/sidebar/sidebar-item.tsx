@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { useSidebarStore } from "./sidebar.store";
+
 import { cn } from "../../utils";
+import { useSidebarStore } from "./sidebar.store";
 
 export const SidebarItem = ({
   children,

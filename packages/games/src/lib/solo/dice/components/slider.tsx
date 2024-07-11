@@ -1,9 +1,10 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { useFormContext } from "react-hook-form";
-import { DiceForm } from "../types";
+
 import { cn } from "../../../../lib/utils/style";
 import { FormControl, FormField, FormItem } from "../../../ui/form";
 import { useDiceGameStore } from "..";
+import { DiceForm } from "../types";
 
 export interface SliderTrackOptions {
   color?: string;

@@ -1,12 +1,13 @@
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { CoinSide, WIN_MULTIPLIER } from "../constants";
 import { useFormContext } from "react-hook-form";
-import { CoinFlipForm } from "../types";
+
 import { CDN_URL } from "../../../constants";
+import { FormControl, FormField, FormItem } from "../../../ui/form";
 import { cn } from "../../../utils/style";
 import { toFormatted } from "../../../utils/web3";
-import { FormControl, FormField, FormItem } from "../../../ui/form";
 import { useCoinFlipGameStore } from "..";
+import { CoinSide, WIN_MULTIPLIER } from "../constants";
+import { CoinFlipForm } from "../types";
 
 export const CoinFlipController = () => {
   const form = useFormContext() as CoinFlipForm;

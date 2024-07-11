@@ -3,7 +3,7 @@ import {
   createConnector,
   normalizeChainId,
 } from "@wagmi/core";
-import type { IWeb3Auth, WALLET_ADAPTER_TYPE, IProvider } from "@web3auth/base";
+import type { IProvider,IWeb3Auth, WALLET_ADAPTER_TYPE } from "@web3auth/base";
 import * as pkg from "@web3auth/base";
 import type { IWeb3AuthModal, ModalConfig } from "@web3auth/modal";
 import { OpenloginLoginParams } from "@web3auth/openlogin-adapter";

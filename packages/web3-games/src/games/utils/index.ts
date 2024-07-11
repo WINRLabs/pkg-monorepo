@@ -1,12 +1,11 @@
-import { parseUnits } from "viem";
-import { Address, Hex } from "viem";
 import { BaccaratGameHand, toDecimals } from "@winrlabs/games";
+import { parseUnits } from "viem";
+import { Hex } from "viem";
 
 export enum GAME_HUB_GAMES {
   rps = "rps",
   dice = "dice",
   keno = "keno",
-  slot = "slot",
   limbo = "limbo",
   mines = "mines",
   range = "range",
@@ -61,7 +60,7 @@ export interface BaccaratSettledEvent {
 export type UnitySendMessage = (
   gameObjectName: string,
   methodName: string,
-  parameter?: any
+  parameter?: any,
 ) => void;
 
 export enum PUBLIC_MULTIPLAYER_GAME_EVENTS {
@@ -125,7 +124,7 @@ export interface PrepareGameTransactionResult {
 }
 
 export const prepareGameTransaction = (
-  params: PrepareGameTransactionParams
+  params: PrepareGameTransactionParams,
 ): PrepareGameTransactionResult => {
   const {
     lastPrice,
@@ -137,17 +136,17 @@ export const prepareGameTransaction = (
 
   const wagerInGameCurrency = toDecimals(
     (wager / lastPrice).toString(),
-    6
+    6,
   ).toString();
 
   const stopGainInGameCurrency = toDecimals(
     (stopGain / lastPrice).toString(),
-    6
+    6,
   ).toString();
 
   const stopLossInGameCurrency = toDecimals(
     (stopLoss / lastPrice).toString(),
-    6
+    6,
   ).toString();
 
   console.log(wagerInGameCurrency, "wager in currency");

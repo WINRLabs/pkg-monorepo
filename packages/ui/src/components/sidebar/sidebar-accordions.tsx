@@ -1,14 +1,15 @@
 import React from "react";
+
+import { cn } from "../../utils";
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from "../accordion";
-import { SidebarItem } from "./sidebar-item";
-import { cn } from "../../utils";
-import { useSidebarStore } from "./sidebar.store";
 import { Separator } from "../separator";
+import { useSidebarStore } from "./sidebar.store";
+import { SidebarItem } from "./sidebar-item";
 
 type Game = {
   href: string;

@@ -1,19 +1,19 @@
 "use client";
 
-import React from "react";
-import { Socket, io } from "socket.io-client";
-import SuperJSON from "superjson";
 import { useCurrentAccount } from "@winrlabs/web3";
+import React from "react";
+import { io,Socket } from "socket.io-client";
 
 interface GameSocket {
-  // gameEvent: DecodedEvent<T, K> | null;
   socket: Socket | null;
+  bundlerWsUrl: string;
 }
 const GameSocketContext = React.createContext<GameSocket>({
   socket: null,
+  bundlerWsUrl: "",
 });
 
-export const useGameSocketContext = <T, K>() => {
+export const useGameSocketContext = () => {
   return React.useContext(GameSocketContext);
 };
 
@@ -60,34 +60,11 @@ export const GameSocketProvider: React.FC<{
     };
   }, [socket]);
 
-  // React.useEffect(() => {
-  //   if (!socket) return;
-
-  //   socket.on("message", onListenEvent);
-
-  //   return () => {
-  //     socket.off("message", onListenEvent);
-  //   };
-  // }, [socket]);
-
-  // const onListenEvent = (e: string) => {
-  //   const _e = SuperJSON.parse(e) as Event;
-
-  //   const context = _e.context as DecodedEvent<any, any>;
-
-  //   console.log(context, "CONTEXT!");
-
-  //   setGameEvent(context);
-  // };
-
-  React.useEffect(() => {
-    console.log(socket, "SOCKET!");
-  }, [socket]);
-
   return (
     <GameSocketContext.Provider
       value={{
         socket,
+        bundlerWsUrl,
       }}
     >
       {children}

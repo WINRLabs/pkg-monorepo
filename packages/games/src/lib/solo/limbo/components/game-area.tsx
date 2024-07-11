@@ -1,7 +1,8 @@
 import React from "react";
+
+import { useGameSkip } from "../../../game-provider";
 import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 import useLimboGameStore from "../store";
-import { useGameSkip } from "../../../game-provider";
 import { LimboGameResult } from "../types";
 
 export interface GameAreaProps {

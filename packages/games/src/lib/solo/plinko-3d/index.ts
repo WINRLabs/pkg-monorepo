@@ -11,7 +11,5 @@ export const Plinko3d = {
 };
 
 export { PlinkoGame as Plinko3dTemplate } from "./components/template";
-
 export * from "./store";
-
 export * from "./types";

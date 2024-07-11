@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import styles from "./single-dealer-card-area.module.css";
-import { genNumberArray } from "../../../../utils/number";
-import { cn } from "../../../../utils/style";
 
 import { CDN_URL } from "../../../../constants";
+import { genNumberArray } from "../../../../utils/number";
+import { cn } from "../../../../utils/style";
 import {
   BlackjackCard,
   BlackjackHandStatus,
-  GameStruct,
   calcTotalAmounts,
+  GameStruct,
 } from "../../../blackjack";
-import { Card } from "../card";
 import { SingleBJActiveGameHands } from "../..";
+import { Card } from "../card";
+import styles from "./single-dealer-card-area.module.css";
 
 interface DealerCardAreaProps {
   hand: SingleBJActiveGameHands["dealer"];

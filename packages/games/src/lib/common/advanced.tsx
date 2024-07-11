@@ -1,7 +1,8 @@
 "use client";
 
-import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import * as React from "react";
+
 import { Accordion, AccordionContent, AccordionItem } from "../ui/accordion";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";

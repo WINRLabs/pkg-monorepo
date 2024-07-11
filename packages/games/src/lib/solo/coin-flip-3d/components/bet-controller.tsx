@@ -1,5 +1,7 @@
+import * as Slider from "@radix-ui/react-slider";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+
 import { Advanced } from "../../../common/advanced";
 import { UnityAudioController } from "../../../common/audio-controller";
 import { UnityBetControllerContainer } from "../../../common/containers";
@@ -16,10 +18,9 @@ import { Button } from "../../../ui/button";
 import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
 import { toDecimals } from "../../../utils/web3";
-import { CoinFlip3dForm } from "../types";
-import * as Slider from "@radix-ui/react-slider";
-import { CoinFlipController } from "./controller";
 import useCoinFlip3dGameStore from "../store";
+import { CoinFlip3dForm } from "../types";
+import { CoinFlipController } from "./controller";
 
 interface Props {
   minWager: number;

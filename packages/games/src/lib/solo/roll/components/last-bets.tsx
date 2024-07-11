@@ -1,9 +1,10 @@
-import { LastBetsContainer } from "../../../common/last-bets-container";
-import { cn } from "../../../utils/style";
-import { FormLabel } from "../../../ui/form";
 import React from "react";
-import { miniDotPosition } from "./dice";
+
+import { LastBetsContainer } from "../../../common/last-bets-container";
+import { FormLabel } from "../../../ui/form";
+import { cn } from "../../../utils/style";
 import useRollGameStore from "../store";
+import { miniDotPosition } from "./dice";
 
 type DiceResultIndex = 0 | 1 | 2 | 3 | 4 | 5;
 

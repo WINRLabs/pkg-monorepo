@@ -1,6 +1,7 @@
-import { DiceForm } from "../types";
 import { useFormContext } from "react-hook-form";
+
 import { cn } from "../../../../lib/utils/style";
+import { IconChevronUp } from "../../../svgs";
 import { Button } from "../../../ui/button";
 import {
   FormControl,
@@ -10,8 +11,8 @@ import {
   FormMessage,
 } from "../../../ui/form";
 import { NumberInput } from "../../../ui/number-input";
-import { IconChevronUp } from "../../../svgs";
 import { useDiceGameStore } from "..";
+import { DiceForm } from "../types";
 
 export interface RangeControllerProps {
   winMultiplier: number;

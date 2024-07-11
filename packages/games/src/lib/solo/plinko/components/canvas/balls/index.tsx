@@ -1,14 +1,15 @@
 import React from "react";
-import styles from "./balls.module.css";
-import { cn } from "../../../../../utils/style";
-import { genNumberArray } from "../../../../../utils/number";
+
 import { useGameSkip } from "../../../../../game-provider";
-import useMediaQuery from "../../../../../hooks/use-media-query";
 import {
   SoundEffects,
   useAudioEffect,
 } from "../../../../../hooks/use-audio-effect";
+import useMediaQuery from "../../../../../hooks/use-media-query";
+import { genNumberArray } from "../../../../../utils/number";
+import { cn } from "../../../../../utils/style";
 import { usePlinkoGameStore } from "../../..";
+import styles from "./balls.module.css";
 
 const initialStyle = {
   transform: `translate(0px, -12px)`,

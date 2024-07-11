@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { RollForm } from "../types";
-import { toDecimals } from "../../../utils/web3";
+
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
@@ -12,15 +13,15 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
+import { PreBetButton } from "../../../common/pre-bet-button";
+import { SkipButton } from "../../../common/skip-button";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+import { Button } from "../../../ui/button";
 import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
-import { Advanced } from "../../../common/advanced";
-import { PreBetButton } from "../../../common/pre-bet-button";
-import { Button } from "../../../ui/button";
-import { AudioController } from "../../../common/audio-controller";
+import { toDecimals } from "../../../utils/web3";
 import useRollGameStore from "../store";
-import { SkipButton } from "../../../common/skip-button";
+import { RollForm } from "../types";
 
 interface Props {
   minWager: number;

@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import useDiceGameStore from "../store";
+
 import { cn } from "../../../../lib/utils/style";
 import {
   Tooltip,
@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../../ui/tooltip";
+import useDiceGameStore from "../store";
 
 export const TextRandomizer = () => {
   const { diceGameResults, currentAnimationCount, gameStatus } =

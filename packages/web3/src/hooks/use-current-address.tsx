@@ -1,10 +1,11 @@
 "use client";
 
-import { useAccount } from "wagmi";
-import { Address } from "viem";
 import { useQuery } from "@tanstack/react-query";
+import React, { createContext, useContext, useState } from "react";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
+
 import { SmartWalletConnectorWagmiType } from "../config/smart-wallet-connectors";
-import React, { createContext, useContext, useMemo, useState } from "react";
 import { SimpleAccountAPI } from "../smart-wallet";
 import { useSmartAccountApi } from "./use-smart-account-api";
 

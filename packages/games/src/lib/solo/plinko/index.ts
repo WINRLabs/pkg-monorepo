@@ -11,7 +11,5 @@ export const Plinko = {
 };
 
 export { default as PlinkoTemplate } from "./components/template";
-
 export * from "./store";
-
 export * from "./types";

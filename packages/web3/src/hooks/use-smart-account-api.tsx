@@ -3,6 +3,8 @@
 import { JSONRPCClient } from "json-rpc-2.0";
 import React from "react";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
+
+import { SmartWalletConnectorWagmiType } from "../config/smart-wallet-connectors";
 import {
   PaymasterAPI,
   PaymasterParams,
@@ -10,7 +12,6 @@ import {
   UserOperation,
 } from "../smart-wallet";
 import { useBundlerClient } from "./use-bundler-client";
-import { SmartWalletConnectorWagmiType } from "../config/smart-wallet-connectors";
 
 class Paymaster implements PaymasterAPI {
   client: JSONRPCClient;

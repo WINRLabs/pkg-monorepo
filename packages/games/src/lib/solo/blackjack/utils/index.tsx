@@ -1,7 +1,8 @@
 import React from "react";
+
 import { CDN_URL } from "../../../constants";
-import { BlackjackGameResult, TIMEOUT } from "..";
 import { wait } from "../../../utils/promise";
+import { BlackjackGameResult, TIMEOUT } from "..";
 
 const BigDiamonds = <img src={`${CDN_URL}/blackjack/suits/big-diamonds.svg`} />;
 const BigClubs = <img src={`${CDN_URL}/blackjack/suits/big-clubs.svg`} />;

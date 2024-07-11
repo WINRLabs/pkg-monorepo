@@ -1,4 +1,7 @@
 import { useFormContext } from "react-hook-form";
+
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
 import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
@@ -7,16 +10,14 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
+import { PreBetButton } from "../../../common/pre-bet-button";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+import { IconMagicStick, IconTrash } from "../../../svgs";
+import { Button } from "../../../ui/button";
 import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
-import { Advanced } from "../../../common/advanced";
-import { PreBetButton } from "../../../common/pre-bet-button";
-import { Button } from "../../../ui/button";
-import { IconMagicStick, IconTrash } from "../../../svgs";
-import { AudioController } from "../../../common/audio-controller";
-import { KenoForm } from "../types";
 import useKenoGameStore from "../store";
+import { KenoForm } from "../types";
 
 type Props = {
   minWager: number;

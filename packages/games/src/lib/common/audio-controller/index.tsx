@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
 import * as Slider from "@radix-ui/react-slider";
-import { useAudioContext } from "../../hooks/use-audio-effect";
+import React from "react";
+
 import { CDN_URL } from "../../constants";
-import { cn } from "../../utils/style";
-import { Button } from "../../ui/button";
+import { useAudioContext } from "../../hooks/use-audio-effect";
 import { useOutsideClick } from "../../hooks/use-outside-click";
+import { Button } from "../../ui/button";
+import { cn } from "../../utils/style";
 
 export const AudioController: React.FC<{
   className?: string;

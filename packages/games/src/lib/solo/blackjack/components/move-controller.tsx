@@ -2,10 +2,10 @@
 
 import React from "react";
 
-import { cn } from "../../../utils/style";
-import { Button } from "../../../ui/button";
-import { ActiveGameHands, GameStruct } from "..";
 import { useGameOptions } from "../../../game-provider";
+import { Button } from "../../../ui/button";
+import { cn } from "../../../utils/style";
+import { ActiveGameHands, GameStruct } from "..";
 
 export interface MoveControllerProps {
   isDistributionCompleted: boolean;

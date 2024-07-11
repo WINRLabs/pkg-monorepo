@@ -1,7 +1,11 @@
 "use client";
+import * as Slider from "@radix-ui/react-slider";
 import * as React from "react";
 import { useFormContext } from "react-hook-form";
-import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+
+import { Advanced } from "../../../common/advanced";
+import { AudioController } from "../../../common/audio-controller";
+import { BetControllerContainer } from "../../../common/containers";
 import {
   BetControllerTitle,
   BetCountFormField,
@@ -9,13 +13,10 @@ import {
   StopLossFormField,
   WagerFormField,
 } from "../../../common/controller";
-import { BetControllerContainer } from "../../../common/containers";
-import { PlinkoForm } from "../types";
 import { PreBetButton } from "../../../common/pre-bet-button";
-import { AudioController } from "../../../common/audio-controller";
 import { SkipButton } from "../../../common/skip-button";
-import { cn } from "../../../utils/style";
-import { toDecimals, toFormatted } from "../../../utils/web3";
+import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+import { Button } from "../../../ui/button";
 import {
   FormControl,
   FormField,
@@ -23,12 +24,12 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../ui/form";
-import { Button } from "../../../ui/button";
-import usePlinkoGameStore from "../store";
-import { Advanced } from "../../../common/advanced";
-import { rowMultipliers } from "../constants";
-import * as Slider from "@radix-ui/react-slider";
 import { INumberInputContext, NumberInput } from "../../../ui/number-input";
+import { cn } from "../../../utils/style";
+import { toDecimals, toFormatted } from "../../../utils/web3";
+import { rowMultipliers } from "../constants";
+import usePlinkoGameStore from "../store";
+import { PlinkoForm } from "../types";
 
 interface Props {
   minWager: number;

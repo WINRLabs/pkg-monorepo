@@ -3,6 +3,7 @@
 import * as Slider from "@radix-ui/react-slider";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+
 import { Advanced } from "../../../common/advanced";
 import { UnityAudioController } from "../../../common/audio-controller";
 import { UnityBetControllerContainer } from "../../../common/containers";
@@ -15,14 +16,14 @@ import {
 } from "../../../common/controller";
 import { PreBetButton } from "../../../common/pre-bet-button";
 import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
+import { Button } from "../../../ui/button";
 import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
 import { toDecimals } from "../../../utils/web3";
 import { rowMultipliers } from "../constants";
+import usePlinko3dGameStore from "../store";
 import { Plinko3dForm } from "../types";
 import PlinkoRow from "./plinko-row";
-import usePlinko3dGameStore from "../store";
-import { Button } from "../../../ui/button";
 
 type Props = {
   minWager: number;

@@ -1,7 +1,8 @@
 import React from "react";
-import useLimboGameStore from "../store";
+
 import { LastBetsContainer } from "../../../common/last-bets-container";
 import { cn } from "../../../utils/style";
+import useLimboGameStore from "../store";
 
 const LastBets = () => {
   const { lastBets } = useLimboGameStore(["lastBets"]);

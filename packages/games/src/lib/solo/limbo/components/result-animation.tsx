@@ -1,7 +1,8 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
+
 import { cn } from "../../../utils/style";
 import useLimboGameStore from "../store";
-import { useFormContext } from "react-hook-form";
 import { LimboForm } from "../types";
 
 const ResultAnimation = () => {

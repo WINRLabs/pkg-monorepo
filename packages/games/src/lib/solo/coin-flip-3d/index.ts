@@ -11,9 +11,6 @@ export const CoinFlip3D = {
 };
 
 export { CoinFlipTemplate as CoinFlip3DTemplate } from "./components/template";
-
-export * from "./store";
-
-export * from "./types";
-
 export * from "./constants";
+export * from "./store";
+export * from "./types";

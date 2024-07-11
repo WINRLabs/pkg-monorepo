@@ -4,7 +4,9 @@
 // paths: number[][]
 // is skipped. is animation skipped
 
+import { useMemo, useReducer } from "react";
 import { useFormContext } from "react-hook-form";
+
 import {
   PlinkoForm,
   PlinkoGameResult,
@@ -12,12 +14,11 @@ import {
   PlinkoResultActions,
   usePlinkoGameStore,
 } from "../..";
-import { useMemo, useReducer } from "react";
-import { DotRows } from "./dot-rows";
-import { Buckets } from "./buckets";
 import { rowMultipliers } from "../../constants";
-import { Balls } from "./balls";
 import { getMultiplierIndex } from "../../utils";
+import { Balls } from "./balls";
+import { Buckets } from "./buckets";
+import { DotRows } from "./dot-rows";
 
 const initialState = { results: [] };
 

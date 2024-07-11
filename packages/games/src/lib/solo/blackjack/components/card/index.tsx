@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import styles from "./card.module.css";
+
+import { CDN_URL } from "../../../../constants";
 import { cn } from "../../../../utils/style";
 import { BlackjackCard, BlackjackSuit, getBlackjackIcon } from "../../utils";
-import { CDN_URL } from "../../../../constants";
+import styles from "./card.module.css";
 
 interface CardProps {
   card: BlackjackCard | null;

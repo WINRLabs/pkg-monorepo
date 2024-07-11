@@ -1,28 +1,29 @@
 "use client";
 
 import React from "react";
+
+import { AudioController } from "../../../common/audio-controller";
 import { Chip } from "../../../common/chip-controller/types";
 import { GameContainer, SceneContainer } from "../../../common/containers";
+import { CDN_URL } from "../../../constants";
+import { useGameOptions } from "../../../game-provider";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { wait } from "../../../utils/promise";
+import { cn } from "../../../utils/style";
 import {
   BlackjackGameProps,
   BlackjackGameStatus,
   BlackjackHandIndex,
   TIMEOUT,
 } from "..";
-import { CDN_URL } from "../../../constants";
-import { BetController } from "./bet-controller";
-import { MoveController } from "./move-controller";
 import { BlackjackCard, distributeNewCards, getBlackjackSuit } from "../utils";
-import styles from "./styles.module.css";
-import { cn } from "../../../utils/style";
-import { DealerCardArea } from "./dealer-card-area";
 import { BetArea } from "./bet-area";
-import { SplittedCardArea } from "./splitted-card-area";
+import { BetController } from "./bet-controller";
 import { CardArea } from "./card-area";
-import { wait } from "../../../utils/promise";
-import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
-import { useGameOptions } from "../../../game-provider";
-import { AudioController } from "../../../common/audio-controller";
+import { DealerCardArea } from "./dealer-card-area";
+import { MoveController } from "./move-controller";
+import { SplittedCardArea } from "./splitted-card-area";
+import styles from "./styles.module.css";
 
 type TemplateOptions = {
   scene?: {

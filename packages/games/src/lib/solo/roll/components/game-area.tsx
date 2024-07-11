@@ -1,13 +1,14 @@
-import { useFormContext } from "react-hook-form";
 import React from "react";
-import { FormField, FormItem, FormMessage } from "../../../ui/form";
-import { cn } from "../../../utils/style";
-import Dice from "./dice";
-import { ALL_DICES } from "../constant";
-import { RollForm, RollGameResult } from "../types";
-import useRollGameStore from "../store";
+import { useFormContext } from "react-hook-form";
+
 import { useGameSkip } from "../../../game-provider";
 import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { FormField, FormItem, FormMessage } from "../../../ui/form";
+import { cn } from "../../../utils/style";
+import { ALL_DICES } from "../constant";
+import useRollGameStore from "../store";
+import { RollForm, RollGameResult } from "../types";
+import Dice from "./dice";
 
 export interface GameAreaProps {
   onAnimationStep?: (step: number) => void;

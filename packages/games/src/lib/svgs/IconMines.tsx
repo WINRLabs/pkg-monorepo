@@ -1,5 +1,5 @@
-import * as React from "react";
 import type { SVGProps } from "react";
+import * as React from "react";
 
 const SvgIconMines = (props: SVGProps<SVGSVGElement>) => (
   <svg

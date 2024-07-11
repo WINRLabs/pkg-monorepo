@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useMemo } from "react";
-import useModalsStore from "./modals.store";
+
 import { LoginModal } from "./login";
+import useModalsStore from "./modals.store";
 
 export const WinrWeb3Modals: React.FC = () => {
   const { modal, props } = useModalsStore();
