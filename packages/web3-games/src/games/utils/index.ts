@@ -85,28 +85,28 @@ export enum DecoderType {
   RockPaperScissors = "rock-paper-scissors",
 }
 
-// export type Item<T> = {
-//   type: string;
-//   data: T;
-// };
+export type Item<T> = {
+  type: string;
+  data: T;
+};
 
-// export type Event = {
-//   context: any;
-//   timestamp: bigint;
-//   type: string;
-//   id: string;
-//   player: string;
-//   program: string;
-// };
+export type Event = {
+  context: any;
+  timestamp: bigint;
+  type: string;
+  id: string;
+  player: string;
+  program: string;
+};
 
-// export type DecodedEvent<T, K> = {
-//   key: Hex;
-//   type: string;
-//   version: number;
-//   timestamp: number;
-//   context: Item<T>[];
-//   program: Item<K>[];
-// };
+export type DecodedEvent<T, K> = {
+  key: Hex;
+  type: string;
+  version: number;
+  timestamp: number;
+  context: Item<T>[];
+  program: Item<K>[];
+};
 
 export interface PrepareGameTransactionParams {
   wager: number;
