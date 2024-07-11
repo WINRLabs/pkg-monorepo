@@ -111,7 +111,7 @@ export default [
       },
       {
         internalType: "address",
-        name: "token",
+        name: "bankroll",
         type: "address",
       },
       {
@@ -440,13 +440,13 @@ export default [
       },
       {
         internalType: "address",
-        name: "token",
+        name: "bankroll",
         type: "address",
       },
       {
-        internalType: "uint128",
+        internalType: "uint256",
         name: "wager",
-        type: "uint128",
+        type: "uint256",
       },
       {
         internalType: "uint64",
@@ -515,13 +515,13 @@ export default [
           },
           {
             internalType: "address",
-            name: "token",
+            name: "bankroll",
             type: "address",
           },
           {
-            internalType: "uint128",
+            internalType: "uint256",
             name: "wager",
-            type: "uint128",
+            type: "uint256",
           },
           {
             internalType: "uint64",
