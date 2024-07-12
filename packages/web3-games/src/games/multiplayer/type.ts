@@ -1,3 +1,5 @@
+import { Address } from "viem";
+
 export type Item<K extends string, T> = {
   type: K;
   data: T;
@@ -8,6 +10,7 @@ export interface GameProgram {
   joinningFinish: number;
   joinningStart: number;
   result: number;
+  angle?: number;
 }
 
 export interface BetProgram {
@@ -59,8 +62,20 @@ export interface MultiplayerGameMessage {
   timestamp: number;
 }
 
+export interface Participant {
+  // hex
+  choice: Address;
+  claimed: boolean;
+  player: string;
+  wager: bigint;
+}
+
+/**
+ * Delievered when the game is active and new participants join(to the user, not broadcasted)
+ */
 export interface MultiplayerUpdateMessage {
   is_active: boolean;
+  participants: Participant[];
   result: {
     joiningFinish: number;
     cooldownFinish: number;

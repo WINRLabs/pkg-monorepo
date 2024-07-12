@@ -32,7 +32,7 @@ const WheelParticipants = () => {
           })}
         />
       </Button>
-      <div className="wr-absolute wr-bottom-0 wr-left-0 wr-flex  wr-w-full wr-gap-2 wr-overflow-scroll wr-scrollbar-none ">
+      <div className="wr-absolute wr-bottom-0 wr-left-0 wr-flex  wr-w-full wr-gap-2 wr-overflow-scroll wr-scrollbar-none wr-z-20">
         <WheelParticipantDetail variant="gray" multiplier="2x" />
         <WheelParticipantDetail variant="blue" multiplier="3x" />
         <WheelParticipantDetail variant="green" multiplier="6x" />

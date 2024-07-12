@@ -4,7 +4,8 @@
   "version": "1.0.3",
   "scripts": {
     "dev": "next dev -p 3001",
-    "start": "next start"
+    "start": "next start",
+    "build": "next build"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.24.1",

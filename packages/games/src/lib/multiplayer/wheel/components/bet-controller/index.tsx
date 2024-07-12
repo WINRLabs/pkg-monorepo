@@ -23,7 +23,7 @@ import {
 import { cn } from "../../../../utils/style";
 import { toDecimals } from "../../../../utils/web3";
 import { MultiplayerGameStatus } from "../../../core/type";
-import { colorMultipliers,WheelColor } from "../../constants";
+import { colorMultipliers, WheelColor } from "../../constants";
 import { useWheelGameStore } from "../../store";
 import { WheelForm } from "../../types";
 
@@ -176,11 +176,12 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
               (timeLeft > 0 &&
                 status === MultiplayerGameStatus.Wait &&
                 isGamblerParticipant) ||
+              isGamblerParticipant ||
               (timeLeft > 0 && status === MultiplayerGameStatus.Finish) ||
               chosenColor === WheelColor.IDLE
             }
           >
-            {timeLeft > 0 && status === MultiplayerGameStatus.Finish
+            {timeLeft >= 0 && status === MultiplayerGameStatus.Finish
               ? `Next game in ${timeLeft} seconds`
               : chosenColor !== WheelColor.IDLE
                 ? "BET"
