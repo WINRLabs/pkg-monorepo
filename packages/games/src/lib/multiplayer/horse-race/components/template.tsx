@@ -14,7 +14,15 @@ import LastBets from "./last-bets";
 import { RacingScene } from "./racing-scene";
 import SelectedHorseDetail from "./selected-horse-detail";
 
+type TemplateOptions = {
+  scene?: {
+    loader?: string;
+    logo?: string;
+  };
+};
+
 type TemplateProps = {
+  options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
   currentAccount: `0x${string}`;
@@ -97,11 +105,13 @@ const HorseRaceTemplate = (props: TemplateProps) => {
               maxWager={props?.maxWager || 2000}
               maxPayout={maxPayout}
               isGamblerParticipant={isGamblerParticipant}
+              logo={props.options.scene?.logo}
             />
             <LastBets />
             <RacingScene
               onComplete={onComplete}
               buildedGameUrl={props.buildedGameUrl}
+              loaderImg={props.options.scene?.loader}
             />
             <div className="wr-absolute wr-top-0 wr-z-10 wr-h-full wr-w-full md:wr-bg-unity-overlay" />
             <SelectedHorseDetail />

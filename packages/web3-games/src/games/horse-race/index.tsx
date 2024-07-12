@@ -12,7 +12,8 @@ import { GAME_HUB_GAMES } from "../utils";
 
 type TemplateOptions = {
   scene?: {
-    backgroundImage?: string;
+    loader?: string;
+    logo?: string;
   };
 };
 

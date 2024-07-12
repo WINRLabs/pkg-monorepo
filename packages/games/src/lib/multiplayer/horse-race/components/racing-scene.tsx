@@ -8,15 +8,21 @@ import { useEqualizeUnitySound } from "../../../hooks/use-unity-sound";
 import { toFormatted } from "../../../utils/web3";
 import { HorseRaceStatus } from "../constants";
 import useHorseRaceGameStore from "../store";
+import { SceneLoader } from "./scene-loader";
 
 const UnityFinalizedEvent = "HR_GameEnd";
 
 interface Props {
   onComplete?: () => void;
   buildedGameUrl: string;
+  loaderImg?: string;
 }
 
-export const RacingScene = ({ onComplete, buildedGameUrl }: Props) => {
+export const RacingScene = ({
+  onComplete,
+  buildedGameUrl,
+  loaderImg,
+}: Props) => {
   const devicePixelRatio = useDevicePixelRatio();
 
   const BUILDED_GAME_URL = `${buildedGameUrl}/builded-games/horse-racing`;
@@ -94,44 +100,10 @@ export const RacingScene = ({ onComplete, buildedGameUrl }: Props) => {
   return (
     <>
       {percentageRef.current !== 100 && (
-        <div className="wr-absolute wr-left-0 wr-top-0 wr-z-[100] wr-flex wr-h-[276px] wr-w-full wr-flex-col wr-items-center wr-justify-center wr-gap-4 md:wr-h-full">
-          <img
-            src={"/images/horse-race/loader.png"}
-            alt="loader"
-            className="wr-absolute wr-left-0 wr-top-0 wr-z-[5] wr-h-full wr-w-full wr-rounded-md"
-          />
-          <span
-            style={{
-              textShadow: "0 0 5px black, 0 0 5px black",
-            }}
-            className="wr-z-50 wr-text-2xl wr-font-bold wr-text-white"
-          >
-            {toFormatted(percentageRef.current, 2)} %
-          </span>
-          <Progress.Root
-            className="wr-radius-[1000px] wr-relative wr-z-50 wr-h-[25px] wr-w-[320px] wr-overflow-hidden wr-rounded-md wr-bg-black"
-            style={{
-              transform: "translateZ(0)",
-            }}
-            value={percentageRef.current}
-          >
-            <Progress.Indicator
-              className="wr-h-full wr-w-full wr-bg-gradient-to-t wr-from-unity-horse-race-blue-400 wr-to-unity-horse-race-blue-600"
-              style={{
-                transform: `translateX(-${100 - percentageRef.current}%)`,
-                transition: "transform 660ms cubic-bezier(0.65, 0, 0.35, 1)",
-              }}
-            />
-          </Progress.Root>
-          <span
-            style={{
-              textShadow: "0 0 5px black, 0 0 5px black",
-            }}
-            className="wr-z-50 wr-text-2xl wr-font-bold wr-text-white"
-          >
-            Horse Race
-          </span>
-        </div>
+        <SceneLoader
+          percentage={percentageRef.current}
+          loaderImage={loaderImg || ""}
+        />
       )}
       <Unity
         unityProvider={unityProvider}

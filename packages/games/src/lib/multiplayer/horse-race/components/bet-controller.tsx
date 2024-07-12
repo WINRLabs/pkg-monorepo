@@ -24,6 +24,7 @@ interface Props {
   maxWager: number;
   maxPayout: number;
   isGamblerParticipant: boolean;
+  logo?: string;
 }
 
 export const HorseRaceBetController: React.FC<Props> = ({
@@ -31,6 +32,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
   maxWager,
   maxPayout,
   isGamblerParticipant,
+  logo,
 }) => {
   const form = useFormContext() as HorseRaceForm;
 
@@ -58,12 +60,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
       <div className="wr-mb-3 wr-flex wr-flex-col">
         <div className="wr-mb-3 wr-hidden md:wr-block">
           <BetControllerTitle>
-            <img
-              src={"/images/horse-race/horse-race-logo.png"}
-              width={140}
-              height={60}
-              alt="game_logo"
-            />
+            {logo && <img src={logo} width={140} height={60} alt="game_logo" />}
           </BetControllerTitle>
         </div>
         <div className="wr-mb-4 wr-flex wr-flex-col wr-gap-3 max-md:wr-mt-[40px]">
