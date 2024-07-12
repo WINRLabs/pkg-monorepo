@@ -439,6 +439,10 @@ const config: Omit<Config, "content"> = {
           "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/plinko/plinko-button-disabled.png)",
         "keno-cell-bg":
           "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/keno/keno-cell-bg.png)",
+        "horse-race-bet-button":
+          "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/horse-race/horse-race-bet-button.svg)",
+        "horse-race-bet-button-bg-disabled":
+          "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/horse-race/horse-race-bet-button-disabled.svg)",
         "card-bg":
           "url(https://jbassets.fra1.digitaloceanspaces.com/winrlabs-games/baccarat/jb-card-bg.svg)",
         "card-bg-black":
