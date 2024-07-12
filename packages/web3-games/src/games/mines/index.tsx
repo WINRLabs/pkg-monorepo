@@ -426,15 +426,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
   return (
     <div>
-      <button onClick={() => setFormSetValue({ key: "minesCount", value: 10 })}>
-        form set value
-      </button>
-      <button onClick={async () => await handleReveal.mutateAsync()}>
-        Reveal cell
-      </button>
-      <button onClick={async () => await handleCashout.mutateAsync()}>
-        cashout
-      </button>
       <MinesTemplate
         {...props}
         onSubmitGameForm={onGameSubmit}
