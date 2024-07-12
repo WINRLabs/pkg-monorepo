@@ -8,7 +8,12 @@ const HorseRacePage = () => {
     <HorseRaceGame
       minWager={0.1}
       maxWager={2000}
-      options={{}}
+      options={{
+        scene: {
+          loader: "/horse-race/loader.png",
+          logo: "/horse-race/horse-race-logo.png",
+        },
+      }}
       buildedGameUrl={process.env.NEXT_PUBLIC_BASE_CDN_URL || ""}
     />
   );
