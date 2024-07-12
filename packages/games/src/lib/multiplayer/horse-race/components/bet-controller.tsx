@@ -54,7 +54,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
   });
 
   return (
-    <UnityBetControllerContainer className="wr-top-[276px] wr-z-[15] wr-h-full wr-w-full md:wr-top-0 md:wr-w-[264px]">
+    <UnityBetControllerContainer className="wr-top-[276px] wr-z-[15] wr-h-full wr-w-full md:wr-top-0 md:!wr-w-[264px]">
       <div className="wr-mb-3 wr-flex wr-flex-col">
         <div className="wr-mb-3 wr-hidden md:wr-block">
           <BetControllerTitle>

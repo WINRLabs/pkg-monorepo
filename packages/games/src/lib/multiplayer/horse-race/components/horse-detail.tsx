@@ -7,19 +7,19 @@ import { HorseRaceMultiplier } from "../constants";
 import useHorseRaceGameStore from "../store";
 
 const color = {
-  gray: " bg-zinc-400/60",
-  yellow: "bg-yellow-600/60",
-  blue: "bg-blue-600/60",
-  green: "bg-green-500/60",
-  red: "bg-red-600/60",
+  gray: " wr-bg-zinc-400/60",
+  yellow: "wr-bg-yellow-600/60",
+  blue: "wr-bg-blue-600/60",
+  green: "wr-bg-green-500/60",
+  red: "wr-bg-red-600/60",
 };
 
 const iconColor = {
-  gray: " text-white ",
-  yellow: "text-yellow-500",
-  blue: "text-blue-500",
-  green: "text-green-500",
-  red: "text-red-600",
+  gray: " wr-text-white ",
+  yellow: "wr-text-yellow-500",
+  blue: "wr-text-blue-500",
+  green: "wr-text-green-500",
+  red: "wr-text-red-600",
 };
 
 interface HorseDetailProps {
