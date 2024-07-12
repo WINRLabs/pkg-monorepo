@@ -51,7 +51,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
     <div className="wr-flex">
       <div
         className={cn(
-          "wr-mr-0.5 wr-flex wr-w-[140px] wr-flex-col wr-justify-between wr-overflow-hidden wr-transition-all wr-duration-300 wr-max-md:hidden",
+          "wr-mr-0.5 wr-hidden md:!wr-flex wr-w-[140px] wr-flex-col wr-justify-between wr-overflow-hidden wr-transition-all wr-duration-300 max-md:wr-hidden",
           {
             "wr-w-0": !isParticipantsOpen,
           }
@@ -169,13 +169,13 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
 
       <div
         className={cn(
-          "wr-flex wr-flex-row wr-items-center wr-gap-1 wr-rounded-md wr-p-2 wr-text-[14px] wr-font-semibold md:wr-w-10 md:wr-flex-col",
+          "wr-flex wr-flex-row wr-h-full wr-items-center wr-gap-1 wr-rounded-md wr-p-2 wr-text-[14px] wr-font-semibold md:wr-w-10 md:wr-flex-col",
           color[variant]
         )}
       >
         <Horse className={cn("wr-h-5 wr-w-5", iconColor[variant])} />
         <div>{multiplier}</div>
-        <Separator className="wr-my-2 wr-max-md:hidden" />
+        <Separator className="wr-my-2 max-md:wr-hidden" />
         <Separator className="wr-mx-2 md:wr-hidden" orientation="vertical" />
         <Avatar />
         <div>{selectedHorse[multiplier].length}</div>
