@@ -20,7 +20,7 @@ interface TemplateWithWeb3Props {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
-
+  buildedGameUrl: string;
   onAnimationCompleted?: (result: []) => void;
 }
 
@@ -70,7 +70,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       <HorseRaceTemplate
         {...props}
         currentAccount={currentAccount as `0x${string}`}
-        buildedGameUrl={""}
+        buildedGameUrl={props.buildedGameUrl}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {
           setFormValues(val);

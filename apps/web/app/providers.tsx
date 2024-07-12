@@ -4,12 +4,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
 import { WagmiProvider } from "wagmi";
 
-import { config } from "./wagmi";
-import { WinrLabsWeb3Provider } from "@winrlabs/web3";
 import { AudioContextProvider } from "@winrlabs/games";
 import { AppUiProviders } from "@winrlabs/ui";
+import { WinrLabsWeb3Provider } from "@winrlabs/web3";
 import { WinrLabsWeb3GamesProvider } from "@winrlabs/web3-games";
 import { Address } from "viem";
+import { config } from "./wagmi";
 
 const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL || "";
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || "";
@@ -41,6 +41,7 @@ export const gameAddresses = {
   videoPoker: process.env.NEXT_PUBLIC_VIDEO_POKER_ADDRESS as Address,
   blackjack: process.env.NEXT_PUBLIC_BLACKJACK_ADDRESS as Address,
   blackjackReader: process.env.NEXT_PUBLIC_BLACKJACK_READER_ADDRESS as Address,
+  horseRace: process.env.NEXT_PUBLIC_HORSE_RACE_ADDRESS as Address,
 };
 
 export function Providers(props: { children: ReactNode }) {
