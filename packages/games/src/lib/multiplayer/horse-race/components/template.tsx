@@ -97,7 +97,7 @@ const HorseRaceTemplate = (props: TemplateProps) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
           <UnityGameContainer
-            className="wr-relative wr-h-[840px] wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 md:wr-h-[640px]"
+            className="wr-relative wr-h-[840px] wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 md:!wr-h-[700px]"
             id="animationScene"
           >
             <HorseRaceBetController
