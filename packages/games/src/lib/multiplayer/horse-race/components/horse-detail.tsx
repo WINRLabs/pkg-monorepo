@@ -1,5 +1,6 @@
 import React from "react";
 
+import { CDN_URL } from "../../../constants";
 import { Avatar, Horse } from "../../../svgs";
 import { Separator } from "../../../ui/separator";
 import { cn } from "../../../utils/style";
@@ -76,7 +77,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
                 <img
                   width={16}
                   height={16}
-                  src="/images/tokens/usdc.png"
+                  src={`${CDN_URL}/tokens/usdc.png`}
                   alt="usdc"
                   className="wr-ml-0.5 wr-shrink-0"
                 />
@@ -103,7 +104,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
                 <img
                   width={16}
                   height={16}
-                  src="/images/tokens/usdc.png"
+                  src={`${CDN_URL}/tokens/usdc.png`}
                   alt="usdc"
                   className="wr-ml-0.5 wr-shrink-0"
                 />
@@ -130,7 +131,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
                 <img
                   width={16}
                   height={16}
-                  src="/images/tokens/usdc.png"
+                  src={`${CDN_URL}/tokens/usdc.png`}
                   alt="usdc"
                   className="wr-ml-0.5 wr-shrink-0"
                 />
@@ -157,7 +158,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
                 <img
                   width={16}
                   height={16}
-                  src="/images/tokens/usdc.png"
+                  src={`${CDN_URL}/tokens/usdc.png`}
                   alt="usdc"
                   className="wr-ml-0.5 wr-shrink-0"
                 />

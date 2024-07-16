@@ -19,6 +19,7 @@ import {
   encodeAbiParameters,
   encodeFunctionData,
   formatUnits,
+  fromHex,
 } from "viem";
 
 import { useListenMultiplayerGameEvent } from "../hooks";
@@ -55,10 +56,8 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     wager: 1,
   });
 
-  const { updateState, setSelectedHorse } = useHorseRaceGameStore([
-    "updateState",
-    "setSelectedHorse",
-  ]);
+  const { updateState, setSelectedHorse, selectedHorse } =
+    useHorseRaceGameStore(["updateState", "setSelectedHorse", "selectedHorse"]);
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.horse_race);
 
@@ -245,25 +244,38 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         winnerHorse: result,
       });
     }
+
     if (bet && bet?.converted.wager && player) {
       const _participantHorse =
         horseRaceParticipantMapWithStore[bet?.choice as unknown as Horse];
 
-      setSelectedHorse(_participantHorse, {
-        bet: bet?.converted.wager,
-        name: player,
-      });
+      const names = selectedHorse[_participantHorse].map((item) => item.name);
+
+      if (!names.includes(player)) {
+        setSelectedHorse(_participantHorse, {
+          bet: bet?.converted.wager,
+          name: player,
+        });
+      }
     }
 
     if (participants?.length > 0 && isGameActive) {
       participants?.forEach((p) => {
         const _participantHorse =
-          horseRaceParticipantMapWithStore[p.choice as unknown as Horse];
+          horseRaceParticipantMapWithStore[
+            fromHex(p.choice, {
+              to: "number",
+            }) as unknown as Horse
+          ];
 
-        setSelectedHorse(_participantHorse, {
-          bet: Number(formatUnits(p.wager, 18)) as number,
-          name: p.player as string,
-        });
+        const names = selectedHorse[_participantHorse].map((item) => item.name);
+
+        if (!names.includes(p.player)) {
+          setSelectedHorse(_participantHorse, {
+            bet: Number(formatUnits(p.wager, 18)) as number,
+            name: p.player as string,
+          });
+        }
       });
     }
   }, [gameEvent, currentAccount.address]);

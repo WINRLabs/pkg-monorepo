@@ -10,7 +10,7 @@ export const SceneLoader = ({
   return (
     <>
       {percentage !== 100 && (
-        <div className="wr-absolute wr-left-0 wr-top-0 wr-z-[5] wr-flex wr-h-full wr-w-full wr-flex-col wr-items-center wr-justify-center wr-gap-4">
+        <div className="wr-absolute wr-left-0 wr-top-0 wr-z-[50] wr-flex wr-h-full wr-w-full wr-flex-col wr-items-center wr-justify-center wr-gap-4">
           <img
             src={loaderImage}
             alt="loader"
