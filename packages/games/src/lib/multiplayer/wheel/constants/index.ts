@@ -84,3 +84,10 @@ export const participantMapWithStore: Record<WheelColor, Multiplier> = {
   [WheelColor.GREEN]: "6x",
   [WheelColor.RED]: "48x",
 };
+
+export const multiplierColors: Record<Multiplier, WheelColor> = {
+  "2x": WheelColor.GREY,
+  "3x": WheelColor.BLUE,
+  "6x": WheelColor.GREEN,
+  "48x": WheelColor.RED,
+};

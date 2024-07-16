@@ -1,5 +1,6 @@
 "use client";
 
+import { useGameControllerGetMultiplayerGameHistory } from "@winrlabs/api";
 import {
   ANGLE_SCALE,
   CoinFlipGameResult,
@@ -18,7 +19,7 @@ import {
   useTokenAllowance,
   useTokenStore,
 } from "@winrlabs/web3";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Address,
   encodeAbiParameters,
@@ -54,7 +55,15 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
   } = useContractConfigContext();
   const selectedToken = useTokenStore((s) => s.selectedToken);
   const selectedTokenAddress = selectedToken.address;
-
+  const { data: betHistory, refetch: refetchBetHistory } =
+    useGameControllerGetMultiplayerGameHistory({
+      queryParams: {
+        game: 3,
+        // TODO: swagger does not include the pagination params. ask be to fix it.
+        // @ts-ignore
+        limit: 2,
+      },
+    });
   const { updateState, setWheelParticipant, setIsGamblerParticipant } =
     useWheelGameStore([
       "updateState",
@@ -64,7 +73,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
 
   const [formValues, setFormValues] = useState<WheelFormFields>({
     color: WheelColor.IDLE,
-    wager: 1,
+    wager: props?.minWager || 2,
   });
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.wheel);
@@ -123,12 +132,15 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
         gameAddresses.wheel,
         encodedParams.tokenAddress,
         uiOperatorAddress as Address,
-        "claim",
+        "bet",
         encodedParams.encodedGameData,
       ],
       address: controllerAddress as Address,
     },
-    options: {},
+    options: {
+      // TODO: consider it. it breaks he caching mechanism and refetch and ignroe the cached op
+      forceRefetch: true,
+    },
     encodedTxData: encodedParams.encodedTxData,
   });
 
@@ -209,15 +221,20 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       if (!handledAllowance) return;
     }
 
+    console.log("CLAIM TX!");
     try {
       await handleClaimTx.mutateAsync();
     } catch (error) {}
+
+    console.log("cLAIM TX SUCCESS, TRYING BET TX");
 
     try {
       await handleTx.mutateAsync();
     } catch (e: any) {
       console.log("error", e);
     }
+
+    console.log("BET TX COMPLETED");
 
     setIsGamblerParticipant(true);
   };
@@ -291,12 +308,26 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     }
   }, [gameEvent, currentAccount.address]);
 
+  useEffect(() => {
+    if (betHistory && betHistory?.length > 0) {
+      updateState({
+        lastBets: betHistory.map(
+          (data) =>
+            participantMapWithStore[data.result as unknown as WheelColor]
+        ),
+      });
+    }
+  }, [betHistory]);
+
   return (
     <WheelTemplate
       {...props}
       onSubmitGameForm={onGameSubmit}
       onFormChange={(val) => {
         setFormValues(val);
+      }}
+      onComplete={() => {
+        refetchBetHistory();
       }}
     />
   );

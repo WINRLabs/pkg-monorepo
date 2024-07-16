@@ -20,7 +20,7 @@ interface WheelGameState {
   joiningFinish: number;
   cooldownFinish: number;
   status: MultiplayerGameStatus;
-  lastBets: number[];
+  lastBets: Multiplier[];
   isParticipantsOpen: boolean;
   wheelParticipants: MultiplierArray;
   winnerAngle: number;
@@ -97,6 +97,5 @@ export const wheelGameStore = create<WheelGameStore>()((set, get) => ({
     })),
 }));
 
-export const useWheelGameStore = createSelectors<WheelGameStore>(
-  wheelGameStore,
-);
+export const useWheelGameStore =
+  createSelectors<WheelGameStore>(wheelGameStore);

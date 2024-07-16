@@ -1,3 +1,5 @@
+"use client";
+
 import { BundlerClientProvider } from "../hooks/use-bundler-client";
 import { CurrentAccountProvider } from "../hooks/use-current-address";
 import { SmartAccountApiProvider } from "../hooks/use-smart-account-api";

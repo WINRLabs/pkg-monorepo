@@ -16,6 +16,8 @@ export interface UseHandleTxOptions {
   errorCb?: (e?: any) => void;
   confirmations?: number;
   showDefaultToasts?: boolean;
+  refetchInterval?: number;
+  forceRefetch?: boolean;
 }
 
 interface UseHandleTxParams<
@@ -83,7 +85,8 @@ export const useHandleTx = <
         isSmartWallet
       ),
     enabled: !!accountApi && isSmartWallet && !!encodedTxData,
-    staleTime: 10000, // Adjust stale time as needed
+    staleTime: 10000,
+    refetchInterval: params.options.refetchInterval || 10000,
   });
 
   const { writeContractAsync } = useWriteContract();
@@ -95,7 +98,7 @@ export const useHandleTx = <
       if (isSmartWallet) {
         let userOp = cachedUserOp;
 
-        if (!userOp) {
+        if (!userOp || options.forceRefetch) {
           userOp = await getCachedSignature(
             writeContractVariables,
             encodedTxData,

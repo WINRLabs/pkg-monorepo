@@ -87,7 +87,6 @@ export const CurrentAccountProvider: React.FC<{
     status,
   ]);
 
-
   const resetCurrentAccount = () => {
     setCurrentAccount(initalState);
   };

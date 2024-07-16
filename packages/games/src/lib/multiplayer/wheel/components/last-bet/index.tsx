@@ -1,44 +1,24 @@
+import { useMemo } from "react";
+
 import { LastBetsContainer } from "../../../../common/last-bets-container";
 import { cn } from "../../../../utils/style";
-import { colorMultipliers, WheelColor } from "../../constants";
+import {
+  colorMultipliers,
+  multiplierColors,
+  WheelColor,
+} from "../../constants";
+import { useWheelGameStore } from "../../store";
 
 const LastBets = () => {
-  // const { data, refetch } = useGetWheelGameHistoryQuery(
-  //   getGraphQLClient(),
-  //   {},
-  //   {
-  //     retry: false,
-  //     refetchOnMount: false,
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
-
-  // React.useEffect(() => {
-  //   isFinished && refetch();
-  // }, [isFinished]);
-
-  // const history = data?.getWheelGameHistory.length
-  //   ? data.getWheelGameHistory
-  //   : [];
-
-  const history = [
-    {
-      color: WheelColor.BLUE,
-      multiplier: 3,
-    },
-    {
-      color: WheelColor.GREEN,
-      multiplier: 6,
-    },
-    {
-      color: WheelColor.RED,
-      multiplier: 48,
-    },
-    {
-      color: WheelColor.GREY,
-      multiplier: 2,
-    },
-  ];
+  const { lastBets } = useWheelGameStore(["lastBets"]);
+  const history = useMemo(
+    () =>
+      lastBets.map((multiplier) => ({
+        color: multiplierColors[multiplier],
+        multiplier,
+      })),
+    [lastBets]
+  );
 
   return (
     <LastBetsContainer className="absolute top-4 h-[28px]">
