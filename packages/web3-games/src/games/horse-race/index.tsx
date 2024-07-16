@@ -4,8 +4,6 @@ import {
   horseRaceParticipantMapWithStore,
   HorseRaceStatus,
   HorseRaceTemplate,
-  MultiplayerGameStatus,
-  participantMapWithStore,
   useHorseRaceGameStore,
 } from "@winrlabs/games";
 import {
@@ -16,7 +14,12 @@ import {
   useTokenStore,
 } from "@winrlabs/web3";
 import { useEffect, useMemo, useState } from "react";
-import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
+import {
+  Address,
+  encodeAbiParameters,
+  encodeFunctionData,
+  formatUnits,
+} from "viem";
 
 import { useListenMultiplayerGameEvent } from "../hooks";
 import { useContractConfigContext } from "../hooks/use-contract-config";
@@ -212,8 +215,6 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
     const currentTime = new Date().getTime() / 1000;
 
-    let status: MultiplayerGameStatus = MultiplayerGameStatus.None;
-
     const {
       cooldownFinish,
       joiningFinish,
@@ -244,25 +245,27 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         winnerHorse: result,
       });
     }
+    if (bet && bet?.converted.wager && player) {
+      const _participantHorse =
+        horseRaceParticipantMapWithStore[bet?.choice as unknown as Horse];
 
-    // if (participants?.length > 0 && isGameActive) {
-    //   participants?.forEach((p) => {
-    //     const _participantHorse =
-    //       horseRaceParticipantMapWithStore[p.selection as unknown as Horse];
+      setSelectedHorse(_participantHorse, {
+        bet: bet?.converted.wager,
+        name: player,
+      });
+    }
 
-    //     setSelectedHorse(_participantHorse, {
-    //       bet: p.amountInUsd,
-    //       name: p.address,
-    //     });
-    //   });
-    // }
+    if (participants?.length > 0 && isGameActive) {
+      participants?.forEach((p) => {
+        const _participantHorse =
+          horseRaceParticipantMapWithStore[p.choice as unknown as Horse];
 
-    // if (bet && bet?.converted?.wager && player) {
-    //   setWheelParticipant(participantMapWithStore[bet.choice] as Multiplier, {
-    //     player: player,
-    //     bet: bet.converted.wager,
-    //   });
-    // }
+        setSelectedHorse(_participantHorse, {
+          bet: Number(formatUnits(p.wager, 18)) as number,
+          name: p.player as string,
+        });
+      });
+    }
   }, [gameEvent, currentAccount.address]);
 
   return (
