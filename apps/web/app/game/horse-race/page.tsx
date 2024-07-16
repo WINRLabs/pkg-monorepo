@@ -1,7 +1,13 @@
 "use client";
 
-import { HorseRaceGame } from "@winrlabs/web3-games";
-import React from "react";
+import dynamic from "next/dynamic";
+
+const HorseRaceGame = dynamic(
+  () => import("@winrlabs/web3-games").then((mod) => mod.HorseRaceGame),
+  {
+    ssr: false,
+  }
+);
 
 const HorseRacePage = () => {
   return (
@@ -14,7 +20,7 @@ const HorseRacePage = () => {
           logo: "/horse-race/horse-race-logo.png",
         },
       }}
-      buildedGameUrl={process.env.NEXT_PUBLIC_BASE_CDN_URL || ""}
+      buildedGameUrl={"https://jbassets.fra1.digitaloceanspaces.com"}
     />
   );
 };

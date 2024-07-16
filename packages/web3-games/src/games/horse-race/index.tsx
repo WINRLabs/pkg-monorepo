@@ -1,6 +1,7 @@
 import {
   Horse,
   HorseRaceFormFields,
+  horseRaceParticipantMapWithStore,
   HorseRaceStatus,
   HorseRaceTemplate,
   MultiplayerGameStatus,
@@ -243,8 +244,6 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         winnerHorse: result,
       });
     }
-
-    console.log("status:", { status });
 
     // if (participants?.length > 0 && isGameActive) {
     //   participants?.forEach((p) => {
