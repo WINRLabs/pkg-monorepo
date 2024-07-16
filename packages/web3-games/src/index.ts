@@ -1,4 +1,6 @@
+export { default as BetHistory } from "./components/bet-history";
 export { default as BaccaratGame } from "./games/baccarat";
+export { default as BlackjackGame } from "./games/blackjack";
 export { default as CoinFlipGame } from "./games/coinflip-2d";
 export { default as CoinFlip3DGame } from "./games/coinflip-3d";
 export { default as DiceGame } from "./games/dice";
@@ -15,5 +17,4 @@ export * from "./games/utils";
 export { default as VideoPokerGame } from "./games/video-poker";
 export { default as WheelGame } from "./games/wheel";
 export { default as WinrBonanzaGame } from "./games/winr-bonanza";
-export { default as BlackjackGame } from "./games/blackjack";
 export * from "./providers";
