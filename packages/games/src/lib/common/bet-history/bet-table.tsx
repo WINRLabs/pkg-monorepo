@@ -49,19 +49,6 @@ const BetTable: React.FC<{
                   ? shorter(bet.username, 2)
                   : bet.username}
               </TableCell>
-              {/*{!isGameHistory && (
-                <TableCell className="text-left">
-                 <div className="flex h-full w-full items-center justify-center gap-2 lg:justify-start">
-                    <Image
-                      width={20}
-                      height={20}
-                      alt={GameMetadata[bet.game as GameType].name}
-                      src={GameMetadata[bet.game as GameType].smallLogo}
-                    />
-                    {!isMobile && GameMetadata[bet.game as GameType].name}
-                  </div> 
-                </TableCell>
-              )}*/}
               <TableCell className="wr-text-center lg:wr-text-left">
                 {bet.playedGameCount}
               </TableCell>
