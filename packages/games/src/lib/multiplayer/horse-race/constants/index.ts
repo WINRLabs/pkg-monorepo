@@ -24,3 +24,15 @@ export enum HorseRaceStatus {
   Race = "Race",
   Started = "Started",
 }
+
+export const horseRaceParticipantMapWithStore: Record<
+  Horse,
+  HorseRaceMultiplier
+> = {
+  [Horse.IDLE]: "2x",
+  [Horse.ONE]: "2x",
+  [Horse.TWO]: "3x",
+  [Horse.THREE]: "8x",
+  [Horse.FOUR]: "15x",
+  [Horse.FIVE]: "60x",
+};
