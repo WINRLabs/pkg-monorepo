@@ -4,8 +4,9 @@ import {
   BaccaratGameResult,
   BaccaratGameSettledResult,
   BaccaratTemplate,
+  GameType,
 } from "@winrlabs/games";
-import { BaccaratGame } from "@winrlabs/web3-games";
+import { BaccaratGame, BetHistory } from "@winrlabs/web3-games";
 import React from "react";
 
 const baccaratResult = {
@@ -43,12 +44,15 @@ export default function BaccaratPage() {
   // }, []);
 
   return (
-    <BaccaratGame
-      minWager={0.1}
-      maxWager={2000}
-      onAnimationCompleted={() => {
-        console.log("animation comp!");
-      }}
-    />
+    <>
+      <BaccaratGame
+        minWager={0.1}
+        maxWager={2000}
+        onAnimationCompleted={() => {
+          console.log("animation comp!");
+        }}
+      />
+      <BetHistory gameType={GameType.BACCARAT} />
+    </>
   );
 }

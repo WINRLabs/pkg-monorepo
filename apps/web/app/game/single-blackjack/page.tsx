@@ -4,9 +4,11 @@ import React from "react";
 import {
   BlackjackGameStatus,
   GameStruct,
+  GameType,
   SingleBJActiveGameHands,
   SingleBlackjackTemplate,
 } from "@winrlabs/games";
+import { BetHistory } from "@winrlabs/web3-games";
 
 const defaultActiveGameHands = {
   dealer: {
@@ -102,23 +104,26 @@ export default function SingleBlackjackPage() {
   }, []);
 
   return (
-    <SingleBlackjackTemplate
-      activeGameData={activeGameData}
-      activeGameHands={activeGameHands}
-      onReset={() => {}}
-      onDeal={() => {}}
-      onDoubleDown={() => {}}
-      onHit={(a) => {
-        console.log(a, "a");
-      }}
-      onInsure={() => {}}
-      onSplit={() => {}}
-      onStand={() => {}}
-      onGameCompleted={() => {}}
-      initialDataFetched={initialDataFetched}
-      options={{}}
-      minWager={2}
-      maxWager={1000}
-    />
+    <>
+      <SingleBlackjackTemplate
+        activeGameData={activeGameData}
+        activeGameHands={activeGameHands}
+        onReset={() => {}}
+        onDeal={() => {}}
+        onDoubleDown={() => {}}
+        onHit={(a) => {
+          console.log(a, "a");
+        }}
+        onInsure={() => {}}
+        onSplit={() => {}}
+        onStand={() => {}}
+        onGameCompleted={() => {}}
+        initialDataFetched={initialDataFetched}
+        options={{}}
+        minWager={2}
+        maxWager={1000}
+      />
+      <BetHistory gameType={GameType.ROULETTE} />
+    </>
   );
 }

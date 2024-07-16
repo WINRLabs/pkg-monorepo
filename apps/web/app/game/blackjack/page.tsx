@@ -5,8 +5,9 @@ import {
   BlackjackGameStatus,
   BlackjackTemplate,
   GameStruct,
+  GameType,
 } from "@winrlabs/games";
-import { BlackjackGame } from "@winrlabs/web3-games";
+import { BetHistory, BlackjackGame } from "@winrlabs/web3-games";
 import React, { useState } from "react";
 
 const defaultActiveGameHands = {
@@ -151,5 +152,10 @@ export default function BlackjackPage() {
   //     setTimeout(() => setInitialDataFetched(false), 500);
   //   }, 2000);
   // }, []);
-  return <BlackjackGame minWager={0.1} maxWager={2000} options={{}} />;
+  return (
+    <>
+      <BlackjackGame minWager={0.1} maxWager={2000} options={{}} />;
+      <BetHistory gameType={GameType.BLACKJACK} />
+    </>
+  );
 }

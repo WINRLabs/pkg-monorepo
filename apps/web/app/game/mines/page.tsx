@@ -1,7 +1,7 @@
 "use client";
 
-import { MinesGameResult, MinesTemplate } from "@winrlabs/games";
-import { MinesGame } from "@winrlabs/web3-games";
+import { GameType, MinesGameResult, MinesTemplate } from "@winrlabs/games";
+import { BetHistory, MinesGame } from "@winrlabs/web3-games";
 import React, { useState } from "react";
 
 const MinesPage = () => {
@@ -16,6 +16,8 @@ const MinesPage = () => {
           console.log("game completed");
         }}
       />
+
+      <BetHistory gameType={GameType.MINES} />
     </div>
   );
 };
