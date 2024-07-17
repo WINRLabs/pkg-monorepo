@@ -40,7 +40,7 @@ const HorseRaceTemplate = (props: TemplateProps) => {
   const formSchema = z.object({
     wager: z
       .number()
-      .min(props?.minWager || 2, {
+      .min(props?.minWager || 1, {
         message: `Minimum wager is ${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
@@ -55,7 +55,7 @@ const HorseRaceTemplate = (props: TemplateProps) => {
     }),
     mode: "all",
     defaultValues: {
-      wager: 2,
+      wager: props?.minWager || 1,
       horse: Horse.IDLE,
     },
   });

@@ -47,7 +47,7 @@ const WheelTemplate = (props: TemplateProps) => {
     }),
     mode: "onSubmit",
     defaultValues: {
-      wager: props.minWager || 2,
+      wager: props?.minWager || 1,
       color: WheelColor.IDLE,
     },
   });
@@ -72,7 +72,7 @@ const WheelTemplate = (props: TemplateProps) => {
         <GameContainer>
           <BetController
             maxWager={props?.maxWager || 2000}
-            minWager={props?.minWager || 2}
+            minWager={props?.minWager || 1}
           />
           <SceneContainer className="wr-h-[640px] max-md:wr-h-[480px] lg:wr-p-[14px]">
             <LastBets />
