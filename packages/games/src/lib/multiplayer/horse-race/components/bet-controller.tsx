@@ -15,6 +15,7 @@ import { Button } from "../../../ui/button";
 import { CountdownProvider, Minutes, Seconds } from "../../../ui/countdown";
 import { FormControl, FormField, FormItem, FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
+import { toFormatted } from "../../../utils/web3";
 import { Horse, HorseRaceStatus } from "../constants";
 import useHorseRaceGameStore from "../store";
 import { HorseRaceForm } from "../types";
@@ -200,7 +201,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
           >
             <WagerCurrencyIcon />
             <span className={cn("wr-font-semibold wr-text-zinc-100")}>
-              ${maxPayout}
+              ${toFormatted(maxPayout, 2)}
             </span>
           </div>
         </div>

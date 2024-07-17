@@ -284,7 +284,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     <div>
       <HorseRaceTemplate
         {...props}
-        currentAccount={currentAccount as `0x${string}`}
+        currentAccount={currentAccount.address as `0x${string}`}
         buildedGameUrl={props.buildedGameUrl}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {

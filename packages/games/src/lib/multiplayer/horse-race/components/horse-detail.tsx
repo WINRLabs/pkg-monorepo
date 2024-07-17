@@ -72,16 +72,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
           </div>
           <div className="wr-flex">
             {getHorseDetail(multiplier, 1)?.bet ? (
-              <>
-                {getHorseDetail(multiplier, 1)?.bet}
-                <img
-                  width={16}
-                  height={16}
-                  src={`${CDN_URL}/tokens/usdc.png`}
-                  alt="usdc"
-                  className="wr-ml-0.5 wr-shrink-0"
-                />
-              </>
+              <>{getHorseDetail(multiplier, 1)?.bet}$</>
             ) : null}
           </div>
         </div>
@@ -99,16 +90,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
           </div>
           <div className="wr-flex">
             {getHorseDetail(multiplier, 2)?.bet ? (
-              <>
-                {getHorseDetail(multiplier, 2)?.bet}
-                <img
-                  width={16}
-                  height={16}
-                  src={`${CDN_URL}/tokens/usdc.png`}
-                  alt="usdc"
-                  className="wr-ml-0.5 wr-shrink-0"
-                />
-              </>
+              <>{getHorseDetail(multiplier, 2)?.bet}$</>
             ) : null}
           </div>
         </div>
@@ -126,16 +108,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
           </div>
           <div className="wr-flex">
             {getHorseDetail(multiplier, 3)?.bet ? (
-              <>
-                {getHorseDetail(multiplier, 3)?.bet}
-                <img
-                  width={16}
-                  height={16}
-                  src={`${CDN_URL}/tokens/usdc.png`}
-                  alt="usdc"
-                  className="wr-ml-0.5 wr-shrink-0"
-                />
-              </>
+              <>{getHorseDetail(multiplier, 3)?.bet}$</>
             ) : null}
           </div>
         </div>
@@ -153,16 +126,7 @@ const HorseDetail: React.FC<HorseDetailProps> = ({ variant, multiplier }) => {
           </div>
           <div className="wr-flex">
             {getHorseDetail(multiplier, 4)?.bet ? (
-              <>
-                {getHorseDetail(multiplier, 4)?.bet}
-                <img
-                  width={16}
-                  height={16}
-                  src={`${CDN_URL}/tokens/usdc.png`}
-                  alt="usdc"
-                  className="wr-ml-0.5 wr-shrink-0"
-                />
-              </>
+              <>{getHorseDetail(multiplier, 4)?.bet}$</>
             ) : null}
           </div>
         </div>
