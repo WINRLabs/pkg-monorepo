@@ -1,5 +1,18 @@
 # @winrlabs/web3-games
 
+## 1.0.0
+
+### Minor Changes
+
+- 308fbee: Bet History
+
+### Patch Changes
+
+- Updated dependencies [308fbee]
+  - @winrlabs/games@2.9.0
+  - @winrlabs/web3@0.1.0
+  - @winrlabs/web3-games@1.0.0
+
 ## 0.0.24
 
 ### Patch Changes

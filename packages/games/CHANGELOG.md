@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.9.0
+
+### Minor Changes
+
+- 308fbee: Bet History
+
 ## 2.5.0
 
 ### Minor Changes
