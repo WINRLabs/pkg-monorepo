@@ -11,12 +11,12 @@ const SelectedHorseDetail = () => {
   ]);
 
   return (
-    <div className="wr-absolute wr-left-3 wr-top-0 wr-z-[15] wr-w-full md:wr-left-[unset] md:wr-right-3.5 md:wr-top-1 md:wr-h-full md:wr-max-w-[250px]">
+    <div className="wr-absolute wr-left-3 wr-top-0 wr-z-[15] wr-w-full md:wr-left-[unset] md:wr-right-3.5 md:wr-top-1 md:!wr-h-full  md:wr-max-w-full">
       <Button
         variant="secondary"
         type="button"
         className={cn(
-          "wr-absolute wr-top-0 wr-h-9 wr-w-9 wr-bg-zinc-100/60 wr-p-0 wr-transition-all wr-duration-200 max-md:wr-hidden",
+          "wr-absolute wr-top-0 wr-h-9 wr-w-9 wr-bg-zinc-100/60 wr-p-0 wr-transition-all wr-duration-200 wr-hidden  md:!wr-grid wr-place-items-center",
           {
             "wr-right-[190px]": isParticipantsOpen,
             "wr-right-[45px]": !isParticipantsOpen,
