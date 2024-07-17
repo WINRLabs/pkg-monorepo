@@ -15,10 +15,15 @@ import {
 import { shorter } from "../../utils/string";
 import { cn } from "../../utils/style";
 import { toDecimals, toFormatted } from "../../utils/web3";
+import { BetHistoryCurrencyList } from ".";
 
-const BetTable: React.FC<{
+const BetTable = ({
+  betHistory,
+  currencyList,
+}: {
   betHistory: GameControllerBetHistoryResponse;
-}> = ({ betHistory }) => {
+  currencyList: BetHistoryCurrencyList;
+}) => {
   return (
     <Table className="max-lg:wr-min-w-[700px] max-md:wr-overflow-scroll max-md:wr-scrollbar-none ">
       <TableHeader>
@@ -79,12 +84,12 @@ const BetTable: React.FC<{
               </TableCell>
               <TableCell>
                 <div className="wr-flex wr-items-center wr-justify-center">
-                  {/* <Image
-                    src={tokenDisplayData[tokenOut as TokenAddress]?.icon}
-                    alt={tokenDisplayData[tokenOut as TokenAddress]?.label}
+                  <img
+                    src={currencyList[bet.token]?.icon}
+                    alt={currencyList[bet.token]?.symbol}
                     width={20}
                     height={20}
-                  /> */}
+                  />
                 </div>
               </TableCell>
               <TableCell className="wr-w-12 wr-text-right">

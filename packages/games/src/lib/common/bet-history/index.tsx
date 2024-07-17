@@ -6,6 +6,14 @@ import { Document, Person } from "../../svgs";
 import { AnimatedTabContent } from "../animated-tab-content";
 import BetTable from "./bet-table";
 
+export type BetHistoryCurrencyList = Record<
+  string,
+  {
+    icon: string;
+    symbol: string;
+  }
+>;
+
 export type BetHistoryType = "bets" | "player";
 
 export type BetHistoryFilter = {
@@ -16,12 +24,14 @@ type BetHistoryTemplateProps = {
   betHistory: GameControllerBetHistoryResponse;
   loading?: boolean;
   onChangeFilter?: (filter: BetHistoryFilter) => void;
+  currencyList: BetHistoryCurrencyList;
 };
 
 export const BetHistoryTemplate = ({
   betHistory,
   onChangeFilter,
   loading,
+  currencyList,
 }: BetHistoryTemplateProps) => {
   const [filter, setFilter] = useState<BetHistoryFilter>({
     type: "bets",
@@ -62,10 +72,10 @@ export const BetHistoryTemplate = ({
 
         {loading && "Loading..."}
         <AnimatedTabContent value="bets">
-          <BetTable betHistory={betHistory} />
+          <BetTable betHistory={betHistory} currencyList={currencyList} />
         </AnimatedTabContent>
         <AnimatedTabContent value="player">
-          <BetTable betHistory={betHistory} />
+          <BetTable betHistory={betHistory} currencyList={currencyList} />
         </AnimatedTabContent>
       </Tabs.Root>
     </div>
