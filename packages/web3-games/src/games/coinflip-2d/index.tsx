@@ -177,29 +177,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedParams.encodedTxData,
   });
 
-  const encodedTxData = useMemo(() => {
-    if (!currentAccount.address) return;
-
-    const encodedData: `0x${string}` = encodeFunctionData({
-      abi: erc20Abi,
-      functionName: "mint" as any,
-      args: [currentAccount.address as `0x${string}`, parseUnits("100", 18)],
-    });
-
-    return encodedData;
-  }, [currentAccount.address]);
-
-  const mintTx = useHandleTx({
-    writeContractVariables: {
-      abi: erc20Abi,
-      address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
-      functionName: "mint" as any,
-      args: [currentAccount.address as `0x${string}`, parseUnits("100", 18)],
-    },
-    encodedTxData: encodedTxData || "0x0",
-    options: {},
-  });
-
   const onGameSubmit = async () => {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -230,17 +207,14 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   }, [gameEvent]);
 
   return (
-    <>
-      <div onClick={() => mintTx.mutateAsync()}>mint</div>
-      <CoinFlipTemplate
-        {...props}
-        isGettingResult={isLoading}
-        onSubmitGameForm={onGameSubmit}
-        gameResults={coinFlipSteps || []}
-        onFormChange={(val) => {
-          setFormValues(val);
-        }}
-      />
-    </>
+    <CoinFlipTemplate
+      {...props}
+      isGettingResult={isLoading}
+      onSubmitGameForm={onGameSubmit}
+      gameResults={coinFlipSteps || []}
+      onFormChange={(val) => {
+        setFormValues(val);
+      }}
+    />
   );
 }
