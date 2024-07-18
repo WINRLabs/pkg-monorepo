@@ -1,0 +1,205 @@
+import * as Slider from "@radix-ui/react-slider";
+import React from "react";
+import { useFormContext } from "react-hook-form";
+
+import { UnityAudioController } from "../../../common/audio-controller";
+import { UnityBetControllerContainer } from "../../../common/containers";
+import {
+  BetControllerTitle,
+  UnityWagerFormField,
+} from "../../../common/controller";
+import { PreBetButton } from "../../../common/pre-bet-button";
+import { WagerCurrencyIcon } from "../../../common/wager";
+import useCountdown from "../../../hooks/use-time-left";
+import { Button } from "../../../ui/button";
+import { CountdownProvider, Minutes, Seconds } from "../../../ui/countdown";
+import {
+  FormControl,
+  FormField,
+  FormLabel,
+  FormMessage,
+} from "../../../ui/form";
+import { NumberInput } from "../../../ui/number-input";
+import { cn } from "../../../utils/style";
+import { toFormatted } from "../../../utils/web3";
+import { MultiplayerGameStatus } from "../../core/type";
+import useHorseRaceGameStore from "../store";
+import { CrashForm } from "../types";
+
+interface CrashBetControllerProps {
+  minWager: number;
+  maxWager: number;
+  isGamblerParticipant: boolean;
+  logo?: string;
+}
+
+export const CrashBetController: React.FC<CrashBetControllerProps> = ({
+  minWager,
+  maxWager,
+}) => {
+  const form: CrashForm = useFormContext();
+  const wager = form.watch("wager");
+  const multiplier = form.watch("multiplier");
+
+  const maxPayout = wager * multiplier;
+
+  const { updateState, startTime, status, finishTime, resetState } =
+    useHorseRaceGameStore([
+      "finishTime",
+      "startTime",
+      "status",
+      "updateState",
+      "resetState",
+    ]);
+
+  // const selectedHorse = form.watch("horse");
+
+  useCountdown(startTime, () => {
+    // updateState({ status: HorseRaceStatus.Race });
+  });
+
+  const finishTimeLeft = useCountdown(finishTime, () => {
+    resetState();
+  });
+
+  return (
+    <UnityBetControllerContainer className="wr-top-[600px] wr-z-[15] wr-w-full md:wr-top-0 md:!wr-w-[264px]">
+      <div className="wr-mb-2">
+        <div className="wr-mb-3 wr-hidden md:!wr-block">
+          <BetControllerTitle>
+            <img
+              src={"/crash/game-logo.svg"}
+              width={140}
+              height={60}
+              alt="game_logo"
+            />
+          </BetControllerTitle>
+        </div>
+
+        <div
+          className={cn(
+            "wr-mb-3 wr-flex wr-flex-col wr-gap-3 wr-font-dewi max-md:wr-absolute max-md:wr-left-2.5 max-md:wr-top-[-590px]",
+            {
+              invisible: status === MultiplayerGameStatus.Finish,
+            }
+          )}
+        >
+          <span className="wr-text-[12px] wr-uppercase wr-text-unity-white-50">
+            Next round in
+          </span>
+
+          {startTime > 0 ? (
+            <CountdownProvider
+              targetDate={new Date(startTime * 1000)?.toISOString()}
+            >
+              <section className="wr-flex wr-items-center wr-gap-2 ">
+                <div className="wr-text-[48px] wr-font-bold wr-leading-[64px] wr-text-white">
+                  <Minutes />
+                </div>
+                <div className="wr-text-[48px] wr-font-bold wr-leading-[64px] wr-text-white">
+                  :
+                </div>
+                <div className="wr-text-[48px] wr-font-bold wr-leading-[64px] wr-text-white">
+                  <Seconds />
+                </div>
+              </section>
+            </CountdownProvider>
+          ) : (
+            <span className="wr-text-[48px] wr-font-bold wr-leading-[64px] wr-text-white">
+              Waiting...
+            </span>
+          )}
+        </div>
+
+        <UnityWagerFormField minWager={minWager} maxWager={maxWager} />
+
+        <FormField
+          control={form.control}
+          name="multiplier"
+          render={({ field }) => (
+            <div className="wr-mb-3 wr-w-full">
+              <FormLabel className="wr-text-unity-white-50">
+                Multiplier
+              </FormLabel>
+              <FormControl className="relative">
+                <>
+                  <NumberInput.Root {...field} isDisabled={false}>
+                    <NumberInput.Container
+                      className={cn(
+                        "wr-rounded-b-none wr-border wr-border-solid wr-border-unity-white-15 wr-bg-unity-white-15 wr-pl-2 wr-backdrop-blur-md",
+                        {
+                          ["wr-border wr-border-solid wr-border-red-600"]:
+                            !!form.formState.errors.multiplier,
+                        }
+                      )}
+                    >
+                      <NumberInput.Input
+                        className={cn(
+                          "wr-rounded-none wr-border-none wr-bg-transparent wr-px-0px-0 py-2 text-base font-semibold leading-5 outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                        )}
+                      />
+                    </NumberInput.Container>
+                  </NumberInput.Root>
+                  <Slider.Root
+                    className={cn(
+                      "wr-relative wr--mt-2 wr-flex wr-w-full wr-touch-none wr-select-none wr-items-center"
+                    )}
+                    value={[field.value]}
+                    min={1.01}
+                    max={100}
+                    step={0.01}
+                    onValueChange={(e) => {
+                      form.setValue("multiplier", e[0]!, {
+                        shouldValidate: true,
+                      });
+                    }}
+                  >
+                    <Slider.Track className="wr-relative wr-h-1 wr-w-full wr-grow wr-overflow-hidden wr-rounded-full wr-rounded-tl-md wr-rounded-tr-md wr-bg-zinc-600">
+                      <Slider.Range className="wr-absolute wr-h-full wr-bg-[#5B6CFF]" />
+                    </Slider.Track>
+                    <Slider.Thumb className="wr-border-primary wr-ring-offset-background wr-focus-visible:ring-ring wr-flex  wr-h-2 wr-w-2 wr-items-center wr-justify-center wr-rounded-full wr-border-2 wr-bg-white wr-text-[12px] wr-font-medium wr-text-zinc-900 wr-transition-colors focus-visible:wr-outline-none focus-visible:wr-ring-2 focus-visible:wr-ring-offset-2 disabled:wr-pointer-events-none disabled:wr-opacity-50" />
+                  </Slider.Root>
+                </>
+              </FormControl>
+              <FormMessage />
+            </div>
+          )}
+        />
+
+        <div className="wr-mb-3 wr-w-full">
+          <FormLabel className="wr-text-unity-white-50">Max Payout</FormLabel>
+          <div
+            className={cn(
+              "wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] ",
+              "wr-border wr-border-solid wr-border-unity-white-15 wr-bg-unity-white-15 wr-backdrop-blur-md"
+            )}
+          >
+            <WagerCurrencyIcon />
+            <span className={cn("wr-font-semibold wr-text-zinc-100")}>
+              ${toFormatted(maxPayout, 2)}
+            </span>
+          </div>
+        </div>
+        <PreBetButton>
+          <Button
+            type="submit"
+            variant={"crash"}
+            className="wr-w-full"
+            size={"xl"}
+            disabled={false}
+          >
+            {form.formState.isSubmitting || form.formState.isLoading
+              ? "Placing bet..."
+              : finishTimeLeft > 0 && status === MultiplayerGameStatus.Finish
+                ? `Next game in ${finishTimeLeft} seconds`
+                : "Place a bet"}
+          </Button>
+        </PreBetButton>
+
+        <footer className="wr-mt-3 wr-flex wr-items-center wr-justify-between max-md:wr-absolute max-md:wr-top-14">
+          <UnityAudioController />
+        </footer>
+      </div>
+    </UnityBetControllerContainer>
+  );
+};

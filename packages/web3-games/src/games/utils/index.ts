@@ -16,7 +16,7 @@ export enum GAME_HUB_GAMES {
   black_jack = "black_jack",
   video_poker = "video_poker",
   wheel = "wheel",
-  moon = "moon",
+  crash = "crash",
   horse_race = "horse-race",
 }
 

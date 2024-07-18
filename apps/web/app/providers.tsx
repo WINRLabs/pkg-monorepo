@@ -42,6 +42,7 @@ export const gameAddresses = {
   blackjack: process.env.NEXT_PUBLIC_BLACKJACK_ADDRESS as Address,
   blackjackReader: process.env.NEXT_PUBLIC_BLACKJACK_READER_ADDRESS as Address,
   horseRace: process.env.NEXT_PUBLIC_HORSE_RACE_ADDRESS as Address,
+  crash: process.env.NEXT_PUBLIC_CRASH_ADDRESS as Address,
 };
 
 export function Providers(props: { children: ReactNode }) {
