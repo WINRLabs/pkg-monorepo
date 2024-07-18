@@ -103,7 +103,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
               <CoinFlip.Game {...props}>
                 <CoinFlip.LastBets />
                 <CoinFlip.Coin {...props} />
-                <div className="wr-hidden lg:wr-block">
+                <div className="wr-hidden lg:wr-flex">
                   <CoinFlip.Controller />
                 </div>
               </CoinFlip.Game>

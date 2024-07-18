@@ -2,6 +2,7 @@ import { GameProvider } from "@winrlabs/games";
 import {
   useBalanceStore,
   useCurrentAccount,
+  usePriceFeed,
   useTokenStore,
 } from "@winrlabs/web3";
 import { Config } from "wagmi";
@@ -33,6 +34,10 @@ export const WinrLabsWeb3GamesProvider = ({
   }));
 
   const { balances } = useBalanceStore();
+  const { getPrice } = usePriceFeed();
+
+  const balance = balances[selectedToken.address] || 0;
+  const balanceAsDollar = balance * getPrice(selectedToken.address);
 
   return (
     <ContractConfigProvider
@@ -48,7 +53,8 @@ export const WinrLabsWeb3GamesProvider = ({
           },
           account: {
             isLoggedIn: !!address,
-            balance: balances[selectedToken.address] || 0,
+            balance,
+            balanceAsDollar,
           },
         }}
       >

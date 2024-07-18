@@ -19,7 +19,7 @@ export const usePriceFeed = () => {
     const payload: Record<Address, number> = {};
 
     tokens.forEach((t) => {
-      payload[t.address] = 1;
+      payload[t.address] = 3500;
     });
 
     setPriceFeed(payload);

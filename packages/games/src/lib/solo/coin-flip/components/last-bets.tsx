@@ -24,7 +24,7 @@ const LastBet = ({ result }: { result: CoinFlipGameResult }) => {
           src={`${CDN_URL}/coin-flip-2d/btc.png`}
           width={20}
           height={20}
-          alt="sol_icon"
+          alt="btc_icon"
         />
       )}
       <div className="wr-ml-1 wr-text-zinc-100">

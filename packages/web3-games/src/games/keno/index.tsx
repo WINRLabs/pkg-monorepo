@@ -57,7 +57,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [kenoResult, setKenoResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent<number[]>>>();
@@ -126,7 +126,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.keno as Address,
-        "0x0000000000000000000000000000000000000002",
+        "0x0000000000000000000000000000000000000004",
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -145,6 +145,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
     formValues.stopLoss,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
@@ -153,7 +154,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.keno,
-        "0x0000000000000000000000000000000000000002",
+        "0x0000000000000000000000000000000000000004",
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

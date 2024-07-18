@@ -141,7 +141,7 @@ importers:
     dependencies:
       '@openapi-codegen/cli':
         specifier: ^2.0.2
-        version: 2.0.2(@types/react@18.3.1)(react@18.3.1)
+        version: 2.0.2(react@18.3.1)
       '@openapi-codegen/typescript':
         specifier: ^8.0.2
         version: 8.0.2
@@ -151,11 +151,8 @@ importers:
       '@types/node':
         specifier: ^20.10.6
         version: 20.12.10
-      '@types/react':
-        specifier: ^18.2.46
-        version: 18.3.1
       react:
-        specifier: ^18.2.0
+        specifier: '>=18.2.0'
         version: 18.3.1
     devDependencies:
       '@winrlabs/eslint-config':
@@ -752,7 +749,7 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  /@apollo/client@3.10.8(@types/react@18.3.1)(graphql@15.9.0)(react@18.3.1):
+  /@apollo/client@3.10.8(graphql@15.9.0)(react@18.3.1):
     resolution: {integrity: sha512-UaaFEitRrPRWV836wY2L7bd3HRCfbMie1jlYMcmazFAK23MVhz/Uq7VG1nwbotPb5xzFsw5RF4Wnp2G3dWPM3g==}
     peerDependencies:
       graphql: ^15.0.0 || ^16.0.0
@@ -780,7 +777,7 @@ packages:
       optimism: 0.18.0
       prop-types: 15.8.1
       react: 18.3.1
-      rehackt: 0.1.0(@types/react@18.3.1)(react@18.3.1)
+      rehackt: 0.1.0(react@18.3.1)
       response-iterator: 0.2.6
       symbol-observable: 4.0.0
       ts-invariant: 0.10.3
@@ -3941,11 +3938,11 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
-  /@openapi-codegen/cli@2.0.2(@types/react@18.3.1)(react@18.3.1):
+  /@openapi-codegen/cli@2.0.2(react@18.3.1):
     resolution: {integrity: sha512-uBk6yOBSBIgGWA2ok/IjBS03UwVAIpnan0lKz2sk3tsSe8rVIjOnQPxGYvSuByfxzdIu+nrPom2meqtcjlMvDQ==}
     hasBin: true
     dependencies:
-      '@apollo/client': 3.10.8(@types/react@18.3.1)(graphql@15.9.0)(react@18.3.1)
+      '@apollo/client': 3.10.8(graphql@15.9.0)(react@18.3.1)
       '@swc/core': 1.6.13
       case: 1.6.3
       chalk: 5.3.0
@@ -3955,7 +3952,7 @@ packages:
       got: 12.6.1
       got-fetch: 5.1.10(got@12.6.1)
       graphql: 15.9.0
-      ink: 3.2.0(@types/react@18.3.1)(react@18.3.1)
+      ink: 3.2.0(react@18.3.1)
       js-yaml: 4.1.0
       openapi3-ts: 2.0.2
       prettier: 3.2.5
@@ -12120,7 +12117,7 @@ packages:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
     dev: true
 
-  /ink@3.2.0(@types/react@18.3.1)(react@18.3.1):
+  /ink@3.2.0(react@18.3.1):
     resolution: {integrity: sha512-firNp1q3xxTzoItj/eOOSZQnYSlyrWks5llCTVX37nJ59K3eXbQ8PtzCguqo8YI19EELo5QxaKnJd4VxzhU8tg==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -12130,7 +12127,6 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.3.1
       ansi-escapes: 4.3.2
       auto-bind: 4.0.0
       chalk: 4.1.2
@@ -16761,7 +16757,7 @@ packages:
     dependencies:
       jsesc: 0.5.0
 
-  /rehackt@0.1.0(@types/react@18.3.1)(react@18.3.1):
+  /rehackt@0.1.0(react@18.3.1):
     resolution: {integrity: sha512-7kRDOuLHB87D/JESKxQoRwv4DzbIdwkAGQ7p6QKGdVlY1IZheUnVhlk/4UZlNUVxdAXpyxikE3URsG067ybVzw==}
     peerDependencies:
       '@types/react': '*'
@@ -16772,7 +16768,6 @@ packages:
       react:
         optional: true
     dependencies:
-      '@types/react': 18.3.1
       react: 18.3.1
     dev: false
 

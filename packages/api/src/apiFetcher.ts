@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-nocheck
+
 import { ApiContext } from "./apiContext";
 
 const baseUrl = "https://gateway-dev.winr.games"; // TODO add your baseUrl

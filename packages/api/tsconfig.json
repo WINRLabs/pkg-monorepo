@@ -1,9 +1,13 @@
 {
-  "extends": "@winrlabs/typescript-config/base.json",
+  "extends": "@winrlabs/typescript-config/react-library.json",
   "compilerOptions": {
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
     "module": "esnext",
     "moduleResolution": "bundler"
   },
-  "include": ["./**/*.ts", "openapi-codegen.config.ts"],
+  "include": [".", "declaration.d.ts", "jest.config.cjs"],
   "exclude": ["node_modules", "dist"]
 }
