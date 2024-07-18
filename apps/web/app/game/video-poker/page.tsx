@@ -7,7 +7,7 @@ export default function VideoPokerPage() {
   return (
     <>
       <VideoPokerGame minWager={0.1} maxWager={2000} />;
-      <BetHistory gameType={GameType.ROULETTE} />
+      <BetHistory gameType={GameType.VIDEO_POKER} />
     </>
   );
 }

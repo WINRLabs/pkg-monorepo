@@ -16,7 +16,7 @@ const RollPage = () => {
         minWager={0.1}
         maxWager={2000}
       />
-      {/* <BetHistory gameType={GameType.DICE} /> */}
+      <BetHistory gameType={GameType.DICE} />
     </>
   );
 };

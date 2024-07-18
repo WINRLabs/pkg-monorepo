@@ -123,7 +123,7 @@ export default function SingleBlackjackPage() {
         minWager={2}
         maxWager={1000}
       />
-      <BetHistory gameType={GameType.ROULETTE} />
+      <BetHistory gameType={GameType.BLACKJACK} />
     </>
   );
 }
