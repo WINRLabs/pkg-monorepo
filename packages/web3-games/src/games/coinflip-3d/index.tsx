@@ -58,7 +58,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
     coinSide: COIN_SIDE.ETH,
     stopGain: 0,
     stopLoss: 0,
-    wager: 1,
+    wager: props.minWager || 1,
   });
 
   const gameEvent = useListenGameEvent();
@@ -66,7 +66,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent>>();
@@ -151,6 +151,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
     formValues.stopLoss,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({

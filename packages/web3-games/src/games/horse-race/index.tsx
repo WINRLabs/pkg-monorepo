@@ -10,6 +10,7 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  usePriceFeed,
   useTokenAllowance,
   useTokenStore,
 } from "@winrlabs/web3";
@@ -53,7 +54,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
   const [formValues, setFormValues] = useState<HorseRaceFormFields>({
     horse: Horse.IDLE,
-    wager: 1,
+    wager: props.minWager || 1,
   });
 
   const { updateState, setSelectedHorse, selectedHorse } =
@@ -73,13 +74,15 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     showDefaultToasts: false,
   });
 
+  const { priceFeed, getPrice } = usePriceFeed();
+
   const encodedParams = useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
-      wager: formValues?.wager || 0,
+      wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: "0x0000000000000000000000000000000000000004",
-      lastPrice: 1,
+      lastPrice: getPrice(selectedToken.address),
     });
 
     const encodedGameData = encodeAbiParameters(
@@ -107,7 +110,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues?.horse, formValues?.wager]);
+  }, [formValues?.horse, formValues?.wager, priceFeed[selectedToken.address]]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {

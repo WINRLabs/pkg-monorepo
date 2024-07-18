@@ -13,9 +13,15 @@ import {
   usePriceFeed,
   useTokenAllowance,
   useTokenStore,
+  erc20Abi,
 } from "@winrlabs/web3";
 import React, { useMemo, useState } from "react";
-import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
+import {
+  Address,
+  encodeAbiParameters,
+  encodeFunctionData,
+  parseUnits,
+} from "viem";
 
 import { useContractConfigContext } from "../hooks/use-contract-config";
 import { useListenGameEvent } from "../hooks/use-listen-game-event";
@@ -57,7 +63,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     coinSide: CoinSide.HEADS,
     stopGain: 0,
     stopLoss: 0,
-    wager: 1,
+    wager: props.minWager || 1,
   });
 
   const gameEvent = useListenGameEvent();
@@ -66,7 +72,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     selectedToken: s.selectedToken,
   }));
 
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent>>();
@@ -151,6 +157,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     formValues.stopLoss,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
@@ -168,6 +175,29 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     },
     options: {},
     encodedTxData: encodedParams.encodedTxData,
+  });
+
+  const encodedTxData = useMemo(() => {
+    if (!currentAccount.address) return;
+
+    const encodedData: `0x${string}` = encodeFunctionData({
+      abi: erc20Abi,
+      functionName: "mint" as any,
+      args: [currentAccount.address as `0x${string}`, parseUnits("100", 18)],
+    });
+
+    return encodedData;
+  }, [currentAccount.address]);
+
+  const mintTx = useHandleTx({
+    writeContractVariables: {
+      abi: erc20Abi,
+      address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+      functionName: "mint" as any,
+      args: [currentAccount.address as `0x${string}`, parseUnits("100", 18)],
+    },
+    encodedTxData: encodedTxData || "0x0",
+    options: {},
   });
 
   const onGameSubmit = async () => {
@@ -200,14 +230,17 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   }, [gameEvent]);
 
   return (
-    <CoinFlipTemplate
-      {...props}
-      isGettingResult={isLoading}
-      onSubmitGameForm={onGameSubmit}
-      gameResults={coinFlipSteps || []}
-      onFormChange={(val) => {
-        setFormValues(val);
-      }}
-    />
+    <>
+      <div onClick={() => mintTx.mutateAsync()}>mint</div>
+      <CoinFlipTemplate
+        {...props}
+        isGettingResult={isLoading}
+        onSubmitGameForm={onGameSubmit}
+        gameResults={coinFlipSteps || []}
+        onFormChange={(val) => {
+          setFormValues(val);
+        }}
+      />
+    </>
   );
 }

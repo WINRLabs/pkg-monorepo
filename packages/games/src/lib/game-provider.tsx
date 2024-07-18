@@ -11,6 +11,7 @@ interface Currency {
 interface Account {
   isLoggedIn?: boolean;
   balance: number;
+  balanceAsDollar: number;
 }
 
 interface Defaults {

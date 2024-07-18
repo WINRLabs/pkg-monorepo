@@ -55,7 +55,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     wagmiConfig,
   } = useContractConfigContext();
 
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const selectedTokenAddress = useTokenStore((s) => s.selectedToken);
 
@@ -64,7 +64,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const [revealCells, setRevealCells] = useState<boolean[]>([]);
 
   const [formValues, setFormValues] = useState<MinesFormField>({
-    wager: 1,
+    wager: props?.minWager || 1,
     minesCount: 1,
     selectedCells: [],
   });
@@ -211,6 +211,8 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     formValues.wager,
     submitType,
     revealCells,
+    selectedTokenAddress.address,
+    priceFeed[selectedTokenAddress.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({

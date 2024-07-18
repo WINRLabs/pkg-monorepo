@@ -95,7 +95,7 @@ export default function BlackjackTemplateWithWeb3(
 
   const gameEvent = useListenGameEvent();
 
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<BlackjackFormFields>({
@@ -190,6 +190,7 @@ export default function BlackjackTemplateWithWeb3(
     formValues.thirdHandWager,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const encodedHitParams = React.useMemo(() => {

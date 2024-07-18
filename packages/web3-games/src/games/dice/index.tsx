@@ -56,7 +56,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     betCount: 1,
     stopGain: 0,
     stopLoss: 0,
-    wager: 1,
+    wager: props?.minWager || 1,
     rollValue: 50,
     rollType: "OVER",
     winChance: 50,
@@ -67,7 +67,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [diceResult, setDiceResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent>>();
@@ -152,7 +152,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues, selectedToken.address]);
+  }, [formValues, selectedToken.address, priceFeed[selectedToken.address]]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {

@@ -16,6 +16,7 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  usePriceFeed,
   useTokenAllowance,
   useTokenStore,
 } from "@winrlabs/web3";
@@ -73,12 +74,13 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
 
   const [formValues, setFormValues] = useState<WheelFormFields>({
     color: WheelColor.IDLE,
-    wager: props?.minWager || 2,
+    wager: props?.minWager || 1,
   });
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.wheel);
 
   const currentAccount = useCurrentAccount();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,
@@ -94,7 +96,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: "0x0000000000000000000000000000000000000004",
-      lastPrice: 1,
+      lastPrice: getPrice(selectedToken.address),
     });
 
     const encodedGameData = encodeAbiParameters(
@@ -122,7 +124,12 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues.color, formValues.wager]);
+  }, [
+    formValues.color,
+    formValues.wager,
+    selectedToken.address,
+    priceFeed[selectedToken.address],
+  ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {

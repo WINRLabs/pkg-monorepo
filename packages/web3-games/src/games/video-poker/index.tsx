@@ -39,7 +39,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   } = useContractConfigContext();
 
   const [formValues, setFormValues] = React.useState<VideoPokerFormFields>({
-    wager: props.minWager || 1,
+    wager: props?.minWager || 1,
     cardsToSend: [0, 0, 0, 0, 0],
   });
   const [settledCards, setSettledCards] = React.useState<{
@@ -54,7 +54,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,
@@ -95,7 +95,11 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues.wager, selectedToken.address]);
+  }, [
+    formValues.wager,
+    selectedToken.address,
+    priceFeed[selectedToken.address],
+  ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {

@@ -57,7 +57,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     betCount: 1,
     stopGain: 0,
     stopLoss: 0,
-    wager: 1,
+    wager: props.minWager || 1,
     plinkoSize: 10,
   });
 
@@ -66,7 +66,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [plinkoResult, setPlinkoResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent<number[]>>>();
@@ -151,6 +151,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     formValues.stopLoss,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({

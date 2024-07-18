@@ -68,8 +68,8 @@ export const CoinFlipController = () => {
                         )}
                       >
                         {field.value === CoinSide.HEADS
-                          ? `+$${toFormatted(wager * WIN_MULTIPLIER, 2)}`
-                          : `-$${toFormatted(wager, 2)}`}
+                          ? `+$${toFormatted(wager * WIN_MULTIPLIER, 3)}`
+                          : `-$${toFormatted(wager, 3)}`}
                       </span>
                     </>
                   </FormControl>
@@ -109,8 +109,8 @@ export const CoinFlipController = () => {
                       )}
                     >
                       {field.value === CoinSide.TAILS
-                        ? `+$${toFormatted(wager * WIN_MULTIPLIER, 2)}`
-                        : `-$${toFormatted(wager, 2)}`}
+                        ? `+$${toFormatted(wager * WIN_MULTIPLIER, 3)}`
+                        : `-$${toFormatted(wager, 3)}`}
                     </span>
                   </>
                 </FormItem>

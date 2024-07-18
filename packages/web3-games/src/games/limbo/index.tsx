@@ -54,7 +54,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     limboMultiplier: 1,
     stopGain: 0,
     stopLoss: 0,
-    wager: 1,
+    wager: props?.minWager || 1,
   });
 
   const gameEvent = useListenGameEvent();
@@ -62,7 +62,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [limboResult, setLimboResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent>>();
@@ -147,6 +147,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     formValues.stopLoss,
     formValues.wager,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({

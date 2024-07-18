@@ -56,7 +56,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { getPrice } = usePriceFeed();
+  const { priceFeed, getPrice } = usePriceFeed();
 
   const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] =
@@ -75,11 +75,6 @@ export default function WinrBonanzaTemplateWithWeb3({
   });
 
   const encodedParams = React.useMemo(() => {
-    console.log(
-      formValues.actualBetAmount,
-      formValues.isDoubleChance,
-      "form fields"
-    );
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.actualBetAmount,
       selectedCurrency: selectedToken.address,
@@ -115,6 +110,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     formValues.isDoubleChance,
     formValues.actualBetAmount,
     selectedToken.address,
+    priceFeed[selectedToken.address],
   ]);
 
   const encodedBuyFreeSpinParams = React.useMemo(() => {
@@ -146,7 +142,11 @@ export default function WinrBonanzaTemplateWithWeb3({
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues.betAmount, selectedToken.address]);
+  }, [
+    formValues.betAmount,
+    selectedToken.address,
+    priceFeed[selectedToken.address],
+  ]);
 
   const encodedFreeSpinParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
