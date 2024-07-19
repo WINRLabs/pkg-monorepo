@@ -1,5 +1,5 @@
 "use client";
-import { HorseRaceStatus, useCrashGameStore } from "@winrlabs/games";
+import { useCrashGameStore } from "@winrlabs/games";
 import { CrashFormFields, CrashTemplate } from "@winrlabs/games/src";
 import {
   controllerAbi,
@@ -214,19 +214,19 @@ const CrashGame = (props: CrashTemplateProps) => {
     const shouldWait =
       currentTime <= joiningFinish && currentTime >= joiningStart;
 
-    if (shouldWait) {
-      updateState({
-        startTime: joiningFinish,
-        finishTime: cooldownFinish,
-        status: HorseRaceStatus.Started,
-      });
-    }
-    if (isGameFinished) {
-      updateState({
-        status: HorseRaceStatus.Finished,
-        winnerHorse: result,
-      });
-    }
+    // if (shouldWait) {
+    //   updateState({
+    //     startTime: joiningFinish,
+    //     finishTime: cooldownFinish,
+    //     status: MultiplayerGameStatus.,
+    //   });
+    // }
+    // if (isGameFinished) {
+    //   updateState({
+    //     status: HorseRaceStatus.Finished,
+    //     winnerHorse: result,
+    //   });
+    // }
 
     // if (bet && bet?.converted.wager && player) {
     //   const _participantHorse =
