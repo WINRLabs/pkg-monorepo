@@ -1,6 +1,6 @@
 "use client";
 import { useCrashGameStore } from "@winrlabs/games";
-import { CrashFormFields, CrashTemplate } from "@winrlabs/games/src";
+import { CrashFormFields, CrashTemplate } from "@winrlabs/games";
 import {
   controllerAbi,
   useCurrentAccount,
