@@ -21,7 +21,7 @@ export type CrashGameActions = {
 
 export type CrashGameStore = CrashGameState & CrashGameActions;
 
-export const horseRaceGameStore = create<CrashGameStore>()((set) => ({
+export const crashGameStore = create<CrashGameStore>()((set) => ({
   status: MultiplayerGameStatus.None,
   finishTime: 0,
   startTime: 0,
@@ -42,7 +42,7 @@ export const horseRaceGameStore = create<CrashGameStore>()((set) => ({
 }));
 
 export const useCrashGameStore = <T extends keyof CrashGameStore>(keys: T[]) =>
-  horseRaceGameStore((state) => {
+  crashGameStore((state) => {
     const x = keys.reduce((acc, cur) => {
       acc[cur] = state[cur];
 

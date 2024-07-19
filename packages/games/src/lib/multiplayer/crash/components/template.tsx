@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import debounce from "debounce";
 import React from "react";
@@ -8,9 +10,6 @@ import { UnityGameContainer } from "../../../common/containers";
 import { Form } from "../../../ui/form";
 import { CrashFormFields } from "../types";
 import { CrashBetController } from "./bet-controller";
-import { CrashScene } from "./crash-scene";
-import LastBets from "./last-bets";
-import CrashParticipant from "./participants";
 
 type TemplateOptions = {
   scene?: {
@@ -23,11 +22,9 @@ type TemplateProps = {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
-  currentAccount: `0x${string}`;
   onSubmitGameForm: (props: CrashFormFields) => void;
   onFormChange?: (fields: CrashFormFields) => void;
   onComplete?: () => void;
-  buildedGameUrl: string;
 };
 
 const CrashTemplate = (props: TemplateProps) => {
@@ -80,12 +77,11 @@ const CrashTemplate = (props: TemplateProps) => {
               minWager={props?.minWager || 2}
               maxWager={props?.maxWager || 2000}
               isGamblerParticipant={false}
-              logo={props.options.scene?.logo}
             />
-            <LastBets />
-            <CrashScene onComplete={onComplete} />
+            {/* <LastBets /> */}
+            {/* <CrashScene onComplete={onComplete} /> */}
             <div className="wr-absolute wr-top-0 wr-z-10 wr-h-full wr-w-full md:wr-bg-unity-overlay" />
-            <CrashParticipant />
+            {/* <CrashParticipant /> */}
           </UnityGameContainer>
         </form>
       </Form>

@@ -1,5 +1,7 @@
 "use client";
 
+import { GameType } from "@winrlabs/games";
+import { BetHistory } from "@winrlabs/web3-games";
 import dynamic from "next/dynamic";
 
 const CrashGame = dynamic(
@@ -11,17 +13,10 @@ const CrashGame = dynamic(
 
 const CrashPage = () => {
   return (
-    <CrashGame
-      minWager={2}
-      maxWager={2000}
-      options={{
-        scene: {
-          loader: "/horse-race/loader.png",
-          logo: "/horse-race/horse-race-logo.png",
-        },
-      }}
-      buildedGameUrl={"https://jbassets.fra1.digitaloceanspaces.com"}
-    />
+    <>
+      <CrashGame minWager={2} maxWager={2000} />
+      <BetHistory gameType={GameType.MOON} />
+    </>
   );
 };
 

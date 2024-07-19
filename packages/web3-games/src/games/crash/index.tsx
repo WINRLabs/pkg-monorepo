@@ -1,4 +1,5 @@
-import { HorseRaceStatus, useHorseRaceGameStore } from "@winrlabs/games";
+"use client";
+import { HorseRaceStatus, useCrashGameStore } from "@winrlabs/games";
 import { CrashFormFields, CrashTemplate } from "@winrlabs/games/src";
 import {
   controllerAbi,
@@ -27,10 +28,9 @@ type TemplateOptions = {
 };
 
 interface CrashTemplateProps {
-  options: TemplateOptions;
+  options?: TemplateOptions;
   minWager?: number;
   maxWager?: number;
-  buildedGameUrl: string;
   onAnimationCompleted?: (result: []) => void;
 }
 
@@ -50,7 +50,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     wager: 1,
   });
 
-  const { updateState } = useHorseRaceGameStore(["updateState"]);
+  const { updateState } = useCrashGameStore(["updateState"]);
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.crash);
 
@@ -267,8 +267,11 @@ const CrashGame = (props: CrashTemplateProps) => {
     <div>
       <CrashTemplate
         {...props}
-        currentAccount={currentAccount.address as `0x${string}`}
-        buildedGameUrl={props.buildedGameUrl}
+        options={{
+          scene: {
+            logo: "/crash/game-logo.svg",
+          },
+        }}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {
           setFormValues(val);

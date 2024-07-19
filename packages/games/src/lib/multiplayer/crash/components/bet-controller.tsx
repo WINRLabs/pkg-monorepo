@@ -23,14 +23,13 @@ import { NumberInput } from "../../../ui/number-input";
 import { cn } from "../../../utils/style";
 import { toFormatted } from "../../../utils/web3";
 import { MultiplayerGameStatus } from "../../core/type";
-import useHorseRaceGameStore from "../store";
+import { useCrashGameStore } from "../store";
 import { CrashForm } from "../types";
 
 interface CrashBetControllerProps {
   minWager: number;
   maxWager: number;
   isGamblerParticipant: boolean;
-  logo?: string;
 }
 
 export const CrashBetController: React.FC<CrashBetControllerProps> = ({
@@ -44,15 +43,13 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
   const maxPayout = wager * multiplier;
 
   const { updateState, startTime, status, finishTime, resetState } =
-    useHorseRaceGameStore([
+    useCrashGameStore([
       "finishTime",
       "startTime",
       "status",
       "updateState",
       "resetState",
     ]);
-
-  // const selectedHorse = form.watch("horse");
 
   useCountdown(startTime, () => {
     // updateState({ status: HorseRaceStatus.Race });
@@ -186,7 +183,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
             variant={"crash"}
             className="wr-w-full"
             size={"xl"}
-            disabled={false}
+            disabled={form.formState.isSubmitting || form.formState.isLoading}
           >
             {form.formState.isSubmitting || form.formState.isLoading
               ? "Placing bet..."
