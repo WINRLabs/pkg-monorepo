@@ -10,6 +10,9 @@ import { UnityGameContainer } from "../../../common/containers";
 import { Form } from "../../../ui/form";
 import { CrashFormFields } from "../types";
 import { CrashBetController } from "./bet-controller";
+import { CrashScene } from "./crash-scene";
+import LastBets from "./last-bets";
+import CrashParticipant from "./participants";
 
 type TemplateOptions = {
   scene?: {
@@ -78,10 +81,10 @@ const CrashTemplate = (props: TemplateProps) => {
               maxWager={props?.maxWager || 2000}
               isGamblerParticipant={false}
             />
-            {/* <LastBets /> */}
-            {/* <CrashScene onComplete={onComplete} /> */}
+            <LastBets />
+            <CrashScene onComplete={onComplete} />
             <div className="wr-absolute wr-top-0 wr-z-10 wr-h-full wr-w-full md:wr-bg-unity-overlay" />
-            {/* <CrashParticipant /> */}
+            <CrashParticipant />
           </UnityGameContainer>
         </form>
       </Form>
