@@ -27,7 +27,7 @@ const buttonVariants = cva(
         "horse-race":
           "wr-bg-horse-race-bet-button wr-bg-cover md:bg-[size:wr-100%] wr-bg-no-repeat wr-font-barlowCondensed wr-text-[22px] wr-font-[900] wr-uppercase wr-italic wr-leading-8 wr-tracking-wider wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-horse-race-bet-button-bg-disabled md:wr-bg-contain",
         crash:
-          "bg-[#5B6CFF] transition-all duration-300 hover:bg-[#3C4DE1] disabled:bg-zinc-700",
+          "wr-bg-[#5B6CFF] wr-transition-all wr-duration-300 hover:wr-bg-[#3C4DE1] disabled:wr-bg-zinc-700",
         plinko: `!wr-rounded-none wr-bg-plinko-button bg-[size:wr-100%] wr-bg-no-repeat wr-font-furore wr-text-2xl wr-leading-6 wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] [box-shadow:wr-0px_2.7px_0px_0px_#004265] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-plinko-button-disabled lg:wr-bg-contain`,
       },
       size: {

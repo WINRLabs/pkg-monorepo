@@ -5,6 +5,7 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  usePriceFeed,
   useTokenAllowance,
   useTokenStore,
 } from "@winrlabs/web3";
@@ -66,24 +67,26 @@ const CrashGame = (props: CrashTemplateProps) => {
     showDefaultToasts: false,
   });
 
+  const { getPrice } = usePriceFeed();
+
   const encodedParams = useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues?.wager || 0,
       stopGain: 0,
       stopLoss: 0,
-      selectedCurrency: "0x0000000000000000000000000000000000000002",
-      lastPrice: 1,
+      selectedCurrency: "0x0000000000000000000000000000000000000004",
+      lastPrice: getPrice(selectedToken.address),
     });
 
     const encodedGameData = encodeAbiParameters(
       [
         { name: "wager", type: "uint128" },
-        { name: "multiplier", type: "uint256" },
+        { name: "multiplier", type: "uint16" },
       ],
-      [wagerInWei, parseUnits(formValues.multiplier.toString(), 18)]
+      [wagerInWei, parseUnits(formValues.multiplier.toString(), 16)]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    const encodedData = encodeFunctionData({
       abi: controllerAbi,
       functionName: "perform",
       args: [
@@ -107,7 +110,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       abi: controllerAbi,
       functionName: "perform",
       args: [
-        gameAddresses.horseRace,
+        gameAddresses.crash,
         encodedParams.tokenAddress,
         uiOperatorAddress as Address,
         "claim",
@@ -115,7 +118,9 @@ const CrashGame = (props: CrashTemplateProps) => {
       ],
       address: controllerAddress as Address,
     },
-    options: {},
+    options: {
+      forceRefetch: true,
+    },
     encodedTxData: encodedParams.encodedTxData,
   });
 
@@ -145,8 +150,8 @@ const CrashGame = (props: CrashTemplateProps) => {
       abi: controllerAbi,
       functionName: "perform",
       args: [
-        gameAddresses.horseRace as Address,
-        "0x0000000000000000000000000000000000000002",
+        gameAddresses.crash as Address,
+        "0x0000000000000000000000000000000000000004",
         uiOperatorAddress as Address,
         "claim",
         encodedParams,
@@ -165,7 +170,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       abi: controllerAbi,
       functionName: "perform",
       args: [
-        gameAddresses.horseRace,
+        gameAddresses.crash,
         encodedParams.tokenAddress,
         uiOperatorAddress as Address,
         "claim",
@@ -187,15 +192,16 @@ const CrashGame = (props: CrashTemplateProps) => {
 
       if (!handledAllowance) return;
     }
-
     try {
       await handleClaimTx.mutateAsync();
-    } catch (error) {}
+    } catch (error) {
+      console.log("handleClaimTx error", error);
+    }
 
     try {
       await handleTx.mutateAsync();
     } catch (e: any) {
-      console.log("error", e);
+      console.log("handleTx error", e);
     }
   };
 
