@@ -29,7 +29,7 @@ export const RotationWrapper: React.FC<{ children: React.ReactNode }> = ({
 
   if (isMobile && orientation.type === "portrait-primary")
     return (
-      <section className="text-light fixed left-0 top-0 z-[999] flex h-[100dvh] w-[100dvw] flex-col items-center justify-center gap-2 overflow-hidden text-center font-bold backdrop-blur-lg">
+      <section className="wr-text-light wr-fixed wr-left-0 wr-top-0 wr-z-[999] wr-flex wr-h-[100dvh] wr-w-[100dvw] wr-flex-col wr-items-center wr-justify-center wr-gap-2 wr-overflow-hidden wr-text-center wr-font-bold wr-backdrop-blur-lg">
         <Rotate />
         Please rotate your <br /> device to start playing
       </section>
