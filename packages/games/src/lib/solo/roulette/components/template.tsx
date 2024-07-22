@@ -11,6 +11,7 @@ import { Chip } from "../../../common/chip-controller/types";
 import { GameContainer, SceneContainer } from "../../../common/containers";
 import { CDN_URL } from "../../../constants";
 import { Form } from "../../../ui/form";
+import { RotationWrapper } from "../../../ui/rotation-wrapper";
 import { Roulette } from "..";
 import {
   chunkMinWagerIndexes,
@@ -19,10 +20,7 @@ import {
   minWagerMultiplierForSideBets,
   NUMBER_INDEX_COUNT,
 } from "../constants";
-import {
-  RouletteFormFields,
-  RouletteGameProps,
-} from "../types";
+import { RouletteFormFields, RouletteGameProps } from "../types";
 
 type TemplateProps = RouletteGameProps & {
   minWager?: number;
@@ -163,45 +161,47 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   }, [form.watch]);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(prepareSubmit)}>
-        <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
-          <SceneContainer
-            style={{
-              backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
-            }}
-            className="wr-relative wr-flex wr-h-[675px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 max-lg:wr-h-[100dvh] max-lg:wr-rounded-none lg:wr-pt-6"
-          >
-            <AudioController className="wr-absolute wr-left-3 wr-top-3" />
+    <RotationWrapper>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(prepareSubmit)}>
+          <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+            <SceneContainer
+              style={{
+                backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
+              }}
+              className="wr-relative wr-flex wr-h-[675px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 max-lg:wr-h-[100dvh] max-lg:wr-rounded-none lg:wr-pt-6"
+            >
+              <AudioController className="wr-absolute wr-left-3 wr-top-3" />
 
-            <Roulette.Game gameResults={gameResults}>
-              <Roulette.Scene
-                isPrepared={isPrepared}
-                setIsPrepared={setIsPrepared}
-                onAnimationCompleted={onAnimationCompleted}
-                onAnimationSkipped={onAnimationSkipped}
-                onAnimationStep={onAnimationStep}
-              />
-              <Roulette.Table
-                addWager={addWager}
-                winningNumber={null}
-                selectedChip={selectedChip}
-                isPrepared={isPrepared}
-              />
-              <Roulette.BetController
-                isPrepared={isPrepared}
-                selectedChip={selectedChip}
-                onSelectedChipChange={setSelectedChip}
-                undoBet={undoBet}
-                minWager={minWager || 1}
-                maxWager={maxWager || 2000}
-              />
-              <Roulette.LastBets />
-            </Roulette.Game>
-          </SceneContainer>
-        </GameContainer>
-      </form>
-    </Form>
+              <Roulette.Game gameResults={gameResults}>
+                <Roulette.Scene
+                  isPrepared={isPrepared}
+                  setIsPrepared={setIsPrepared}
+                  onAnimationCompleted={onAnimationCompleted}
+                  onAnimationSkipped={onAnimationSkipped}
+                  onAnimationStep={onAnimationStep}
+                />
+                <Roulette.Table
+                  addWager={addWager}
+                  winningNumber={null}
+                  selectedChip={selectedChip}
+                  isPrepared={isPrepared}
+                />
+                <Roulette.BetController
+                  isPrepared={isPrepared}
+                  selectedChip={selectedChip}
+                  onSelectedChipChange={setSelectedChip}
+                  undoBet={undoBet}
+                  minWager={minWager || 1}
+                  maxWager={maxWager || 2000}
+                />
+                <Roulette.LastBets />
+              </Roulette.Game>
+            </SceneContainer>
+          </GameContainer>
+        </form>
+      </Form>
+    </RotationWrapper>
   );
 };
 
