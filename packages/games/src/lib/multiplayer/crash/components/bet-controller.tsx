@@ -29,7 +29,6 @@ import { CrashForm } from "../types";
 interface CrashBetControllerProps {
   minWager: number;
   maxWager: number;
-  isGamblerParticipant: boolean;
 }
 
 export const CrashBetController: React.FC<CrashBetControllerProps> = ({
@@ -42,20 +41,22 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
 
   const maxPayout = wager * multiplier;
 
-  const { updateState, startTime, status, finishTime, resetState } =
-    useCrashGameStore([
-      "finishTime",
-      "startTime",
-      "status",
-      "updateState",
-      "resetState",
-    ]);
+  const {
+    status,
+    joiningFinish,
+    cooldownFinish,
+    resetState,
+    isGamblerParticipant,
+  } = useCrashGameStore([
+    "joiningFinish",
+    "status",
+    "updateState",
+    "resetState",
+    "cooldownFinish",
+    "isGamblerParticipant",
+  ]);
 
-  useCountdown(startTime, () => {
-    // updateState({ status: HorseRaceStatus.Race });
-  });
-
-  const finishTimeLeft = useCountdown(finishTime, () => {
+  const timeLeft = useCountdown(cooldownFinish, () => {
     resetState();
   });
 
@@ -77,7 +78,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
           className={cn(
             "wr-mb-3 wr-flex wr-flex-col wr-gap-3 wr-font-dewi max-md:wr-absolute max-md:wr-left-2.5 max-md:wr-top-[-590px]",
             {
-              invisible: status === MultiplayerGameStatus.Finish,
+              "wr-invisible": status === MultiplayerGameStatus.Finish,
             }
           )}
         >
@@ -85,9 +86,9 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
             Next round in
           </span>
 
-          {startTime > 0 ? (
+          {joiningFinish > 0 ? (
             <CountdownProvider
-              targetDate={new Date(startTime * 1000)?.toISOString()}
+              targetDate={new Date(joiningFinish * 1000)?.toISOString()}
             >
               <section className="wr-flex wr-items-center wr-gap-2 ">
                 <div className="wr-text-[48px] wr-font-bold wr-leading-[64px] wr-text-white">
@@ -183,12 +184,17 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
             variant={"crash"}
             className="wr-w-full"
             size={"xl"}
-            disabled={form.formState.isSubmitting || form.formState.isLoading}
+            disabled={
+              form.formState.isSubmitting ||
+              form.formState.isLoading ||
+              status === MultiplayerGameStatus.Finish ||
+              isGamblerParticipant
+            }
           >
             {form.formState.isSubmitting || form.formState.isLoading
               ? "Placing bet..."
-              : finishTimeLeft > 0 && status === MultiplayerGameStatus.Finish
-                ? `Next game in ${finishTimeLeft} seconds`
+              : timeLeft > 0 && status === MultiplayerGameStatus.Finish
+                ? `Next game in ${timeLeft} seconds`
                 : "Place a bet"}
           </Button>
         </PreBetButton>

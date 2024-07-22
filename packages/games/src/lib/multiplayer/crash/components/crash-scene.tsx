@@ -1,14 +1,15 @@
 import * as Progress from "@radix-ui/react-progress";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 import { useDevicePixelRatio } from "../../../hooks/use-device-pixel-ratio";
 import { useListenUnityEvent } from "../../../hooks/use-listen-unity-event";
-import useCountdown from "../../../hooks/use-time-left";
 import { useEqualizeUnitySound } from "../../../hooks/use-unity-sound";
 import { toFormatted } from "../../../utils/web3";
 import { MultiplayerGameStatus } from "../../core/type";
 import useCrashGameStore from "../store";
+import { CrashForm } from "../types";
 
 const UnityFinalizedEvent = "HR_GameEnd";
 
@@ -18,16 +19,27 @@ export const CrashScene = ({ onComplete }: { onComplete?: () => void }) => {
   const devicePixelRatio = useDevicePixelRatio();
 
   // const { address: currentAccount } = useCurrentAccount();
+  const form = useFormContext() as CrashForm;
+  const multiplier = form.watch("multiplier");
 
-  const { status, participants, startTime, updateState, resetParticipants } =
-    useCrashGameStore([
-      "status",
-      "participants",
-      "startTime",
-      "updateState",
-      "resetParticipants",
-      "resetState",
-    ]);
+  const {
+    status,
+    participants,
+    joiningFinish,
+    updateState,
+    resetParticipants,
+    finalMultiplier,
+    isGamblerParticipant,
+  } = useCrashGameStore([
+    "status",
+    "participants",
+    "joiningFinish",
+    "updateState",
+    "resetParticipants",
+    "resetState",
+    "finalMultiplier",
+    "isGamblerParticipant",
+  ]);
 
   const percentageRef = React.useRef(0);
 
@@ -56,15 +68,15 @@ export const CrashScene = ({ onComplete }: { onComplete?: () => void }) => {
 
   const { unityEvent } = useListenUnityEvent();
 
-  const timeLeftToStart = useCountdown(startTime);
+  // const timeLeftToStart = useCountdown(joiningFinish);
 
-  React.useEffect(() => {
-    if (timeLeftToStart <= 0 && status === MultiplayerGameStatus.None) {
-      updateState({
-        status: MultiplayerGameStatus.Wait,
-      });
-    }
-  }, [timeLeftToStart, status]);
+  // React.useEffect(() => {
+  //   if (timeLeftToStart <= 0 && status === MultiplayerGameStatus.None) {
+  //     updateState({
+  //       status: MultiplayerGameStatus.Wait,
+  //     });
+  //   }
+  // }, [timeLeftToStart, status]);
 
   React.useEffect(() => {
     if (isLoaded && status === MultiplayerGameStatus.Wait) {
@@ -72,29 +84,18 @@ export const CrashScene = ({ onComplete }: { onComplete?: () => void }) => {
       sendMessage("WebGLHandler", "ReceiveMessage", "M_PrepareRocket");
     }
 
-    // if (isLoaded && status === MultiplayerGameStatus.Finish) {
-    //   const participatedPlayer = participants.find(
-    //     (p) => p.name === currentAccount
-    //   );
+    if (isLoaded && status === MultiplayerGameStatus.Finish) {
+      isGamblerParticipant &&
+        sendMessage("WebGLHandler", "ReceiveMessage", `M_Win|${multiplier}`);
 
-    //   console.log("participatedPlayer", participatedPlayer);
-
-    //   // set win animation
-    //   participatedPlayer &&
-    //     sendMessage(
-    //       "WebGLHandler",
-    //       "ReceiveMessage",
-    //       `M_Win|${participatedPlayer.multiplier}`
-    //     );
-
-    //   // move rocket
-    //   sendMessage(
-    //     "WebGLHandler",
-    //     "ReceiveMessage",
-    //     `M_StartGame|${finalMultiplier}`
-    //   );
-    // }
-  }, [status, isLoaded]);
+      sendMessage(
+        "WebGLHandler",
+        "ReceiveMessage",
+        // `M_StartGame|${finalMultiplier}`
+        `M_StartGame|${2}`
+      );
+    }
+  }, [status, finalMultiplier, isLoaded]);
 
   React.useEffect(() => {
     if (unityEvent.name === "M_GameEnd") {

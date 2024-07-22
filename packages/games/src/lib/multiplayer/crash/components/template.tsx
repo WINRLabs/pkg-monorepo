@@ -50,7 +50,7 @@ const CrashTemplate = (props: TemplateProps) => {
     mode: "all",
     defaultValues: {
       wager: props?.minWager || 1,
-      multiplier: 1,
+      multiplier: 1.01,
     },
   });
 
@@ -79,7 +79,6 @@ const CrashTemplate = (props: TemplateProps) => {
             <CrashBetController
               minWager={props?.minWager || 2}
               maxWager={props?.maxWager || 2000}
-              isGamblerParticipant={false}
             />
             <LastBets />
             <CrashScene onComplete={onComplete} />

@@ -1,5 +1,9 @@
 "use client";
-import { useCrashGameStore } from "@winrlabs/games";
+import {
+  MultiplayerGameStatus,
+  toDecimals,
+  useCrashGameStore,
+} from "@winrlabs/games";
 import { CrashFormFields, CrashTemplate } from "@winrlabs/games";
 import {
   controllerAbi,
@@ -14,7 +18,8 @@ import {
   Address,
   encodeAbiParameters,
   encodeFunctionData,
-  parseUnits,
+  formatUnits,
+  fromHex,
 } from "viem";
 
 import { useListenMultiplayerGameEvent } from "../hooks";
@@ -51,11 +56,14 @@ const CrashGame = (props: CrashTemplateProps) => {
     wager: 1,
   });
 
-  const { updateState } = useCrashGameStore(["updateState"]);
+  const { updateState, addParticipant, setIsGamblerParticipant } =
+    useCrashGameStore([
+      "updateState",
+      "addParticipant",
+      "setIsGamblerParticipant",
+    ]);
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.crash);
-
-  console.log("gameEvent", gameEvent);
 
   const currentAccount = useCurrentAccount();
 
@@ -83,7 +91,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         { name: "wager", type: "uint128" },
         { name: "multiplier", type: "uint16" },
       ],
-      [wagerInWei, parseUnits(formValues.multiplier.toString(), 16)]
+      [wagerInWei, toDecimals(formValues.multiplier * 100)]
     );
 
     const encodedData = encodeFunctionData({
@@ -113,7 +121,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         gameAddresses.crash,
         encodedParams.tokenAddress,
         uiOperatorAddress as Address,
-        "claim",
+        "bet",
         encodedParams.encodedGameData,
       ],
       address: controllerAddress as Address,
@@ -199,10 +207,20 @@ const CrashGame = (props: CrashTemplateProps) => {
     }
 
     try {
+      console.log(encodedParams.encodedTxData);
       await handleTx.mutateAsync();
     } catch (e: any) {
       console.log("handleTx error", e);
     }
+
+    const participant = {
+      avatar: "",
+      name: currentAccount.address!,
+      multiplier: formValues.multiplier,
+      bet: formValues.wager,
+    };
+    addParticipant(participant);
+    setIsGamblerParticipant(true);
   };
 
   useEffect(() => {
@@ -212,61 +230,49 @@ const CrashGame = (props: CrashTemplateProps) => {
 
     const currentTime = new Date().getTime() / 1000;
 
-    const { cooldownFinish, joiningFinish, joiningStart, randoms, result } =
-      gameEvent;
+    const {
+      joiningFinish,
+      joiningStart,
+      randoms,
+      cooldownFinish,
+      isGameActive,
+      participants,
+    } = gameEvent;
 
     const isGameFinished =
       currentTime >= joiningFinish && joiningFinish > 0 && randoms;
     const shouldWait =
       currentTime <= joiningFinish && currentTime >= joiningStart;
 
-    // if (shouldWait) {
-    //   updateState({
-    //     startTime: joiningFinish,
-    //     finishTime: cooldownFinish,
-    //     status: MultiplayerGameStatus.,
-    //   });
-    // }
-    // if (isGameFinished) {
-    //   updateState({
-    //     status: HorseRaceStatus.Finished,
-    //     winnerHorse: result,
-    //   });
-    // }
+    let status: MultiplayerGameStatus = MultiplayerGameStatus.None;
 
-    // if (bet && bet?.converted.wager && player) {
-    //   const _participantHorse =
-    //     horseRaceParticipantMapWithStore[bet?.choice as unknown as Horse];
+    if (shouldWait) {
+      updateState({
+        status: MultiplayerGameStatus.Wait,
+      });
+    } else if (isGameFinished) {
+      status = MultiplayerGameStatus.Finish;
+    }
 
-    //   const names = selectedHorse[_participantHorse].map((item) => item.name);
+    updateState({
+      status,
+      joiningFinish,
+      joiningStart,
+      cooldownFinish,
+    });
 
-    //   if (!names.includes(player)) {
-    //     setSelectedHorse(_participantHorse, {
-    //       bet: bet?.converted.wager,
-    //       name: player,
-    //     });
-    //   }
-    // }
-
-    // if (participants?.length > 0 && isGameActive) {
-    //   participants?.forEach((p) => {
-    //     const _participantHorse =
-    //       horseRaceParticipantMapWithStore[
-    //         fromHex(p.choice, {
-    //           to: "number",
-    //         }) as unknown as Horse
-    //       ];
-
-    //     const names = selectedHorse[_participantHorse].map((item) => item.name);
-
-    //     if (!names.includes(p.player)) {
-    //       setSelectedHorse(_participantHorse, {
-    //         bet: Number(formatUnits(p.wager, 18)) as number,
-    //         name: p.player as string,
-    //       });
-    //     }
-    //   });
-    // }
+    if (participants?.length > 0 && isGameActive) {
+      participants?.forEach((p) => {
+        addParticipant({
+          avatar: "",
+          name: p.player,
+          multiplier: fromHex(p.choice, {
+            to: "number",
+          }) as unknown as number,
+          bet: Number(formatUnits(p.wager, 18)),
+        });
+      });
+    }
   }, [gameEvent, currentAccount.address]);
 
   return (

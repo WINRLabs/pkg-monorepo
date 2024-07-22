@@ -21,3 +21,11 @@ export const textShorter = (str: string, length = 14): string => {
     return `${str.slice(0, length)}...`;
   }
 };
+
+export const walletShorter = (str?: string | null, length = 6): string => {
+  if (!str) {
+    return "";
+  } else {
+    return `${str.slice(0, length)}...${str.slice(str.length - 4, str.length)}`;
+  }
+};
