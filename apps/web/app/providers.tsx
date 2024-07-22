@@ -64,15 +64,35 @@ export function Providers(props: { children: ReactNode }) {
           }}
           tokens={[
             {
-              address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+              address: "0x2Bd00DD5fc6A1942a94B88fB7fFaB458b41f3Bbf",
+              bankrollIndex: "0x0000000000000000000000000000000000000001",
+              displayDecimals: 2,
+              decimals: 6,
+              icon: "/tokens/usdc.png",
+              symbol: "USDC",
+              playable: true,
+            },
+            {
+              address: "0x2d1AdcaA8118B36855505973B7778A4F469cDBeD",
+              bankrollIndex: "0x0000000000000000000000000000000000000002",
+              displayDecimals: 2,
+              decimals: 6,
+              icon: "/tokens/usdt.png",
+              symbol: "USDT",
+              playable: true,
+            },
+            {
+              address: "0xA517ebFa624F572eD981b71971D31790500aC4E0",
+              bankrollIndex: "0x0000000000000000000000000000000000000003",
               displayDecimals: 6,
-              decimals: 18,
-              icon: "/tokens/weth.png",
-              symbol: "wETH",
+              decimals: 8,
+              icon: "/tokens/wbtc.png",
+              symbol: "wBTC",
               playable: true,
             },
             {
               address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+              bankrollIndex: "0x0000000000000000000000000000000000000004",
               displayDecimals: 6,
               decimals: 18,
               icon: "/tokens/weth.png",
@@ -82,6 +102,7 @@ export function Providers(props: { children: ReactNode }) {
           ]}
           selectedToken={{
             address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+            bankrollIndex: "0x0000000000000000000000000000000000000004",
             displayDecimals: 6,
             decimals: 18,
             icon: "/tokens/weth.png",

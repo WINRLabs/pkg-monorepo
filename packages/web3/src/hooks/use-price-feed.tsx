@@ -19,7 +19,10 @@ export const usePriceFeed = () => {
     const payload: Record<Address, number> = {};
 
     tokens.forEach((t) => {
-      payload[t.address] = 3500;
+      if (t.symbol == "USDC") payload[t.address] = 1;
+      if (t.symbol == "USDT") payload[t.address] = 1;
+      if (t.symbol == "wBTC") payload[t.address] = 65000;
+      if (t.symbol == "wETH") payload[t.address] = 3500;
     });
 
     setPriceFeed(payload);

@@ -92,7 +92,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
         wager: formValues.wager,
         stopGain: formValues.stopGain,
         stopLoss: formValues.stopLoss,
-        selectedCurrency: selectedToken.address,
+        selectedCurrency: selectedToken,
         lastPrice: getPrice(selectedToken.address),
       });
 
@@ -128,7 +128,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.limbo as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -156,7 +156,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.limbo as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

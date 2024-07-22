@@ -1,4 +1,5 @@
 import { BaccaratGameHand, toDecimals } from "@winrlabs/games";
+import { Token } from "@winrlabs/web3";
 import { parseUnits } from "viem";
 import { Hex } from "viem";
 
@@ -111,7 +112,7 @@ export type DecodedEvent<T, K> = {
 export interface PrepareGameTransactionParams {
   wager: number;
   lastPrice: number;
-  selectedCurrency: `0x${string}`;
+  selectedCurrency: Token;
   stopGain?: number;
   stopLoss?: number;
 }
@@ -149,7 +150,7 @@ export const prepareGameTransaction = (
     6
   ).toString();
 
-  const decimal = 18;
+  const decimal = selectedCurrency.decimals;
 
   console.log(wagerInGameCurrency, "wager in gamecurr");
 
@@ -159,7 +160,7 @@ export const prepareGameTransaction = (
 
   const stopLossInWei = parseUnits(stopLossInGameCurrency, decimal);
 
-  const tokenAddress = selectedCurrency;
+  const tokenAddress = selectedCurrency.address;
 
   return {
     wagerInWei,

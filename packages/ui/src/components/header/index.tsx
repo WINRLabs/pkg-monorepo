@@ -1,6 +1,15 @@
 "use client";
 
-import { delay, useCurrentAccount } from "@winrlabs/web3";
+import {
+  delay,
+  erc20Abi,
+  useCurrentAccount,
+  useHandleTx,
+  useTokenBalances,
+  useTokenStore,
+} from "@winrlabs/web3";
+import React from "react";
+import { encodeFunctionData, parseUnits } from "viem";
 import { Config, useConnectors, useDisconnect } from "wagmi";
 
 import { useWagmiConfig } from "../../providers/wagmi-config";
@@ -43,9 +52,45 @@ export const Header = ({
   const connectors = useConnectors({
     config: wagmiConfig,
   });
+  const { selectedToken } = useTokenStore((s) => ({
+    selectedToken: s.selectedToken,
+  }));
 
   const { disconnect, disconnectAsync, isPending, data } = useDisconnect({
     config: wagmiConfig,
+  });
+
+  useTokenBalances({
+    account: account.address!,
+  });
+
+  const encodedTxData = React.useMemo(() => {
+    if (!account.address) return;
+
+    const encodedData: `0x${string}` = encodeFunctionData({
+      abi: erc20Abi,
+      functionName: "mint",
+      args: [
+        account.address as `0x${string}`,
+        parseUnits("100", selectedToken.decimals),
+      ],
+    });
+
+    return encodedData;
+  }, [account.address, selectedToken.address]);
+
+  const mintTx = useHandleTx({
+    writeContractVariables: {
+      abi: erc20Abi,
+      address: selectedToken.address,
+      functionName: "mint",
+      args: [
+        account.address as `0x${string}`,
+        parseUnits("100", selectedToken.decimals),
+      ],
+    },
+    encodedTxData: encodedTxData || "0x0",
+    options: {},
   });
 
   return (
@@ -68,8 +113,21 @@ export const Header = ({
         {account.isGettingAddress && <Skeleton className="wr-h-10 wr-w-24" />}
         {account.address && !account.isGettingAddress && (
           <>
-            <div className="wr-mx-4 wr-flex wr-items-center lg:wr-absolute lg:wr-left-[50%] lg:wr-top-[50%] lg:wr-mx-0 lg:wr-translate-x-[-50%] lg:wr-translate-y-[-50%]">
+            <div className="wr-mx-4 wr-gap-2 wr-flex wr-items-center lg:wr-absolute lg:wr-left-[50%] lg:wr-top-[50%] lg:wr-mx-0 lg:wr-translate-x-[-50%] lg:wr-translate-y-[-50%]">
               <SelectGameCurrency />
+              <Button
+                isLoading={mintTx.isPending}
+                variant={"success"}
+                onClick={async () => {
+                  try {
+                    await mintTx.mutateAsync();
+                  } catch (e: any) {
+                    console.log("error", e);
+                  }
+                }}
+              >
+                MINT
+              </Button>
             </div>
             <Button
               disabled={isPending}

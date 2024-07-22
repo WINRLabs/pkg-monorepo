@@ -81,7 +81,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
-      selectedCurrency: "0x0000000000000000000000000000000000000004",
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -98,7 +98,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.horseRace as Address,
-        tokenAddress,
+        selectedToken.address,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -110,7 +110,12 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       encodedGameData,
       encodedTxData: encodedData,
     };
-  }, [formValues?.horse, formValues?.wager, priceFeed[selectedToken.address]]);
+  }, [
+    formValues?.horse,
+    formValues?.wager,
+    priceFeed[selectedToken.address],
+    selectedToken.address,
+  ]);
 
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
@@ -118,7 +123,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.horseRace,
-        encodedParams.tokenAddress,
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "claim",
         encodedParams.encodedGameData,
@@ -156,7 +161,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.horseRace as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "claim",
         encodedParams,
@@ -168,7 +173,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       encodedClaimTxData: encodedClaimData,
       currentAccount,
     };
-  }, [formValues.horse, formValues.wager]);
+  }, [formValues.horse, formValues.wager, selectedToken.bankrollIndex]);
 
   const handleClaimTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
@@ -176,7 +181,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: "perform",
       args: [
         gameAddresses.horseRace,
-        encodedParams.tokenAddress,
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "claim",
         encodedClaimParams.encodedClaimData,
@@ -273,6 +278,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
         const names = selectedHorse[_participantHorse].map((item) => item.name);
 
+        // FIXME:Token decimal couldn't calc because player data doesn't include bankroll index
         if (!names.includes(p.player)) {
           setSelectedHorse(_participantHorse, {
             bet: Number(formatUnits(p.wager, 18)) as number,

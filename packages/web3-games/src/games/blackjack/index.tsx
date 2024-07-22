@@ -142,7 +142,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedBetParams = React.useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -172,7 +172,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -196,7 +196,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedHitParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -210,7 +210,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "hitAnotherCard",
         encodedGameData,
@@ -227,7 +227,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedStandParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -241,7 +241,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "standOff",
         encodedGameData,
@@ -258,7 +258,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedDoubleParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -272,7 +272,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "doubleDown",
         encodedGameData,
@@ -289,7 +289,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedSplitParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -303,7 +303,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "splitHand",
         encodedGameData,
@@ -320,7 +320,7 @@ export default function BlackjackTemplateWithWeb3(
   const encodedBuyInsuranceParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -334,7 +334,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "buyInsurance",
         encodedGameData,
@@ -354,7 +354,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedBetParams.encodedGameData,
@@ -371,7 +371,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "hitAnotherCard",
         encodedHitParams.encodedGameData,
@@ -388,7 +388,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "standOff",
         encodedStandParams.encodedGameData,
@@ -405,7 +405,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "doubleDown",
         encodedDoubleParams.encodedGameData,
@@ -422,7 +422,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "splitHand",
         encodedSplitParams.encodedGameData,
@@ -439,7 +439,7 @@ export default function BlackjackTemplateWithWeb3(
       functionName: "perform",
       args: [
         gameAddresses.blackjack,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "buyInsurance",
         encodedBuyInsuranceParams.encodedGameData,
