@@ -57,7 +57,7 @@ export default function WinrBonanzaPage() {
         buildedGameUrl={`${CDN_URL}/winrlabs-games/winr-bonanza`}
         buildedGameUrlMobile={`${CDN_URL}/winrlabs-games/winr-bonanza`}
       />
-      <BetHistory gameType={GameType.ROULETTE} />
+      <BetHistory gameType={GameType.WINR_BONANZA} />
     </>
   );
 }

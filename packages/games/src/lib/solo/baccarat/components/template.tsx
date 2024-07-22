@@ -10,6 +10,7 @@ import { Chip } from "../../../common/chip-controller/types";
 import { GameContainer, SceneContainer } from "../../../common/containers";
 import { CDN_URL } from "../../../constants";
 import { Form } from "../../../ui/form";
+import { RotationWrapper } from "../../../ui/rotation-wrapper";
 import { MULTIPLIER_BANKER, MULTIPLIER_TIE } from "../constants";
 import {
   BaccaratBetType,
@@ -213,39 +214,41 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   }, [form.watch]);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(prepareSubmit)}>
-        <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
-          <SceneContainer
-            className="wr-relative wr-flex wr-h-[600px]"
-            style={{
-              backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
-            }}
-          >
-            <BaccaratScene
-              baccaratResults={results}
-              baccaratSettled={settled}
-              isDisabled={isGamePlaying}
-              setIsDisabled={setIsGamePlaying}
-              addWager={addWager}
-              selectedChip={selectedChip}
-              onAnimationCompleted={onAnimationCompleted}
-            />
+    <RotationWrapper>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(prepareSubmit)}>
+          <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+            <SceneContainer
+              className="wr-relative wr-flex wr-h-[600px]"
+              style={{
+                backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
+              }}
+            >
+              <BaccaratScene
+                baccaratResults={results}
+                baccaratSettled={settled}
+                isDisabled={isGamePlaying}
+                setIsDisabled={setIsGamePlaying}
+                addWager={addWager}
+                selectedChip={selectedChip}
+                onAnimationCompleted={onAnimationCompleted}
+              />
 
-            <BaccaratBetController
-              isDisabled={isGamePlaying}
-              totalWager={(bankerWager + tieWager + playerWager) * wager}
-              maxPayout={maxPayout}
-              undoBet={undoBet}
-              selectedChip={selectedChip}
-              onSelectedChipChange={setSelectedChip}
-              minWager={minWager || 1}
-              maxWager={maxWager || 2000}
-            />
-          </SceneContainer>
-        </GameContainer>
-      </form>
-    </Form>
+              <BaccaratBetController
+                isDisabled={isGamePlaying}
+                totalWager={(bankerWager + tieWager + playerWager) * wager}
+                maxPayout={maxPayout}
+                undoBet={undoBet}
+                selectedChip={selectedChip}
+                onSelectedChipChange={setSelectedChip}
+                minWager={minWager || 1}
+                maxWager={maxWager || 2000}
+              />
+            </SceneContainer>
+          </GameContainer>
+        </form>
+      </Form>
+    </RotationWrapper>
   );
 };
 

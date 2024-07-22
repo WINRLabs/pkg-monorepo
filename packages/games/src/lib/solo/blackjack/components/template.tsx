@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useDebounce } from "use-debounce";
 
 import { AudioController } from "../../../common/audio-controller";
 import { Chip } from "../../../common/chip-controller/types";
@@ -8,6 +9,7 @@ import { GameContainer, SceneContainer } from "../../../common/containers";
 import { CDN_URL } from "../../../constants";
 import { useGameOptions } from "../../../game-provider";
 import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { RotationWrapper } from "../../../ui/rotation-wrapper";
 import { wait } from "../../../utils/promise";
 import { cn } from "../../../utils/style";
 import {
@@ -20,7 +22,6 @@ import { BlackjackCard, distributeNewCards, getBlackjackSuit } from "../utils";
 import { BetArea } from "./bet-area";
 import { BetController } from "./bet-controller";
 import { CardArea } from "./card-area";
-import { useDebounce } from "use-debounce";
 import { DealerCardArea } from "./dealer-card-area";
 import { MoveController } from "./move-controller";
 import { SplittedCardArea } from "./splitted-card-area";
@@ -682,253 +683,261 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
   }, [debouncedFormFields[0]]);
 
   return (
-    <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0 wr-max-w-[1140px]">
-      <SceneContainer
-        style={{
-          backgroundImage: `url(${CDN_URL}/blackjack/blackjack-bg.png)`,
-        }}
-        className={cn(
-          styles.bjSceneWrapper,
-          "wr-relative wr-flex wr-h-[675px] wr-border-0 wr-bg-center !wr-p-0"
-        )}
-      >
-        <AudioController className="wr-absolute wr-left-3 wr-top-3 wr-z-[999] wr-hidden lg:wr-block" />
-        {/* canvas start */}
-        <div
+    <RotationWrapper>
+      <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0 wr-max-w-[1140px]">
+        <SceneContainer
+          style={{
+            backgroundImage: `url(${CDN_URL}/blackjack/blackjack-bg.png)`,
+          }}
           className={cn(
-            styles.canvas,
-            "wr-absolute wr-h-full wr-max-h-[675px] wr-w-[1140px] wr-select-none"
+            styles.bjSceneWrapper,
+            "wr-relative wr-flex wr-h-[675px] wr-border-0 wr-bg-center !wr-p-0"
           )}
         >
-          <img
-            src={`${CDN_URL}/blackjack/deck.svg`}
-            width={105}
-            height={115}
-            alt="Justbet Blackjack Deck"
-            className="wr-absolute wr-right-[-10px] wr-top-[-20px] wr-z-[5]"
-          />
-          <img
-            src={`${CDN_URL}/blackjack/distributed-deck.svg`}
-            width={80}
-            height={128}
-            alt="Justbet Blackjack Distributed Deck"
-            className="wr-absolute wr-left-[-35px] wr-top-[100px] wr-z-[5]"
-          />
+          <AudioController className="wr-absolute wr-left-3 wr-top-3 wr-z-[999] wr-hidden lg:wr-block" />
+          {/* canvas start */}
+          <div
+            className={cn(
+              styles.canvas,
+              "wr-absolute wr-h-full wr-max-h-[675px] wr-w-[1140px] wr-select-none"
+            )}
+          >
+            <img
+              src={`${CDN_URL}/blackjack/deck.svg`}
+              width={105}
+              height={115}
+              alt="Justbet Blackjack Deck"
+              className="wr-absolute wr-right-[-10px] wr-top-[-20px] wr-z-[5]"
+            />
+            <img
+              src={`${CDN_URL}/blackjack/distributed-deck.svg`}
+              width={80}
+              height={128}
+              alt="Justbet Blackjack Distributed Deck"
+              className="wr-absolute wr-left-[-35px] wr-top-[100px] wr-z-[5]"
+            />
 
-          {/* dealer cards area start */}
-          <div className="wr-absolute wr-h-full wr-w-full">
+            {/* dealer cards area start */}
+            <div className="wr-absolute wr-h-full wr-w-full">
+              {activeGameData.status !== BlackjackGameStatus.NONE && (
+                <DealerCardArea
+                  hand={activeGameHands.dealer}
+                  uiCards={dealerCards}
+                  activeGameData={activeGameData}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                />
+              )}
+            </div>
+            {/* dealer cards area end */}
+
+            {/* bet area start */}
+            <BetArea
+              onClick={() => addWager(selectedChip, BlackjackHandIndex.THIRD)}
+              isDisabled={
+                !canPlaceBet(BlackjackHandIndex.THIRD) || isControllerDisabled
+              }
+              isDouble={activeGameHands.thirdHand.hand?.isDouble}
+              chipAmount={thirdHandWager}
+              isInsured={activeGameHands.thirdHand.hand?.isInsured}
+              isTurn={isTurn(activeGameHands.thirdHand.handId)}
+              className="wr-left-[200px] wr-top-[380px] -wr-translate-x-1/2 -wr-translate-y-1/2"
+            />
+
+            <BetArea
+              onClick={() => addWager(selectedChip, BlackjackHandIndex.SECOND)}
+              isDisabled={
+                !canPlaceBet(BlackjackHandIndex.SECOND) || isControllerDisabled
+              }
+              isDouble={activeGameHands.secondHand.hand?.isDouble}
+              chipAmount={secondHandWager}
+              isInsured={activeGameHands.secondHand.hand?.isInsured}
+              isTurn={isTurn(activeGameHands.secondHand.handId)}
+              className="wr-left-[50%] wr-top-[520px] -wr-translate-x-1/2 -wr-translate-y-1/2"
+            />
+
+            <BetArea
+              onClick={() => addWager(selectedChip, BlackjackHandIndex.FIRST)}
+              isDisabled={
+                !canPlaceBet(BlackjackHandIndex.FIRST) || isControllerDisabled
+              }
+              isDouble={activeGameHands.firstHand.hand?.isDouble}
+              chipAmount={firstHandWager}
+              isInsured={activeGameHands.firstHand.hand?.isInsured}
+              isTurn={isTurn(activeGameHands.firstHand.handId)}
+              className="wr-right-[120px] wr-top-[380px] -wr-translate-x-1/2 -wr-translate-y-1/2"
+            />
+            {/* bet area end */}
+
+            {/* card area start */}
             {activeGameData.status !== BlackjackGameStatus.NONE && (
-              <DealerCardArea
-                hand={activeGameHands.dealer}
-                uiCards={dealerCards}
-                activeGameData={activeGameData}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-              />
+              <>
+                <SplittedCardArea
+                  handType={BlackjackHandIndex.SPLITTED_FIRST}
+                  hand={activeGameHands.splittedFirstHand}
+                  uiCards={splittedFirstHandCards}
+                  activeGameData={activeGameData}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                  isSplitted={activeGameHands.firstHand.hand?.isSplitted}
+                >
+                  <BetArea
+                    onClick={() =>
+                      addWager(selectedChip, BlackjackHandIndex.SPLITTED_FIRST)
+                    }
+                    isDisabled={
+                      !canPlaceBet(BlackjackHandIndex.SPLITTED_FIRST) ||
+                      isControllerDisabled
+                    }
+                    isDouble={activeGameHands.splittedFirstHand.hand?.isDouble}
+                    chipAmount={
+                      activeGameHands.splittedFirstHand.hand?.chipsAmount || 0
+                    }
+                    isInsured={
+                      activeGameHands.splittedFirstHand.hand?.isInsured
+                    }
+                    isTurn={isTurn(activeGameHands.splittedFirstHand.handId)}
+                    className="wr-right-[120px] wr-top-[170px] -wr-translate-x-1/2 -wr-translate-y-1/2"
+                  />
+                </SplittedCardArea>
+
+                <SplittedCardArea
+                  handType={BlackjackHandIndex.SPLITTED_SECOND}
+                  hand={activeGameHands.splittedSecondHand}
+                  uiCards={splittedSecondHandCards}
+                  activeGameData={activeGameData}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                  isSplitted={activeGameHands.secondHand.hand?.isSplitted}
+                >
+                  <BetArea
+                    onClick={() =>
+                      addWager(selectedChip, BlackjackHandIndex.SPLITTED_SECOND)
+                    }
+                    isDisabled={
+                      !canPlaceBet(BlackjackHandIndex.SPLITTED_SECOND) ||
+                      isControllerDisabled
+                    }
+                    isDouble={activeGameHands.splittedSecondHand.hand?.isDouble}
+                    chipAmount={
+                      activeGameHands.splittedSecondHand.hand?.chipsAmount || 0
+                    }
+                    isInsured={
+                      activeGameHands.splittedSecondHand.hand?.isInsured
+                    }
+                    isTurn={isTurn(activeGameHands.splittedSecondHand.handId)}
+                    className="wr-bottom-[275px] wr-left-[50%] -wr-translate-x-1/2 -wr-translate-y-1/2"
+                  />
+                </SplittedCardArea>
+
+                <SplittedCardArea
+                  handType={BlackjackHandIndex.SPLITTED_THIRD}
+                  hand={activeGameHands.splittedThirdHand}
+                  uiCards={splittedThirdHandCards}
+                  activeGameData={activeGameData}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                  isSplitted={activeGameHands.thirdHand.hand?.isSplitted}
+                >
+                  <BetArea
+                    onClick={() =>
+                      addWager(selectedChip, BlackjackHandIndex.SPLITTED_THIRD)
+                    }
+                    isDisabled={
+                      !canPlaceBet(BlackjackHandIndex.SPLITTED_THIRD) ||
+                      isControllerDisabled
+                    }
+                    isDouble={activeGameHands.splittedThirdHand.hand?.isDouble}
+                    chipAmount={
+                      activeGameHands.splittedThirdHand.hand?.chipsAmount || 0
+                    }
+                    isInsured={
+                      activeGameHands.splittedThirdHand.hand?.isInsured
+                    }
+                    isTurn={isTurn(activeGameHands.splittedThirdHand.handId)}
+                    className="wr-left-[200px] wr-top-[170px] -wr-translate-x-1/2 -wr-translate-y-1/2"
+                  />
+                </SplittedCardArea>
+
+                <CardArea
+                  handType={BlackjackHandIndex.FIRST}
+                  hand={activeGameHands.firstHand}
+                  uiCards={firstHandCards}
+                  activeGameData={activeGameData}
+                  splittedCard={firstHandSplittedCard}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                />
+                <CardArea
+                  handType={BlackjackHandIndex.SECOND}
+                  hand={activeGameHands.secondHand}
+                  uiCards={secondHandCards}
+                  activeGameData={activeGameData}
+                  splittedCard={secondHandSplittedCard}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                />
+                <CardArea
+                  handType={BlackjackHandIndex.THIRD}
+                  hand={activeGameHands.thirdHand}
+                  uiCards={thirdHandCards}
+                  activeGameData={activeGameData}
+                  splittedCard={thirdHandSplittedCard}
+                  isDistributionCompleted={isDistributionCompleted}
+                  isLastDistributionCompleted={isLastDistributionCompleted}
+                />
+              </>
             )}
+            {/* card area end */}
+
+            {/* controller start */}
+            {activeGameData.status !== BlackjackGameStatus.FINISHED &&
+              activeGameData.status !== BlackjackGameStatus.NONE && (
+                <MoveController
+                  isDistributionCompleted={isDistributionCompleted}
+                  isControllerDisabled={isControllerDisabled}
+                  activeHandByIndex={activeHandByIndex}
+                  activeGameData={activeGameData}
+                  activeHandChipAmount={activeHandChipAmount}
+                  onHit={onHit}
+                  onSplit={onSplit}
+                  onDoubleDown={onDoubleDown}
+                  onInsure={onInsure}
+                  onStand={onStand}
+                />
+              )}
+
+            <BetController
+              wager={wager}
+              onWagerChange={setWager}
+              maxWager={maxWager}
+              minWager={minWager}
+              totalWager={totalWager}
+              selectedChip={selectedChip}
+              onSelectedChipChange={setSelectedChip}
+              isDisabled={isControllerDisabled}
+              isDistributionCompleted={isDistributionCompleted}
+              isLastDistributionCompleted={isLastDistributionCompleted}
+              status={activeGameData.status}
+              onDeal={() =>
+                onDeal(firstHandWager, secondHandWager, thirdHandWager)
+              }
+              onClear={() => {
+                handleClearWagers();
+                onReset();
+                resetUiCards();
+              }}
+              onRebet={() => {
+                onReset();
+                resetUiCards();
+              }}
+            />
+            {/* controller end */}
           </div>
-          {/* dealer cards area end */}
-
-          {/* bet area start */}
-          <BetArea
-            onClick={() => addWager(selectedChip, BlackjackHandIndex.THIRD)}
-            isDisabled={
-              !canPlaceBet(BlackjackHandIndex.THIRD) || isControllerDisabled
-            }
-            isDouble={activeGameHands.thirdHand.hand?.isDouble}
-            chipAmount={thirdHandWager}
-            isInsured={activeGameHands.thirdHand.hand?.isInsured}
-            isTurn={isTurn(activeGameHands.thirdHand.handId)}
-            className="wr-left-[200px] wr-top-[380px] -wr-translate-x-1/2 -wr-translate-y-1/2"
-          />
-
-          <BetArea
-            onClick={() => addWager(selectedChip, BlackjackHandIndex.SECOND)}
-            isDisabled={
-              !canPlaceBet(BlackjackHandIndex.SECOND) || isControllerDisabled
-            }
-            isDouble={activeGameHands.secondHand.hand?.isDouble}
-            chipAmount={secondHandWager}
-            isInsured={activeGameHands.secondHand.hand?.isInsured}
-            isTurn={isTurn(activeGameHands.secondHand.handId)}
-            className="wr-left-[50%] wr-top-[520px] -wr-translate-x-1/2 -wr-translate-y-1/2"
-          />
-
-          <BetArea
-            onClick={() => addWager(selectedChip, BlackjackHandIndex.FIRST)}
-            isDisabled={
-              !canPlaceBet(BlackjackHandIndex.FIRST) || isControllerDisabled
-            }
-            isDouble={activeGameHands.firstHand.hand?.isDouble}
-            chipAmount={firstHandWager}
-            isInsured={activeGameHands.firstHand.hand?.isInsured}
-            isTurn={isTurn(activeGameHands.firstHand.handId)}
-            className="wr-right-[120px] wr-top-[380px] -wr-translate-x-1/2 -wr-translate-y-1/2"
-          />
-          {/* bet area end */}
-
-          {/* card area start */}
-          {activeGameData.status !== BlackjackGameStatus.NONE && (
-            <>
-              <SplittedCardArea
-                handType={BlackjackHandIndex.SPLITTED_FIRST}
-                hand={activeGameHands.splittedFirstHand}
-                uiCards={splittedFirstHandCards}
-                activeGameData={activeGameData}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-                isSplitted={activeGameHands.firstHand.hand?.isSplitted}
-              >
-                <BetArea
-                  onClick={() =>
-                    addWager(selectedChip, BlackjackHandIndex.SPLITTED_FIRST)
-                  }
-                  isDisabled={
-                    !canPlaceBet(BlackjackHandIndex.SPLITTED_FIRST) ||
-                    isControllerDisabled
-                  }
-                  isDouble={activeGameHands.splittedFirstHand.hand?.isDouble}
-                  chipAmount={
-                    activeGameHands.splittedFirstHand.hand?.chipsAmount || 0
-                  }
-                  isInsured={activeGameHands.splittedFirstHand.hand?.isInsured}
-                  isTurn={isTurn(activeGameHands.splittedFirstHand.handId)}
-                  className="wr-right-[120px] wr-top-[170px] -wr-translate-x-1/2 -wr-translate-y-1/2"
-                />
-              </SplittedCardArea>
-
-              <SplittedCardArea
-                handType={BlackjackHandIndex.SPLITTED_SECOND}
-                hand={activeGameHands.splittedSecondHand}
-                uiCards={splittedSecondHandCards}
-                activeGameData={activeGameData}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-                isSplitted={activeGameHands.secondHand.hand?.isSplitted}
-              >
-                <BetArea
-                  onClick={() =>
-                    addWager(selectedChip, BlackjackHandIndex.SPLITTED_SECOND)
-                  }
-                  isDisabled={
-                    !canPlaceBet(BlackjackHandIndex.SPLITTED_SECOND) ||
-                    isControllerDisabled
-                  }
-                  isDouble={activeGameHands.splittedSecondHand.hand?.isDouble}
-                  chipAmount={
-                    activeGameHands.splittedSecondHand.hand?.chipsAmount || 0
-                  }
-                  isInsured={activeGameHands.splittedSecondHand.hand?.isInsured}
-                  isTurn={isTurn(activeGameHands.splittedSecondHand.handId)}
-                  className="wr-bottom-[275px] wr-left-[50%] -wr-translate-x-1/2 -wr-translate-y-1/2"
-                />
-              </SplittedCardArea>
-
-              <SplittedCardArea
-                handType={BlackjackHandIndex.SPLITTED_THIRD}
-                hand={activeGameHands.splittedThirdHand}
-                uiCards={splittedThirdHandCards}
-                activeGameData={activeGameData}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-                isSplitted={activeGameHands.thirdHand.hand?.isSplitted}
-              >
-                <BetArea
-                  onClick={() =>
-                    addWager(selectedChip, BlackjackHandIndex.SPLITTED_THIRD)
-                  }
-                  isDisabled={
-                    !canPlaceBet(BlackjackHandIndex.SPLITTED_THIRD) ||
-                    isControllerDisabled
-                  }
-                  isDouble={activeGameHands.splittedThirdHand.hand?.isDouble}
-                  chipAmount={
-                    activeGameHands.splittedThirdHand.hand?.chipsAmount || 0
-                  }
-                  isInsured={activeGameHands.splittedThirdHand.hand?.isInsured}
-                  isTurn={isTurn(activeGameHands.splittedThirdHand.handId)}
-                  className="wr-left-[200px] wr-top-[170px] -wr-translate-x-1/2 -wr-translate-y-1/2"
-                />
-              </SplittedCardArea>
-
-              <CardArea
-                handType={BlackjackHandIndex.FIRST}
-                hand={activeGameHands.firstHand}
-                uiCards={firstHandCards}
-                activeGameData={activeGameData}
-                splittedCard={firstHandSplittedCard}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-              />
-              <CardArea
-                handType={BlackjackHandIndex.SECOND}
-                hand={activeGameHands.secondHand}
-                uiCards={secondHandCards}
-                activeGameData={activeGameData}
-                splittedCard={secondHandSplittedCard}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-              />
-              <CardArea
-                handType={BlackjackHandIndex.THIRD}
-                hand={activeGameHands.thirdHand}
-                uiCards={thirdHandCards}
-                activeGameData={activeGameData}
-                splittedCard={thirdHandSplittedCard}
-                isDistributionCompleted={isDistributionCompleted}
-                isLastDistributionCompleted={isLastDistributionCompleted}
-              />
-            </>
-          )}
-          {/* card area end */}
-
-          {/* controller start */}
-          {activeGameData.status !== BlackjackGameStatus.FINISHED &&
-            activeGameData.status !== BlackjackGameStatus.NONE && (
-              <MoveController
-                isDistributionCompleted={isDistributionCompleted}
-                isControllerDisabled={isControllerDisabled}
-                activeHandByIndex={activeHandByIndex}
-                activeGameData={activeGameData}
-                activeHandChipAmount={activeHandChipAmount}
-                onHit={onHit}
-                onSplit={onSplit}
-                onDoubleDown={onDoubleDown}
-                onInsure={onInsure}
-                onStand={onStand}
-              />
-            )}
-
-          <BetController
-            wager={wager}
-            onWagerChange={setWager}
-            maxWager={maxWager}
-            minWager={minWager}
-            totalWager={totalWager}
-            selectedChip={selectedChip}
-            onSelectedChipChange={setSelectedChip}
-            isDisabled={isControllerDisabled}
-            isDistributionCompleted={isDistributionCompleted}
-            isLastDistributionCompleted={isLastDistributionCompleted}
-            status={activeGameData.status}
-            onDeal={() =>
-              onDeal(firstHandWager, secondHandWager, thirdHandWager)
-            }
-            onClear={() => {
-              handleClearWagers();
-              onReset();
-              resetUiCards();
-            }}
-            onRebet={() => {
-              onReset();
-              resetUiCards();
-            }}
-          />
-          {/* controller end */}
-        </div>
-        {/* canvas end */}
-      </SceneContainer>
-    </GameContainer>
+          {/* canvas end */}
+        </SceneContainer>
+      </GameContainer>
+    </RotationWrapper>
   );
 };
 
