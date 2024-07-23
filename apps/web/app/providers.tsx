@@ -65,15 +65,35 @@ export function Providers(props: { children: ReactNode }) {
           }}
           tokens={[
             {
-              address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
-              displayDecimals: 6,
-              decimals: 18,
-              icon: "/tokens/weth.png",
-              symbol: "wETH",
+              address: "0xAfBd36C63F824B60bAc808FA1fA4C2A1a130a772",
+              bankrollIndex: "0x0000000000000000000000000000000000000001",
+              displayDecimals: 2,
+              decimals: 6,
+              icon: "/tokens/usdc.png",
+              symbol: "USDC",
               playable: true,
             },
             {
-              address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+              address: "0x32DF602bB33390CefB3cA9F9608ee100971ff1a9",
+              bankrollIndex: "0x0000000000000000000000000000000000000002",
+              displayDecimals: 2,
+              decimals: 6,
+              icon: "/tokens/usdt.png",
+              symbol: "USDT",
+              playable: true,
+            },
+            {
+              address: "0x0Fc2838ad7247a883d96FEA4a4c7402BAf20D1be",
+              bankrollIndex: "0x0000000000000000000000000000000000000003",
+              displayDecimals: 6,
+              decimals: 8,
+              icon: "/tokens/wbtc.png",
+              symbol: "wBTC",
+              playable: true,
+            },
+            {
+              address: "0x7d259fdA68762D0DEB6EA5c8e4e949D97Da6caB9",
+              bankrollIndex: "0x0000000000000000000000000000000000000004",
               displayDecimals: 6,
               decimals: 18,
               icon: "/tokens/weth.png",
@@ -82,7 +102,8 @@ export function Providers(props: { children: ReactNode }) {
             },
           ]}
           selectedToken={{
-            address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
+            address: "0x7d259fdA68762D0DEB6EA5c8e4e949D97Da6caB9",
+            bankrollIndex: "0x0000000000000000000000000000000000000004",
             displayDecimals: 6,
             decimals: 18,
             icon: "/tokens/weth.png",

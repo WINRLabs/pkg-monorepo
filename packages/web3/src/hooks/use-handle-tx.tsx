@@ -53,6 +53,7 @@ const getCachedSignature = async <
   const userOp = await accountApi?.createSignedUserOp({
     target: writeContractVariables.address as Address,
     data: encodedData,
+    value: writeContractVariables.value,
   });
 
   return userOp;

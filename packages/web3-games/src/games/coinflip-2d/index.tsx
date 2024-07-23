@@ -13,15 +13,9 @@ import {
   usePriceFeed,
   useTokenAllowance,
   useTokenStore,
-  erc20Abi,
 } from "@winrlabs/web3";
 import React, { useMemo, useState } from "react";
-import {
-  Address,
-  encodeAbiParameters,
-  encodeFunctionData,
-  parseUnits,
-} from "viem";
+import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
 
 import { useContractConfigContext } from "../hooks/use-contract-config";
 import { useListenGameEvent } from "../hooks/use-listen-game-event";
@@ -102,7 +96,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         wager: formValues.wager,
         stopGain: formValues.stopGain,
         stopLoss: formValues.stopLoss,
-        selectedCurrency: selectedToken.address,
+        selectedCurrency: selectedToken,
         lastPrice: getPrice(selectedToken.address),
       });
 
@@ -138,7 +132,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.coinFlip as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -166,7 +160,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.coinFlip,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

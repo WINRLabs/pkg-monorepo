@@ -7,6 +7,7 @@ import { persist } from "zustand/middleware";
 
 export interface Token {
   address: Address;
+  bankrollIndex: Address;
   symbol: string;
   icon: string;
   decimals: number;
@@ -31,6 +32,7 @@ export const createTokenStore = (initProps?: Partial<TokenProps>) => {
     tokens: [],
     selectedToken: {
       address: "0x",
+      bankrollIndex: "0x",
       symbol: "",
       icon: "",
       decimals: 0,

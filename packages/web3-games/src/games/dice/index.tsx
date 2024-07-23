@@ -97,7 +97,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         wager: formValues.wager,
         stopGain: formValues.stopGain,
         stopLoss: formValues.stopLoss,
-        selectedCurrency: selectedToken.address,
+        selectedCurrency: selectedToken,
         lastPrice: getPrice(selectedToken.address),
       });
 
@@ -140,7 +140,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.dice as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -160,7 +160,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.dice as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

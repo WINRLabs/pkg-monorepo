@@ -69,7 +69,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -83,7 +83,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "start",
         encodedGameData,
@@ -107,7 +107,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "start",
         encodedParams.encodedGameData,
@@ -121,7 +121,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const encodedFinishParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.wager,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: 1,
     });
 
@@ -142,7 +142,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.videoPoker as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "finish",
         encodedGameData,
@@ -162,7 +162,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.videoPoker,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "finish",
         encodedFinishParams.encodedGameData,

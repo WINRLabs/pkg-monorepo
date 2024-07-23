@@ -92,7 +92,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
         wager: formValues.wager,
         stopGain: 0,
         stopLoss: 0,
-        selectedCurrency: selectedToken.address,
+        selectedCurrency: selectedToken,
         lastPrice: getPrice(selectedToken.address),
       });
 
@@ -128,7 +128,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roulette as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -154,7 +154,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
       functionName: "perform",
       args: [
         gameAddresses.roulette,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,

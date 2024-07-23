@@ -77,7 +77,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const encodedParams = React.useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.actualBetAmount,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -94,7 +94,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -116,7 +116,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const encodedBuyFreeSpinParams = React.useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
       wager: formValues.betAmount,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -130,7 +130,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "buyFreeSpins",
         encodedGameData,
@@ -151,7 +151,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const encodedFreeSpinParams = React.useMemo(() => {
     const { tokenAddress } = prepareGameTransaction({
       wager: formValues.betAmount,
-      selectedCurrency: selectedToken.address,
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
@@ -160,7 +160,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "freeSpin",
         "0x",
@@ -179,7 +179,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,
@@ -196,7 +196,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "buyFreeSpins",
         encodedBuyFreeSpinParams.encodedGameData,
@@ -213,7 +213,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: "perform",
       args: [
         gameAddresses.winrBonanza as Address,
-        "0x0000000000000000000000000000000000000004",
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "freeSpin",
         encodedFreeSpinParams.encodedTxData,
