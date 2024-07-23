@@ -102,7 +102,7 @@ export function Providers(props: { children: ReactNode }) {
             },
           ]}
           selectedToken={{
-            address: "0x7d259fdA68762D0DEB6EA5c8e4e949D97Da6caB9",
+            address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
             bankrollIndex: "0x0000000000000000000000000000000000000005",
             displayDecimals: 6,
             decimals: 18,
