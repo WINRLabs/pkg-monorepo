@@ -15,7 +15,11 @@ const UnityFinalizedEvent = "HR_GameEnd";
 
 const BUILDED_GAME_URL = `https://jbassets.fra1.digitaloceanspaces.com/builded-games/crash`;
 
-export const CrashScene = ({ onComplete }: { onComplete?: () => void }) => {
+export const CrashScene = ({
+  onComplete,
+}: {
+  onComplete?: (multiplier: number) => void;
+}) => {
   const devicePixelRatio = useDevicePixelRatio();
 
   // const { address: currentAccount } = useCurrentAccount();
@@ -92,14 +96,14 @@ export const CrashScene = ({ onComplete }: { onComplete?: () => void }) => {
         "WebGLHandler",
         "ReceiveMessage",
         // `M_StartGame|${finalMultiplier}`
-        `M_StartGame|${2}`
+        `M_StartGame|${finalMultiplier}`
       );
     }
   }, [status, finalMultiplier, isLoaded]);
 
   React.useEffect(() => {
     if (unityEvent.name === "M_GameEnd") {
-      onComplete && onComplete();
+      onComplete && onComplete(finalMultiplier);
 
       setTimeout(() => {
         resetParticipants();

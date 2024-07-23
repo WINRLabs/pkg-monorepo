@@ -47,11 +47,20 @@ export const crashGameStore = create<CrashGameStore>()((set) => ({
       isGamblerParticipant: false,
     }),
   addParticipant: (participant: Participant) =>
-    set((state) => ({
-      ...state,
-      participants: [...state.participants, participant],
-    })),
+    set((state) => {
+      const existingParticipant = state.participants.find(
+        (p) => p.name === participant.name
+      );
 
+      if (existingParticipant) {
+        return state;
+      }
+
+      return {
+        ...state,
+        participants: [...state.participants, participant],
+      };
+    }),
   resetParticipants: () => set({ participants: [] }),
 }));
 

@@ -27,7 +27,7 @@ type TemplateProps = {
   maxWager?: number;
   onSubmitGameForm: (props: CrashFormFields) => void;
   onFormChange?: (fields: CrashFormFields) => void;
-  onComplete?: () => void;
+  onComplete?: (multiplier: number) => void;
 };
 
 const CrashTemplate = (props: TemplateProps) => {
@@ -54,9 +54,12 @@ const CrashTemplate = (props: TemplateProps) => {
     },
   });
 
-  const onComplete = React.useCallback(() => {
-    props.onComplete && props.onComplete();
-  }, [props.onComplete]);
+  const onComplete = React.useCallback(
+    (multiplier: number) => {
+      props.onComplete && props.onComplete(multiplier);
+    },
+    [props.onComplete]
+  );
 
   React.useEffect(() => {
     const debouncedCb = debounce((formFields) => {

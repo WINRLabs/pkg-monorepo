@@ -11,6 +11,7 @@ import {
   useHandleTx,
   usePriceFeed,
   useTokenAllowance,
+  useTokenBalances,
   useTokenStore,
 } from "@winrlabs/web3";
 import { useEffect, useMemo, useState } from "react";
@@ -47,9 +48,14 @@ const CrashGame = (props: CrashTemplateProps) => {
     cashierAddress,
     uiOperatorAddress,
   } = useContractConfigContext();
-
+  const currentAccount = useCurrentAccount();
   const selectedToken = useTokenStore((s) => s.selectedToken);
   const selectedTokenAddress = selectedToken.address;
+
+  const { refetch: refetchBalances } = useTokenBalances({
+    account: currentAccount.address || "0x0000000",
+    balancesToRead: [selectedTokenAddress],
+  });
 
   const [formValues, setFormValues] = useState<CrashFormFields>({
     multiplier: 1,
@@ -64,8 +70,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     ]);
 
   const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.crash);
-
-  const currentAccount = useCurrentAccount();
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,
@@ -113,6 +117,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     };
   }, [formValues?.multiplier, formValues?.wager]);
 
+  console.log("CRASH", gameEvent);
   const handleTx = useHandleTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
@@ -209,13 +214,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     try {
       console.log(encodedParams.encodedTxData);
       await handleTx.mutateAsync();
-      const participant = {
-        avatar: "",
-        name: currentAccount.address!,
-        multiplier: formValues.multiplier,
-        bet: formValues.wager,
-      };
-      addParticipant(participant);
       setIsGamblerParticipant(true);
     } catch (e: any) {
       console.log("handleTx error", e);
@@ -224,9 +222,6 @@ const CrashGame = (props: CrashTemplateProps) => {
 
   useEffect(() => {
     if (!gameEvent) return;
-
-    console.log("gameEvent:", gameEvent);
-
     const currentTime = new Date().getTime() / 1000;
 
     const {
@@ -234,8 +229,11 @@ const CrashGame = (props: CrashTemplateProps) => {
       joiningStart,
       randoms,
       cooldownFinish,
-      isGameActive,
+      bet,
+      player,
       participants,
+      result,
+      isGameActive,
     } = gameEvent;
 
     const isGameFinished =
@@ -258,6 +256,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       joiningFinish,
       joiningStart,
       cooldownFinish,
+      finalMultiplier: result / 100,
     });
 
     if (participants?.length > 0 && isGameActive) {
@@ -272,8 +271,26 @@ const CrashGame = (props: CrashTemplateProps) => {
         });
       });
     }
+
+    if (bet && bet?.converted?.wager && player) {
+      addParticipant({
+        avatar: "",
+        name: player,
+        multiplier: bet.choice as unknown as number,
+        bet: bet.converted.wager,
+      });
+    }
   }, [gameEvent, currentAccount.address]);
 
+  const onComplete = (multiplier: number) => {
+    const isWon = multiplier <= gameEvent.result / 100;
+
+    refetchBalances();
+
+    if (isWon) {
+      console.log("WON");
+    }
+  };
   return (
     <div>
       <CrashTemplate
@@ -283,6 +300,7 @@ const CrashGame = (props: CrashTemplateProps) => {
             logo: "/crash/game-logo.svg",
           },
         }}
+        onComplete={onComplete}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {
           setFormValues(val);

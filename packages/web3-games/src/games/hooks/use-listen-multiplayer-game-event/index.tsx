@@ -84,7 +84,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     // socket.on("connect_info", onConnectEvent);
 
     socket.onAny((e) => {
-      console.log("MULTIPLAYER ANY EVENT", e);
+      // console.log("MULTIPLAYER ANY EVENT", e);
     });
 
     return () => {
