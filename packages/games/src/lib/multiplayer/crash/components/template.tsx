@@ -28,6 +28,7 @@ type TemplateProps = {
   onSubmitGameForm: (props: CrashFormFields) => void;
   onFormChange?: (fields: CrashFormFields) => void;
   onComplete?: (multiplier: number) => void;
+  gameUrl?: string;
 };
 
 const CrashTemplate = (props: TemplateProps) => {
@@ -84,7 +85,7 @@ const CrashTemplate = (props: TemplateProps) => {
               maxWager={props?.maxWager || 2000}
             />
             <LastBets />
-            <CrashScene onComplete={onComplete} />
+            <CrashScene onComplete={onComplete} gameUrl={props.gameUrl} />
             <div className="wr-absolute wr-top-0 wr-z-10 wr-h-full wr-w-full md:wr-bg-unity-overlay" />
             <CrashParticipant />
           </UnityGameContainer>

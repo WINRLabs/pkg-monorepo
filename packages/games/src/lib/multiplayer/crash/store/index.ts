@@ -9,7 +9,7 @@ export type CrashGameState = {
   joiningFinish: number;
   joiningStart: number;
   cooldownFinish: number;
-  lastBets: string[];
+  lastBets: number[];
   participants: Participant[];
   finalMultiplier: number;
   isGamblerParticipant?: boolean;

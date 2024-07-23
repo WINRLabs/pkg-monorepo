@@ -11,14 +11,12 @@ import { MultiplayerGameStatus } from "../../core/type";
 import useCrashGameStore from "../store";
 import { CrashForm } from "../types";
 
-const UnityFinalizedEvent = "HR_GameEnd";
-
-const BUILDED_GAME_URL = `https://jbassets.fra1.digitaloceanspaces.com/builded-games/crash`;
-
 export const CrashScene = ({
   onComplete,
+  gameUrl,
 }: {
   onComplete?: (multiplier: number) => void;
+  gameUrl?: string;
 }) => {
   const devicePixelRatio = useDevicePixelRatio();
 
@@ -26,24 +24,14 @@ export const CrashScene = ({
   const form = useFormContext() as CrashForm;
   const multiplier = form.watch("multiplier");
 
-  const {
-    status,
-    participants,
-    joiningFinish,
-    updateState,
-    resetParticipants,
-    finalMultiplier,
-    isGamblerParticipant,
-  } = useCrashGameStore([
-    "status",
-    "participants",
-    "joiningFinish",
-    "updateState",
-    "resetParticipants",
-    "resetState",
-    "finalMultiplier",
-    "isGamblerParticipant",
-  ]);
+  const { status, resetParticipants, finalMultiplier, isGamblerParticipant } =
+    useCrashGameStore([
+      "status",
+      "resetParticipants",
+      "resetState",
+      "finalMultiplier",
+      "isGamblerParticipant",
+    ]);
 
   const percentageRef = React.useRef(0);
 
@@ -54,10 +42,10 @@ export const CrashScene = ({
     unityProvider,
     UNSAFE__detachAndUnloadImmediate: detachAndUnloadImmediate,
   } = useUnityContext({
-    loaderUrl: `${BUILDED_GAME_URL}/SpaceCat.loader.js`,
-    dataUrl: `${BUILDED_GAME_URL}/SpaceCat.data.unityweb`,
-    frameworkUrl: `${BUILDED_GAME_URL}/SpaceCat.framework.js.unityweb`,
-    codeUrl: `${BUILDED_GAME_URL}/SpaceCat.wasm.unityweb`,
+    loaderUrl: `${gameUrl}/SpaceCat.loader.js`,
+    dataUrl: `${gameUrl}/SpaceCat.data.unityweb`,
+    frameworkUrl: `${gameUrl}/SpaceCat.framework.js.unityweb`,
+    codeUrl: `${gameUrl}/SpaceCat.wasm.unityweb`,
   });
 
   useEqualizeUnitySound({
@@ -72,16 +60,6 @@ export const CrashScene = ({
 
   const { unityEvent } = useListenUnityEvent();
 
-  // const timeLeftToStart = useCountdown(joiningFinish);
-
-  // React.useEffect(() => {
-  //   if (timeLeftToStart <= 0 && status === MultiplayerGameStatus.None) {
-  //     updateState({
-  //       status: MultiplayerGameStatus.Wait,
-  //     });
-  //   }
-  // }, [timeLeftToStart, status]);
-
   React.useEffect(() => {
     if (isLoaded && status === MultiplayerGameStatus.Wait) {
       // prepare rocket
@@ -95,7 +73,6 @@ export const CrashScene = ({
       sendMessage(
         "WebGLHandler",
         "ReceiveMessage",
-        // `M_StartGame|${finalMultiplier}`
         `M_StartGame|${finalMultiplier}`
       );
     }

@@ -1,45 +1,28 @@
 import { LastBetsContainer } from "../../../common/last-bets-container";
+import { cn } from "../../../utils/style";
+import useCrashGameStore from "../store";
 
 const LastBets = () => {
-  //   const { data, refetch } = useGetHorseRaceGameHistoryQuery(
-  //     getGraphQLClient(),
-  //     {},
-  //     {
-  //       retry: false,
-  //       refetchOnMount: false,
-  //       refetchOnWindowFocus: false,
-  //     }
-  //   );
-
-  //   React.useEffect(() => {
-  //     isFinished && refetch();
-  //   }, [isFinished]);
+  const { lastBets: history } = useCrashGameStore(["lastBets"]);
 
   return (
     <LastBetsContainer className="wr-absolute wr-left-1/2 wr-top-5 wr--translate-x-1/2">
-      <div></div>
-      {/* {history.map((horse, i) => (
+      {history.map((multiplier, i) => (
         <div
           className={cn(
-            "wr-flex wr-h-[28px] wr-items-center wr-justify-center wr-rounded-[200px] wr-px-2 wr-py-1.5 wr-font-semibold",
+            "wr-flex wr-h-[28px] wr-w-12 wr-flex-grow wr-items-center wr-justify-center wr-rounded-md wr-text-xs wr-font-semibold wr-leading-3",
             {
-              "wr-bg-white wr-bg-opacity-25":
-                `${horseMultipliers[String(horse) as Horse]}x` === "2x",
-              "wr-bg-yellow-600":
-                `${horseMultipliers[String(horse) as Horse]}x` === "3x",
-              "wr-bg-blue-600":
-                `${horseMultipliers[String(horse) as Horse]}x` == "8x",
-              "wr-bg-green-500":
-                `${horseMultipliers[String(horse) as Horse]}x` === "15x",
-              "wr-bg-red-600":
-                `${horseMultipliers[String(horse) as Horse]}x` === "60x",
+              "wr-bg-white wr-bg-opacity-25": multiplier < 1,
+              "wr-bg-[#1BC3543D] text-[#30DB60]": multiplier >= 1,
+              "wr-bg-[#C3B31B3D]/25 wr-text-[#E5D321]": multiplier >= 2,
+              "wr-bg-[#B13A3A3D]/25 wr-text-[#F94747]": multiplier >= 10,
             }
           )}
           key={i}
         >
-          {horseMultipliers[String(horse) as Horse]}x
+          X{multiplier}
         </div>
-      ))} */}
+      ))}
     </LastBetsContainer>
   );
 };

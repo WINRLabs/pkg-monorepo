@@ -1,5 +1,7 @@
 "use client";
+import { useGameControllerGetMultiplayerGameHistory } from "@winrlabs/api";
 import {
+  GameType,
   MultiplayerGameStatus,
   toDecimals,
   useCrashGameStore,
@@ -39,6 +41,7 @@ interface CrashTemplateProps {
   minWager?: number;
   maxWager?: number;
   onAnimationCompleted?: (result: []) => void;
+  gameUrl?: string;
 }
 
 const CrashGame = (props: CrashTemplateProps) => {
@@ -51,7 +54,15 @@ const CrashGame = (props: CrashTemplateProps) => {
   const currentAccount = useCurrentAccount();
   const selectedToken = useTokenStore((s) => s.selectedToken);
   const selectedTokenAddress = selectedToken.address;
-
+  const { data: betHistory, refetch: refetchBetHistory } =
+    useGameControllerGetMultiplayerGameHistory({
+      queryParams: {
+        game: GameType.MOON,
+        // TODO: swagger does not include the pagination params. ask be to fix it.
+        // @ts-ignore
+        limit: 7,
+      },
+    });
   const { refetch: refetchBalances } = useTokenBalances({
     account: currentAccount.address || "0x0000000",
     balancesToRead: [selectedTokenAddress],
@@ -291,6 +302,15 @@ const CrashGame = (props: CrashTemplateProps) => {
       console.log("WON");
     }
   };
+
+  useEffect(() => {
+    if (betHistory && betHistory?.length > 0) {
+      updateState({
+        lastBets: betHistory.map((data) => Number(data.result) / 100),
+      });
+    }
+  }, [betHistory]);
+
   return (
     <div>
       <CrashTemplate
@@ -305,6 +325,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         onFormChange={(val) => {
           setFormValues(val);
         }}
+        gameUrl={props.gameUrl}
       />
     </div>
   );
