@@ -20,7 +20,6 @@ export const CrashScene = ({
 }) => {
   const devicePixelRatio = useDevicePixelRatio();
 
-  // const { address: currentAccount } = useCurrentAccount();
   const form = useFormContext() as CrashForm;
   const multiplier = form.watch("multiplier");
 
