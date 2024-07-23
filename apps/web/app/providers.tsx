@@ -65,7 +65,7 @@ export function Providers(props: { children: ReactNode }) {
           }}
           tokens={[
             {
-              address: "0xAfBd36C63F824B60bAc808FA1fA4C2A1a130a772",
+              address: "0x2Bd00DD5fc6A1942a94B88fB7fFaB458b41f3Bbf",
               bankrollIndex: "0x0000000000000000000000000000000000000001",
               displayDecimals: 2,
               decimals: 6,
@@ -74,7 +74,7 @@ export function Providers(props: { children: ReactNode }) {
               playable: true,
             },
             {
-              address: "0x32DF602bB33390CefB3cA9F9608ee100971ff1a9",
+              address: "0x2d1AdcaA8118B36855505973B7778A4F469cDBeD",
               bankrollIndex: "0x0000000000000000000000000000000000000002",
               displayDecimals: 2,
               decimals: 6,
@@ -83,7 +83,7 @@ export function Providers(props: { children: ReactNode }) {
               playable: true,
             },
             {
-              address: "0x0Fc2838ad7247a883d96FEA4a4c7402BAf20D1be",
+              address: "0xA517ebFa624F572eD981b71971D31790500aC4E0",
               bankrollIndex: "0x0000000000000000000000000000000000000003",
               displayDecimals: 6,
               decimals: 8,
@@ -92,7 +92,7 @@ export function Providers(props: { children: ReactNode }) {
               playable: true,
             },
             {
-              address: "0x7d259fdA68762D0DEB6EA5c8e4e949D97Da6caB9",
+              address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
               bankrollIndex: "0x0000000000000000000000000000000000000004",
               displayDecimals: 6,
               decimals: 18,
@@ -102,7 +102,7 @@ export function Providers(props: { children: ReactNode }) {
             },
           ]}
           selectedToken={{
-            address: "0x7d259fdA68762D0DEB6EA5c8e4e949D97Da6caB9",
+            address: "0x1beC7d3Bc7B898f764C98B26Dc8140463Ffe064E",
             bankrollIndex: "0x0000000000000000000000000000000000000004",
             displayDecimals: 6,
             decimals: 18,
