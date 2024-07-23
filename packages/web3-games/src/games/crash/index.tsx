@@ -99,7 +99,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       functionName: "perform",
       args: [
         gameAddresses.crash as Address,
-        tokenAddress,
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedGameData,
@@ -119,7 +119,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       functionName: "perform",
       args: [
         gameAddresses.crash,
-        encodedParams.tokenAddress,
+        selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         "bet",
         encodedParams.encodedGameData,
@@ -159,7 +159,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       functionName: "perform",
       args: [
         gameAddresses.crash as Address,
-        "0x0000000000000000000000000000000000000004",
+        "0x0000000000000000000000000000000000000005",
         uiOperatorAddress as Address,
         "claim",
         encodedParams,
@@ -209,18 +209,17 @@ const CrashGame = (props: CrashTemplateProps) => {
     try {
       console.log(encodedParams.encodedTxData);
       await handleTx.mutateAsync();
+      const participant = {
+        avatar: "",
+        name: currentAccount.address!,
+        multiplier: formValues.multiplier,
+        bet: formValues.wager,
+      };
+      addParticipant(participant);
+      setIsGamblerParticipant(true);
     } catch (e: any) {
       console.log("handleTx error", e);
     }
-
-    const participant = {
-      avatar: "",
-      name: currentAccount.address!,
-      multiplier: formValues.multiplier,
-      bet: formValues.wager,
-    };
-    addParticipant(participant);
-    setIsGamblerParticipant(true);
   };
 
   useEffect(() => {
