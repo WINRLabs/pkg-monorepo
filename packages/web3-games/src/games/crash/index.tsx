@@ -82,7 +82,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       wager: formValues?.wager || 0,
       stopGain: 0,
       stopLoss: 0,
-      selectedCurrency: "0x0000000000000000000000000000000000000004",
+      selectedCurrency: selectedToken,
       lastPrice: getPrice(selectedToken.address),
     });
 
