@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 1.0.1
+
+### Patch Changes
+
+- 94adbd1: bump
+- Updated dependencies [94adbd1]
+  - @winrlabs/api@1.1.1
+  - @winrlabs/games@2.10.1
+  - @winrlabs/web3@0.3.1
+  - @winrlabs/web3-games@1.0.1
+
 ## 1.0.0
 
 ### Minor Changes

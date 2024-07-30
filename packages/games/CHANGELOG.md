@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.10.1
+
+### Patch Changes
+
+- 94adbd1: bump
+
 ## 2.10.0
 
 ### Minor Changes
