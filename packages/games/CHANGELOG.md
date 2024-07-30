@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.10.0
+
+### Minor Changes
+
+- af62052: Constant url
+
 ## 2.9.0
 
 ### Minor Changes
