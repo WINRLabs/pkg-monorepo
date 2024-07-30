@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.11.0
+
+### Minor Changes
+
+- cfca46d: mines ux update
+- 442a4f8: live results
+
 ## 2.10.1
 
 ### Patch Changes

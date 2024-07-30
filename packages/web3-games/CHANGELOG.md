@@ -1,5 +1,21 @@
 # @winrlabs/web3-games
 
+## 2.0.0
+
+### Minor Changes
+
+- cfca46d: mines ux update
+- 442a4f8: live results
+
+### Patch Changes
+
+- Updated dependencies [cfca46d]
+- Updated dependencies [442a4f8]
+  - @winrlabs/api@1.2.0
+  - @winrlabs/games@2.11.0
+  - @winrlabs/web3@0.4.0
+  - @winrlabs/web3-games@2.0.0
+
 ## 1.0.1
 
 ### Patch Changes

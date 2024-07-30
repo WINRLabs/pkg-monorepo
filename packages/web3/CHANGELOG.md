@@ -1,5 +1,17 @@
 # @winrlabs/web3
 
+## 0.4.0
+
+### Minor Changes
+
+- cfca46d: mines ux update
+- 442a4f8: live results
+
+### Patch Changes
+
+- Updated dependencies [cfca46d]
+  - @winrlabs/api@1.2.0
+
 ## 0.3.1
 
 ### Patch Changes

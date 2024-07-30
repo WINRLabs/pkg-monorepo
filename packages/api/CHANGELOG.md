@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.2.0
+
+### Minor Changes
+
+- cfca46d: mines ux update
+
 ## 1.1.1
 
 ### Patch Changes
