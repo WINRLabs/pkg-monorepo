@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 5.0.0
+
+### Minor Changes
+
+- 069c057: cached nonce
+
+### Patch Changes
+
+- Updated dependencies [069c057]
+  - @winrlabs/web3@0.8.0
+  - @winrlabs/web3-games@5.0.0
+
 ## 4.0.0
 
 ### Minor Changes

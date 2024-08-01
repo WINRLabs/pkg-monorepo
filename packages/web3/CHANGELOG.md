@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.8.0
+
+### Minor Changes
+
+- 069c057: cached nonce
+
 ## 0.7.0
 
 ### Minor Changes
