@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 7.0.2
+
+### Patch Changes
+
+- 1b5a1ab: keno wait till anim complete
+- Updated dependencies [1b5a1ab]
+  - @winrlabs/web3-games@7.0.2
+  - @winrlabs/games@2.13.2
+
 ## 7.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.2
+
+### Patch Changes
+
+- 1b5a1ab: keno wait till anim complete
+
 ## 2.13.1
 
 ### Patch Changes
