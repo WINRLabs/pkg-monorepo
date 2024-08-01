@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 6.0.0
+
+### Minor Changes
+
+- f933efa: PAYMASTER UPDATE V2
+
+### Patch Changes
+
+- Updated dependencies [f933efa]
+  - @winrlabs/web3@0.9.0
+  - @winrlabs/web3-games@6.0.0
+
 ## 5.0.0
 
 ### Minor Changes

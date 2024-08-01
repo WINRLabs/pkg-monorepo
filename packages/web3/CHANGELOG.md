@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.9.0
+
+### Minor Changes
+
+- f933efa: PAYMASTER UPDATE V2
+
 ## 0.8.0
 
 ### Minor Changes
