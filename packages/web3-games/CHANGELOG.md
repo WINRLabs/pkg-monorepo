@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 3.0.1
+
+### Patch Changes
+
+- d5949f9: use participant bankrollIdx
+- Updated dependencies [017794a]
+- Updated dependencies [d5949f9]
+  - @winrlabs/web3@0.6.0
+  - @winrlabs/web3-games@3.0.1
+
 ## 3.0.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.6.0
+
+### Minor Changes
+
+- 017794a: paymaster updatae
+
 ## 0.5.0
 
 ### Minor Changes
