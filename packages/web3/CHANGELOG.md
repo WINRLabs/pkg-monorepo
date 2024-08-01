@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.0
+
+### Minor Changes
+
+- befb5fa: ui improvement
+
 ## 0.9.0
 
 ### Minor Changes

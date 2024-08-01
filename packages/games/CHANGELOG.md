@@ -1,5 +1,15 @@
 # @winrlabs/games
 
+## 2.13.0
+
+### Minor Changes
+
+- befb5fa: ui improvement
+
+### Patch Changes
+
+- f79f776: faster rps
+
 ## 2.12.0
 
 ### Minor Changes

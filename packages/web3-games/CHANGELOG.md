@@ -1,5 +1,19 @@
 # @winrlabs/web3-games
 
+## 7.0.0
+
+### Minor Changes
+
+- befb5fa: ui improvement
+
+### Patch Changes
+
+- Updated dependencies [f79f776]
+- Updated dependencies [befb5fa]
+  - @winrlabs/games@2.13.0
+  - @winrlabs/web3@0.10.0
+  - @winrlabs/web3-games@7.0.0
+
 ## 6.0.0
 
 ### Minor Changes
