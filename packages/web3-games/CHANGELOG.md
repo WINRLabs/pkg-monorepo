@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 7.0.1
+
+### Patch Changes
+
+- d652f3e: faster keno
+- Updated dependencies [d652f3e]
+  - @winrlabs/web3-games@7.0.1
+  - @winrlabs/games@2.13.1
+
 ## 7.0.0
 
 ### Minor Changes

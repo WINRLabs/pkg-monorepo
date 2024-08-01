@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.1
+
+### Patch Changes
+
+- d652f3e: faster keno
+
 ## 2.13.0
 
 ### Minor Changes
