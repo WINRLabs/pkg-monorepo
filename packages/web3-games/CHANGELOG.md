@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 4.0.0
+
+### Minor Changes
+
+- eb65d53: paymaster update
+
+### Patch Changes
+
+- Updated dependencies [eb65d53]
+  - @winrlabs/web3@0.7.0
+  - @winrlabs/web3-games@4.0.0
+
 ## 3.0.1
 
 ### Patch Changes

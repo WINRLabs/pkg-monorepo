@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.7.0
+
+### Minor Changes
+
+- eb65d53: paymaster update
+
 ## 0.6.0
 
 ### Minor Changes
