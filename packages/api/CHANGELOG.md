@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.0
+
+### Minor Changes
+
+- 04764d6: refund level check
+
 ## 1.2.0
 
 ### Minor Changes

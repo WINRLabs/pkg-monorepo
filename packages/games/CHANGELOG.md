@@ -1,5 +1,16 @@
 # @winrlabs/games
 
+## 2.12.0
+
+### Minor Changes
+
+- 04764d6: refund level check
+
+### Patch Changes
+
+- 97d0ff3: hide scrollbar on all games controller etc.
+- a531117: roll game result size issue
+
 ## 2.11.0
 
 ### Minor Changes

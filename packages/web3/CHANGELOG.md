@@ -1,5 +1,16 @@
 # @winrlabs/web3
 
+## 0.5.0
+
+### Minor Changes
+
+- 04764d6: refund level check
+
+### Patch Changes
+
+- Updated dependencies [04764d6]
+  - @winrlabs/api@1.3.0
+
 ## 0.4.0
 
 ### Minor Changes

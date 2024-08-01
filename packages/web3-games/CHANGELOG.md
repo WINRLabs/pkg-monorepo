@@ -1,5 +1,23 @@
 # @winrlabs/web3-games
 
+## 3.0.0
+
+### Minor Changes
+
+- 04764d6: refund level check
+
+### Patch Changes
+
+- 7089df1: format user's wheel wager
+- Updated dependencies [97d0ff3]
+- Updated dependencies [7089df1]
+- Updated dependencies [a531117]
+- Updated dependencies [04764d6]
+  - @winrlabs/games@2.12.0
+  - @winrlabs/web3-games@3.0.0
+  - @winrlabs/api@1.3.0
+  - @winrlabs/web3@0.5.0
+
 ## 2.0.0
 
 ### Minor Changes
