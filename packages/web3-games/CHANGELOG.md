@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.3
+
+### Patch Changes
+
+- 260d592: dump
+- Updated dependencies [260d592]
+  - @winrlabs/games@2.13.3
+  - @winrlabs/web3@0.10.1
+  - @winrlabs/web3-games@7.0.3
+
 ## 7.0.2
 
 ### Patch Changes

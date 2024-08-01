@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.1
+
+### Patch Changes
+
+- 260d592: dump
+
 ## 0.10.0
 
 ### Minor Changes

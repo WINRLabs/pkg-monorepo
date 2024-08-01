@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.3
+
+### Patch Changes
+
+- 260d592: dump
+
 ## 2.13.2
 
 ### Patch Changes
