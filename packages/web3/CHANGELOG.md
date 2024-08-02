@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.7
+
+### Patch Changes
+
+- 04b399a: ui fix
+
 ## 0.10.6
 
 ### Patch Changes
