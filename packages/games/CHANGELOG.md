@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.13.6
+
+### Patch Changes
+
+- 04b661a: coin flip looks great
+- f231149: dice slider new number range and min-value change
+
 ## 2.13.5
 
 ### Patch Changes
