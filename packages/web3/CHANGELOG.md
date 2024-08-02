@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.6
+
+### Patch Changes
+
+- 1729a68: update
+
 ## 0.10.5
 
 ### Patch Changes

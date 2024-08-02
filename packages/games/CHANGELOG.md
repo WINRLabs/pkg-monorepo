@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.7
+
+### Patch Changes
+
+- 1729a68: update
+
 ## 2.13.6
 
 ### Patch Changes
