@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.5
+
+### Patch Changes
+
+- 01f8773: wagmi version upgrade
+
 ## 2.13.4
 
 ### Patch Changes

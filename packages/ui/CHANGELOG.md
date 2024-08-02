@@ -1,5 +1,13 @@
 # @winrlabs/ui
 
+## 9.0.3
+
+### Patch Changes
+
+- 01f8773: wagmi version upgrade
+- Updated dependencies [01f8773]
+  - @winrlabs/web3@0.10.3
+
 ## 9.0.2
 
 ### Patch Changes

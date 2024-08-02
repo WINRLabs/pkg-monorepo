@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.5
+
+### Patch Changes
+
+- 01f8773: wagmi version upgrade
+- Updated dependencies [01f8773]
+  - @winrlabs/games@2.13.5
+  - @winrlabs/web3@0.10.3
+  - @winrlabs/web3-games@7.0.5
+
 ## 7.0.4
 
 ### Patch Changes

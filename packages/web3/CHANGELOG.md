@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.3
+
+### Patch Changes
+
+- 01f8773: wagmi version upgrade
+
 ## 0.10.2
 
 ### Patch Changes
