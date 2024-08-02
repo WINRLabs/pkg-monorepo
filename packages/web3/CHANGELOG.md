@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.5
+
+### Patch Changes
+
+- 5f2434a: hook added to get web3 auth account
+
 ## 0.10.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 7.0.7
+
+### Patch Changes
+
+- 5f2434a: hook added to get web3 auth account
+- Updated dependencies [5f2434a]
+  - @winrlabs/web3@0.10.5
+  - @winrlabs/web3-games@7.0.7
+
 ## 7.0.6
 
 ### Patch Changes
