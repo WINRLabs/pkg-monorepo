@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.4
+
+### Patch Changes
+
+- 26fc224: Update smart wallet connector to return web3Instance as well
+
 ## 0.10.3
 
 ### Patch Changes

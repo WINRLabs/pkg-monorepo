@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 7.0.6
+
+### Patch Changes
+
+- 26fc224: Update smart wallet connector to return web3Instance as well
+- Updated dependencies [26fc224]
+  - @winrlabs/web3@0.10.4
+  - @winrlabs/web3-games@7.0.6
+
 ## 7.0.5
 
 ### Patch Changes
