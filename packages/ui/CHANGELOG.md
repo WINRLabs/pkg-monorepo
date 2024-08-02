@@ -1,5 +1,11 @@
 # @winrlabs/ui
 
+## 9.0.2
+
+### Patch Changes
+
+- @winrlabs/web3@0.10.2
+
 ## 9.0.1
 
 ### Patch Changes

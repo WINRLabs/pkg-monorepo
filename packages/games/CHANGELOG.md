@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.13.4
+
+### Patch Changes
+
+- e296b82: api version update
+
 ## 2.13.3
 
 ### Patch Changes

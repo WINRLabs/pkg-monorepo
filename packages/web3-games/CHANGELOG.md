@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 7.0.4
+
+### Patch Changes
+
+- e296b82: api version update
+- Updated dependencies [e296b82]
+  - @winrlabs/web3-games@7.0.4
+  - @winrlabs/games@2.13.4
+  - @winrlabs/api@1.3.1
+  - @winrlabs/web3@0.10.2
+
 ## 7.0.3
 
 ### Patch Changes

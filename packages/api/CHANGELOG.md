@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.1
+
+### Patch Changes
+
+- e296b82: api version update
+
 ## 1.3.0
 
 ### Minor Changes
