@@ -1,5 +1,17 @@
 # @winrlabs/games
 
+## 2.14.0
+
+### Minor Changes
+
+- 80903b6: new limbo
+
+### Patch Changes
+
+- 70f6bc9: remove dice bg
+- a2a3cc7: faster dice
+- 6d6f6c9: add new roll under design for dice
+
 ## 2.13.8
 
 ### Patch Changes
