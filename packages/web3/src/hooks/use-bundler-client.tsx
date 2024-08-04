@@ -2,11 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { JSONRPCClient, TypedJSONRPCClient } from "json-rpc-2.0";
-import { createContext, ReactNode,useContext } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
 
-import { UserOperation } from "../smart-wallet";
+import { GameOperation, UserOperation } from "../smart-wallet";
 
 const BundlerClientContext = createContext<UseBundlerClient>({
   client: undefined,
@@ -28,6 +28,11 @@ export type BundlerMethods = {
 
   "sendUserOperation"(params: Partial<UserOperation>): {
     hash: Hex;
+    status: string;
+  };
+
+  "sendGameOperation"(params: Partial<GameOperation>): {
+    decodedData: any;
     status: string;
   };
 };

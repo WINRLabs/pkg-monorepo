@@ -12,6 +12,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
+  useHandleGameTx,
   useHandleTx,
   usePriceFeed,
   useTokenAllowance,
@@ -19,7 +20,13 @@ import {
   useTokenStore,
 } from "@winrlabs/web3";
 import React, { useMemo, useState } from "react";
-import { Address, encodeAbiParameters, encodeFunctionData } from "viem";
+import {
+  Address,
+  encodeAbiParameters,
+  encodeFunctionData,
+  formatUnits,
+  parseUnits,
+} from "viem";
 
 import { useBetHistory, usePlayerGameStatus } from "../hooks";
 import { useContractConfigContext } from "../hooks/use-contract-config";
@@ -30,6 +37,7 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from "../utils";
+import SuperJSON from "superjson";
 
 type TemplateOptions = {
   scene?: {
@@ -46,6 +54,12 @@ interface TemplateWithWeb3Props {
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: CoinFlipGameResult[]) => void;
   onAnimationSkipped?: (result: CoinFlipGameResult[]) => void;
+}
+
+interface CoinFlipStep {
+  win: boolean;
+  outcome: number;
+  payout: bigint;
 }
 
 export default function CoinFlipGame(props: TemplateWithWeb3Props) {
@@ -94,8 +108,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
 
   const { priceFeed } = usePriceFeed();
 
-  const [coinFlipResult, setCoinFlipResult] =
-    useState<DecodedEvent<any, SingleStepSettledEvent>>();
+  const [coinFlipResult, setCoinFlipResult] = useState<CoinFlipStep[]>();
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || "0x",
@@ -112,11 +125,16 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   const coinFlipSteps = useMemo(() => {
     if (!coinFlipResult) return [];
 
-    return coinFlipResult?.program?.[0]?.data.converted.steps.map((s) => ({
-      coinSide: s.outcome,
-      payout: s.payout,
-      payoutInUsd: s.payout,
-    }));
+    return coinFlipResult.map((s) => {
+      const payout =
+        Number(formatUnits(s.payout, selectedToken.decimals)) *
+        priceFeed[selectedToken.priceKey];
+      return {
+        coinSide: s.outcome,
+        payout: payout,
+        payoutInUsd: payout,
+      };
+    });
   }, [coinFlipResult]);
 
   const encodedParams = useMemo(() => {
@@ -183,7 +201,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     priceFeed[selectedToken.priceKey],
   ]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -198,6 +216,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     },
     options: {},
     encodedTxData: encodedParams.encodedTxData,
+    encodedGameData: encodedParams.encodedGameData,
   });
 
   const onGameSubmit = async () => {
@@ -218,7 +237,19 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       if (isPlayerHalted) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      const tx = await handleTx.mutateAsync();
+
+      if (tx?.decodedData) {
+        const decodedData = SuperJSON.parse(tx.decodedData) as any;
+
+        console.log(decodedData, "DECODED DATA");
+        const gameSteps = decodedData.program[0]?.data.steps as CoinFlipStep[];
+
+        setCoinFlipResult(gameSteps);
+
+        setIsLoading(false);
+      }
+      console.log(tx, "TX");
     } catch (e: any) {
       console.log("error", e);
       refetchPlayerGameStatus();
@@ -226,18 +257,18 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     }
   };
 
-  React.useEffect(() => {
-    const finalResult = gameEvent;
+  // React.useEffect(() => {
+  //   const finalResult = gameEvent;
 
-    if (finalResult?.program[0]?.type === GAME_HUB_EVENT_TYPES.Settled) {
-      setCoinFlipResult(finalResult);
-      updateGame({
-        wager: formValues.wager || 0,
-        betCount: formValues.betCount || 0,
-      });
-      setIsLoading(false);
-    }
-  }, [gameEvent]);
+  //   if (finalResult?.program[0]?.type === GAME_HUB_EVENT_TYPES.Settled) {
+  //     setCoinFlipResult(finalResult);
+  //     updateGame({
+  //       wager: formValues.wager || 0,
+  //       betCount: formValues.betCount || 0,
+  //     });
+  //     setIsLoading(false);
+  //   }
+  // }, [gameEvent]);
 
   const {
     betHistory,
@@ -263,17 +294,16 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     (step: number) => {
       props.onAnimationStep && props.onAnimationStep(step);
 
-      const currentStepResult =
-        coinFlipResult?.program?.[0]?.data.converted.steps[step - 1];
+      const currentStepResult = coinFlipSteps[step - 1];
 
       if (!currentStepResult) return;
 
       addResult({
-        won: currentStepResult.win,
+        won: !!currentStepResult.payout,
         payout: currentStepResult.payout,
       });
     },
-    [coinFlipResult]
+    [coinFlipSteps]
   );
 
   const onAnimationSkipped = React.useCallback(

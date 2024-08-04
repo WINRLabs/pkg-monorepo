@@ -70,6 +70,14 @@ export interface UserOperation {
   signature: Hex;
 }
 
+export interface GameOperation {
+  game: {
+    type: number;
+    data: `0x${string}`;
+  };
+  userOp: UserOperation;
+}
+
 // todo: remove this wrapper method?
 export function packAccountGasLimits(
   validationGasLimit: bigint,
