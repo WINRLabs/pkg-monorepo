@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.8
+
+### Patch Changes
+
+- 6e1891e: update mm wallet to create smart account everytime
+
 ## 0.10.7
 
 ### Patch Changes

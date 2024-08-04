@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.12
+
+### Patch Changes
+
+- 6e1891e: update mm wallet to create smart account everytime
+- Updated dependencies [6e1891e]
+  - @winrlabs/web3@0.10.8
+  - @winrlabs/games@2.14.1
+  - @winrlabs/web3-games@7.0.12
+
 ## 7.0.11
 
 ### Patch Changes

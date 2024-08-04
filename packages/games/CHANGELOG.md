@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.14.1
+
+### Patch Changes
+
+- 6e1891e: update mm wallet to create smart account everytime
+
 ## 2.14.0
 
 ### Minor Changes
