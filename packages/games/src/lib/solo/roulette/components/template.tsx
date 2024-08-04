@@ -165,6 +165,14 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(prepareSubmit)}>
           <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+            <Roulette.BetController
+              isPrepared={isPrepared}
+              selectedChip={selectedChip}
+              onSelectedChipChange={setSelectedChip}
+              undoBet={undoBet}
+              minWager={minWager || 1}
+              maxWager={maxWager || 2000}
+            />
             <SceneContainer
               style={{
                 backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
@@ -186,14 +194,6 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
                   winningNumber={null}
                   selectedChip={selectedChip}
                   isPrepared={isPrepared}
-                />
-                <Roulette.BetController
-                  isPrepared={isPrepared}
-                  selectedChip={selectedChip}
-                  onSelectedChipChange={setSelectedChip}
-                  undoBet={undoBet}
-                  minWager={minWager || 1}
-                  maxWager={maxWager || 2000}
                 />
                 <Roulette.LastBets />
               </Roulette.Game>
