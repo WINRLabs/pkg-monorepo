@@ -113,12 +113,7 @@ export const useHandleGameTx = <
         throw new Error("No cached signature found");
       }
 
-      const gameOp = {
-        type: 1,
-        data: encodedGameData,
-      };
-
-      const _userOp = {
+      const { status, event } = await client.request("sendGameOperation", {
         sender: userOp.sender,
         nonce: userOp.nonce.toString(),
         factory: userOp.factory,
@@ -138,15 +133,7 @@ export const useHandleGameTx = <
           : "",
         paymasterData: userOp.paymasterData,
         signature: userOp.signature,
-      };
-
-      const { status, decodedData } = await client.request(
-        "sendGameOperation",
-        {
-          game: gameOp,
-          userOp: _userOp,
-        }
-      );
+      });
 
       if (status !== "success") {
         throw new Error(status);
@@ -156,7 +143,7 @@ export const useHandleGameTx = <
         console.log(accountApi?.cachedNonce, "cached nonce updated");
       }
 
-      return { status, decodedData };
+      return { status, event };
     },
     onSuccess: (data) => {
       if (options.successCb) {

@@ -239,8 +239,8 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
 
       const tx = await handleTx.mutateAsync();
 
-      if (tx?.decodedData) {
-        const decodedData = SuperJSON.parse(tx.decodedData) as any;
+      if (tx?.event) {
+        const decodedData = SuperJSON.parse(tx.event) as any;
 
         console.log(decodedData, "DECODED DATA");
         const gameSteps = decodedData.program[0]?.data.steps as CoinFlipStep[];

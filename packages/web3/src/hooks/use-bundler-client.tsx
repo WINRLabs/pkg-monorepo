@@ -6,7 +6,7 @@ import { createContext, ReactNode, useContext } from "react";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
 
-import { GameOperation, UserOperation } from "../smart-wallet";
+import { UserOperation } from "../smart-wallet";
 
 const BundlerClientContext = createContext<UseBundlerClient>({
   client: undefined,
@@ -31,8 +31,8 @@ export type BundlerMethods = {
     status: string;
   };
 
-  "sendGameOperation"(params: Partial<GameOperation>): {
-    decodedData: any;
+  "sendGameOperation"(params: Partial<UserOperation>): {
+    event: any;
     status: string;
   };
 };

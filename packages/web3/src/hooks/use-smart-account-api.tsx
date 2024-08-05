@@ -32,7 +32,7 @@ class Paymaster implements PaymasterAPI {
       // );
 
       return {
-        paymaster: "0x4B6C1BDC3AF5D3047BDDa97D35220E2Ff961Ef69",
+        paymaster: "0x79E55774E08c64171Df3F8AF5C858cd01AEc4085",
         paymasterData: "0x",
         paymasterVerificationGasLimit: BigInt(200000),
         paymasterPostOpGasLimit: BigInt(0),
