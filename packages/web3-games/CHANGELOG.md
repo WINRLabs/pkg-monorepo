@@ -1,5 +1,19 @@
 # @winrlabs/web3-games
 
+## 7.0.13
+
+### Patch Changes
+
+- 7cea9a5: remove logs on production
+- b4c7f34: fix limbo button disable issue
+- 3adf111: base acc api update
+- Updated dependencies [7cea9a5]
+- Updated dependencies [b4c7f34]
+- Updated dependencies [3adf111]
+  - @winrlabs/web3-games@7.0.13
+  - @winrlabs/games@2.14.2
+  - @winrlabs/web3@0.10.9
+
 ## 7.0.12
 
 ### Patch Changes
