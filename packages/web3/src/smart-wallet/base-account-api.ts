@@ -2,25 +2,23 @@
 // import { ethers, BigNumber, BigNumberish, BytesLike } from 'ethers'
 // import { Provider } from '@ethersproject/providers'
 
+import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
 // import { defaultAbiCoder } from 'ethers/lib/utils'
-import {
-  Address,
-  decodeAbiParameters,
-  Hex,
-  parseAbiParameters,
-  PublicClient,
-  zeroAddress,
-} from "viem";
-
+import { PaymasterAPI } from "./paymaster-api";
+import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
 import {
   calcPreVerificationGas,
   GasOverheads,
 } from "./calc-pre-verification-gas";
-import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
-import { PaymasterAPI } from "./paymaster-api";
-import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
-
-// import { defaultAbiCoder } from 'ethers/lib/utils'
+import {
+  PublicClient,
+  Hex,
+  Address,
+  decodeAbiParameters,
+  zeroAddress,
+  parseAbiParameters,
+  EstimateFeesPerGasReturnType,
+} from "viem";
 
 export interface FactoryParams {
   factory: Address;
@@ -55,11 +53,17 @@ export interface UserOpResult {
  */
 export abstract class BaseAccountAPI {
   private senderAddress!: Address;
+  private feeData: EstimateFeesPerGasReturnType = {
+    maxFeePerGas: 0n,
+    maxPriorityFeePerGas: 0n,
+  };
+  private feeDataPollingInterval: number = 10 * 1000;
   private isPhantom = true;
   // entryPoint connected to "zero" address. allowed to make static calls (e.g. to getSenderAddress)
   //   private readonly entryPointView: IEntryPoint
 
   provider: PublicClient;
+  chainId: bigint;
   overheads?: Partial<GasOverheads>;
   entryPointAddress: Address;
   accountAddress?: Address;
@@ -71,17 +75,20 @@ export abstract class BaseAccountAPI {
    */
   protected constructor(params: BaseApiParams) {
     this.provider = params.provider;
-
     this.overheads = params.overheads;
-
     this.entryPointAddress = params.entryPointAddress;
-
     this.accountAddress = params.accountAddress;
-
     this.paymasterAPI = params.paymasterAPI;
 
     // factory "connect" define the contract address. the contract "connect" defines the "from" address.
     // this.entryPointView = IEntryPoint__factory.connect(params.entryPointAddress, params.provider).connect(ethers.constants.AddressZero)
+
+    this.collectFeeData();
+    this.setChainId();
+  }
+
+  private async setChainId() {
+    this.chainId = BigInt(await this.provider.getChainId());
   }
 
   async init(): Promise<this> {
@@ -93,7 +100,6 @@ export abstract class BaseAccountAPI {
     }
 
     await this.getAccountAddress();
-
     return this;
   }
 
@@ -129,22 +135,15 @@ export abstract class BaseAccountAPI {
       // already deployed. no need to check anymore.
       return this.isPhantom;
     }
-
-    console.log(await this.getAccountAddress(), "GET ACC ADD");
-
     const senderAddressCode = await this.provider.getBytecode({
       address: await this.getAccountAddress(),
     });
-
-    console.log(senderAddressCode, "sender address code");
-
-    if (senderAddressCode?.length > 2) {
+    if (senderAddressCode && senderAddressCode?.length > 2) {
       // console.log(`SimpleAccount Contract already deployed at ${this.senderAddress}`)
       this.isPhantom = false;
     } else {
       // console.log(`SimpleAccount Contract is NOT YET deployed at ${this.senderAddress} - working in "phantom account" mode.`)
     }
-
     return this.isPhantom;
   }
 
@@ -153,11 +152,9 @@ export abstract class BaseAccountAPI {
    */
   async getCounterFactualAddress(): Promise<Address> {
     const { factory, factoryData } = (await this.getFactoryData()) ?? {};
-
     if (factory == null) {
       throw new Error("no counter factual address if not factory");
     }
-
     // use entryPoint to query account address (factory can provide a helper method to do the same, but
     // this method attempts to be generic
     const retAddr = await this.provider.call({
@@ -167,9 +164,8 @@ export abstract class BaseAccountAPI {
 
     const [addr] = decodeAbiParameters(
       parseAbiParameters("address"),
-      retAddr.data
+      retAddr.data as Address
     );
-
     return addr as Address;
   }
 
@@ -181,7 +177,6 @@ export abstract class BaseAccountAPI {
     if (await this.checkAccountPhantom()) {
       return await this.getFactoryData();
     }
-
     return null;
   }
 
@@ -223,9 +218,13 @@ export abstract class BaseAccountAPI {
       detailsForUserOp.data
     );
 
+    const to = await this.getAccountAddress();
+
+    const callGasLimit = 0n;
+
     return {
       callData,
-      callGasLimit: 0n,
+      callGasLimit,
     };
   }
 
@@ -235,9 +234,7 @@ export abstract class BaseAccountAPI {
    * @param op userOperation, (signature field ignored)
    */
   async getUserOpHash(op: UserOperation): Promise<Hex> {
-    const chainId = BigInt(await this.provider.getChainId());
-
-    return getUserOpHash(op, this.entryPointAddress, chainId);
+    return getUserOpHash(op, this.entryPointAddress, this.chainId);
   }
 
   /**
@@ -252,7 +249,6 @@ export abstract class BaseAccountAPI {
         this.senderAddress = await this.getCounterFactualAddress();
       }
     }
-
     return this.senderAddress;
   }
 
@@ -262,12 +258,17 @@ export abstract class BaseAccountAPI {
     if (factoryParams == null) {
       return 0n;
     }
-
     return await this.provider.estimateGas({
       to: factoryParams.factory,
       account: zeroAddress,
       data: factoryParams.factoryData,
     });
+  }
+
+  async collectFeeData() {
+    this.feeData = await this.provider.estimateFeesPerGas();
+
+    setTimeout(() => this.collectFeeData(), this.feeDataPollingInterval);
   }
 
   /**
@@ -281,25 +282,19 @@ export abstract class BaseAccountAPI {
   ): Promise<UserOperation> {
     const { callData, callGasLimit } =
       await this.encodeUserOpCallDataAndGasLimit(info);
-
     const factoryParams = await this.getRequiredFactoryData();
 
     const initGas = await this.estimateCreationGas(factoryParams);
-
     const verificationGasLimit =
       (await this.getVerificationGasLimit()) + initGas;
 
     let { maxFeePerGas, maxPriorityFeePerGas } = info;
-
     if (maxFeePerGas == null || maxPriorityFeePerGas == null) {
-      const feeData = await this.provider.estimateFeesPerGas();
-
       if (maxFeePerGas == null) {
-        maxFeePerGas = feeData.maxFeePerGas ?? undefined;
+        maxFeePerGas = this.feeData.maxFeePerGas ?? undefined;
       }
-
       if (maxPriorityFeePerGas == null) {
-        maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
+        maxPriorityFeePerGas = this.feeData.maxPriorityFeePerGas ?? undefined;
       }
     }
 
@@ -315,16 +310,11 @@ export abstract class BaseAccountAPI {
       maxPriorityFeePerGas: maxPriorityFeePerGas as any,
     };
 
-    console.log(this.paymasterAPI, "PAYMASTERAPI");
     if (this.paymasterAPI != null) {
       // fill (partial) preVerificationGas (all except the cost of the generated paymasterAndData)
-
       console.log(partialUserOp, "partial user op");
-
       const pmFields = await this.paymasterAPI.getPaymasterData(partialUserOp);
-
       console.log(pmFields, "pm fields");
-
       if (pmFields != null) {
         partialUserOp = {
           ...partialUserOp,
@@ -350,9 +340,7 @@ export abstract class BaseAccountAPI {
    */
   async signUserOp(userOp: UserOperation): Promise<UserOperation> {
     const userOpHash = await this.getUserOpHash(userOp);
-
     const signature = await this.signUserOpHash(userOpHash);
-
     return {
       ...userOp,
       signature,
