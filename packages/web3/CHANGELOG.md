@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.10
+
+### Patch Changes
+
+- 6b949f7: roulette baccarat controller upadte
+
 ## 0.10.9
 
 ### Patch Changes

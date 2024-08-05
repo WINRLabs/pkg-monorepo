@@ -1,5 +1,15 @@
 # @winrlabs/games
 
+## 2.15.0
+
+### Minor Changes
+
+- af01252: plinko adjustments
+
+### Patch Changes
+
+- 6b949f7: roulette baccarat controller upadte
+
 ## 2.14.2
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 7.0.14
+
+### Patch Changes
+
+- 6b949f7: roulette baccarat controller upadte
+- Updated dependencies [af01252]
+- Updated dependencies [6b949f7]
+  - @winrlabs/games@2.15.0
+  - @winrlabs/web3@0.10.10
+  - @winrlabs/web3-games@7.0.14
+
 ## 7.0.13
 
 ### Patch Changes
