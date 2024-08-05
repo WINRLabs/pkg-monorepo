@@ -242,7 +242,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       if (tx?.event) {
         const decodedData = SuperJSON.parse(tx.event) as any;
 
-        console.log(decodedData, "DECODED DATA");
         const gameSteps = decodedData.program[0]?.data.steps as CoinFlipStep[];
 
         setCoinFlipResult(gameSteps);
