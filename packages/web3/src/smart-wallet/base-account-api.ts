@@ -210,7 +210,7 @@ export abstract class BaseAccountAPI {
 
   async encodeUserOpCallDataAndGasLimit(
     detailsForUserOp: TransactionDetailsForUserOp
-  ): Promise<{ callData: Hex; callGasLimit: bigint }> {
+  ): Promise<{ callData: Hex }> {
     function parseNumber(a: any): bigint | null {
       if (a == null || a === "") return null;
 
@@ -225,17 +225,16 @@ export abstract class BaseAccountAPI {
       detailsForUserOp.data
     );
 
-    const callGasLimit =
-      parseNumber(detailsForUserOp.gasLimit) ??
-      (await this.provider.estimateGas({
-        account: this.entryPointAddress,
-        to: await this.getAccountAddress(),
-        data: callData,
-      }));
+    // const callGasLimit =
+    //   parseNumber(detailsForUserOp.gasLimit) ??
+    //   (await this.provider.estimateGas({
+    //     account: this.entryPointAddress,
+    //     to: await this.getAccountAddress(),
+    //     data: callData,
+    //   }));
 
     return {
       callData,
-      callGasLimit,
     };
   }
 
