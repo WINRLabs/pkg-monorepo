@@ -210,31 +210,22 @@ export abstract class BaseAccountAPI {
 
   async encodeUserOpCallDataAndGasLimit(
     detailsForUserOp: TransactionDetailsForUserOp
-  ): Promise<{ callData: Hex }> {
+  ): Promise<{ callData: Hex; callGasLimit: bigint }> {
     function parseNumber(a: any): bigint | null {
       if (a == null || a === "") return null;
-
       return BigInt(a);
     }
 
     const value = parseNumber(detailsForUserOp.value) ?? 0n;
-
     const callData = this.encodeExecute(
       detailsForUserOp.target,
       value,
       detailsForUserOp.data
     );
 
-    // const callGasLimit =
-    //   parseNumber(detailsForUserOp.gasLimit) ??
-    //   (await this.provider.estimateGas({
-    //     account: this.entryPointAddress,
-    //     to: await this.getAccountAddress(),
-    //     data: callData,
-    //   }));
-
     return {
       callData,
+      callGasLimit: 0n,
     };
   }
 
@@ -288,7 +279,8 @@ export abstract class BaseAccountAPI {
   async createUnsignedUserOp(
     info: TransactionDetailsForUserOp
   ): Promise<UserOperation> {
-    const { callData } = await this.encodeUserOpCallDataAndGasLimit(info);
+    const { callData, callGasLimit } =
+      await this.encodeUserOpCallDataAndGasLimit(info);
 
     const factoryParams = await this.getRequiredFactoryData();
 
@@ -317,7 +309,7 @@ export abstract class BaseAccountAPI {
       factory: factoryParams?.factory,
       factoryData: factoryParams?.factoryData,
       callData,
-      callGasLimit: 0n,
+      callGasLimit,
       verificationGasLimit,
       maxFeePerGas: maxFeePerGas as any,
       maxPriorityFeePerGas: maxPriorityFeePerGas as any,

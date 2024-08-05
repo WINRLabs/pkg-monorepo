@@ -221,22 +221,9 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
 
   const onGameSubmit = async () => {
     clearLiveResults();
-
-    if (!allowance.hasAllowance) {
-      const handledAllowance = await allowance.handleAllowance({
-        errorCb: (e: any) => {
-          console.log("error", e);
-        },
-      });
-
-      if (!handledAllowance) return;
-    }
     setIsLoading(true); // Set loading state to true
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
-      if (isReIterable) await playerReIterate();
-
       const tx = await handleTx.mutateAsync();
 
       if (tx?.event) {
@@ -249,6 +236,19 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         setIsLoading(false);
       }
       console.log(tx, "TX");
+
+      if (isPlayerHalted) await playerLevelUp();
+      if (isReIterable) await playerReIterate();
+
+      if (!allowance.hasAllowance) {
+        const handledAllowance = await allowance.handleAllowance({
+          errorCb: (e: any) => {
+            console.log("error", e);
+          },
+        });
+
+        if (!handledAllowance) return;
+      }
     } catch (e: any) {
       console.log("error", e);
       refetchPlayerGameStatus();
