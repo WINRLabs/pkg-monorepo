@@ -129,53 +129,55 @@
   z-index: 1;
 }
 
+/* +290; */
+
 .playerFirstCard {
-  top: 205px;
+  top: 475px;
   left: -250px;
 }
 
 .playerFirstCard.withThird {
-  top: 200px;
+  top: 470px;
   left: -260px;
 }
 
 .playerSecondCard {
-  top: 215px;
+  top: 485px;
   left: -220px;
 }
 
 .playerSecondCard.withThird {
-  top: 210px;
+  top: 480px;
   left: -235px;
 }
 
 .playerThirdCard {
-  top: 220px;
+  top: 490px;
   left: -210px;
 }
 
 .bankerFirstCard {
-  top: 205px;
+  top: 475px;
   left: 295px;
 }
 
 .bankerFirstCard.withThird {
-  top: 200px;
+  top: 470px;
   left: 285px;
 }
 
 .bankerSecondCard {
-  top: 215px;
+  top: 485px;
   left: 325px;
 }
 
 .bankerSecondCard.withThird {
-  top: 210px;
+  top: 480px;
   left: 310px;
 }
 
 .bankerThirdCard {
-  top: 220px;
+  top: 490px;
   left: 335px;
 }
 
@@ -216,4 +218,57 @@
     border: 2px solid var(--warning);
     filter: drop-shadow(0px 0px 5px #ffd000);
   }
+}
+
+
+@media only screen and (max-width:1024px) {
+  .playerFirstCard {
+  top: 475px;
+  left: -100px;
+}
+
+.playerFirstCard.withThird {
+  top: 470px;
+  left: -110px;
+}
+
+.playerSecondCard {
+  top: 485px;
+  left: -70px;
+}
+
+.playerSecondCard.withThird {
+  top: 480px;
+  left: -85px;
+}
+
+.playerThirdCard {
+  top: 490px;
+  left: -60px;
+}
+
+.bankerFirstCard {
+  top: 475px;
+  left: 145px;
+}
+
+.bankerFirstCard.withThird {
+  top: 470px;
+  left: 135px;
+}
+
+.bankerSecondCard {
+  top: 485px;
+  left: 175px;
+}
+
+.bankerSecondCard.withThird {
+  top: 480px;
+  left: 160px;
+}
+
+.bankerThirdCard {
+  top: 490px;
+  left: 185px;
+}
 }

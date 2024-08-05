@@ -8,7 +8,9 @@ export const PreBetButton = ({
   children,
   variant = "success",
   className,
+  totalWager,
 }: {
+  totalWager?: number;
   children: React.ReactNode;
   variant?: ButtonProps["variant"];
   className?: string;
@@ -25,7 +27,7 @@ export const PreBetButton = ({
 
   !betCount ? (_betCount = 1) : (_betCount = betCount);
 
-  const totalWager = wager * _betCount;
+  const _totalWager = totalWager ? totalWager : wager * _betCount;
 
   if (!account?.isLoggedIn)
     return (
@@ -41,7 +43,7 @@ export const PreBetButton = ({
 
   if (
     account.isLoggedIn &&
-    (account.balanceAsDollar <= 0 || account.balanceAsDollar < totalWager)
+    (account.balanceAsDollar <= 0 || account.balanceAsDollar < _totalWager)
   )
     return (
       <Button

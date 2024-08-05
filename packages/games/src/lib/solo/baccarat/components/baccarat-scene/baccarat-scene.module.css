@@ -1,9 +1,9 @@
 .betArea {
   position: absolute;
-  width: 900px;
-  height: 900px;
+  width: 750px;
+  height: 750px;
   border-radius: 100%;
-  clip: rect(0px, 900px, 900px, 450px);
+  clip: rect(0px, 750px, 750px, 375px);
   transform: rotate(30deg);
   z-index: 3;
   overflow: hidden;
@@ -11,10 +11,10 @@
 
 .pie {
   position: absolute;
-  width: 900px;
-  height: 900px;
+  width: 750px;
+  height: 750px;
   border-radius: 100%;
-  clip: rect(0px, 450px, 900px, 0px);
+  clip: rect(0px, 375px, 750px, 0px);
   transform: rotate(-60deg);
   color: #77c188;
   left: -3px;

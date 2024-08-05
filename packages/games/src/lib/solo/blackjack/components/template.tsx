@@ -26,6 +26,7 @@ import { DealerCardArea } from "./dealer-card-area";
 import { MoveController } from "./move-controller";
 import { SplittedCardArea } from "./splitted-card-area";
 import styles from "./styles.module.css";
+import { ChipFixed } from "../../../common/chip-controller-fixed/types";
 
 type TemplateOptions = {
   scene?: {
@@ -58,7 +59,9 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
   onFormChange,
 }) => {
   const [wager, setWager] = React.useState<number>(minWager || 1);
-  const [selectedChip, setSelectedChip] = React.useState<Chip>(Chip.ONE);
+  const [selectedChip, setSelectedChip] = React.useState<ChipFixed>(
+    ChipFixed.ONE
+  );
 
   const [firstHandWager, setFirstHandWager] = React.useState<number>(0);
   const [secondHandWager, setSecondHandWager] = React.useState<number>(0);

@@ -1,60 +1,52 @@
-import React from "react";
 import { useFormContext } from "react-hook-form";
-import { Chip } from "../../../../common/chip-controller/types";
 import { BetControllerContainer } from "../../../../common/containers";
 import {
   BetControllerTitle,
-  BetCountFormField,
   WagerFormField,
 } from "../../../../common/controller";
-import { RouletteForm } from "../../types";
-import useRouletteGameStore from "../../store";
+import { BaccaratForm } from "../../types";
+import { useGameOptions } from "../../../../game-provider";
+import { Chip } from "../../../../common/chip-controller/types";
 import { ChipController } from "../../../../common/chip-controller";
 import { Button } from "../../../../ui/button";
 import { CDN_URL } from "../../../../constants";
-import { NUMBER_INDEX_COUNT } from "../../constants";
+import { cn } from "../../../../utils/style";
+import { FormLabel } from "../../../../ui/form";
+import { TotalWager, WagerCurrencyIcon } from "../../../../common/wager";
+import { toFormatted } from "../../../../utils/web3";
 import { PreBetButton } from "../../../../common/pre-bet-button";
-import { SkipButton } from "../../../../common/skip-button";
-import { AudioController } from "../../../../common/audio-controller";
-import { useGameOptions } from "../../../../game-provider";
 
 export interface Props {
-  isPrepared: boolean;
+  totalWager: number;
+  maxPayout: number;
   selectedChip: Chip;
+  isDisabled: boolean;
   minWager: number;
   maxWager: number;
-  onSelectedChipChange: (c: Chip) => void;
+  onSelectedChipChange: (chip: Chip) => void;
   undoBet: () => void;
 }
 
 export const BetController: React.FC<Props> = ({
-  isPrepared,
-  selectedChip,
   minWager,
   maxWager,
+  isDisabled,
+  totalWager,
+  selectedChip,
+  maxPayout,
   onSelectedChipChange,
   undoBet,
 }) => {
   const { account } = useGameOptions();
-  const form = useFormContext() as RouletteForm;
+  const form = useFormContext() as BaccaratForm;
 
   const wager = form.watch("wager");
-  const selectedNumbers = form.watch("selectedNumbers");
-  const totalWager = React.useMemo(() => {
-    const totalChipCount = selectedNumbers.reduce((acc, cur) => acc + cur, 0);
-    return totalChipCount * wager;
-  }, [selectedNumbers, wager]);
-
-  const { rouletteGameResults, gameStatus } = useRouletteGameStore([
-    "rouletteGameResults",
-    "gameStatus",
-  ]);
 
   return (
     <BetControllerContainer>
       <div className="wr-flex-col wr-flex lg:wr-block lg:wr-flex-row">
         <div className="wr-mb-3">
-          <BetControllerTitle>Roulette</BetControllerTitle>
+          <BetControllerTitle>Baccarat</BetControllerTitle>
         </div>
 
         <WagerFormField
@@ -64,7 +56,7 @@ export const BetController: React.FC<Props> = ({
           isDisabled={
             form.formState.isSubmitting ||
             form.formState.isLoading ||
-            gameStatus == "PLAYING"
+            isDisabled
           }
         />
 
@@ -72,7 +64,7 @@ export const BetController: React.FC<Props> = ({
           chipAmount={wager}
           totalWager={totalWager}
           balance={account?.balanceAsDollar || 0}
-          isDisabled={isPrepared}
+          isDisabled={isDisabled}
           selectedChip={selectedChip}
           onSelectedChipChange={onSelectedChipChange}
           className="wr-mb-6"
@@ -81,11 +73,11 @@ export const BetController: React.FC<Props> = ({
         <div className="wr-flex wr-w-full wr-items-center wr-gap-2 wr-mb-6">
           <Button
             type="button"
-            disabled={isPrepared || form.getValues().totalWager === 0}
-            onClick={() => undoBet()}
+            disabled={totalWager === 0 || isDisabled}
             variant="secondary"
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
+            onClick={() => undoBet()}
           >
             <img
               src={`${CDN_URL}/icons/icon-undo.svg`}
@@ -101,13 +93,8 @@ export const BetController: React.FC<Props> = ({
             variant="secondary"
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
-            disabled={isPrepared}
-            onClick={() =>
-              form.setValue(
-                "selectedNumbers",
-                new Array(NUMBER_INDEX_COUNT).fill(0)
-              )
-            }
+            disabled={totalWager === 0 || isDisabled}
+            onClick={() => form.reset()}
           >
             <img
               src={`${CDN_URL}/icons/icon-trash.svg`}
@@ -119,45 +106,48 @@ export const BetController: React.FC<Props> = ({
           </Button>
         </div>
 
-        <BetCountFormField
-          isDisabled={
-            form.formState.isSubmitting ||
-            form.formState.isLoading ||
-            gameStatus == "PLAYING"
-          }
-        />
+        <div className="wr-mb-6 wr-grid wr-grid-cols-2 wr-gap-2">
+          <div>
+            <FormLabel>Max Payout</FormLabel>
+            <div
+              className={cn(
+                "wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden"
+              )}
+            >
+              <WagerCurrencyIcon />
+              <span className={cn("wr-font-semibold wr-text-zinc-100")}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
+            </div>
+          </div>
+          <div>
+            <FormLabel>Total Wager</FormLabel>
+            <TotalWager betCount={1} wager={totalWager} />
+          </div>
+        </div>
 
         <div className="wr-w-full -wr-order-1 lg:wr-order-none wr-mb-6">
-          {!(rouletteGameResults.length > 3) && (
-            <PreBetButton totalWager={totalWager}>
-              <Button
-                type="submit"
-                variant="success"
-                size="xl"
-                disabled={
-                  form.getValues().totalWager === 0 ||
-                  form.formState.isSubmitting ||
-                  form.formState.isLoading ||
-                  isPrepared
-                }
-                isLoading={
-                  form.formState.isSubmitting || form.formState.isLoading
-                }
-                className="wr-w-full"
-              >
-                Bet
-              </Button>
-            </PreBetButton>
-          )}
-          {rouletteGameResults.length > 3 && gameStatus == "PLAYING" && (
-            <SkipButton />
-          )}
+          <PreBetButton>
+            <Button
+              type="submit"
+              variant="success"
+              size="xl"
+              disabled={
+                totalWager === 0 ||
+                form.formState.isSubmitting ||
+                form.formState.isLoading ||
+                isDisabled
+              }
+              isLoading={
+                form.formState.isSubmitting || form.formState.isLoading
+              }
+              className="wr-w-full"
+            >
+              Deal
+            </Button>
+          </PreBetButton>
         </div>
       </div>
-
-      <footer className="wr-flex wr-items-center wr-justify-between wr-mt-4">
-        <AudioController />
-      </footer>
     </BetControllerContainer>
   );
 };

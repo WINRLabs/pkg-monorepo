@@ -1,5 +1,3 @@
-import { ChipController } from "../../../common/chip-controller";
-import { Chip } from "../../../common/chip-controller/types";
 import { PreBetButton } from "../../../common/pre-bet-button";
 import { TotalWager, WagerCurrencyIcon } from "../../../common/wager";
 import { CDN_URL } from "../../../constants";
@@ -7,6 +5,8 @@ import { Button } from "../../../ui/button";
 import { NumberInput } from "../../../ui/number-input";
 import { cn } from "../../../utils/style";
 import { BlackjackGameStatus } from "..";
+import { ChipControllerFixed } from "../../../common/chip-controller-fixed";
+import { ChipFixed } from "../../../common/chip-controller-fixed/types";
 
 interface BetControllerProps {
   wager: number;
@@ -14,12 +14,12 @@ interface BetControllerProps {
   totalWager: number;
   minWager?: number;
   maxWager?: number;
-  selectedChip: Chip;
+  selectedChip: ChipFixed;
   isDisabled: boolean;
   isDistributionCompleted: boolean;
   isLastDistributionCompleted: boolean;
   status: BlackjackGameStatus;
-  onSelectedChipChange: (c: Chip) => void;
+  onSelectedChipChange: (c: ChipFixed) => void;
   onClear: () => void;
   onRebet: () => void;
   onDeal: () => void;
@@ -80,7 +80,7 @@ export const BetController: React.FC<BetControllerProps> = ({
 
       {(status === BlackjackGameStatus.FINISHED ||
         status === BlackjackGameStatus.NONE) && (
-        <ChipController
+        <ChipControllerFixed
           isDisabled={isDisabled}
           selectedChip={selectedChip}
           onSelectedChipChange={onSelectedChipChange}

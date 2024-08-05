@@ -69,7 +69,7 @@ export const BaccaratScene: React.FC<BaccaratSceneProps> = ({
   return (
     <div
       className={cn(
-        "wr-absolute wr-left-1/2 wr-top-[-450px] wr-mx-auto wr-h-[900px] wr-w-[900px] -wr-translate-x-1/2",
+        "wr-absolute wr-left-1/2 wr-top-[-375px] wr-mx-auto wr-h-[750px] wr-w-[750px] -wr-translate-x-1/2",
         styles.baccaratScene
       )}
     >

@@ -21,6 +21,7 @@ import {
   NUMBER_INDEX_COUNT,
 } from "../constants";
 import { RouletteFormFields, RouletteGameProps } from "../types";
+import { useGameOptions } from "../../../game-provider";
 
 type TemplateProps = RouletteGameProps & {
   minWager?: number;
@@ -40,15 +41,15 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   onAnimationStep,
 }) => {
   const [selectedChip, setSelectedChip] = React.useState<Chip>(Chip.ONE);
-
   const [isPrepared, setIsPrepared] = React.useState<boolean>(false);
-
   const [lastSelecteds, setLastSelecteds] = React.useState<
     {
       index: number;
       wager: number;
     }[]
   >([]);
+
+  const { account } = useGameOptions();
 
   const formSchema = z.object({
     wager: z
@@ -91,7 +92,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   const selectedNumbers = form.watch("selectedNumbers");
 
   const addWager = (n: number, wager: Chip) => {
-    const _selectedNumbers = selectedNumbers;
+    const _selectedNumbers = [...selectedNumbers];
 
     console.log(n, "index", chunkMinWagerIndexes.includes(n));
 
@@ -99,8 +100,13 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
 
     // min wager for side bets
     if (chunkMinWagerIndexes.includes(n)) {
-      newWager =
-        (_selectedNumbers[n] as number) + wager * minWagerMultiplierForSideBets;
+      const amount = _selectedNumbers[n] as number;
+
+      if ((wager == Chip.ONE || wager == Chip.TWO) && amount < 10) {
+        newWager = minWagerMultiplierForSideBets;
+      } else {
+        newWager = amount + wager;
+      }
     } else {
       newWager = (_selectedNumbers[n] as number) + wager;
     }
@@ -109,16 +115,23 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
 
     _selectedNumbers[n] = newWager;
 
-    form.setValue("selectedNumbers", [..._selectedNumbers]);
+    const currentBalance = account?.balanceAsDollar || 0;
+    const chipAmount = form.watch("wager");
 
-    form.setValue("totalWager", totalWager + 1);
+    if (totalWager * chipAmount > currentBalance) {
+      console.log("balance reached!");
+      return;
+    } else {
+      form.setValue("selectedNumbers", [..._selectedNumbers]);
+      form.setValue("totalWager", totalWager + 1);
 
-    // set last selected for undo bet
-    const _ls = lastSelecteds;
+      // set last selected for undo bet
+      const _ls = lastSelecteds;
 
-    _ls.push({ index: n, wager });
+      _ls.push({ index: n, wager });
 
-    setLastSelecteds([..._ls]);
+      setLastSelecteds([..._ls]);
+    }
   };
 
   const undoBet = () => {
@@ -161,47 +174,45 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   }, [form.watch]);
 
   return (
-    <RotationWrapper>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(prepareSubmit)}>
-          <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
-            <Roulette.BetController
-              isPrepared={isPrepared}
-              selectedChip={selectedChip}
-              onSelectedChipChange={setSelectedChip}
-              undoBet={undoBet}
-              minWager={minWager || 1}
-              maxWager={maxWager || 2000}
-            />
-            <SceneContainer
-              style={{
-                backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
-              }}
-              className="wr-relative wr-flex wr-h-[675px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 max-lg:wr-h-[100dvh] max-lg:wr-rounded-none lg:wr-pt-6"
-            >
-              <AudioController className="wr-absolute wr-left-3 wr-top-3" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(prepareSubmit)}>
+        <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+          <Roulette.BetController
+            isPrepared={isPrepared}
+            selectedChip={selectedChip}
+            onSelectedChipChange={setSelectedChip}
+            undoBet={undoBet}
+            minWager={minWager || 1}
+            maxWager={maxWager || 2000}
+          />
+          <SceneContainer
+            style={{
+              backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
+            }}
+            className="wr-relative wr-flex wr-h-[675px] md:wr-h-[575px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 wr-overflow-hidden"
+          >
+            <AudioController className="wr-absolute wr-left-3 wr-top-3" />
 
-              <Roulette.Game gameResults={gameResults}>
-                <Roulette.Scene
-                  isPrepared={isPrepared}
-                  setIsPrepared={setIsPrepared}
-                  onAnimationCompleted={onAnimationCompleted}
-                  onAnimationSkipped={onAnimationSkipped}
-                  onAnimationStep={onAnimationStep}
-                />
-                <Roulette.Table
-                  addWager={addWager}
-                  winningNumber={null}
-                  selectedChip={selectedChip}
-                  isPrepared={isPrepared}
-                />
-                <Roulette.LastBets />
-              </Roulette.Game>
-            </SceneContainer>
-          </GameContainer>
-        </form>
-      </Form>
-    </RotationWrapper>
+            <Roulette.Game gameResults={gameResults}>
+              <Roulette.Scene
+                isPrepared={isPrepared}
+                setIsPrepared={setIsPrepared}
+                onAnimationCompleted={onAnimationCompleted}
+                onAnimationSkipped={onAnimationSkipped}
+                onAnimationStep={onAnimationStep}
+              />
+              <Roulette.Table
+                addWager={addWager}
+                winningNumber={null}
+                selectedChip={selectedChip}
+                isPrepared={isPrepared}
+              />
+              <Roulette.LastBets />
+            </Roulette.Game>
+          </SceneContainer>
+        </GameContainer>
+      </form>
+    </Form>
   );
 };
 

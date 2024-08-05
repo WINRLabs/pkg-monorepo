@@ -22,6 +22,7 @@ import { Button } from "../ui/button";
 import { CDN_URL } from "../constants";
 
 interface WagerFormFieldProps {
+  customLabel?: string;
   minWager: number;
   maxWager: number;
   isDisabled?: boolean;
@@ -148,6 +149,7 @@ export const StopLossFormField = ({
 };
 
 export const WagerFormField: React.FC<WagerFormFieldProps> = ({
+  customLabel,
   minWager,
   maxWager,
   isDisabled,
@@ -162,7 +164,7 @@ export const WagerFormField: React.FC<WagerFormFieldProps> = ({
       render={({ field }) => (
         <FormItem className={cn(className)}>
           <FormLabel>
-            Wager
+            {customLabel ? customLabel : "Wager"}
             <div>
               <WagerBalance className="wr-text-zinc-100" />
               <WagerCurrency />

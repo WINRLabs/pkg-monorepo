@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { renderChipIcon } from "../../../../common/chip-controller/utils";
+import { renderChipIcon } from "../../../../common/chip-controller-fixed/utils";
 import { CDN_URL } from "../../../../constants";
 import { cn } from "../../../../utils/style";
 import styles from "./bet-area.module.css";

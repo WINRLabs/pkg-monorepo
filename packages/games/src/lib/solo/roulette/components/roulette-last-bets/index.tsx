@@ -8,7 +8,7 @@ export const RouletteLastBets: React.FC = () => {
   const { lastBets } = useRouletteGameStore(["lastBets"]);
 
   return (
-    <div className="wr-absolute wr-left-0 wr-top-1/2 wr-mx-4 wr-flex wr-max-h-[265px] -wr-translate-y-1/2 wr-flex-col wr-items-center wr-justify-end wr-gap-2 wr-overflow-hidden wr-transition-all wr-duration-300 max-lg:wr-left-1/2 max-lg:wr-top-6 max-lg:wr-max-h-[45px] max-lg:wr-w-[185px] max-lg:-wr-translate-x-1/2 max-lg:wr-flex-row">
+    <div className="wr-absolute max-md:wr-flex-row wr-left-0 wr-top-1/2 wr-mx-2 wr-flex wr-max-h-[265px] -wr-translate-y-1/2 md:wr-flex-col wr-items-center wr-justify-end wr-gap-2 wr-overflow-hidden wr-transition-all wr-duration-300 max-lg:wr-left-1/2 max-lg:wr-top-8 max-lg:wr-max-h-[45px] max-lg:wr-w-[185px] max-md:wr-w-[285px] max-lg:-wr-translate-x-1/2 max-lg:wr-flex-row">
       {lastBets.map((result, idx) => (
         <div
           key={idx}

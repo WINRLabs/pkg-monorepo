@@ -29,19 +29,17 @@ export const RouletteTable: React.FC<RouletteTableProps> = ({
 
   const form = useFormContext() as RouletteForm;
 
-  const selectedNumbers = React.useMemo(
-    () => form.getValues().selectedNumbers,
-    [form]
-  );
+  const selectedNumbers = form.watch("selectedNumbers");
 
   return (
     <div
       className={cn(
-        "wr-relative wr-h-[250px] wr-w-full wr-max-w-[742px] wr-transition-all wr-duration-500 max-md:wr-h-[200px] max-md:wr-max-w-[600px]",
+        "wr-h-[250px] max-md:wr-absolute md:wr-relative md:wr-w-full wr-max-w-[742px] wr-transition-all wr-duration-500 max-md:wr-h-[225px] max-md:wr-w-[575px] max-md:wr-rotate-90 max-lg:-wr-translate-y-[45%]",
         {
-          "wr-top-0 wr-z-10 wr-blur-0 max-lg:wr-absolute max-lg:wr-top-1/2 max-lg:-wr-translate-y-1/2 ":
+          "md:wr-top-0 wr-z-10 wr-blur-0 max-lg:wr-absolute max-lg:wr-top-1/2":
             !isPrepared,
-          "wr-top-[250px] wr-blur-[4px] max-lg:wr-top-[150px]": isPrepared,
+          "wr-top-1/2 lg:wr-top-[250px] wr-blur-[4px] md:wr-top-[150px] md:wr-z-0":
+            isPrepared,
         }
       )}
     >

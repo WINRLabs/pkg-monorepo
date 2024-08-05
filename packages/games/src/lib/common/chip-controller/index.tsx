@@ -5,8 +5,12 @@ import { chips } from "./constants";
 import { ChipControllerProps, ChipProps } from "./types";
 import { Button } from "../../ui/button";
 import { ScrollArea } from "../../ui/scroll-area";
+import { CDN_URL } from "../../constants";
 
 export const ChipController: React.FC<ChipControllerProps> = ({
+  chipAmount,
+  totalWager,
+  balance,
   selectedChip,
   onSelectedChipChange,
   isDisabled,
@@ -16,34 +20,50 @@ export const ChipController: React.FC<ChipControllerProps> = ({
 
   const scrollHorizontal = (scrollAmount: number) => {
     if (scrollRef.current) {
-      console.log("scrolled");
       scrollRef.current.scrollLeft += scrollAmount;
     }
+  };
+
+  const hasBalanceForMove = (chipValue: number) => {
+    const maxAmountForMove = balance - totalWager;
+    if (maxAmountForMove > chipValue * chipAmount) return true;
+    else return false;
   };
 
   return (
     <div
       className={cn(
         "wr-relative wr-flex wr-items-end wr-justify-center wr-gap-2 wr-w-full wr-rounded-md wr-py-1 wr-pl-12 wr-pr-12 wr-bg-zinc-700",
-        className && className
+        className && className,
+        {
+          "wr-bg-zinc-800": isDisabled,
+        }
       )}
     >
       <Button
         onClick={() => scrollHorizontal(-100)}
-        className="wr-absolute wr-left-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700"
+        disabled={isDisabled}
+        className="wr-absolute wr-left-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
+        type="button"
       >
-        L
+        <img
+          src={`${CDN_URL}/icons/icon-chevron-left.svg`}
+          alt="JustBet WINR Roulette"
+          className={cn("wr-duration-200 wr-transition-all", {
+            "wr-brightness-50": isDisabled,
+          })}
+        />
       </Button>
 
       <ScrollArea ref={scrollRef} className="wr-flex wr-w-full wr-items-center">
-        <div className="wr-flex">
+        <div className="wr-flex wr-gap-0.5 wr-bg-zinc-800 wr-p-1 max-lg:wr-justify-center">
           {chips.map((i, idx) => (
             <Chip
               icon={i.src}
               value={i.value}
               selectedChip={selectedChip}
               onSelectedChipChange={onSelectedChipChange}
-              isDisabled={isDisabled}
+              isDisabled={isDisabled || !hasBalanceForMove(i.value)}
               key={idx}
             />
           ))}
@@ -52,9 +72,17 @@ export const ChipController: React.FC<ChipControllerProps> = ({
 
       <Button
         onClick={() => scrollHorizontal(100)}
-        className="wr-absolute wr-right-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700"
+        disabled={isDisabled}
+        className="wr-absolute wr-right-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
+        type="button"
       >
-        R
+        <img
+          src={`${CDN_URL}/icons/icon-chevron-right.svg`}
+          alt="JustBet WINR Roulette"
+          className={cn("wr-duration-200 wr-transition-all", {
+            "wr-brightness-50": isDisabled,
+          })}
+        />
       </Button>
     </div>
   );
@@ -75,7 +103,7 @@ const Chip: React.FC<ChipProps> = ({
         {
           "wr-pointer-events-none wr-cursor-default wr-opacity-70 wr-grayscale-[0.3]":
             isDisabled,
-          "wr-bg-unity-white-50": selectedChip === value,
+          "wr-bg-zinc-700": selectedChip === value,
         }
       )}
     >
@@ -87,7 +115,9 @@ const Chip: React.FC<ChipProps> = ({
         alt="JustBet Decentralized Casino Chip"
       />
       <span className="wr-absolute wr-left-1/2 wr-top-1/2 -wr-translate-x-1/2 wr-translate-y-[-55%] wr-text-base wr-font-bold">
-        {value}
+        {value <= 100 && value}
+        {value == 1000 && "1K"}
+        {value == 10000 && "10K"}
       </span>
     </div>
   );

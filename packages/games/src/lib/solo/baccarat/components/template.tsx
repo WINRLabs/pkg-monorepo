@@ -19,8 +19,8 @@ import {
   BaccaratGameResult,
   BaccaratGameSettledResult,
 } from "../types";
-import { BaccaratBetController } from "./baccarat-bet-controller";
 import { BaccaratScene } from "./baccarat-scene";
+import { BetController } from "./bet-controller";
 
 type TemplateProps = BaccaratGameProps & {
   minWager?: number;
@@ -214,41 +214,38 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   }, [form.watch]);
 
   return (
-    <RotationWrapper>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(prepareSubmit)}>
-          <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
-            <SceneContainer
-              className="wr-relative wr-flex wr-h-[600px]"
-              style={{
-                backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
-              }}
-            >
-              <BaccaratScene
-                baccaratResults={results}
-                baccaratSettled={settled}
-                isDisabled={isGamePlaying}
-                setIsDisabled={setIsGamePlaying}
-                addWager={addWager}
-                selectedChip={selectedChip}
-                onAnimationCompleted={onAnimationCompleted}
-              />
-
-              <BaccaratBetController
-                isDisabled={isGamePlaying}
-                totalWager={(bankerWager + tieWager + playerWager) * wager}
-                maxPayout={maxPayout}
-                undoBet={undoBet}
-                selectedChip={selectedChip}
-                onSelectedChipChange={setSelectedChip}
-                minWager={minWager || 1}
-                maxWager={maxWager || 2000}
-              />
-            </SceneContainer>
-          </GameContainer>
-        </form>
-      </Form>
-    </RotationWrapper>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(prepareSubmit)}>
+        <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+          <BetController
+            maxWager={maxWager || 2000}
+            minWager={minWager || 1}
+            isDisabled={isGamePlaying}
+            totalWager={(bankerWager + tieWager + playerWager) * wager}
+            maxPayout={maxPayout}
+            selectedChip={selectedChip}
+            undoBet={undoBet}
+            onSelectedChipChange={setSelectedChip}
+          />
+          <SceneContainer
+            className="wr-relative wr-flex wr-h-[475px] lg:wr-h-[640px] wr-overflow-hidden"
+            style={{
+              backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
+            }}
+          >
+            <BaccaratScene
+              baccaratResults={results}
+              baccaratSettled={settled}
+              isDisabled={isGamePlaying}
+              setIsDisabled={setIsGamePlaying}
+              addWager={addWager}
+              selectedChip={selectedChip}
+              onAnimationCompleted={onAnimationCompleted}
+            />
+          </SceneContainer>
+        </GameContainer>
+      </form>
+    </Form>
   );
 };
 

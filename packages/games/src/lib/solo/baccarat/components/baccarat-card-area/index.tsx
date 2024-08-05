@@ -263,10 +263,10 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
   React.useEffect(() => {
     if (isBankerWinner) setTimeout(() => bankerLottieRef.current.play(), 100);
   }, [isBankerWinner]);
-
+  // 110 -> 400
   return (
     <div className="wr-absolute wr-left-[47%] wr-top-[45%] wr-z-[5] wr-flex -wr-translate-x-1/2 -wr-translate-y-1/2 wr-items-start wr-justify-center">
-      <div className="wr-absolute wr-left-[-325px] wr-top-[110px] wr-h-[200px] wr-w-[160px]">
+      <div className="wr-absolute wr-left-[-175px] lg:wr-left-[-325px] wr-top-[380px] wr-h-[200px] wr-w-[160px]">
         <div className="wr-absolute wr-bottom-[-55px] wr-left-1/2 -wr-translate-x-1/2 wr-gap-1 wr-text-center wr-text-md wr-font-bold ">
           <AnimatePresence>
             {playerCount !== null && (
@@ -306,7 +306,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
           )}
         </div>
       </div>
-      <div className="wr-absolute wr-left-[220px] wr-top-[110px] wr-h-[200px] wr-w-[160px]">
+      <div className="wr-absolute wr-left-[70px] lg:wr-left-[220px] wr-top-[380px] wr-h-[200px] wr-w-[160px]">
         <div className="wr-absolute wr-bottom-[-55px] wr-left-1/2 wr-flex -wr-translate-x-1/2 wr-flex-col wr-gap-1 wr-text-center wr-text-md wr-font-bold">
           <AnimatePresence>
             {bankerCount !== null && (
@@ -352,7 +352,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
           width={100}
           height={150}
           className={cn(
-            "wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2",
+            "wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2 wr-hidden md:wr-block",
             styles.playerFirstCard
           )}
           src={`${CDN_URL}/baccarat/stack.svg`}
@@ -363,7 +363,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
           width={100}
           height={150}
           className={cn(
-            "wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2",
+            "wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2 wr-hidden md:wr-block",
             styles.bankerFirstCard
           )}
           src={`${CDN_URL}/baccarat/stack.svg`}
