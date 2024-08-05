@@ -34,7 +34,7 @@ export default defineConfig({
             pluginData: {
               pathDir: path.join(args.resolveDir, args.path),
             },
-          }),
+          })
         );
         build.onLoad(
           { filter: /#css-module$/, namespace: "css-module" },
@@ -45,7 +45,7 @@ export default defineConfig({
 
             const source = await fsPromises.readFile(
               pluginData.pathDir,
-              "utf8",
+              "utf8"
             );
 
             let cssModule = {};
@@ -59,11 +59,11 @@ export default defineConfig({
 
             return {
               pluginData: { css: result.css },
-              contents: `import "${pluginData.pathDir}"; export default ${
-                JSON.stringify(cssModule)
-              }`,
+              contents: `import "${pluginData.pathDir}"; export default ${JSON.stringify(
+                cssModule
+              )}`,
             };
-          },
+          }
         );
         build.onResolve(
           { filter: /\.module\.css$/, namespace: "css-module" },
@@ -71,14 +71,14 @@ export default defineConfig({
             path: path.join(args.resolveDir, args.path, "#css-module-data"),
             namespace: "css-module",
             pluginData: args.pluginData as { css: string },
-          }),
+          })
         );
         build.onLoad(
           { filter: /#css-module-data$/, namespace: "css-module" },
           (args) => ({
             contents: (args.pluginData as { css: string }).css,
             loader: "css",
-          }),
+          })
         );
       },
     },
@@ -89,4 +89,10 @@ export default defineConfig({
   sourcemap: true,
   external: ["react", "react-dom"],
   minify: true,
+  esbuildOptions: (options) => {
+    if (!process.env.DEBUG) {
+      options.drop = ["console"];
+    }
+    return options;
+  },
 });

@@ -23,7 +23,6 @@ export const LimboGame = ({ gameResults, children }: LimboGameProps) => {
     if (gameResults.length) {
       updateSkipAnimation(false);
       updateLimboGameResults(gameResults);
-      updateGameStatus("PLAYING");
     }
   }, [gameResults]);
 

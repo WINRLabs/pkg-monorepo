@@ -1,5 +1,18 @@
 # @winrlabs/games
 
+## 2.14.2
+
+### Patch Changes
+
+- 7cea9a5: remove logs on production
+- b4c7f34: fix limbo button disable issue
+
+## 2.14.1
+
+### Patch Changes
+
+- 6e1891e: update mm wallet to create smart account everytime
+
 ## 2.14.0
 
 ### Minor Changes

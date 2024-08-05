@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3",
-  "version": "0.10.7",
+  "version": "0.10.9",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -16,7 +16,7 @@
     "lint": "eslint .",
     "generate:component": "turbo gen react-component",
     "build": "tsup",
-    "dev": "npm run build -- --watch"
+    "dev": "DEBUG=true npm run build -- --watch"
   },
   "devDependencies": {
     "@turbo/gen": "^1.11.3",

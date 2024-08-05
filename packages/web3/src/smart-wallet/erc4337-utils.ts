@@ -309,26 +309,22 @@ export function encodeUserOp(
 ): Hex {
   // if "op" is unpacked UserOperation, then pack it first, before we ABI-encode it.
   let op: PackedUserOperation;
-
   if ("callGasLimit" in op1) {
     op = packUserOp(op1);
   } else {
     op = op1;
   }
-
   if (forSignature) {
     return encodeAbiParameters(
-      parseAbiParameters(
-        "address, uint256, bytes32, bytes32, bytes32, uint256, bytes32, bytes32"
-      ),
+      parseAbiParameters("address, uint256, bytes32, bytes32, bytes32"),
       [
         op.sender,
         op.nonce,
         keccak256(op.initCode),
         keccak256(op.callData),
-        op.accountGasLimits,
-        op.preVerificationGas,
-        op.gasFees,
+        // op.accountGasLimits,
+        // op.preVerificationGas,
+        // op.gasFees,
         keccak256(op.paymasterAndData),
       ]
     );

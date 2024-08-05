@@ -8,6 +8,7 @@ import {
   LimboTemplate,
   toDecimals,
   useLiveResultStore,
+  useLimboGameStore,
 } from "@winrlabs/games";
 import {
   controllerAbi,
@@ -83,6 +84,8 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     skipAll,
     clear: clearLiveResults,
   } = useLiveResultStore(["addResult", "clear", "updateGame", "skipAll"]);
+
+  const { updateGameStatus } = useLimboGameStore(["updateGameStatus"]);
 
   const gameEvent = useListenGameEvent();
 
@@ -193,11 +196,15 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
       ],
       address: controllerAddress as Address,
     },
-    options: {},
+    options: {
+      forceRefetch: true,
+    },
     encodedTxData: encodedParams.encodedTxData,
   });
 
   const onGameSubmit = async () => {
+    updateGameStatus("PLAYING");
+
     clearLiveResults();
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({

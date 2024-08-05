@@ -7,6 +7,7 @@ import { smartWalletConnectors } from "./wagmi";
 
 function App() {
   const account = useAccount();
+  const currentAcc = useCurrentAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const currentAA = useCurrentAccount();
@@ -16,7 +17,9 @@ function App() {
     smartWalletConnectors: smartWalletConnectors.connectors,
   });
 
-  console.log("data", data);
+  console.log("account", account);
+
+  console.log("data", currentAcc);
 
   /*   const currentConnector = smartWalletConnectors.connectors.find(
     (c) => c.loginProvider === account.connector?.name

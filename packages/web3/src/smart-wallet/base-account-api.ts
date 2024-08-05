@@ -2,24 +2,23 @@
 // import { ethers, BigNumber, BigNumberish, BytesLike } from 'ethers'
 // import { Provider } from '@ethersproject/providers'
 
-import {
-  Address,
-  decodeAbiParameters,
-  EstimateFeesPerGasReturnType,
-  Hex,
-  parseAbiParameters,
-  PublicClient,
-  zeroAddress,
-} from "viem";
-
+import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
+// import { defaultAbiCoder } from 'ethers/lib/utils'
+import { PaymasterAPI } from "./paymaster-api";
+import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
 import {
   calcPreVerificationGas,
   GasOverheads,
 } from "./calc-pre-verification-gas";
-import { encodeUserOp, getUserOpHash, UserOperation } from "./erc4337-utils"; // IEntryPoint, IEntryPoint__factory,
-// import { defaultAbiCoder } from 'ethers/lib/utils'
-import { PaymasterAPI } from "./paymaster-api";
-import { TransactionDetailsForUserOp } from "./transaction-details-for-user-op";
+import {
+  PublicClient,
+  Hex,
+  Address,
+  decodeAbiParameters,
+  zeroAddress,
+  parseAbiParameters,
+  EstimateFeesPerGasReturnType,
+} from "viem";
 
 export interface FactoryParams {
   factory: Address;
@@ -139,7 +138,7 @@ export abstract class BaseAccountAPI {
     const senderAddressCode = await this.provider.getBytecode({
       address: await this.getAccountAddress(),
     });
-    if (senderAddressCode?.length > 2) {
+    if (senderAddressCode && senderAddressCode?.length > 2) {
       // console.log(`SimpleAccount Contract already deployed at ${this.senderAddress}`)
       this.isPhantom = false;
     } else {
@@ -165,7 +164,7 @@ export abstract class BaseAccountAPI {
 
     const [addr] = decodeAbiParameters(
       parseAbiParameters("address"),
-      retAddr.data
+      retAddr.data as Address
     );
     return addr as Address;
   }
@@ -219,13 +218,9 @@ export abstract class BaseAccountAPI {
       detailsForUserOp.data
     );
 
-    const callGasLimit =
-      parseNumber(detailsForUserOp.gasLimit) ??
-      (await this.provider.estimateGas({
-        account: this.entryPointAddress,
-        to: await this.getAccountAddress(),
-        data: callData,
-      }));
+    const to = await this.getAccountAddress();
+
+    const callGasLimit = 0n;
 
     return {
       callData,

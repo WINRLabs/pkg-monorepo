@@ -42,11 +42,9 @@ const getCachedSignature = async <
     functionName
   >["writeContractVariables"],
   encodedData: `0x${string}`,
-  accountApi?: SimpleAccountAPI,
-  isSmartWallet?: boolean
+  accountApi?: SimpleAccountAPI
 ) => {
   if (!accountApi) return;
-  if (!isSmartWallet) return;
 
   const userOp = await accountApi?.createSignedUserOp({
     target: writeContractVariables.address as Address,
@@ -65,7 +63,7 @@ export const useHandleTxUncached = <
 ) => {
   const { options } = params;
   const { accountApi } = useSmartAccountApi();
-  const { isSmartWallet } = useCurrentAccount();
+  const { isSocialLogin } = useCurrentAccount();
   const { client } = useBundlerClient();
 
   const { writeContractAsync } = useWriteContract();
@@ -82,68 +80,46 @@ export const useHandleTxUncached = <
   }) => {
     if (!client) return;
 
-    if (isSmartWallet) {
-      const userOp = await getCachedSignature(
-        writeContractVariables,
-        encodedTxData,
-        accountApi,
-        isSmartWallet
-      );
-      if (!userOp) {
-        throw new Error("No cached signature found");
-      }
-
-      const { status, hash } = await client.request("sendUserOperation", {
-        sender: userOp.sender,
-        nonce: userOp.nonce.toString(),
-        factory: userOp.factory,
-        factoryData: userOp.factoryData,
-        callData: userOp.callData,
-        callGasLimit: userOp.callGasLimit.toString(),
-        verificationGasLimit: userOp.verificationGasLimit.toString(),
-        preVerificationGas: userOp.preVerificationGas.toString(),
-        maxFeePerGas: userOp.maxFeePerGas.toString(),
-        maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
-        paymaster: userOp.paymaster,
-        paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
-          ? userOp.paymasterVerificationGasLimit.toString()
-          : "",
-        paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
-          ? userOp.paymasterPostOpGasLimit.toString()
-          : "",
-        paymasterData: userOp.paymasterData,
-        signature: userOp.signature,
-      });
-
-      if (status !== "success") {
-        throw new Error(status);
-      } else {
-        console.log(accountApi?.cachedNonce, "cached nonce");
-        accountApi?.cachedNonce && accountApi.increaseNonce();
-        console.log(accountApi?.cachedNonce, "cached nonce updated");
-      }
-
-      return { status, hash };
-    } else {
-      return await writeContractAsync({
-        abi: writeContractVariables.abi,
-        address: writeContractVariables.address,
-        functionName: writeContractVariables.functionName,
-        account: writeContractVariables.account,
-        args: writeContractVariables.args,
-        chainId: writeContractVariables.chainId,
-        connector: writeContractVariables.connector,
-        dataSuffix: writeContractVariables.dataSuffix,
-        value: writeContractVariables.value,
-        __mode: writeContractVariables.__mode,
-      } as WriteContractVariables<
-        Abi,
-        string,
-        readonly unknown[],
-        Config,
-        Config["chains"][number]["id"]
-      >);
+    const userOp = await getCachedSignature(
+      writeContractVariables,
+      encodedTxData,
+      accountApi
+    );
+    if (!userOp) {
+      throw new Error("No cached signature found");
     }
+
+    const { status, hash } = await client.request("sendUserOperation", {
+      sender: userOp.sender,
+      nonce: userOp.nonce.toString(),
+      factory: userOp.factory,
+      factoryData: userOp.factoryData,
+      callData: userOp.callData,
+      callGasLimit: userOp.callGasLimit.toString(),
+      verificationGasLimit: userOp.verificationGasLimit.toString(),
+      preVerificationGas: userOp.preVerificationGas.toString(),
+      maxFeePerGas: userOp.maxFeePerGas.toString(),
+      maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
+      paymaster: userOp.paymaster,
+      paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
+        ? userOp.paymasterVerificationGasLimit.toString()
+        : "",
+      paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
+        ? userOp.paymasterPostOpGasLimit.toString()
+        : "",
+      paymasterData: userOp.paymasterData,
+      signature: userOp.signature,
+    });
+
+    if (status !== "success") {
+      throw new Error(status);
+    } else {
+      console.log(accountApi?.cachedNonce, "cached nonce");
+      accountApi?.cachedNonce && accountApi.increaseNonce();
+      console.log(accountApi?.cachedNonce, "cached nonce updated");
+    }
+
+    return { status, hash };
   };
 
   const handleTxMutation = useMutation({

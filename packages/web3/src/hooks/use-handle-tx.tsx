@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Abi, Address, ContractFunctionArgs, ContractFunctionName } from "viem";
-import { Config, useWriteContract } from "wagmi";
+import { Config } from "wagmi";
 import { WriteContractVariables } from "wagmi/query";
 
 import { SimpleAccountAPI } from "../smart-wallet";
@@ -44,11 +44,9 @@ const getCachedSignature = async <
     functionName
   >["writeContractVariables"],
   encodedData: `0x${string}`,
-  accountApi?: SimpleAccountAPI,
-  isSmartWallet?: boolean
+  accountApi?: SimpleAccountAPI
 ) => {
   if (!accountApi) return;
-  if (!isSmartWallet) return;
 
   const userOp = await accountApi?.createSignedUserOp({
     target: writeContractVariables.address as Address,
@@ -67,7 +65,7 @@ export const useHandleTx = <
 ) => {
   const { writeContractVariables, options, encodedTxData } = params;
   const { accountApi } = useSmartAccountApi();
-  const { isSmartWallet } = useCurrentAccount();
+  const { isSocialLogin } = useCurrentAccount();
   const { client } = useBundlerClient();
   const queryClient = useQueryClient();
 
@@ -75,100 +73,71 @@ export const useHandleTx = <
     queryKey: [
       "cachedSignature",
       writeContractVariables.functionName,
-      isSmartWallet,
+      isSocialLogin,
       encodedTxData,
     ],
     queryFn: () =>
-      getCachedSignature(
-        writeContractVariables,
-        encodedTxData,
-        accountApi,
-        isSmartWallet
-      ),
-    enabled: !!accountApi && isSmartWallet && !!encodedTxData,
+      getCachedSignature(writeContractVariables, encodedTxData, accountApi),
+    enabled: !!accountApi && isSocialLogin && !!encodedTxData,
     staleTime: 10000,
     refetchInterval: params.options.refetchInterval || 10000,
   });
-
-  const { writeContractAsync } = useWriteContract();
 
   const handleTxMutation = useMutation({
     mutationFn: async () => {
       if (!client) return;
 
-      if (isSmartWallet) {
-        let userOp = cachedUserOp;
+      let userOp = cachedUserOp;
 
-        if (!userOp || options.forceRefetch) {
-          userOp = await getCachedSignature(
-            writeContractVariables,
-            encodedTxData,
-            accountApi,
-            isSmartWallet
-          );
-        }
-
-        if (!userOp) {
-          throw new Error("No cached signature found");
-        }
-
-        const { status, hash } = await client.request("sendUserOperation", {
-          sender: userOp.sender,
-          nonce: userOp.nonce.toString(),
-          factory: userOp.factory,
-          factoryData: userOp.factoryData,
-          callData: userOp.callData,
-          callGasLimit: userOp.callGasLimit.toString(),
-          verificationGasLimit: userOp.verificationGasLimit.toString(),
-          preVerificationGas: userOp.preVerificationGas.toString(),
-          maxFeePerGas: userOp.maxFeePerGas.toString(),
-          maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
-          paymaster: userOp.paymaster,
-          paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
-            ? userOp.paymasterVerificationGasLimit.toString()
-            : "",
-          paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
-            ? userOp.paymasterPostOpGasLimit.toString()
-            : "",
-          paymasterData: userOp.paymasterData,
-          signature: userOp.signature,
-        });
-
-        if (status !== "success") {
-          throw new Error(status);
-        } else {
-          console.log(accountApi?.cachedNonce, "cached nonce");
-          accountApi?.cachedNonce && accountApi.increaseNonce();
-          console.log(accountApi?.cachedNonce, "cached nonce updated");
-        }
-
-        return { status, hash };
-      } else {
-        return await writeContractAsync({
-          abi: writeContractVariables.abi,
-          address: writeContractVariables.address,
-          functionName: writeContractVariables.functionName,
-          account: writeContractVariables.account,
-          args: writeContractVariables.args,
-          chainId: writeContractVariables.chainId,
-          connector: writeContractVariables.connector,
-          dataSuffix: writeContractVariables.dataSuffix,
-          value: writeContractVariables.value,
-          __mode: writeContractVariables.__mode,
-        } as WriteContractVariables<
-          Abi,
-          string,
-          readonly unknown[],
-          Config,
-          Config["chains"][number]["id"]
-        >);
+      if (!userOp || options.forceRefetch || !isSocialLogin) {
+        userOp = await getCachedSignature(
+          writeContractVariables,
+          encodedTxData,
+          accountApi
+        );
       }
+
+      if (!userOp) {
+        throw new Error("No cached signature found");
+      }
+
+      const { status, hash } = await client.request("sendUserOperation", {
+        sender: userOp.sender,
+        nonce: userOp.nonce.toString(),
+        factory: userOp.factory,
+        factoryData: userOp.factoryData,
+        callData: userOp.callData,
+        callGasLimit: userOp.callGasLimit.toString(),
+        verificationGasLimit: userOp.verificationGasLimit.toString(),
+        preVerificationGas: userOp.preVerificationGas.toString(),
+        maxFeePerGas: userOp.maxFeePerGas.toString(),
+        maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
+        paymaster: userOp.paymaster,
+        paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
+          ? userOp.paymasterVerificationGasLimit.toString()
+          : "",
+        paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
+          ? userOp.paymasterPostOpGasLimit.toString()
+          : "",
+        paymasterData: userOp.paymasterData,
+        signature: userOp.signature,
+      });
+
+      if (status !== "success") {
+        throw new Error(status);
+      } else {
+        console.log(accountApi?.cachedNonce, "cached nonce");
+        accountApi?.cachedNonce && accountApi.increaseNonce();
+        console.log(accountApi?.cachedNonce, "cached nonce updated");
+      }
+
+      return { status, hash };
     },
     onSuccess: (data) => {
       if (options.successCb) {
         options.successCb();
       }
-      if (isSmartWallet) {
+      if (isSocialLogin) {
         queryClient.invalidateQueries({
           queryKey: ["cachedSignature"],
         });

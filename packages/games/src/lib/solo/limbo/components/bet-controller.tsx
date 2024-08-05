@@ -169,7 +169,8 @@ export const BetController: React.FC<Props> = ({
                 !form.formState.isValid ||
                 form.formState.isSubmitting ||
                 form.formState.isLoading ||
-                gameStatus == "PLAYING"
+                gameStatus == "PLAYING" ||
+                limboGameResults.length > 0
               }
             >
               Bet

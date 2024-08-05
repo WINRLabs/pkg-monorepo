@@ -1,5 +1,18 @@
 # @winrlabs/web3
 
+## 0.10.9
+
+### Patch Changes
+
+- 7cea9a5: remove logs on production
+- 3adf111: base acc api update
+
+## 0.10.8
+
+### Patch Changes
+
+- 6e1891e: update mm wallet to create smart account everytime
+
 ## 0.10.7
 
 ### Patch Changes
