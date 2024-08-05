@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.1
+
+### Patch Changes
+
+- dd33a87: ui fixes
+
 ## 2.15.0
 
 ### Minor Changes
