@@ -120,9 +120,9 @@ export const RangeGame = ({
 
         lastBetClearRef.current = setTimeout(() => {
           updateDiceGameResults([]);
-        }, 1000);
+        }, 500);
       } else {
-        intervalRef.current = setInterval(stepTrigger, 1000);
+        intervalRef.current = setInterval(stepTrigger, 650);
       }
     } else {
       onSkip();
