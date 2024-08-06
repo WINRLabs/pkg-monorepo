@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.11
+
+### Patch Changes
+
+- cef1e8f: update useHandleTx to give unauth action
+
 ## 0.10.10
 
 ### Patch Changes

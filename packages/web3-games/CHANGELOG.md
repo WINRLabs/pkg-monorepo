@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.16
+
+### Patch Changes
+
+- cef1e8f: update useHandleTx to give unauth action
+- Updated dependencies [cef1e8f]
+  - @winrlabs/web3@0.10.11
+  - @winrlabs/games@2.15.2
+  - @winrlabs/web3-games@7.0.16
+
 ## 7.0.15
 
 ### Patch Changes

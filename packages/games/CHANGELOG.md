@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.2
+
+### Patch Changes
+
+- cef1e8f: update useHandleTx to give unauth action
+
 ## 2.15.1
 
 ### Patch Changes
