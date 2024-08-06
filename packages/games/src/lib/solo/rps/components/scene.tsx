@@ -22,9 +22,9 @@ const Scene: React.FC<GameAreaProps> = ({
   onAnimationStep,
   onAnimationSkipped = () => {},
 }) => {
-  const winEffect = useAudioEffect(SoundEffects.WIN);
-
-  const playingEffect = useAudioEffect(SoundEffects.RPS);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
+  const playingEffect = useAudioEffect(SoundEffects.LIMBO_SPIN_1);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const form = useFormContext() as RPSForm;
 
@@ -97,12 +97,12 @@ const Scene: React.FC<GameAreaProps> = ({
           setTimeout(() => {
             setWinnerAnimation(false);
             updateGameStatus("ENDED");
-          }, 1000);
+          }, 750);
         } else {
-          setTimeout(() => turn(curr), 750);
+          setTimeout(() => turn(curr), 500);
         }
         setWinnerAnimation(true);
-      }, 1250);
+      }, 500);
       setWinnerAnimation(false);
     };
     turn();
@@ -331,7 +331,10 @@ const Scene: React.FC<GameAreaProps> = ({
               <FormControl>
                 <RadioGroupPrimitive.Root
                   {...field}
-                  onValueChange={field.onChange}
+                  onValueChange={(e) => {
+                    field.onChange(e);
+                    digitalClickEffect.play();
+                  }}
                 >
                   {ALL_RPS_CHOICES.map((item) => (
                     <FormItem className="wr-mb-2 wr-cursor-pointer" key={item}>

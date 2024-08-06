@@ -8,6 +8,10 @@ import { toFormatted } from "../../../../utils/web3";
 import { videoPokerHands, VideoPokerResult } from "../../constants";
 import useVideoPokerGameStore from "../../store";
 import { VideoPokerForm } from "../../types";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 const ResultBox: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   className,
@@ -30,6 +34,7 @@ const ResultBox: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 export const VideoPokerResults = () => {
   // copy video poker result names and remove first item
   const form = useFormContext() as VideoPokerForm;
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const { gameResult, updateState } = useVideoPokerGameStore([
     "gameResult",
@@ -39,6 +44,10 @@ export const VideoPokerResults = () => {
   const wager = form.watch("wager");
 
   const hands = videoPokerHands.slice(1);
+
+  React.useEffect(() => {
+    if (gameResult !== VideoPokerResult.LOST) winEffect.play();
+  }, [gameResult]);
 
   return (
     <section className="wr-w-full">

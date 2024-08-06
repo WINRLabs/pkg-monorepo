@@ -17,6 +17,10 @@ import { PreBetButton } from "../../../../common/pre-bet-button";
 import { SkipButton } from "../../../../common/skip-button";
 import { AudioController } from "../../../../common/audio-controller";
 import { useGameOptions } from "../../../../game-provider";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 export interface Props {
   isPrepared: boolean;
@@ -37,6 +41,8 @@ export const BetController: React.FC<Props> = ({
 }) => {
   const { account } = useGameOptions();
   const form = useFormContext() as RouletteForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const wager = form.watch("wager");
   const selectedNumbers = form.watch("selectedNumbers");
@@ -82,7 +88,10 @@ export const BetController: React.FC<Props> = ({
           <Button
             type="button"
             disabled={isPrepared || form.getValues().totalWager === 0}
-            onClick={() => undoBet()}
+            onClick={() => {
+              undoBet();
+              digitalClickEffect.play();
+            }}
             variant="secondary"
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
@@ -102,12 +111,13 @@ export const BetController: React.FC<Props> = ({
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
             disabled={isPrepared}
-            onClick={() =>
+            onClick={() => {
+              digitalClickEffect.play();
               form.setValue(
                 "selectedNumbers",
                 new Array(NUMBER_INDEX_COUNT).fill(0)
-              )
-            }
+              );
+            }}
           >
             <img
               src={`${CDN_URL}/icons/icon-trash.svg`}
@@ -134,6 +144,7 @@ export const BetController: React.FC<Props> = ({
                 type="submit"
                 variant="success"
                 size="xl"
+                onClick={() => clickEffect.play()}
                 disabled={
                   form.getValues().totalWager === 0 ||
                   form.formState.isSubmitting ||

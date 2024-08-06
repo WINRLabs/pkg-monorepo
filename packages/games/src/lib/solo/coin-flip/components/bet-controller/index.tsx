@@ -22,6 +22,10 @@ import { toDecimals, toFormatted } from "../../../../utils/web3";
 import { useCoinFlipGameStore } from "../..";
 import { CoinFlipForm } from "../../types";
 import { CoinFlipController } from "./controller";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 interface Props {
   minWager: number;
@@ -37,6 +41,7 @@ export const BetController: React.FC<Props> = ({
   isGettingResults,
 }) => {
   const form = useFormContext() as CoinFlipForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const maxPayout = React.useMemo(() => {
     const { wager, betCount } = form.getValues();
@@ -127,6 +132,7 @@ export const BetController: React.FC<Props> = ({
               variant={"success"}
               className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5 wr-select-none"
               size={"xl"}
+              onClick={() => clickEffect.play()}
               isLoading={
                 form.formState.isSubmitting ||
                 form.formState.isLoading ||

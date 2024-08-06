@@ -15,6 +15,11 @@ import { FormLabel } from "../../../../ui/form";
 import { TotalWager, WagerCurrencyIcon } from "../../../../common/wager";
 import { toFormatted } from "../../../../utils/web3";
 import { PreBetButton } from "../../../../common/pre-bet-button";
+import { AudioController } from "../../../../common/audio-controller";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 export interface Props {
   totalWager: number;
@@ -39,6 +44,8 @@ export const BetController: React.FC<Props> = ({
 }) => {
   const { account } = useGameOptions();
   const form = useFormContext() as BaccaratForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const wager = form.watch("wager");
 
@@ -77,7 +84,10 @@ export const BetController: React.FC<Props> = ({
             variant="secondary"
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
-            onClick={() => undoBet()}
+            onClick={() => {
+              digitalClickEffect.play();
+              undoBet();
+            }}
           >
             <img
               src={`${CDN_URL}/icons/icon-undo.svg`}
@@ -94,7 +104,10 @@ export const BetController: React.FC<Props> = ({
             size="xl"
             className="wr-flex wr-w-full wr-items-center wr-gap-1"
             disabled={totalWager === 0 || isDisabled}
-            onClick={() => form.reset()}
+            onClick={() => {
+              digitalClickEffect.play();
+              form.reset();
+            }}
           >
             <img
               src={`${CDN_URL}/icons/icon-trash.svg`}
@@ -132,6 +145,7 @@ export const BetController: React.FC<Props> = ({
               type="submit"
               variant="success"
               size="xl"
+              onClick={() => clickEffect.play()}
               disabled={
                 totalWager === 0 ||
                 form.formState.isSubmitting ||
@@ -148,6 +162,9 @@ export const BetController: React.FC<Props> = ({
           </PreBetButton>
         </div>
       </div>
+      <footer className="wr-flex wr-items-center wr-justify-between wr-mt-4">
+        <AudioController />
+      </footer>
     </BetControllerContainer>
   );
 };

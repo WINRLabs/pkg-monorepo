@@ -14,6 +14,10 @@ import {
 import { SingleBJActiveGameHands, SingleBlackjackHandIndex } from "../..";
 import { Card } from "../card";
 import styles from "./single-card-area.module.css";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 interface CardAreaProps {
   handType: SingleBlackjackHandIndex;
@@ -159,6 +163,11 @@ export const CardArea: React.FC<CardAreaProps> = ({
   }, [hand.hand?.isSplitted]);
 
   console.log(uiCards, "uicards");
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
+
+  React.useEffect(() => {
+    if (isWinner) winEffect.play();
+  }, [isWinner]);
 
   return (
     <div

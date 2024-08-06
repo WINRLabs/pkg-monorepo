@@ -7,6 +7,7 @@ import { cn } from "../../../utils/style";
 import { BlackjackGameStatus } from "..";
 import { ChipControllerFixed } from "../../../common/chip-controller-fixed";
 import { ChipFixed } from "../../../common/chip-controller-fixed/types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 interface BetControllerProps {
   wager: number;
@@ -41,6 +42,8 @@ export const BetController: React.FC<BetControllerProps> = ({
   onRebet,
   onDeal,
 }) => {
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+
   return (
     <div className="max-md:wr-bg-rotated-bg-blur wr-absolute wr-bottom-0 wr-left-0 wr-z-[5] wr-flex wr-w-full wr-items-end wr-justify-between wr-p-4 max-lg:wr-fixed max-lg:wr-z-10 max-lg:wr-bg-rotated-footer max-lg:wr-p-3 max-lg:wr-pt-0">
       <div className="wr-flex wr-w-full wr-max-w-[230px] wr-items-center wr-justify-between wr-gap-2 max-md:wr-max-w-[140px]">
@@ -96,7 +99,10 @@ export const BetController: React.FC<BetControllerProps> = ({
                 size="xl"
                 disabled={isDisabled}
                 className="wr-w-full max-lg:wr-max-w-[75px]"
-                onClick={() => onDeal()}
+                onClick={() => {
+                  clickEffect.play();
+                  onDeal();
+                }}
               >
                 Deal
               </Button>
@@ -124,7 +130,10 @@ export const BetController: React.FC<BetControllerProps> = ({
                   !isLastDistributionCompleted ||
                   !isDistributionCompleted
                 }
-                onClick={() => onRebet()}
+                onClick={() => {
+                  clickEffect.play();
+                  onRebet();
+                }}
               >
                 Rebet
               </Button>
@@ -141,7 +150,10 @@ export const BetController: React.FC<BetControllerProps> = ({
                 (status !== BlackjackGameStatus.FINISHED &&
                   status !== BlackjackGameStatus.NONE)
               }
-              onClick={() => onClear()}
+              onClick={() => {
+                clickEffect.play();
+                onClear();
+              }}
             >
               <img
                 src={`${CDN_URL}/icons/icon-trash.svg`}

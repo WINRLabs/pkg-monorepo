@@ -22,6 +22,7 @@ import {
 } from "../constants";
 import { RouletteFormFields, RouletteGameProps } from "../types";
 import { useGameOptions } from "../../../game-provider";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 type TemplateProps = RouletteGameProps & {
   minWager?: number;
@@ -50,6 +51,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   >([]);
 
   const { account } = useGameOptions();
+  const chipEffect = useAudioEffect(SoundEffects.CHIP_EFFECT);
 
   const formSchema = z.object({
     wager: z
@@ -131,6 +133,8 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
       _ls.push({ index: n, wager });
 
       setLastSelecteds([..._ls]);
+
+      chipEffect.play();
     }
   };
 
@@ -191,8 +195,6 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
             }}
             className="wr-relative wr-flex wr-h-[675px] md:wr-h-[640px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 wr-overflow-hidden"
           >
-            <AudioController className="wr-absolute wr-left-3 wr-top-3" />
-
             <Roulette.Game gameResults={gameResults}>
               <Roulette.Scene
                 isPrepared={isPrepared}

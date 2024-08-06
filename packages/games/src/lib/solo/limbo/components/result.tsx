@@ -7,7 +7,8 @@ import useLimboGameStore from "../store";
 
 const Result = () => {
   const [isAnimated, setIsAnimated] = useState(false);
-  const effect = useAudioEffect(SoundEffects.RANGE_WIN);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
+  const spinEffect = useAudioEffect(SoundEffects.LIMBO_SPIN_1);
 
   const { limboGameResults, currentAnimationCount } = useLimboGameStore([
     "limboGameResults",
@@ -34,10 +35,13 @@ const Result = () => {
               onAnimationComplete={() => {
                 setIsAnimated(true);
                 if (currentResult?.payout > 0) {
-                  effect.play();
+                  winEffect.play();
                 }
               }}
-              onAnimationStart={() => setIsAnimated(false)}
+              onAnimationStart={() => {
+                setIsAnimated(false);
+                spinEffect.play();
+              }}
             />
             <span>x</span>
           </>

@@ -111,7 +111,7 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
 
   const { account } = useGameOptions();
 
-  const selectEffect = useAudioEffect(SoundEffects.THICK);
+  const selectEffect = useAudioEffect(SoundEffects.CHIP_EFFECT);
 
   const flipEffect = useAudioEffect(SoundEffects.FLIP_CARD);
 

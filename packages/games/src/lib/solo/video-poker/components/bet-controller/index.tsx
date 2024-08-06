@@ -16,6 +16,10 @@ import { FormLabel } from "../../../../ui/form";
 import { cn } from "../../../../utils/style";
 import useVideoPokerGameStore, { VideoPokerStatus } from "../../store";
 import { VideoPokerForm } from "../../types";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 interface Props {
   minWager: number;
@@ -29,6 +33,7 @@ export const VideoPokerBetController: React.FC<Props> = ({
   minWager,
 }) => {
   const form = useFormContext() as VideoPokerForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { status } = useVideoPokerGameStore(["status", "updateState"]);
 
@@ -72,6 +77,7 @@ export const VideoPokerBetController: React.FC<Props> = ({
             variant={"success"}
             className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
             size={"xl"}
+            onClick={() => clickEffect.play()}
             isLoading={form.formState.isSubmitting || form.formState.isLoading}
             disabled={
               !form.formState.isValid ||

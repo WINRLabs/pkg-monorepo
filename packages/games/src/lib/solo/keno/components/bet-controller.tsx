@@ -18,6 +18,7 @@ import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
 import useKenoGameStore from "../store";
 import { KenoForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 type Props = {
   minWager: number;
@@ -26,6 +27,7 @@ type Props = {
 
 export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
   const form = useFormContext() as KenoForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const selections = form.watch("selections");
 
@@ -112,6 +114,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
             variant={"success"}
             className="wr-w-full max-lg:-wr-order-2 max-lg:wr-mb-3.5"
             size={"xl"}
+            onClick={() => clickEffect.play()}
             isLoading={isFormInProgress}
             disabled={
               !form.formState.isValid ||

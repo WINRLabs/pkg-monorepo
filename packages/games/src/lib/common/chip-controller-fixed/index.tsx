@@ -3,6 +3,7 @@ import React from "react";
 import { cn } from "../../utils/style";
 import { chips } from "./constants";
 import { ChipControllerFixedProps, ChipFixedProps } from "./types";
+import { SoundEffects, useAudioEffect } from "../../hooks/use-audio-effect";
 
 export const ChipControllerFixed: React.FC<ChipControllerFixedProps> = ({
   selectedChip,
@@ -10,6 +11,7 @@ export const ChipControllerFixed: React.FC<ChipControllerFixedProps> = ({
   isDisabled,
   className,
 }) => {
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
   return (
     <div
       className={cn(
@@ -22,7 +24,10 @@ export const ChipControllerFixed: React.FC<ChipControllerFixedProps> = ({
           icon={i.src}
           value={i.value}
           selectedChip={selectedChip}
-          onSelectedChipChange={onSelectedChipChange}
+          onSelectedChipChange={(e) => {
+            clickEffect.play();
+            onSelectedChipChange(e);
+          }}
           isDisabled={isDisabled}
           key={idx}
         />

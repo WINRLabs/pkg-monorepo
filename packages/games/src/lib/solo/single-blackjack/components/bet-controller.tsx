@@ -9,6 +9,7 @@ import { useGameOptions } from "../../../game-provider";
 import { Button } from "../../../ui/button";
 import { BlackjackGameStatus } from "../../blackjack";
 import { SingleBJActiveGameHands } from "..";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 interface Props {
   minWager: number;
@@ -72,6 +73,7 @@ export const BetController: React.FC<Props> = ({
   };
 
   const form = useFormContext();
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   return (
     <BetControllerContainer>
@@ -83,7 +85,15 @@ export const BetController: React.FC<Props> = ({
         <WagerFormField
           minWager={minWager}
           maxWager={maxWager}
-          isDisabled={false}
+          isDisabled={
+            !form.formState.isValid ||
+            form.formState.isSubmitting ||
+            form.formState.isLoading ||
+            status == BlackjackGameStatus.PLAYER_TURN ||
+            status == BlackjackGameStatus.DEALER_TURN ||
+            status == BlackjackGameStatus.TABLE_DEAL ||
+            isControllerDisabled
+          }
         />
 
         <PreBetButton>
@@ -91,14 +101,20 @@ export const BetController: React.FC<Props> = ({
           status !== BlackjackGameStatus.FINISHED ? (
             <InsuranceBox
               activeGameIndex={activeHandByIndex.handId || 0}
-              onInsure={onInsure}
+              onInsure={(handId) => {
+                clickEffect.play();
+                onInsure(handId);
+              }}
               setShow={setShowInsuranceBox}
               disabled={!isDistributionCompleted || isControllerDisabled}
             />
           ) : (
             <div className="wr-grid wr-grid-cols-2 wr-grid-rows-2 wr-gap-x-4 wr-gap-y-5">
               <Button
-                onClick={() => onHit(activeHandByIndex.handId || 0)}
+                onClick={() => {
+                  clickEffect.play();
+                  onHit(activeHandByIndex.handId || 0);
+                }}
                 disabled={
                   status == BlackjackGameStatus.FINISHED ||
                   status == BlackjackGameStatus.NONE ||
@@ -113,7 +129,10 @@ export const BetController: React.FC<Props> = ({
                 Hit
               </Button>
               <Button
-                onClick={() => onStand(activeHandByIndex.handId || 0)}
+                onClick={() => {
+                  clickEffect.play();
+                  onStand(activeHandByIndex.handId || 0);
+                }}
                 disabled={
                   status == BlackjackGameStatus.FINISHED ||
                   status == BlackjackGameStatus.NONE ||
@@ -128,7 +147,10 @@ export const BetController: React.FC<Props> = ({
                 Stand
               </Button>
               <Button
-                onClick={() => onSplit(activeHandByIndex.handId || 0)}
+                onClick={() => {
+                  clickEffect.play();
+                  onSplit(activeHandByIndex.handId || 0);
+                }}
                 disabled={
                   !activeHandByIndex?.cards?.canSplit ||
                   !isDistributionCompleted ||
@@ -145,7 +167,10 @@ export const BetController: React.FC<Props> = ({
                 Split
               </Button>
               <Button
-                onClick={() => onDoubleDown(activeHandByIndex.handId || 0)}
+                onClick={() => {
+                  clickEffect.play();
+                  onDoubleDown(activeHandByIndex.handId || 0);
+                }}
                 disabled={
                   !isDistributionCompleted ||
                   isControllerDisabled ||
@@ -167,6 +192,7 @@ export const BetController: React.FC<Props> = ({
             className="wr-w-full wr-mt-6"
             variant="success"
             isLoading={form.formState.isSubmitting || form.formState.isLoading}
+            onClick={() => clickEffect.play()}
             disabled={
               !form.formState.isValid ||
               form.formState.isSubmitting ||

@@ -58,6 +58,7 @@ export const RouletteScene: React.FC<{
   );
 
   const ballEffect = useAudioEffect(SoundEffects.ROULETTE);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const { isAnimationSkipped } = useGameSkip();
 
@@ -80,11 +81,15 @@ export const RouletteScene: React.FC<{
 
         setIsAnimating(true);
 
-        !skipRef.current && ballEffect.play();
+        if (!skipRef.current) {
+          ballEffect.play();
 
-        !skipRef.current && (await wait(ANIMATION_TIMEOUT));
+          await wait(ANIMATION_TIMEOUT);
 
-        !skipRef.current && onAnimationStep(order);
+          onAnimationStep(order);
+
+          rouletteResult[order - 1]?.won && winEffect.play();
+        }
 
         addLastBet(rouletteResult[order - 1] as RouletteGameResult);
 
@@ -101,6 +106,7 @@ export const RouletteScene: React.FC<{
           setIsPrepared(false);
           updateRouletteGameResults([]);
           onAnimationCompleted(rouletteResult);
+
           updateGameStatus("ENDED");
 
           return;
@@ -129,7 +135,7 @@ export const RouletteScene: React.FC<{
   return (
     <div
       className={cn(
-        "wr-relative wr-origin-top wr-transition-all wr-duration-500 wr-scale-[1.2]",
+        "wr-relative wr-origin-top wr-transition-all wr-duration-500 wr-scale-[1.2] lg:wr-top-[5px]",
         {
           "max-md:wr-top-1/2 max-md:-wr-translate-y-1/2 max-md:wr-scale-110 wr-z-[1]":
             isPrepared,

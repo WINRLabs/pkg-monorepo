@@ -25,8 +25,8 @@ export const Coin: React.FC<CoinProps> = ({
     coinRotate.setCanvas(canvas).initialize();
   };
 
-  const flipEffect = useAudioEffect(SoundEffects.COIN_FLIP_TOSS);
-  const winEffect = useAudioEffect(SoundEffects.COIN_FLIP_WIN);
+  const flipEffect = useAudioEffect(SoundEffects.LIMBO_SPIN_1);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const {
     gameStatus,

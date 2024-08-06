@@ -22,7 +22,8 @@ import { cn } from "../../../utils/style";
 import { toDecimals } from "../../../utils/web3";
 import { ALL_RPS_CHOICES, rpsChoiceMap } from "../constant";
 import useRpsGameStore from "../store";
-import { RockPaperScissors,RPSForm } from "../types";
+import { RockPaperScissors, RPSForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 interface BetControllerProps {
   minWager: number;
@@ -59,6 +60,8 @@ export const BetController: React.FC<BetControllerProps> = ({
   winMultiplier,
 }) => {
   const form = useFormContext() as RPSForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const { rpsGameResults, gameStatus } = useRpsGameStore([
     "rpsGameResults",
@@ -96,7 +99,10 @@ export const BetController: React.FC<BetControllerProps> = ({
               <FormControl>
                 <RadioGroupPrimitive.Root
                   {...field}
-                  onValueChange={field.onChange}
+                  onValueChange={(e) => {
+                    digitalClickEffect.play();
+                    field.onChange(e);
+                  }}
                   className="wr-grid wr-w-full wr-grid-cols-3 wr-grid-rows-1 wr-items-center wr-justify-between wr-gap-1"
                 >
                   {ALL_RPS_CHOICES.map((item) => (
@@ -154,6 +160,7 @@ export const BetController: React.FC<BetControllerProps> = ({
               variant={"success"}
               className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
               size={"xl"}
+              onClick={() => clickEffect.play()}
               isLoading={
                 form.formState.isSubmitting || form.formState.isLoading
               }

@@ -24,6 +24,7 @@ import { rowMultipliers } from "../constants";
 import usePlinko3dGameStore from "../store";
 import { Plinko3dForm } from "../types";
 import PlinkoRow from "./plinko-row";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 type Props = {
   minWager: number;
@@ -38,6 +39,7 @@ export const BetController: React.FC<Props> = ({
   logo,
 }) => {
   const form = useFormContext() as Plinko3dForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const wager = form.watch("wager");
 
@@ -160,6 +162,7 @@ export const BetController: React.FC<Props> = ({
             variant="plinko"
             className="wr-w-full !wr-rounded-none max-lg:-wr-order-2 max-lg:wr-mb-3.5 max-lg:wr-bg-cover"
             size={"xl"}
+            onClick={() => clickEffect.play()}
             disabled={
               !form.formState.isValid ||
               form.formState.isSubmitting ||

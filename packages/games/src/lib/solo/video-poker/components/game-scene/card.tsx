@@ -84,6 +84,7 @@ export const CardComponent: React.FC<{
   const [flipped, setFlipped] = React.useState(false);
 
   const flipCardEffect = useAudioEffect(SoundEffects.FLIP_CARD);
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const [isFirstAnimationFinished, setIsFirstAnimationFinished] =
     React.useState(false);
@@ -179,6 +180,7 @@ export const CardComponent: React.FC<{
             newCards[index] = checked ? CardStatus.OPEN : CardStatus.CLOSED;
 
             form.setValue("cardsToSend", newCards);
+            clickEffect.play();
           }}
           disabled={status !== VideoPokerStatus.Dealt}
         >

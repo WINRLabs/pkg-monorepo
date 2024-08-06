@@ -26,6 +26,10 @@ import { MultiplayerGameStatus } from "../../../core/type";
 import { colorMultipliers, WheelColor } from "../../constants";
 import { useWheelGameStore } from "../../store";
 import { WheelForm } from "../../types";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 interface Props {
   minWager: number;
@@ -50,6 +54,9 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
   ]);
 
   const form = useFormContext() as WheelForm;
+
+  const betClickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const chosenColor = form.watch("color");
 
@@ -88,7 +95,10 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
                 <FormLabel className="wr-text-white/50">Choose</FormLabel>
                 <FormControl>
                   <Radio.RadioGroup
-                    onValueChange={field.onChange}
+                    onValueChange={(e) => {
+                      clickEffect.play();
+                      field.onChange(e);
+                    }}
                     defaultValue={field.value}
                     className="wr-grid wr-h-9 wr-w-full wr-grid-cols-4 wr-grid-rows-1 wr-gap-[6px]"
                   >
@@ -168,6 +178,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
             variant={"success"}
             className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
             size={"xl"}
+            onClick={() => betClickEffect.play()}
             isLoading={form.formState.isSubmitting || form.formState.isLoading}
             disabled={
               !form.formState.isValid ||

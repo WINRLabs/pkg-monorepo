@@ -30,6 +30,8 @@ import { cn } from "../../../utils/style";
 import { toDecimals } from "../../../utils/web3";
 import useLimboGameStore from "../store";
 import { LimboForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { useDebounce } from "use-debounce";
 
 interface Props {
   minWager: number;
@@ -43,6 +45,7 @@ export const BetController: React.FC<Props> = ({
   winMultiplier,
 }) => {
   const form = useFormContext() as LimboForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { limboGameResults, gameStatus } = useLimboGameStore([
     "limboGameResults",
@@ -59,6 +62,14 @@ export const BetController: React.FC<Props> = ({
 
     return toDecimals(wager * betCount * winMultiplier, 2);
   }, [form.getValues().wager, form.getValues().betCount, winMultiplier]);
+
+  const sliderEffect = useAudioEffect(SoundEffects.SLIDER_TICK_1X);
+  const limboMultiplier = form.watch("limboMultiplier");
+  const debouncedBetCount = useDebounce(limboMultiplier, 100);
+
+  React.useEffect(() => {
+    sliderEffect.play();
+  }, [debouncedBetCount[0]]);
 
   return (
     <BetControllerContainer>
@@ -162,6 +173,7 @@ export const BetController: React.FC<Props> = ({
               variant={"success"}
               className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
               size={"xl"}
+              onClick={() => clickEffect.play()}
               isLoading={
                 form.formState.isSubmitting || form.formState.isLoading
               }
@@ -169,8 +181,9 @@ export const BetController: React.FC<Props> = ({
                 !form.formState.isValid ||
                 form.formState.isSubmitting ||
                 form.formState.isLoading ||
-                gameStatus == "PLAYING" ||
-                limboGameResults.length > 0
+                (gameStatus == "PLAYING" &&
+                  limboGameResults.length < 4 &&
+                  limboGameResults.length > 1)
               }
             >
               Bet

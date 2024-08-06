@@ -14,6 +14,10 @@ import {
 import { BlackjackCard, calcTotalAmounts } from "../../utils";
 import { Card } from "../card";
 import styles from "./splitted-card-area.module.css";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 interface SplittedCardAreaProps {
   handType: BlackjackHandIndex;
@@ -41,6 +45,7 @@ export const SplittedCardArea: React.FC<SplittedCardAreaProps> = ({
   children,
 }) => {
   const { cards: cardData, settledResult } = hand;
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const [isCompletedAndBusted, setIsCompletedAndBusted] =
     React.useState<boolean>(false);
@@ -119,8 +124,8 @@ export const SplittedCardArea: React.FC<SplittedCardAreaProps> = ({
   }, [isDistributionCompleted, isBusted]);
 
   React.useEffect(() => {
-    console.log(isCompletedAndBusted, "iscom");
-  }, [isCompletedAndBusted]);
+    if (isWinner) winEffect.play();
+  }, [isWinner]);
 
   return (
     <div

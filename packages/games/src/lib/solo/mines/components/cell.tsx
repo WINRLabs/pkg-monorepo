@@ -8,6 +8,8 @@ import { cn } from "../../../utils/style";
 import { boardsSchema, initialBoard } from "../constants";
 import { useMinesGameStateStore } from "../store";
 import { MINES_GAME_STATUS, MINES_SUBMIT_TYPE, MinesForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import React from "react";
 
 const MineCell: React.FC<{
   mineCell: (typeof initialBoard)["0"];
@@ -15,6 +17,9 @@ const MineCell: React.FC<{
   isLoading?: boolean;
 }> = ({ mineCell, idx, isLoading }) => {
   const form = useFormContext() as MinesForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const bombEffect = useAudioEffect(SoundEffects.MINES_BOMB);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const { gameStatus, updateBoardItem, updateMinesGameState } =
     useMinesGameStateStore([
@@ -22,6 +27,14 @@ const MineCell: React.FC<{
       "updateBoardItem",
       "updateMinesGameState",
     ]);
+
+  React.useEffect(() => {
+    if (mineCell.isBomb) bombEffect.play();
+  }, [mineCell.isBomb]);
+
+  React.useEffect(() => {
+    if (!mineCell.isBomb && mineCell.isRevealed) winEffect.play();
+  }, [mineCell.isBomb, mineCell.isRevealed]);
 
   return (
     <FormField
@@ -34,14 +47,13 @@ const MineCell: React.FC<{
               <CheckboxPrimitive.Root
                 className={cn("wr-h-full wr-w-full")}
                 onClick={() => {
+                  clickEffect.play();
                   updateMinesGameState({
                     submitType:
                       gameStatus === MINES_GAME_STATUS.IDLE
                         ? MINES_SUBMIT_TYPE.FIRST_REVEAL
                         : MINES_SUBMIT_TYPE.REVEAL,
                   });
-
-                  console.log("clicked checkbox!");
                 }}
                 checked={field.value[idx]}
                 onCheckedChange={(checked) => {

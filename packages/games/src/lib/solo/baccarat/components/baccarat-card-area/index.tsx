@@ -1,3 +1,5 @@
+"use client";
+
 import { Player } from "@lottiefiles/react-lottie-player";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
@@ -52,6 +54,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
   onAnimationCompleted,
 }) => {
   const flipEffect = useAudioEffect(SoundEffects.FLIP_CARD);
+  const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   const playerLottieRef = React.useRef<any>(null);
 
@@ -252,6 +255,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
   React.useEffect(() => {
     if (isAnimationCompleted && baccaratSettled) {
       // on animation completed
+      if (baccaratSettled.won) winEffect.play();
       onAnimationCompleted(baccaratSettled);
     }
   }, [isAnimationCompleted, baccaratSettled]);

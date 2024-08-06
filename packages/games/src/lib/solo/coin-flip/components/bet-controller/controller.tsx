@@ -13,9 +13,14 @@ import { cn } from "../../../../utils/style";
 import { CoinFlipForm } from "../../types";
 import useCoinFlipGameStore from "../../store";
 import { toFormatted } from "../../../../utils/web3";
+import {
+  SoundEffects,
+  useAudioEffect,
+} from "../../../../hooks/use-audio-effect";
 
 export const CoinFlipController = () => {
   const form = useFormContext() as CoinFlipForm;
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const wager = form.watch("wager");
 
@@ -31,7 +36,10 @@ export const CoinFlipController = () => {
             <FormLabel>Choose Side</FormLabel>
             <FormControl>
               <RadioGroupPrimitive.Root
-                onValueChange={field.onChange}
+                onValueChange={(v) => {
+                  clickEffect.play();
+                  field.onChange(v);
+                }}
                 className="wr-grid wr-h-full wr-w-full wr-grid-cols-2 wr-items-center wr-justify-center wr-gap-0 wr-rounded-md wr-bg-unity-white-15 wr-font-semibold"
                 defaultValue={field.value as unknown as string}
                 disabled={

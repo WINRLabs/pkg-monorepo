@@ -21,6 +21,7 @@ import { cn } from "../../../utils/style";
 import { toDecimals, toFormatted } from "../../../utils/web3";
 import { useDiceGameStore } from "..";
 import { DiceForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 // import { AudioController } from "@/components/common/audio-controller";
 // import { PreBetButton } from "@/app/(games)/_components/bet-button";
 
@@ -38,6 +39,7 @@ export const BetController: React.FC<Props> = ({
   isGettingResults,
 }) => {
   const form = useFormContext() as DiceForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const maxPayout = React.useMemo(() => {
     const { wager, betCount } = form.getValues();
@@ -127,6 +129,7 @@ export const BetController: React.FC<Props> = ({
               variant={"success"}
               className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
               size={"xl"}
+              onClick={() => clickEffect.play()}
               isLoading={
                 form.formState.isSubmitting ||
                 form.formState.isLoading ||
@@ -136,7 +139,9 @@ export const BetController: React.FC<Props> = ({
                 !form.formState.isValid ||
                 form.formState.isSubmitting ||
                 form.formState.isLoading ||
-                gameStatus == "PLAYING" ||
+                (gameStatus == "PLAYING" &&
+                  diceGameResults.length < 4 &&
+                  diceGameResults.length > 1) ||
                 isGettingResults
               }
             >

@@ -1,8 +1,14 @@
 import * as Slider from "@radix-ui/react-slider";
 import { useFormContext } from "react-hook-form";
 
-import { AudioContextProvider } from "../../hooks/use-audio-effect";
+import {
+  AudioContextProvider,
+  SoundEffects,
+  useAudioEffect,
+} from "../../hooks/use-audio-effect";
 import { cn } from "../../utils/style";
+import React from "react";
+import { useDebounce } from "use-debounce";
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
   children?: React.ReactNode;
@@ -46,21 +52,26 @@ export const BetControllerContainer: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <AudioContextProvider>
-      <section
-        className={cn(
-          "wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-zinc-900 wr-p-4 lg:wr-w-[340px]",
-          className
-        )}
-      >
-        {children}
-      </section>
-    </AudioContextProvider>
+    <section
+      className={cn(
+        "wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-zinc-900 wr-p-4 lg:wr-w-[340px]",
+        className
+      )}
+    >
+      {children}
+    </section>
   );
 };
 
 export const BetCountSlider = ({ ...props }) => {
   const form = useFormContext();
+  const sliderEffect = useAudioEffect(SoundEffects.SLIDER_TICK_1X);
+  const betCount = form.watch("betCount");
+  const debouncedBetCount = useDebounce(betCount, 50);
+
+  React.useEffect(() => {
+    sliderEffect.play();
+  }, [debouncedBetCount[0]]);
 
   return (
     <Slider.Root

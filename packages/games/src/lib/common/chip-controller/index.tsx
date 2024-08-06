@@ -6,6 +6,7 @@ import { ChipControllerProps, ChipProps } from "./types";
 import { Button } from "../../ui/button";
 import { ScrollArea } from "../../ui/scroll-area";
 import { CDN_URL } from "../../constants";
+import { SoundEffects, useAudioEffect } from "../../hooks/use-audio-effect";
 
 export const ChipController: React.FC<ChipControllerProps> = ({
   chipAmount,
@@ -17,6 +18,7 @@ export const ChipController: React.FC<ChipControllerProps> = ({
   className,
 }) => {
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const scrollHorizontal = (scrollAmount: number) => {
     if (scrollRef.current) {
@@ -41,7 +43,10 @@ export const ChipController: React.FC<ChipControllerProps> = ({
       )}
     >
       <Button
-        onClick={() => scrollHorizontal(-100)}
+        onClick={() => {
+          clickEffect.play();
+          scrollHorizontal(-100);
+        }}
         disabled={isDisabled}
         className="wr-absolute wr-left-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
         type="button"
@@ -62,7 +67,10 @@ export const ChipController: React.FC<ChipControllerProps> = ({
               icon={i.src}
               value={i.value}
               selectedChip={selectedChip}
-              onSelectedChipChange={onSelectedChipChange}
+              onSelectedChipChange={(c) => {
+                clickEffect.play();
+                onSelectedChipChange(c);
+              }}
               isDisabled={isDisabled || !hasBalanceForMove(i.value)}
               key={idx}
             />
@@ -71,7 +79,10 @@ export const ChipController: React.FC<ChipControllerProps> = ({
       </ScrollArea>
 
       <Button
-        onClick={() => scrollHorizontal(100)}
+        onClick={() => {
+          clickEffect.play();
+          scrollHorizontal(100);
+        }}
         disabled={isDisabled}
         className="wr-absolute wr-right-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
         type="button"

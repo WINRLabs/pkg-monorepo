@@ -30,6 +30,8 @@ import { toDecimals, toFormatted } from "../../../utils/web3";
 import { rowMultipliers } from "../constants";
 import usePlinkoGameStore from "../store";
 import { PlinkoForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { useDebounce } from "use-debounce";
 
 interface Props {
   minWager: number;
@@ -38,6 +40,7 @@ interface Props {
 
 export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
   const form = useFormContext() as PlinkoForm;
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const rowSize = form.watch("plinkoSize");
   const wager = form.watch("wager");
@@ -138,6 +141,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
               variant={"success"}
               className="wr-w-full max-lg:-wr-order-1 max-lg:wr-mb-3.5"
               size={"xl"}
+              onClick={() => clickEffect.play()}
               isLoading={
                 form.formState.isSubmitting || form.formState.isLoading
               }
@@ -239,6 +243,14 @@ const PlinkoRowInput = ({
 
 const PlinkoRowSlider = ({ ...props }) => {
   const form = useFormContext();
+  const sliderEffect = useAudioEffect(SoundEffects.SLIDER_TICK_1X);
+
+  const plinkoSize = form.watch("plinkoSize");
+  const debouncedPlinkoSize = useDebounce(plinkoSize, 100);
+
+  React.useEffect(() => {
+    sliderEffect.play();
+  }, [debouncedPlinkoSize[0]]);
 
   return (
     <Slider.Root

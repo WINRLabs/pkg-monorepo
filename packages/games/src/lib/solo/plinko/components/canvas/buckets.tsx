@@ -26,12 +26,16 @@ interface PlinkoBucketProps {
 
 const Bucket: React.FC<PlinkoBucketProps> = ({ multiplier, value }) => {
   const [flash, setFlash] = useState(false);
-  const effect = useAudioEffect(SoundEffects.FALLING);
+  const smallWinEffect = useAudioEffect(SoundEffects.PLINKO_SMALL);
+  const midWinEffect = useAudioEffect(SoundEffects.PLINKO_MID);
+  const bigWinEffect = useAudioEffect(SoundEffects.PLINKO_BIG);
 
   useEffect(() => {
-    effect.play();
-
     if (value) {
+      if (multiplier < 2) smallWinEffect.play();
+      if (multiplier >= 2 && multiplier < 4) midWinEffect.play();
+      if (multiplier >= 4) bigWinEffect.play();
+
       setFlash(true);
       setTimeout(() => setFlash(false), 300);
     }

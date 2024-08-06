@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect,useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { CDN_URL } from "../constants";
 
@@ -20,6 +20,17 @@ export enum SoundEffects {
   LIMBO_TICK,
   KENO_OUTCOME_NUMBER,
   WHEEL_STEP,
+  BET_BUTTON_CLICK,
+  SLIDER_TICK_1X,
+  BUTTON_CLICK_DIGITAL,
+  SPIN_TICK_1X,
+  WIN_COIN_DIGITAL,
+  MINES_BOMB,
+  LIMBO_SPIN_1,
+  PLINKO_BIG,
+  PLINKO_MID,
+  PLINKO_SMALL,
+  CHIP_EFFECT,
 }
 
 export interface AudioContextType {
@@ -81,6 +92,7 @@ export const AudioContextProvider = ({
 };
 
 export const effects: Map<SoundEffects, string> = new Map();
+// legacy sounds
 effects.set(SoundEffects.COIN_FLIP_TOSS, "coin-toss.wav");
 effects.set(SoundEffects.COIN_FLIP_WIN, "coin-flip-win.wav");
 effects.set(SoundEffects.SLIDER, "slider-effect.mp3");
@@ -91,15 +103,25 @@ effects.set(
 effects.set(SoundEffects.ROLLING_DICE, "rolling-dice.mp3");
 effects.set(SoundEffects.RPS, "rps.mp3");
 effects.set(SoundEffects.RANGE_WIN, "mixkit-magical-coin-win-1936.wav");
-effects.set(SoundEffects.FLIP_CARD, "flip.mp3");
+effects.set(SoundEffects.FLIP_CARD, "card-open-1.mp3");
 effects.set(SoundEffects.THICK, "thick.wav");
 effects.set(SoundEffects.FALLING, "bucket.wav");
 effects.set(SoundEffects.BALL_BUMP, "ball_bump.mp3");
 effects.set(SoundEffects.ROULETTE, "roulette.mp3");
 effects.set(SoundEffects.LIMBO_TICK, "limbo-tick.mp3");
 effects.set(SoundEffects.KENO_OUTCOME_NUMBER, "outcome-number.wav");
-// todo: wheel step
 effects.set(SoundEffects.WHEEL_STEP, "limbo-tick.mp3");
+effects.set(SoundEffects.BET_BUTTON_CLICK, "bet-button-click.mp3");
+effects.set(SoundEffects.SLIDER_TICK_1X, "slider-tick-1x.mp3");
+effects.set(SoundEffects.BUTTON_CLICK_DIGITAL, "button-click-digital.mp3");
+effects.set(SoundEffects.SPIN_TICK_1X, "spin-tick-1.mp3");
+effects.set(SoundEffects.WIN_COIN_DIGITAL, "win-claim-coin-digital.mp3");
+effects.set(SoundEffects.MINES_BOMB, "mines-bomb.mp3");
+effects.set(SoundEffects.LIMBO_SPIN_1, "limbo-spin-1.mp3");
+effects.set(SoundEffects.PLINKO_BIG, "plinko-big.mp3");
+effects.set(SoundEffects.PLINKO_MID, "plinko-mid.mp3");
+effects.set(SoundEffects.PLINKO_SMALL, "plinko-small.mp3");
+effects.set(SoundEffects.CHIP_EFFECT, "coin-chip-add-effect-controller.mp3");
 
 type PlayOptions = {
   playbackRate?: number;

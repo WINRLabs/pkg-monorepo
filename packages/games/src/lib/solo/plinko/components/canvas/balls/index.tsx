@@ -54,7 +54,7 @@ const Ball: React.FC<PlinkoBallProps> = ({
       const initialX = mobileRef.current ? 10 : 25;
       const initialY = mobileRef.current ? 20 : 30;
 
-      const ballInterval = setInterval(() => ballEffect.play(), 300);
+      // const ballInterval = setInterval(() => ballEffect.play(), 300);
 
       for (let i = 0; i < path.length + 2; i++) {
         console.log(i, "i");
@@ -93,7 +93,7 @@ const Ball: React.FC<PlinkoBallProps> = ({
 
                 clearTimeout(t);
 
-                clearInterval(ballInterval);
+                // clearInterval(ballInterval);
               }
 
               const isPathEnded = i === path.length;
@@ -110,7 +110,7 @@ const Ball: React.FC<PlinkoBallProps> = ({
               }
 
               if (skipRef.current) {
-                clearInterval(ballInterval);
+                // clearInterval(ballInterval);
               }
             },
             delay + i * 275

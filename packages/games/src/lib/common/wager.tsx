@@ -1,4 +1,5 @@
 import { useGameOptions } from "../game-provider";
+import { SoundEffects, useAudioEffect } from "../hooks/use-audio-effect";
 import { Button } from "../ui/button";
 import { INumberInputContext, NumberInput } from "../ui/number-input";
 import { cn } from "../utils/style";
@@ -79,6 +80,8 @@ export const WagerSetterButtons = ({
   form,
   isDisabled,
 }: WagerSetterButtonsProps) => {
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+
   return (
     <div className="wr-flex wr-items-center wr-gap-1 wr-">
       <Button
@@ -87,6 +90,7 @@ export const WagerSetterButtons = ({
         disabled={isDisabled}
         variant={"secondary"}
         onClick={() => {
+          clickEffect.play();
           form.setValue("wager", minWager);
         }}
       >
@@ -98,6 +102,7 @@ export const WagerSetterButtons = ({
         disabled={isDisabled}
         variant={"secondary"}
         onClick={() => {
+          clickEffect.play();
           const newValue = currentWager / 3;
 
           if (newValue < minWager) form.setValue("wager", minWager);
@@ -112,6 +117,7 @@ export const WagerSetterButtons = ({
         disabled={isDisabled}
         variant={"secondary"}
         onClick={() => {
+          clickEffect.play();
           const newValue = currentWager * 2;
 
           if (newValue > maxWager) form.setValue("wager", maxWager);
@@ -126,6 +132,7 @@ export const WagerSetterButtons = ({
         disabled={isDisabled}
         variant={"secondary"}
         onClick={() => {
+          clickEffect.play();
           form.setValue("wager", maxWager);
         }}
       >

@@ -21,6 +21,7 @@ import {
 } from "../types";
 import { BaccaratScene } from "./baccarat-scene";
 import { BetController } from "./bet-controller";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
 
 type TemplateProps = BaccaratGameProps & {
   minWager?: number;
@@ -104,6 +105,8 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
     },
   });
 
+  const chipEffect = useAudioEffect(SoundEffects.CHIP_EFFECT);
+
   const wager = form.watch("wager");
 
   const tieWager = form.watch("tieWager");
@@ -114,6 +117,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
 
   const addWager = (wager: Chip, betType: BaccaratBetType) => {
     const _lastSelections = lastSelections;
+    chipEffect.play();
 
     switch (betType) {
       case BaccaratBetType.TIE:

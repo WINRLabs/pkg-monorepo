@@ -7,6 +7,9 @@ import { toDecimals } from "../../../utils/web3";
 import { useDiceGameStore } from "..";
 import { MAX_VALUE, MIN_VALUE } from "../constant";
 import { DiceForm } from "../types";
+import { SoundEffects, useAudioEffect } from "../../../hooks/use-audio-effect";
+import { useDebounce } from "use-debounce";
+import React from "react";
 
 export interface SliderTrackOptions {
   color?: string;
@@ -21,12 +24,19 @@ export interface SliderProps {
 
 export const Slider = ({ isLoading, disabled, track }: SliderProps) => {
   const form = useFormContext() as DiceForm;
+  const sliderEffect = useAudioEffect(SoundEffects.SLIDER_TICK_1X);
 
   const { gameStatus } = useDiceGameStore(["gameStatus"]);
 
   const rollValue = form.watch("rollValue");
 
   const rollType = form.watch("rollType");
+
+  const debouncedRollValue = useDebounce(rollValue, 150);
+
+  React.useEffect(() => {
+    sliderEffect.play();
+  }, [debouncedRollValue[0]]);
 
   return (
     <div className="wr-w-full wr-shrink-0">
@@ -52,6 +62,7 @@ export const Slider = ({ isLoading, disabled, track }: SliderProps) => {
                 max={MAX_VALUE}
                 onValueChange={(e) => {
                   field.onChange(e[0]);
+                  sliderEffect.play();
 
                   const { rollType } = form.getValues();
 
@@ -107,7 +118,13 @@ export const Slider = ({ isLoading, disabled, track }: SliderProps) => {
       />
       <div className="wr-mt-[22px] wr-flex wr-justify-between wr-text-[15px] wr-font-bold">
         {[0, 25, 50, 75, 100].map((value) => (
-          <span key={value} className="block wr-size-10 wr-text-center">
+          <span
+            key={value}
+            className={cn("block wr-size-10 wr-text-center", {
+              "wr-text-left": value == 0,
+              "wr-text-right": value == 100,
+            })}
+          >
             {value}
           </span>
         ))}
