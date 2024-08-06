@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.15.4
+
+### Patch Changes
+
+- 8509b2c: In the history section, make items above 1x green and others red. plinko
+- 4cd6111: dice instant bet
+
 ## 2.15.3
 
 ### Patch Changes

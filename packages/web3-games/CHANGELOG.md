@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.18
+
+### Patch Changes
+
+- 4cd6111: dice instant bet
+- Updated dependencies [8509b2c]
+- Updated dependencies [4cd6111]
+  - @winrlabs/games@2.15.4
+  - @winrlabs/web3-games@7.0.18
+
 ## 7.0.17
 
 ### Patch Changes
