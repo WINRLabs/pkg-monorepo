@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.14
+
+### Patch Changes
+
+- fc4d0bb: last sound fixes
+
 ## 0.10.13
 
 ### Patch Changes

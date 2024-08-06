@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.22
+
+### Patch Changes
+
+- fc4d0bb: last sound fixes
+- Updated dependencies [fc4d0bb]
+  - @winrlabs/games@2.15.8
+  - @winrlabs/web3@0.10.14
+  - @winrlabs/web3-games@7.0.22
+
 ## 7.0.21
 
 ### Patch Changes

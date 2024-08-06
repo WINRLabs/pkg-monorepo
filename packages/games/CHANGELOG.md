@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.8
+
+### Patch Changes
+
+- fc4d0bb: last sound fixes
+
 ## 2.15.7
 
 ### Patch Changes
