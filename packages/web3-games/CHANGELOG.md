@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 7.0.17
+
+### Patch Changes
+
+- 63e6d03: fixes
+- 918d324: update plinko3d
+- Updated dependencies [63e6d03]
+- Updated dependencies [918d324]
+  - @winrlabs/games@2.15.3
+  - @winrlabs/web3@0.10.12
+  - @winrlabs/web3-games@7.0.17
+
 ## 7.0.16
 
 ### Patch Changes
