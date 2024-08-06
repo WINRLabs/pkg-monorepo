@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.13
+
+### Patch Changes
+
+- 246e4ce: ui updates
+
 ## 0.10.12
 
 ### Patch Changes

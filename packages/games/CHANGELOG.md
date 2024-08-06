@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.7
+
+### Patch Changes
+
+- 246e4ce: ui updates
+
 ## 2.15.6
 
 ### Patch Changes
