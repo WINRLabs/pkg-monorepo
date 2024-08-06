@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.25
+
+### Patch Changes
+
+- ba680ba: update sound effects
+- Updated dependencies [ba680ba]
+  - @winrlabs/games@2.15.11
+  - @winrlabs/web3@0.10.16
+  - @winrlabs/web3-games@7.0.25
+
 ## 7.0.24
 
 ### Patch Changes

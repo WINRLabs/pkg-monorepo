@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.16
+
+### Patch Changes
+
+- ba680ba: update sound effects
+
 ## 0.10.15
 
 ### Patch Changes

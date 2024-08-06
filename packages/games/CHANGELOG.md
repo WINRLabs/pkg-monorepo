@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.11
+
+### Patch Changes
+
+- ba680ba: update sound effects
+
 ## 2.15.10
 
 ### Patch Changes

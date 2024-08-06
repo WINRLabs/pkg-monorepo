@@ -1,5 +1,12 @@
 # @winrlabs/ui
 
+## 9.0.16
+
+### Patch Changes
+
+- Updated dependencies [ba680ba]
+  - @winrlabs/web3@0.10.16
+
 ## 9.0.15
 
 ### Patch Changes
