@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.9
+
+### Patch Changes
+
+- 5d63d71: export audio effect
+
 ## 2.15.8
 
 ### Patch Changes
