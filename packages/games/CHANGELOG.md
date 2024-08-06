@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.5
+
+### Patch Changes
+
+- 141433d: last bets plinko
+
 ## 2.15.4
 
 ### Patch Changes
