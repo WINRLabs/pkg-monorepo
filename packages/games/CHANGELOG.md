@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.15.6
+
+### Patch Changes
+
+- 51a6a33: wheel remove usdc an bigger result
+- c338760: keno remove spacing and kept the result
+
 ## 2.15.5
 
 ### Patch Changes
