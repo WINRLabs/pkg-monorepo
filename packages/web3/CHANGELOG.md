@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.15
+
+### Patch Changes
+
+- 84e150f: audio enum export
+
 ## 0.10.14
 
 ### Patch Changes

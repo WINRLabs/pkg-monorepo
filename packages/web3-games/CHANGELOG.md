@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.24
+
+### Patch Changes
+
+- 84e150f: audio enum export
+- Updated dependencies [84e150f]
+  - @winrlabs/games@2.15.10
+  - @winrlabs/web3@0.10.15
+  - @winrlabs/web3-games@7.0.24
+
 ## 7.0.23
 
 ### Patch Changes

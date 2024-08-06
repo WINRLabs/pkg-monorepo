@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.10
+
+### Patch Changes
+
+- 84e150f: audio enum export
+
 ## 2.15.9
 
 ### Patch Changes
