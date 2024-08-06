@@ -7,6 +7,7 @@ import {
   DiceTemplate,
   GameType,
   toDecimals,
+  useDiceGameStore,
   useLiveResultStore,
 } from "@winrlabs/games";
 import {
@@ -71,7 +72,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     skipAll,
     clear: clearLiveResults,
   } = useLiveResultStore(["addResult", "clear", "updateGame", "skipAll"]);
-
+  const { updateGameStatus } = useDiceGameStore(["updateGameStatus"]);
   const [isGettingResults, setIsGettingResults] = useState(false);
 
   const [formValues, setFormValues] = useState<DiceFormFields>({
@@ -96,6 +97,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || "0x",
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -192,12 +194,15 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       ],
       address: controllerAddress as Address,
     },
-    options: {},
+    options: {
+      forceRefetch: true,
+    },
     encodedTxData: encodedParams.encodedTxData,
   });
 
   const onGameSubmit = async () => {
     clearLiveResults();
+    updateGameStatus("PLAYING");
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -219,6 +224,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       console.log("error", e);
       setIsGettingResults(false);
       refetchPlayerGameStatus();
+      updateGameStatus("ENDED");
     }
   };
 

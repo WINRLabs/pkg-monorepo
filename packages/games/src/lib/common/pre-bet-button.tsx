@@ -57,5 +57,5 @@ export const PreBetButton = ({
       </Button>
     );
 
-  return <>{children}</>;
+  return <span className="wr-select-none">{children}</span>;
 };

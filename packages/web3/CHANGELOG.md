@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.12
+
+### Patch Changes
+
+- 63e6d03: fixes
+
 ## 0.10.11
 
 ### Patch Changes

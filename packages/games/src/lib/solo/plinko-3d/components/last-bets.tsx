@@ -18,10 +18,7 @@ export const Plinko3dLastBets = () => {
               "wr-flex wr-h-7 wr-w-[53px] wr-flex-shrink-0 wr-items-center wr-justify-center wr-rounded-[1000px] wr-bg-zinc-700 wr-font-semibold wr-text-zinc-100",
               {
                 "wr-bg-green-500": Number(result.multiplier) > 1,
-                "wr-bg-sky-500":
-                  Number(result.multiplier) > 0.4 &&
-                  Number(result.multiplier) < 1,
-                "wr-bg-pink-500": Number(result.multiplier) === 0.4,
+                "wr-bg-zinc-700": Number(result.multiplier) < 1,
               }
             )}
           >

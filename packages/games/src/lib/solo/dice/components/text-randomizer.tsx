@@ -14,7 +14,7 @@ export const TextRandomizer = () => {
     ]);
 
   const currentResult =
-    gameStatus === "PLAYING" ? diceGameResults[currentAnimationCount] : null;
+    diceGameResults.length > 0 ? diceGameResults[currentAnimationCount] : null;
 
   const [resetAnimation, setResetAnimation] = React.useState(false);
 

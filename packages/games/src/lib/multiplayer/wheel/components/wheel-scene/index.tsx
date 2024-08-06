@@ -62,7 +62,7 @@ export const WheelScene = ({ onComplete }: { onComplete?: () => void }) => {
 
           {status === MultiplayerGameStatus.Finish && showResult && (
             <div className={cn(styles.multiplier, styles[`m${multiplier}x`])}>
-              <div className="wr-text-[32px]">{multiplier}x</div>
+              <div className="wr-text-[40px]">{multiplier}x</div>
             </div>
           )}
         </div>

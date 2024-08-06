@@ -80,7 +80,7 @@ const WheelParticipantDetail: React.FC<WheelParticipantDetailProps> = ({
               {participant.player}
             </div>
             <div className="wr-flex">
-              {participant.bet ? <>{participant.bet} USDC</> : null}
+              {participant.bet ? <>${participant.bet}</> : null}
             </div>
           </div>
         ))}

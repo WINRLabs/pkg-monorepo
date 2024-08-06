@@ -120,10 +120,7 @@ export const Slider = ({ isLoading, disabled, track }: SliderProps) => {
         {[0, 25, 50, 75, 100].map((value) => (
           <span
             key={value}
-            className={cn("block wr-size-10 wr-text-center", {
-              "wr-text-left": value == 0,
-              "wr-text-right": value == 100,
-            })}
+            className="block wr-size-10 wr-text-center first:wr-text-left last:wr-text-right"
           >
             {value}
           </span>

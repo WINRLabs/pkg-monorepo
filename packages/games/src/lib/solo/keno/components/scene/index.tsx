@@ -49,9 +49,10 @@ export const KenoScene: React.FC<KenoSceneProps> = ({
 
       const isWon = kenoGameResults?.[i]?.settled.won;
 
-      setCurrentNumbers(
-        currentNumbers.concat(kenoGameResults?.[i]?.resultNumbers || [])
-      );
+      const results = kenoGameResults?.[i]
+        ?.resultNumbers as unknown as number[][];
+
+      setCurrentNumbers(results || []);
 
       if (isWon) {
         outComeEffect.play();
@@ -61,7 +62,7 @@ export const KenoScene: React.FC<KenoSceneProps> = ({
         updateKenoGameResults([]);
         onAnimationCompleted && onAnimationCompleted(kenoGameResults);
         setTimeout(() => {
-          setCurrentNumbers([]);
+          // setCurrentNumbers([]);
           updateGameStatus("ENDED");
         }, 1000);
       } else {

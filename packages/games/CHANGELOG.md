@@ -1,5 +1,31 @@
 # @winrlabs/games
 
+## 2.15.6
+
+### Patch Changes
+
+- 51a6a33: wheel remove usdc an bigger result
+- c338760: keno remove spacing and kept the result
+
+## 2.15.5
+
+### Patch Changes
+
+- 141433d: last bets plinko
+
+## 2.15.4
+
+### Patch Changes
+
+- 8509b2c: In the history section, make items above 1x green and others red. plinko
+- 4cd6111: dice instant bet
+
+## 2.15.3
+
+### Patch Changes
+
+- 63e6d03: fixes
+
 ## 2.15.2
 
 ### Patch Changes
