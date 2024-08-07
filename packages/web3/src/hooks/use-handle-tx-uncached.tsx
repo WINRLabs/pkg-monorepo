@@ -93,27 +93,30 @@ export const useHandleTxUncached = <
         throw new Error("No cached signature found");
       }
 
-      const { status, hash } = await client.request("sendUserOperation", {
-        sender: userOp.sender,
-        nonce: userOp.nonce.toString(),
-        factory: userOp.factory,
-        factoryData: userOp.factoryData,
-        callData: userOp.callData,
-        callGasLimit: userOp.callGasLimit.toString(),
-        verificationGasLimit: userOp.verificationGasLimit.toString(),
-        preVerificationGas: userOp.preVerificationGas.toString(),
-        maxFeePerGas: userOp.maxFeePerGas.toString(),
-        maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
-        paymaster: userOp.paymaster,
-        paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
-          ? userOp.paymasterVerificationGasLimit.toString()
-          : "",
-        paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
-          ? userOp.paymasterPostOpGasLimit.toString()
-          : "",
-        paymasterData: userOp.paymasterData,
-        signature: userOp.signature,
-      });
+      const { status, hash, event } = await client.request(
+        "sendGameOperation",
+        {
+          sender: userOp.sender,
+          nonce: userOp.nonce.toString(),
+          factory: userOp.factory,
+          factoryData: userOp.factoryData,
+          callData: userOp.callData,
+          callGasLimit: userOp.callGasLimit.toString(),
+          verificationGasLimit: userOp.verificationGasLimit.toString(),
+          preVerificationGas: userOp.preVerificationGas.toString(),
+          maxFeePerGas: userOp.maxFeePerGas.toString(),
+          maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
+          paymaster: userOp.paymaster,
+          paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
+            ? userOp.paymasterVerificationGasLimit.toString()
+            : "",
+          paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
+            ? userOp.paymasterPostOpGasLimit.toString()
+            : "",
+          paymasterData: userOp.paymasterData,
+          signature: userOp.signature,
+        }
+      );
 
       if (status !== "success") {
         throw new Error(status);
@@ -123,7 +126,7 @@ export const useHandleTxUncached = <
         console.log(accountApi?.cachedNonce, "cached nonce updated");
       }
 
-      return { status, hash };
+      return { status, hash, event };
     } else {
       return await writeContractAsync({
         abi: writeContractVariables.abi,

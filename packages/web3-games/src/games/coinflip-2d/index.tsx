@@ -13,7 +13,6 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleGameTx,
-  useHandleTx,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -216,14 +215,26 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     },
     options: {},
     encodedTxData: encodedParams.encodedTxData,
-    encodedGameData: encodedParams.encodedGameData,
   });
 
   const onGameSubmit = async () => {
     clearLiveResults();
     setIsLoading(true); // Set loading state to true
 
+    if (!allowance.hasAllowance) {
+      const handledAllowance = await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          console.log("error", e);
+        },
+      });
+
+      if (!handledAllowance) return;
+    }
+
     try {
+      if (isPlayerHalted) await playerLevelUp();
+      if (isReIterable) await playerReIterate();
+
       const tx = await handleTx.mutateAsync();
 
       if (tx?.event) {
@@ -236,19 +247,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         setIsLoading(false);
       }
       console.log(tx, "TX");
-
-      if (isPlayerHalted) await playerLevelUp();
-      if (isReIterable) await playerReIterate();
-
-      if (!allowance.hasAllowance) {
-        const handledAllowance = await allowance.handleAllowance({
-          errorCb: (e: any) => {
-            console.log("error", e);
-          },
-        });
-
-        if (!handledAllowance) return;
-      }
     } catch (e: any) {
       console.log("error", e);
       refetchPlayerGameStatus();

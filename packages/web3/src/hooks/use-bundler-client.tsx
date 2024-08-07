@@ -33,6 +33,7 @@ export type BundlerMethods = {
 
   "sendGameOperation"(params: Partial<UserOperation>): {
     event: any;
+    hash: Hex;
     status: string;
   };
 };

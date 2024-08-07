@@ -16,7 +16,7 @@ import {
   blackjackReaderAbi,
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
+  useHandleGameTx,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -343,7 +343,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     };
   }, [activeGameData.activeHandIndex, selectedToken.address]);
 
-  const handleBetTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleBetTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -360,7 +360,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedBetParams.encodedTxData,
   });
 
-  const handleHitTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleHitTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -377,7 +377,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedHitParams.encodedTxData,
   });
 
-  const handleStandTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleStandTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -394,7 +394,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedStandParams.encodedTxData,
   });
 
-  const handleDoubleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleDoubleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -411,7 +411,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedDoubleParams.encodedTxData,
   });
 
-  const handleSplitTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleSplitTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -428,22 +428,24 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedSplitParams.encodedTxData,
   });
 
-  const handleBuyInsuranceTx = useHandleTx<typeof controllerAbi, "perform">({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: "perform",
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        "buyInsurance",
-        encodedBuyInsuranceParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {},
-    encodedTxData: encodedBuyInsuranceParams.encodedTxData,
-  });
+  const handleBuyInsuranceTx = useHandleGameTx<typeof controllerAbi, "perform">(
+    {
+      writeContractVariables: {
+        abi: controllerAbi,
+        functionName: "perform",
+        args: [
+          gameAddresses.singleBlackjack,
+          selectedToken.bankrollIndex,
+          uiOperatorAddress as Address,
+          "buyInsurance",
+          encodedBuyInsuranceParams.encodedGameData,
+        ],
+        address: controllerAddress as Address,
+      },
+      options: {},
+      encodedTxData: encodedBuyInsuranceParams.encodedTxData,
+    }
+  );
 
   const handleStart = async () => {
     setIsLoading(true); // Set loading state to true

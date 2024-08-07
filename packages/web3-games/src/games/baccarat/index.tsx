@@ -11,6 +11,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
+  useHandleGameTx,
   useHandleTx,
   usePriceFeed,
   useTokenAllowance,
@@ -161,7 +162,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     priceFeed[selectedToken.priceKey],
   ]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",

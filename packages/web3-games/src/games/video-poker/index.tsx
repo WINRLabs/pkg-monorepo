@@ -11,7 +11,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
+  useHandleGameTx,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -124,7 +124,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     priceFeed[selectedToken.priceKey],
   ]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -179,7 +179,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     };
   }, [formValues.cardsToSend]);
 
-  const handleFinishTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleFinishTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",

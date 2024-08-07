@@ -12,6 +12,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
+  useHandleGameTx,
   useHandleTx,
   usePriceFeed,
   useTokenAllowance,
@@ -179,7 +180,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     };
   }, [formValues, selectedToken.address, priceFeed[selectedToken.priceKey]]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",

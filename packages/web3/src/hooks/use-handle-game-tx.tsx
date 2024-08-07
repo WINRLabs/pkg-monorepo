@@ -33,7 +33,6 @@ interface UseHandleTxParams<
   >;
   options: UseHandleGameTxOptions;
   encodedTxData: `0x${string}`;
-  encodedGameData: `0x${string}`;
 }
 
 const getCachedSignature = async <
@@ -66,8 +65,7 @@ export const useHandleGameTx = <
 >(
   params: UseHandleTxParams<abi, functionName>
 ) => {
-  const { writeContractVariables, options, encodedTxData, encodedGameData } =
-    params;
+  const { writeContractVariables, options, encodedTxData } = params;
   const { accountApi } = useSmartAccountApi();
   const { isSmartWallet } = useCurrentAccount();
   const { client } = useBundlerClient();
@@ -113,27 +111,30 @@ export const useHandleGameTx = <
         throw new Error("No cached signature found");
       }
 
-      const { status, event } = await client.request("sendGameOperation", {
-        sender: userOp.sender,
-        nonce: userOp.nonce.toString(),
-        factory: userOp.factory,
-        factoryData: userOp.factoryData,
-        callData: userOp.callData,
-        callGasLimit: userOp.callGasLimit.toString(),
-        verificationGasLimit: userOp.verificationGasLimit.toString(),
-        preVerificationGas: userOp.preVerificationGas.toString(),
-        maxFeePerGas: userOp.maxFeePerGas.toString(),
-        maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
-        paymaster: userOp.paymaster,
-        paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
-          ? userOp.paymasterVerificationGasLimit.toString()
-          : "",
-        paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
-          ? userOp.paymasterPostOpGasLimit.toString()
-          : "",
-        paymasterData: userOp.paymasterData,
-        signature: userOp.signature,
-      });
+      const { status, event, hash } = await client.request(
+        "sendGameOperation",
+        {
+          sender: userOp.sender,
+          nonce: userOp.nonce.toString(),
+          factory: userOp.factory,
+          factoryData: userOp.factoryData,
+          callData: userOp.callData,
+          callGasLimit: userOp.callGasLimit.toString(),
+          verificationGasLimit: userOp.verificationGasLimit.toString(),
+          preVerificationGas: userOp.preVerificationGas.toString(),
+          maxFeePerGas: userOp.maxFeePerGas.toString(),
+          maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
+          paymaster: userOp.paymaster,
+          paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
+            ? userOp.paymasterVerificationGasLimit.toString()
+            : "",
+          paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
+            ? userOp.paymasterPostOpGasLimit.toString()
+            : "",
+          paymasterData: userOp.paymasterData,
+          signature: userOp.signature,
+        }
+      );
 
       if (status !== "success") {
         throw new Error(status);
@@ -143,7 +144,7 @@ export const useHandleGameTx = <
         console.log(accountApi?.cachedNonce, "cached nonce updated");
       }
 
-      return { status, event };
+      return { status, event, hash };
     },
     onSuccess: (data) => {
       if (options.successCb) {

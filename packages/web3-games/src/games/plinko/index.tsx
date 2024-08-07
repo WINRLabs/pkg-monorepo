@@ -11,7 +11,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
+  useHandleGameTx,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -179,7 +179,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     priceFeed[selectedToken.priceKey],
   ]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",

@@ -11,7 +11,7 @@ import {
   holdemPokerAbi,
   Token,
   useCurrentAccount,
-  useHandleTx,
+  useHandleGameTx,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -215,7 +215,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     };
   }, [selectedToken.address]);
 
-  const handleTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -232,7 +232,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedBetParams.encodedTxData,
   });
 
-  const handleFinalizeTx = useHandleTx<typeof controllerAbi, "perform">({
+  const handleFinalizeTx = useHandleGameTx<typeof controllerAbi, "perform">({
     writeContractVariables: {
       abi: controllerAbi,
       functionName: "perform",
@@ -249,22 +249,24 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedFinalizeParams.encodedTxData,
   });
 
-  const handleFinalizeFoldTx = useHandleTx<typeof controllerAbi, "perform">({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: "perform",
-      args: [
-        gameAddresses.holdemPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        "decide",
-        encodedFinalizeFoldParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {},
-    encodedTxData: encodedFinalizeFoldParams.encodedTxData,
-  });
+  const handleFinalizeFoldTx = useHandleGameTx<typeof controllerAbi, "perform">(
+    {
+      writeContractVariables: {
+        abi: controllerAbi,
+        functionName: "perform",
+        args: [
+          gameAddresses.holdemPoker,
+          selectedToken.bankrollIndex,
+          uiOperatorAddress as Address,
+          "decide",
+          encodedFinalizeFoldParams.encodedGameData,
+        ],
+        address: controllerAddress as Address,
+      },
+      options: {},
+      encodedTxData: encodedFinalizeFoldParams.encodedTxData,
+    }
+  );
 
   const handleDeal = async () => {
     console.log("SUBMITTING!");
