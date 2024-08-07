@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.17
+
+### Patch Changes
+
+- 856db22: ui update
+
 ## 0.10.16
 
 ### Patch Changes

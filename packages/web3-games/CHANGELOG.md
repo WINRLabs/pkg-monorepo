@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.26
+
+### Patch Changes
+
+- 856db22: ui update
+- Updated dependencies [856db22]
+  - @winrlabs/games@2.15.12
+  - @winrlabs/web3@0.10.17
+  - @winrlabs/web3-games@7.0.26
+
 ## 7.0.25
 
 ### Patch Changes
