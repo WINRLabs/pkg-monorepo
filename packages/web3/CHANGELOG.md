@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.18
+
+### Patch Changes
+
+- f77c6bb: add win animation
+
 ## 0.10.17
 
 ### Patch Changes

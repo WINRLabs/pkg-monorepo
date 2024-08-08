@@ -1,5 +1,13 @@
 # @winrlabs/ui
 
+## 9.0.18
+
+### Patch Changes
+
+- f77c6bb: add win animation
+- Updated dependencies [f77c6bb]
+  - @winrlabs/web3@0.10.18
+
 ## 9.0.17
 
 ### Patch Changes
