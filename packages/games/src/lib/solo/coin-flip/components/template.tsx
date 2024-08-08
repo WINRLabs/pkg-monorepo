@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import debounce from "debounce";
-import React from "react";
+import React, { KeyboardEventHandler } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -18,6 +18,7 @@ import {
 } from "../constants";
 import { BetController } from "./bet-controller";
 import { CoinFlipGameProps } from "./game";
+import { KeyCode, useKeyPress } from "../../../hooks/use-key-press";
 
 type TemplateOptions = {
   scene?: {
@@ -81,9 +82,29 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
     return () => subscription.unsubscribe();
   }, [form.watch]);
 
+  // FOR SPACE BET
+  useKeyPress({
+    key: KeyCode.SPACE,
+    callback: () => {
+      console.log("cliked");
+      form.handleSubmit(props.onSubmitGameForm)();
+    },
+  });
+
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter" && !form.formState.isSubmitting) {
+      event.preventDefault(); // Prevent default form submission
+      // Trigger form submission
+      form.handleSubmit(props.onSubmitGameForm)(); // Using handleSubmit correctly
+    }
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form
+        onSubmit={form.handleSubmit(props.onSubmitGameForm)}
+        onKeyDown={handleKeyPress}
+      >
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}

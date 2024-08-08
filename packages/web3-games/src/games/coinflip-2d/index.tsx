@@ -203,6 +203,8 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   const onGameSubmit = async () => {
     clearLiveResults();
 
+    console.log("hi", allowance);
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -210,7 +212,11 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         },
       });
 
+      console.log("checking", handledAllowance);
+
       if (!handledAllowance) return;
+
+      console.log("have allowance");
     }
     setIsLoading(true); // Set loading state to true
 
