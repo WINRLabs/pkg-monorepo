@@ -23,4 +23,5 @@ export * from "./games/utils";
 export { default as VideoPokerGame } from "./games/video-poker";
 export { default as WheelGame } from "./games/wheel";
 export { default as WinrBonanzaGame } from "./games/winr-bonanza";
+export { default as WinrOfOlympusGame } from "./games/winr-of-olympus";
 export * from "./providers";

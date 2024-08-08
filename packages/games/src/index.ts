@@ -35,3 +35,4 @@ export * from "./lib/solo/video-poker";
 export * from "./lib/solo/winr-bonanza";
 export * from "./lib/utils/number";
 export * from "./lib/utils/web3";
+export * from "./lib/solo/winr-of-olympus";
