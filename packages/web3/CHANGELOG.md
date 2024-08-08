@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.19
+
+### Patch Changes
+
+- 338b4db: fix
+
 ## 0.10.18
 
 ### Patch Changes
