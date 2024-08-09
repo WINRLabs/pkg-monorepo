@@ -1,6 +1,9 @@
 "use client";
 
-import { BundlerClientProvider } from "../hooks/use-bundler-client";
+import {
+  BundlerClientProvider,
+  BundlerNetwork,
+} from "../hooks/use-bundler-client";
 import { CurrentAccountProvider } from "../hooks/use-current-address";
 import { SmartAccountApiProvider } from "../hooks/use-smart-account-api";
 import { Token, TokenProvider } from "./token";
@@ -16,12 +19,16 @@ export const WinrLabsWeb3Provider = ({
     bundlerUrl: string;
     entryPointAddress: `0x${string}`;
     factoryAddress: `0x${string}`;
+    network: BundlerNetwork;
   };
   tokens: Token[];
   selectedToken: Token;
 }) => {
   return (
-    <BundlerClientProvider rpcUrl={smartAccountConfig.bundlerUrl}>
+    <BundlerClientProvider
+      rpcUrl={smartAccountConfig.bundlerUrl}
+      network={smartAccountConfig.network}
+    >
       <SmartAccountApiProvider
         entryPointAddress={smartAccountConfig.entryPointAddress}
         factoryAddress={smartAccountConfig.factoryAddress}

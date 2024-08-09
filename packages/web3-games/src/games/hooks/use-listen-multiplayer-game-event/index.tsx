@@ -14,7 +14,7 @@ import {
   SessionContext,
 } from "../../multiplayer/type";
 import { GAME_HUB_GAMES } from "../../utils";
-const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || "";
+import { useGameSocketContext } from "../use-game-socket";
 
 interface MultiplayerGameState {
   joiningStart: number;
@@ -35,6 +35,8 @@ interface MultiplayerGameState {
 export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
   const { address } = useCurrentAccount();
   const [socket, setSocket] = React.useState<Socket | null>(null);
+
+  const { bundlerWsUrl, network } = useGameSocketContext();
 
   const [gameState, setGameState] = useState<MultiplayerGameState>({
     joiningStart: 0,
@@ -61,6 +63,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
         extraHeaders: {
           "x-address": address!,
           "x-multiplayer-game": game,
+          "x-network": network,
         },
       })
     );

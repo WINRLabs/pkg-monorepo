@@ -1,5 +1,6 @@
 import { GameProvider } from "@winrlabs/games";
 import {
+  BundlerNetwork,
   useBalanceStore,
   useCurrentAccount,
   usePriceFeed,
@@ -16,6 +17,7 @@ import {
 type WinrLabsWeb3GamesConfig = {
   wagmiConfig: Config;
   bundlerWsUrl: string;
+  network: BundlerNetwork;
   contracts: ContractConfig;
 };
 
@@ -59,7 +61,10 @@ export const WinrLabsWeb3GamesProvider = ({
           },
         }}
       >
-        <GameSocketProvider bundlerWsUrl={config.bundlerWsUrl}>
+        <GameSocketProvider
+          network={config.network}
+          bundlerWsUrl={config.bundlerWsUrl}
+        >
           {children}
         </GameSocketProvider>
       </GameProvider>

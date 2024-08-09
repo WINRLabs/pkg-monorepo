@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { JSONRPCClient, TypedJSONRPCClient } from "json-rpc-2.0";
-import { createContext, ReactNode,useContext } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
 
@@ -32,9 +32,17 @@ export type BundlerMethods = {
   };
 };
 
+export enum BundlerNetwork {
+  WINR = "WINR",
+  ARBITRUM = "ARBITRUM",
+  BLAST = "BLAST",
+  OPTIMISM = "OPTIMISM",
+}
+
 interface JSONPCClientRequestParams {
   walletAddress?: `0x${string}`;
   rpcUrl: string;
+  network: BundlerNetwork;
 }
 
 export type WinrBundlerClient = TypedJSONRPCClient<BundlerMethods>;
@@ -48,6 +56,7 @@ interface UseBundlerClient {
 const fetchBundlerClient = async ({
   rpcUrl,
   walletAddress,
+  network,
 }: JSONPCClientRequestParams): Promise<WinrBundlerClient> => {
   if (!walletAddress) {
     throw new Error("Wallet address is required");
@@ -60,6 +69,7 @@ const fetchBundlerClient = async ({
         headers: {
           "content-type": "application/json",
           "x-owner": walletAddress,
+          network: network,
         },
         body: JSON.stringify(jsonRPCRequest),
       })
@@ -89,7 +99,8 @@ const fetchBundlerClient = async ({
 export const BundlerClientProvider: React.FC<{
   children: ReactNode;
   rpcUrl: string;
-}> = ({ children, rpcUrl }) => {
+  network: BundlerNetwork;
+}> = ({ children, rpcUrl, network }) => {
   const { address } = useAccount();
 
   const {
@@ -102,9 +113,14 @@ export const BundlerClientProvider: React.FC<{
       fetchBundlerClient({
         rpcUrl,
         walletAddress: address,
+        network,
       }),
     enabled: !!address && !!rpcUrl,
   });
+
+  React.useEffect(() => {
+    console.log(client, "client");
+  }, [client]);
 
   return (
     <BundlerClientContext.Provider

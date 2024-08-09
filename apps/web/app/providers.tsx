@@ -6,13 +6,15 @@ import { WagmiProvider } from "wagmi";
 
 import { AudioContextProvider } from "@winrlabs/games";
 import { AppUiProviders } from "@winrlabs/ui";
-import { WinrLabsWeb3Provider } from "@winrlabs/web3";
+import { BundlerNetwork, WinrLabsWeb3Provider } from "@winrlabs/web3";
 import { WinrLabsWeb3GamesProvider } from "@winrlabs/web3-games";
 import { Address } from "viem";
 import { config } from "./wagmi";
 
 const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL || "";
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || "";
+const network = BundlerNetwork.WINR;
+
 export const entryPointAddress = process.env
   .NEXT_PUBLIC_ENTRYPOINT_ADDRESS as Address;
 export const factoryAddress = process.env
@@ -67,6 +69,7 @@ export function Providers(props: { children: ReactNode }) {
         <WinrLabsWeb3Provider
           smartAccountConfig={{
             bundlerUrl,
+            network,
             entryPointAddress,
             factoryAddress,
           }}
@@ -128,6 +131,7 @@ export function Providers(props: { children: ReactNode }) {
               config={{
                 wagmiConfig: config,
                 bundlerWsUrl,
+                network,
                 contracts: {
                   gameAddresses,
                   controllerAddress,
