@@ -65,10 +65,10 @@ export const useUnityOlympus = ({
     addEventListener,
     removeEventListener,
   } = useUnityContext({
-    loaderUrl: `${buildedGameUrl}/GatesOfOlympus.loader.js`,
-    dataUrl: `${buildedGameUrl}/GatesOfOlympus.data.unityweb`,
-    frameworkUrl: `${buildedGameUrl}/GatesOfOlympus.framework.js.unityweb`,
-    codeUrl: `${buildedGameUrl}/GatesOfOlympus.wasm.unityweb`,
+    loaderUrl: `${buildedGameUrl}/WinrOfOlympus.loader.js`,
+    dataUrl: `${buildedGameUrl}/WinrOfOlympus.data.unityweb`,
+    frameworkUrl: `${buildedGameUrl}/WinrOfOlympus.framework.js.unityweb`,
+    codeUrl: `${buildedGameUrl}/WinrOfOlympus.wasm.unityweb`,
   });
 
   useEqualizeUnitySound({

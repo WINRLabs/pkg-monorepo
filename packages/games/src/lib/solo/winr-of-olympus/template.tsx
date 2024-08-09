@@ -678,7 +678,7 @@ export const WinrOfOlympusTemplate = ({
       <div className="wr-w-full max-lg:wr-border-b  max-lg:wr-border-zinc-800">
         <Unity
           unityProvider={unityProvider}
-          devicePixelRatio={2}
+          devicePixelRatio={1.5}
           className="wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[360px] lg:wr-rounded-md"
         />
       </div>
