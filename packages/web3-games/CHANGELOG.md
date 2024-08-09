@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.30
+
+### Patch Changes
+
+- c16adca: game socket update
+- Updated dependencies [c16adca]
+  - @winrlabs/games@2.15.15
+  - @winrlabs/web3@0.10.21
+  - @winrlabs/web3-games@7.0.30
+
 ## 7.0.29
 
 ### Patch Changes

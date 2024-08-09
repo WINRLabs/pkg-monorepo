@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.15
+
+### Patch Changes
+
+- c16adca: game socket update
+
 ## 2.15.14
 
 ### Patch Changes

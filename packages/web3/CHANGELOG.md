@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.21
+
+### Patch Changes
+
+- c16adca: game socket update
+
 ## 0.10.20
 
 ### Patch Changes
