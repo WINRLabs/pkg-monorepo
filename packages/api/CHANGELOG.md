@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.2
+
+### Patch Changes
+
+- 261d58e: bundler update
+
 ## 1.3.1
 
 ### Patch Changes

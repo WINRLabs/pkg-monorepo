@@ -1,5 +1,27 @@
 # @winrlabs/web3-games
 
+## 7.0.29
+
+### Patch Changes
+
+- 763bd57: bundler config update
+- 261d58e: bundler update
+- Updated dependencies [416955b]
+- Updated dependencies [527bd12]
+- Updated dependencies [763bd57]
+- Updated dependencies [a0cdb7e]
+- Updated dependencies [3ecc084]
+- Updated dependencies [9ad97cb]
+- Updated dependencies [261d58e]
+- Updated dependencies [c47468c]
+- Updated dependencies [51db08b]
+- Updated dependencies [a29e537]
+- Updated dependencies [64cb052]
+  - @winrlabs/games@2.15.14
+  - @winrlabs/web3@0.10.20
+  - @winrlabs/web3-games@7.0.29
+  - @winrlabs/api@1.3.2
+
 ## 7.0.28
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @winrlabs/ui
 
+## 9.0.20
+
+### Patch Changes
+
+- 416955b: baccarat mobile and btn ghost variant
+- Updated dependencies [763bd57]
+- Updated dependencies [261d58e]
+  - @winrlabs/web3@0.10.20
+
 ## 9.0.19
 
 ### Patch Changes

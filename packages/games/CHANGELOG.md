@@ -1,5 +1,21 @@
 # @winrlabs/games
 
+## 2.15.14
+
+### Patch Changes
+
+- 416955b: baccarat mobile and btn ghost variant
+- 527bd12: mines mobile
+- 763bd57: bundler config update
+- a0cdb7e: dice mobile
+- 3ecc084: limbo
+- 9ad97cb: roll mobile
+- 261d58e: bundler update
+- c47468c: wheel mobile
+- 51db08b: rps mobile
+- a29e537: keno mobile
+- 64cb052: coinflip mobile
+
 ## 2.15.13
 
 ### Patch Changes

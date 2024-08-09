@@ -1,5 +1,14 @@
 # @winrlabs/web3
 
+## 0.10.20
+
+### Patch Changes
+
+- 763bd57: bundler config update
+- 261d58e: bundler update
+- Updated dependencies [261d58e]
+  - @winrlabs/api@1.3.2
+
 ## 0.10.19
 
 ### Patch Changes
