@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.15.19
+
+### Patch Changes
+
+- a9aa835: add max to wager input
+- 1bbf5ae: disable audio controller on mobile
+
 ## 2.15.18
 
 ### Patch Changes
