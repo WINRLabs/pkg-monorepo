@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.17
+
+### Patch Changes
+
+- 2c69282: remove cached operation
+
 ## 2.15.16
 
 ### Patch Changes

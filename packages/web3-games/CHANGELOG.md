@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.32
+
+### Patch Changes
+
+- 2c69282: remove cached operation
+- Updated dependencies [2c69282]
+  - @winrlabs/games@2.15.17
+  - @winrlabs/web3@0.10.23
+  - @winrlabs/web3-games@7.0.32
+
 ## 7.0.31
 
 ### Patch Changes

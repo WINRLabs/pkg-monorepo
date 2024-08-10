@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.23
+
+### Patch Changes
+
+- 2c69282: remove cached operation
+
 ## 0.10.22
 
 ### Patch Changes
