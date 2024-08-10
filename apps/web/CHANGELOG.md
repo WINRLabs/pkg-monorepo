@@ -1,5 +1,14 @@
 # web
 
+## 1.0.49
+
+### Patch Changes
+
+- @winrlabs/games@2.15.19
+- @winrlabs/web3@0.10.24
+- @winrlabs/web3-games@7.0.35
+- @winrlabs/ui@9.0.24
+
 ## 1.0.48
 
 ### Patch Changes

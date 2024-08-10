@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.3
+
+### Patch Changes
+
+- a799bc7: add dashboard stats ep
+
 ## 1.3.2
 
 ### Patch Changes
