@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.16
+
+### Patch Changes
+
+- a81ca98: update bundler client to change network
+
 ## 2.15.15
 
 ### Patch Changes

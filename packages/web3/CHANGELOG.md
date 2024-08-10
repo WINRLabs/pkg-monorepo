@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.22
+
+### Patch Changes
+
+- a81ca98: update bundler client to change network
+
 ## 0.10.21
 
 ### Patch Changes

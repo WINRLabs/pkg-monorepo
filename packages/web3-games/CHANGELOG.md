@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.31
+
+### Patch Changes
+
+- a81ca98: update bundler client to change network
+- Updated dependencies [a81ca98]
+  - @winrlabs/web3@0.10.22
+  - @winrlabs/games@2.15.16
+  - @winrlabs/web3-games@7.0.31
+
 ## 7.0.30
 
 ### Patch Changes
