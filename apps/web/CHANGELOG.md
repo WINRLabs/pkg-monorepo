@@ -1,5 +1,13 @@
 # web
 
+## 1.0.47
+
+### Patch Changes
+
+- Updated dependencies [cac6048]
+  - @winrlabs/games@2.15.18
+  - @winrlabs/web3-games@7.0.33
+
 ## 1.0.46
 
 ### Patch Changes

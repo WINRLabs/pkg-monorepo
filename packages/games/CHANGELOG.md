@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.18
+
+### Patch Changes
+
+- cac6048: remove game container spacing
+
 ## 2.15.17
 
 ### Patch Changes
