@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.43
+
+### Patch Changes
+
+- b2f6467: css revert
+- Updated dependencies [b2f6467]
+  - @winrlabs/games@2.15.27
+  - @winrlabs/web3@0.10.31
+  - @winrlabs/web3-games@7.0.43
+
 ## 7.0.42
 
 ### Patch Changes

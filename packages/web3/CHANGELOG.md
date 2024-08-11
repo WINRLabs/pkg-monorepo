@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.31
+
+### Patch Changes
+
+- b2f6467: css revert
+
 ## 0.10.30
 
 ### Patch Changes

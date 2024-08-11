@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.27
+
+### Patch Changes
+
+- b2f6467: css revert
+
 ## 2.15.26
 
 ### Patch Changes
