@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.44
+
+### Patch Changes
+
+- 16075f5: remove sound effect
+- Updated dependencies [16075f5]
+  - @winrlabs/games@2.15.28
+  - @winrlabs/web3@0.10.32
+  - @winrlabs/web3-games@7.0.44
+
 ## 7.0.43
 
 ### Patch Changes

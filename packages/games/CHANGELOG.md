@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.28
+
+### Patch Changes
+
+- 16075f5: remove sound effect
+
 ## 2.15.27
 
 ### Patch Changes

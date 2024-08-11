@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.32
+
+### Patch Changes
+
+- 16075f5: remove sound effect
+
 ## 0.10.31
 
 ### Patch Changes
