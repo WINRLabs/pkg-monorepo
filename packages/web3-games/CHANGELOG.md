@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.41
+
+### Patch Changes
+
+- 6190ede: testing weird error
+- Updated dependencies [6190ede]
+  - @winrlabs/games@2.15.25
+  - @winrlabs/web3@0.10.29
+  - @winrlabs/web3-games@7.0.41
+
 ## 7.0.40
 
 ### Patch Changes

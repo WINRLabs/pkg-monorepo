@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.29
+
+### Patch Changes
+
+- 6190ede: testing weird error
+
 ## 0.10.28
 
 ### Patch Changes

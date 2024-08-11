@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.25
+
+### Patch Changes
+
+- 6190ede: testing weird error
+
 ## 2.15.24
 
 ### Patch Changes
