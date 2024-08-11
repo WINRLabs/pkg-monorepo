@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.42
+
+### Patch Changes
+
+- 0dadafd: remove sound
+- Updated dependencies [0dadafd]
+  - @winrlabs/games@2.15.26
+  - @winrlabs/web3@0.10.30
+  - @winrlabs/web3-games@7.0.42
+
 ## 7.0.41
 
 ### Patch Changes

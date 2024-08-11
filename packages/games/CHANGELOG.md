@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.26
+
+### Patch Changes
+
+- 0dadafd: remove sound
+
 ## 2.15.25
 
 ### Patch Changes

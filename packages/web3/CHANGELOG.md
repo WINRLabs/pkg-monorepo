@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.30
+
+### Patch Changes
+
+- 0dadafd: remove sound
+
 ## 0.10.29
 
 ### Patch Changes
