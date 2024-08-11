@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.21
+
+### Patch Changes
+
+- 72d5928: up
+
 ## 2.15.20
 
 ### Patch Changes
