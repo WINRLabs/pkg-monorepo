@@ -1,5 +1,14 @@
 # @winrlabs/games
 
+## 2.15.20
+
+### Patch Changes
+
+- bf0865b: introduce instant bet for plinko
+- bd062cc: remove wager/profit space in bet table
+- b82dcb5: video poker mobile
+- e1241c4: plinko mobile
+
 ## 2.15.19
 
 ### Patch Changes
