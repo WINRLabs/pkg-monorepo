@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 2.15.23
+
+### Patch Changes
+
+- f6cc264: poker mobile fix
+- e270597: fix
+- 8a69fa0: mobile fixes
+
 ## 2.15.22
 
 ### Patch Changes

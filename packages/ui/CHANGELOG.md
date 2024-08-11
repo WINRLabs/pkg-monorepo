@@ -1,5 +1,13 @@
 # @winrlabs/ui
 
+## 9.0.27
+
+### Patch Changes
+
+- 8a69fa0: mobile fixes
+- Updated dependencies [8a69fa0]
+  - @winrlabs/web3@0.10.27
+
 ## 9.0.26
 
 ### Patch Changes

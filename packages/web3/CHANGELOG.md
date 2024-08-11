@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.27
+
+### Patch Changes
+
+- 8a69fa0: mobile fixes
+
 ## 0.10.26
 
 ### Patch Changes
