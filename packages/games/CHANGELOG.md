@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.24
+
+### Patch Changes
+
+- f9038e1: dummy patch
+
 ## 2.15.23
 
 ### Patch Changes

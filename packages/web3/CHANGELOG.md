@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.28
+
+### Patch Changes
+
+- f9038e1: dummy patch
+
 ## 0.10.27
 
 ### Patch Changes
