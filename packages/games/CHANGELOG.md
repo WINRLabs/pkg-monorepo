@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.22
+
+### Patch Changes
+
+- c85df88: update
+
 ## 2.15.21
 
 ### Patch Changes

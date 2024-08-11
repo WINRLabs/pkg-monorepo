@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.4
+
+### Patch Changes
+
+- c85df88: update
+
 ## 1.3.3
 
 ### Patch Changes
