@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.34
+
+### Patch Changes
+
+- 0a16590: mobile fixes
+
 ## 0.10.33
 
 ### Patch Changes

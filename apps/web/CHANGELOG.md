@@ -1,5 +1,15 @@
 # web
 
+## 1.0.61
+
+### Patch Changes
+
+- Updated dependencies [0a16590]
+  - @winrlabs/games@2.15.31
+  - @winrlabs/web3@0.10.34
+  - @winrlabs/web3-games@7.0.47
+  - @winrlabs/ui@9.0.34
+
 ## 1.0.60
 
 ### Patch Changes

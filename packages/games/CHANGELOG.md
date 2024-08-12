@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.31
+
+### Patch Changes
+
+- 0a16590: mobile fixes
+
 ## 2.15.30
 
 ### Patch Changes

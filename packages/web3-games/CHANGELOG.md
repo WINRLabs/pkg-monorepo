@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 7.0.47
+
+### Patch Changes
+
+- 0a16590: mobile fixes
+- Updated dependencies [0a16590]
+  - @winrlabs/games@2.15.31
+  - @winrlabs/web3@0.10.34
+  - @winrlabs/web3-games@7.0.47
+
 ## 7.0.46
 
 ### Patch Changes
