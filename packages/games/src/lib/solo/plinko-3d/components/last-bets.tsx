@@ -1,9 +1,12 @@
 import { LastBetsContainer } from "../../../common/last-bets-container";
+import useMediaQuery from "../../../hooks/use-media-query";
 import { cn } from "../../../utils/style";
 import usePlinkoLastBetsStore from "../store";
 
 export const Plinko3dLastBets = () => {
   const { lastBets } = usePlinkoLastBetsStore(["lastBets"]);
+  const isMobile = useMediaQuery("(max-width:1024px)");
+  const lastFiveBets = lastBets?.slice(isMobile ? -4 : -5);
 
   return (
     <LastBetsContainer

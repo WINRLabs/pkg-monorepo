@@ -120,7 +120,7 @@ export const BetController: React.FC<BetControllerProps> = ({
             </FormItem>
           )}
         />
-        <BetCountFormField isDisabled={isFormInProgress} hideSm />
+        <BetCountFormField isDisabled={isFormInProgress} />
         <div className="wr-mb-6 lg:!wr-grid-cols-2 wr-gap-2 wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>

@@ -79,7 +79,6 @@ export const BetController: React.FC<Props> = ({
             gameStatus == "PLAYING" ||
             isGettingResults
           }
-          hideSm
         />
         <div className="wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden">
           <div>

@@ -121,7 +121,7 @@ export const Coin: React.FC<CoinProps> = ({
 
   return (
     <>
-      <div className="wr-absolute wr-top-[55%] lg:wr-top-1/2 wr-left-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 max-md:wr-scale-75">
+      <div className="wr-absolute wr-top-1/2 lg:wr-top-1/2 wr-left-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 max-md:wr-scale-75">
         <Player
           ref={lottieRef}
           src={CoinConfetti}

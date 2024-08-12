@@ -1,13 +1,16 @@
 import { cn } from "../../../../lib/utils/style";
 import { LastBetsContainer } from "../../../common/last-bets-container";
 import { useDiceGameStore } from "..";
+import useMediaQuery from "../../../hooks/use-media-query";
 
 export const RangeLastBets: React.FC = () => {
   const { lastBets } = useDiceGameStore(["lastBets"]);
+  const isMobile = useMediaQuery("(max-width:1024px)");
+  const lastFiveBets = lastBets?.slice(isMobile ? -4 : -5);
 
   return (
     <LastBetsContainer>
-      {lastBets?.map((result, index) => {
+      {lastFiveBets?.map((result, index) => {
         return (
           <div
             key={index}

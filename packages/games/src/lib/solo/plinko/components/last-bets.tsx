@@ -1,13 +1,16 @@
 import { LastBetsContainer } from "../../../common/last-bets-container";
 import { cn } from "../../../utils/style";
 import { usePlinkoGameStore } from "..";
+import useMediaQuery from "../../../hooks/use-media-query";
 
 export const PlinkoLastBets = () => {
   const { lastBets } = usePlinkoGameStore(["lastBets"]);
+  const isMobile = useMediaQuery("(max-width:1024px)");
+  const lastFiveBets = lastBets?.slice(isMobile ? -4 : -5);
 
   return (
     <LastBetsContainer className="wr-absolute wr-right-5 wr-top-5 wr-w-full max-md:wr-max-w-[290px]">
-      {lastBets?.map((result, index) => {
+      {lastFiveBets?.map((result, index) => {
         return (
           <div
             key={index}

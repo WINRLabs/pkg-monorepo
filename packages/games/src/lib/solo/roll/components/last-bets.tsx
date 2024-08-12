@@ -5,12 +5,14 @@ import { FormLabel } from "../../../ui/form";
 import { cn } from "../../../utils/style";
 import useRollGameStore from "../store";
 import { miniDotPosition } from "./dice";
+import useMediaQuery from "../../../hooks/use-media-query";
 
 type DiceResultIndex = 0 | 1 | 2 | 3 | 4 | 5;
 
 export const LastBets = () => {
   const { lastBets } = useRollGameStore(["lastBets"]);
-  const lastFiveBets = lastBets?.slice(-5);
+  const isMobile = useMediaQuery("(max-width:1024px)");
+  const lastFiveBets = lastBets?.slice(isMobile ? -4 : -5);
 
   return (
     <LastBetsContainer className="h-12">
@@ -30,7 +32,7 @@ export const LastBets = () => {
                 <div
                   key={i}
                   className={cn(
-                    "wr-ease wr-transfrom  wr-absolute wr-h-2 wr-w-2 wr-shrink-0 wr-rounded-full wr-border-2 wr-border-[#EDEDF1] wr-bg-dice wr-transition-all ",
+                    "wr-absolute wr-h-2 wr-w-2 wr-shrink-0 wr-rounded-full wr-border-2 wr-border-[#EDEDF1] wr-bg-dice wr-transition-all",
                     dot
                   )}
                 />

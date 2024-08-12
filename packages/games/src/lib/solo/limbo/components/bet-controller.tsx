@@ -63,13 +63,13 @@ export const BetController: React.FC<Props> = ({
     return toDecimals(wager * betCount * winMultiplier, 2);
   }, [form.getValues().wager, form.getValues().betCount, winMultiplier]);
 
-  // const sliderEffect = useAudioEffect(SoundEffects.SPIN_TICK_1X);
+  const sliderEffect = useAudioEffect(SoundEffects.SPIN_TICK_1X);
   const limboMultiplier = form.watch("limboMultiplier");
-  // const debouncedBetCount = useDebounce(limboMultiplier, 40);
+  const debouncedBetCount = useDebounce(limboMultiplier, 40);
 
-  // React.useEffect(() => {
-  //   sliderEffect.play();
-  // }, [debouncedBetCount[0]]);
+  React.useEffect(() => {
+    sliderEffect.play();
+  }, [debouncedBetCount[0]]);
 
   return (
     <BetControllerContainer>
@@ -83,7 +83,7 @@ export const BetController: React.FC<Props> = ({
           maxWager={maxWager}
           isDisabled={isFormInProgress}
         />
-        <BetCountFormField isDisabled={isFormInProgress} hideSm />
+        <BetCountFormField isDisabled={isFormInProgress} />
         <>
           <FormField
             control={form.control}

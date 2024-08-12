@@ -16,6 +16,7 @@ import { cn } from "../../utils/style";
 import { toDecimals, toFormatted } from "../../utils/web3";
 import { BetHistoryCurrencyList } from ".";
 import useMediaQuery from "../../hooks/use-media-query";
+import dayjs from "dayjs";
 
 const gameMap: Record<GameType, string> = {
   [GameType.BACCARAT]: "Baccarat",
@@ -65,7 +66,7 @@ const BetTable = ({
             Bet
           </TableHead>
           <TableHead className="wr-hidden lg:wr-table-cell">Wager</TableHead>
-          <TableHead className="wr-hidden lg-wr:table-cell wr-text-left">
+          <TableHead className="wr-hidden lg:wr-table-cell wr-text-left">
             Payout
           </TableHead>
           <TableHead className="wr-hidden lg:wr-table-cell">
@@ -85,12 +86,14 @@ const BetTable = ({
           return (
             <TableRow key={i}>
               <TableCell className="wr-w-[50px] lg:wr-w-[150px]">
-                {/* {dayjs(bet.createdAt * 1000).format("DD-MM-YY, HH:mm")} */}
-                {/* TODO: ADD ROUTE TO EXPLORER */}
-                <a href="">
+                {/* TODO: ADD DYNAMIC ROUTE TO EXPLORER */}
+                <a
+                  target="_blank"
+                  href={`https://explorer.winr.games/tx/${bet.hash}`}
+                >
                   <div className="wr-flex wr-gap-2 wr-items-center wr-justify-start">
                     <span className="wr-hidden lg:wr-flex">
-                      {walletShorter(bet.hash, 5)}
+                      {dayjs(bet.createdAt * 1000).format("DD-MM-YY, HH:mm")}
                     </span>
                     <div className="wr-p-1 wr-border wr-border-zinc-800 wr-rounded-sm">
                       <LinkIcon className="wr-w-4 wr-h-4 wr-text-zinc-500" />
@@ -139,7 +142,7 @@ const BetTable = ({
                 )}`}
               </TableCell>
               <TableCell className="wr-hidden lg:wr-table-cell">
-                <div className="wr-flex wr-items-center wr-justify-center">
+                <div className="wr-flex wr-items-center wr-justify-start">
                   <img
                     src={currencyList[bet.token]?.icon}
                     alt={currencyList[bet.token]?.symbol}

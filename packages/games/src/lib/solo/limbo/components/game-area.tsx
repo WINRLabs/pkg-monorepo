@@ -3,6 +3,7 @@ import React from "react";
 import { useGameSkip } from "../../../game-provider";
 import useLimboGameStore from "../store";
 import { LimboGameResult } from "../types";
+import { cn } from "../../../utils/style";
 
 export interface GameAreaProps {
   onAnimationStep?: (step: number) => void;
@@ -28,6 +29,7 @@ const GameArea: React.FC<GameAreaProps> = ({
     updateGameStatus,
     updateLimboGameResults,
     updateCurrentAnimationCount,
+    lastBets,
   } = useLimboGameStore([
     "addLastBet",
     "removeLastBet",
@@ -36,6 +38,7 @@ const GameArea: React.FC<GameAreaProps> = ({
     "updateGameStatus",
     "updateLimboGameResults",
     "updateCurrentAnimationCount",
+    "lastBets",
   ]);
 
   React.useEffect(() => {
@@ -97,7 +100,14 @@ const GameArea: React.FC<GameAreaProps> = ({
   }, [isAnimationSkipped]);
 
   return (
-    <div className="wr-relative wr-h-full wr-w-full wr-flex wr-justify-between wr-flex-col">
+    <div
+      className={cn(
+        "wr-relative wr-h-full wr-w-full wr-flex wr-justify-between wr-flex-col wr-transition-all wr-duration-200",
+        {
+          "wr-pt-5 lg:wr-pt-0": lastBets.length,
+        }
+      )}
+    >
       {children}
     </div>
   );
