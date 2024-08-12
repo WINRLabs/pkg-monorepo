@@ -8,25 +8,36 @@ import {
 import { Button } from "../../../../ui/button";
 import { NUMBER_INDEX_COUNT } from "../../constants";
 import { RouletteForm } from "../../types";
+import { cn } from "../../../../utils/style";
 
 export const MobileController: React.FC<{
   undoBet: () => void;
   isPrepared: boolean;
 }> = ({ undoBet, isPrepared }) => {
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const form = useFormContext() as RouletteForm;
+
   return (
-    <div className="wr-absolute wr-bottom-0 wr-left-0 wr-flex lg:wr-hidden wr-w-full wr-items-between">
+    <div
+      className={cn(
+        "wr-flex wr-flex-col md:wr-hidden wr-absolute wr-right-2 wr-gap-2 wr-top-1/2 -wr-translate-y-1/2 wr-transition-all wr-duration-200",
+        {
+          "wr-blur-[4px] wr-select-none wr-pointer-events-none wr-z-0":
+            isPrepared,
+        }
+      )}
+    >
       <Button
         type="button"
+        variant="third"
+        className="wr-w-[44px] wr-h-[44px] wr-rounded-full"
         disabled={isPrepared || form.getValues().totalWager === 0}
         onClick={() => {
           undoBet();
           digitalClickEffect.play();
         }}
-        variant="ghost"
         size="xl"
-        className="wr-flex wr-w-full wr-items-center wr-gap-1 wr-justify-start"
       >
         <img
           src={`${CDN_URL}/icons/icon-undo.svg`}
@@ -34,14 +45,27 @@ export const MobileController: React.FC<{
           height={20}
           alt="Justbet Decentralized Casino"
         />
-        <span>Undo</span>
       </Button>
-
+      <Button
+        variant="success"
+        className="wr-rounded-full wr-w-[44px] wr-h-[44px] wr-p-0"
+        onClick={() => clickEffect.play()}
+        type="submit"
+        disabled={
+          form.getValues().totalWager === 0 ||
+          form.formState.isSubmitting ||
+          form.formState.isLoading ||
+          isPrepared
+        }
+        isLoading={form.formState.isSubmitting || form.formState.isLoading}
+      >
+        Spin
+      </Button>
       <Button
         type="button"
-        variant="ghost"
+        variant="third"
+        className="wr-w-[44px] wr-h-[44px] wr-rounded-full"
         size="xl"
-        className="wr-flex wr-w-full wr-items-center wr-gap-1 wr-justify-end"
         disabled={isPrepared}
         onClick={() => {
           digitalClickEffect.play();
@@ -57,7 +81,6 @@ export const MobileController: React.FC<{
           height={20}
           alt="Justbet Decentralized Casino"
         />
-        <span>Clear</span>
       </Button>
     </div>
   );

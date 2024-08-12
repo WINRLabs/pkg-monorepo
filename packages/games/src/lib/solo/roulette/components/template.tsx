@@ -193,7 +193,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
             style={{
               backgroundImage: `url(${CDN_URL}/roulette/roulette-bg.png)`,
             }}
-            className="wr-relative wr-flex wr-h-[640px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 wr-overflow-hidden"
+            className="wr-relative wr-flex wr-h-[625px] md:wr-h-[640px] wr-flex-col wr-items-center wr-justify-start wr-gap-8 wr-bg-center wr-pb-20 wr-pt-6 wr-overflow-hidden"
           >
             <Roulette.Game gameResults={gameResults}>
               <Roulette.Scene

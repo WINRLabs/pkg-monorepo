@@ -120,7 +120,7 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
 
           <SceneContainer
             className={cn(
-              "wr-h-[640px] max-md:wr-h-[400px] lg:wr-py-12 wr-relative"
+              "wr-h-[640px] max-md:wr-h-[360px] lg:wr-py-12 wr-relative"
             )}
             style={{
               backgroundImage: options?.scene?.backgroundImage,

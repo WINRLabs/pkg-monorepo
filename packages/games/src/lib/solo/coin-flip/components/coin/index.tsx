@@ -13,6 +13,7 @@ import { CoinCanvas, CoinFlipForm, CoinProps } from "../../types";
 import Canvas from "./canvas";
 import CoinRotate from "./coin-rotate";
 import CoinConfetti from "./lottie/coins-confetti.json";
+import { cn } from "../../../../utils/style";
 
 export const Coin: React.FC<CoinProps> = ({
   width,
@@ -34,6 +35,7 @@ export const Coin: React.FC<CoinProps> = ({
   const {
     gameStatus,
     coinFlipGameResults,
+    lastBets,
     updateCoinFlipGameResults,
     updateGameStatus,
     addLastBet,
@@ -45,6 +47,7 @@ export const Coin: React.FC<CoinProps> = ({
     "updateGameStatus",
     "addLastBet",
     "updateLastBets",
+    "lastBets",
   ]);
 
   const form = useFormContext() as CoinFlipForm;
@@ -121,7 +124,14 @@ export const Coin: React.FC<CoinProps> = ({
 
   return (
     <>
-      <div className="wr-absolute wr-top-1/2 lg:wr-top-1/2 wr-left-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 max-md:wr-scale-75">
+      <div
+        className={cn(
+          "wr-absolute wr-top-1/2 lg:wr-top-1/2 wr-left-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 max-md:wr-scale-75 wr-transition-all wr-duration-200",
+          {
+            "wr-pt-5 lg:wr-pt-0": lastBets.length,
+          }
+        )}
+      >
         <Player
           ref={lottieRef}
           src={CoinConfetti}

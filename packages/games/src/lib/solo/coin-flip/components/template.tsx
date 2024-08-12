@@ -93,7 +93,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
           />
           <SceneContainer
             className={cn(
-              "wr-h-auto max-lg:wr-h-[500px] max-md:wr-h-[330px] lg:wr-py-12 wr-relative"
+              "wr-h-auto max-lg:wr-h-[500px] max-md:wr-h-[300px] lg:wr-py-12 wr-relative"
             )}
             style={{
               backgroundImage: options?.scene?.backgroundImage,

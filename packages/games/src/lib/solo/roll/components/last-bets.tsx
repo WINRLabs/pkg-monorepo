@@ -50,15 +50,19 @@ export const RollController: React.FC<{
   winChance: number;
 }> = ({ multiplier, winChance }) => {
   return (
-    <section className="wr-z-10 wr-grid wr-w-[280px] wr-grid-cols-2 wr-items-center wr-gap-2 wr-rounded-xl wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-p-[14px]">
+    <section className="wr-z-10 wr-grid wr-w-[255px] lg:wr-w-[280px] wr-grid-cols-2 wr-items-center wr-gap-2 wr-rounded-xl wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-p-[14px]">
       <div>
-        <FormLabel>Multiplier</FormLabel>
+        <FormLabel className="wr-leading-4 lg:wr-leading-6">
+          Multiplier
+        </FormLabel>
         <div className="wr-rounded-md wr-bg-zinc-800 wr-p-3 wr-font-semibold">
           {multiplier}x
         </div>
       </div>
       <div>
-        <FormLabel>Win Chance</FormLabel>
+        <FormLabel className="wr-leading-4 lg:wr-leading-6">
+          Win Chance
+        </FormLabel>
         <div className="wr-rounded-md wr-bg-zinc-800 wr-p-3 wr-font-semibold">
           {winChance}%
         </div>

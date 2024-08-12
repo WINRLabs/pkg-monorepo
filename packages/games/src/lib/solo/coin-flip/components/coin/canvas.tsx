@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { CoinCanvasProps } from "../../types";
+import useCoinFlipGameStore from "../../store";
+import { cn } from "../../../../utils/style";
 
 const CoinCanvas: React.FC<CoinCanvasProps> = ({
   width = 300,
@@ -10,6 +12,8 @@ const CoinCanvas: React.FC<CoinCanvasProps> = ({
 }) => {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [initialized, setInitialized] = useState<boolean>(false);
+
+  const { lastBets } = useCoinFlipGameStore(["lastBets"]);
 
   useEffect(() => {
     if (canvas.current && !initialized) {
@@ -50,7 +54,14 @@ const CoinCanvas: React.FC<CoinCanvasProps> = ({
   }, [canvas, width, height, onLoad, initialized]);
 
   return (
-    <div className="wr-absolute wr-left-1/2 wr-top-1/2 lg:wr-top-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 wr-w-[300px] wr-h-[300px] max-md:wr-scale-75">
+    <div
+      className={cn(
+        "wr-absolute wr-left-1/2 wr-top-1/2 lg:wr-top-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 wr-w-[300px] wr-h-[300px] max-md:wr-scale-75 wr-transition-all wr-duration-200",
+        {
+          "wr-pt-6 lg:wr-pt-0": lastBets.length,
+        }
+      )}
+    >
       <div className="wr-absolute wr-z-[0] wr-top-[50%] wr-left-[50%] -wr-translate-x-1/2 -wr-translate-y-1/2 wr-w-[300px] wr-h-[300px] wr-bg-white wr-opacity-40 wr-blur-[50px]" />
       <canvas ref={canvas} className="wr-relative wr-z-[1]" />
     </div>

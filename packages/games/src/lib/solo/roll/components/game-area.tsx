@@ -128,7 +128,7 @@ export const GameArea: React.FC<GameAreaProps> = ({
   }, [isAnimationSkipped]);
 
   return (
-    <div className="wr-w-full lg:wr-max-w-[422px] wr-max-w-[240px] wr-relative wr-top-1/2 -wr-translate-y-1/2">
+    <div className="wr-w-full lg:wr-max-w-[422px] wr-max-w-[240px] wr-relative wr-top-1/2 -wr-translate-y-[55%] lg:-wr-translate-y-1/2">
       <FormField
         control={form.control}
         name="dices"

@@ -35,7 +35,7 @@ export const RouletteTable: React.FC<RouletteTableProps> = ({
   return (
     <div
       className={cn(
-        "wr-h-[250px] max-md:wr-absolute md:wr-relative md:wr-w-full wr-max-w-[742px] wr-transition-all wr-duration-500 max-md:wr-h-[225px] max-md:wr-w-[575px] max-md:wr-rotate-90 md:wr-top-[72px] max-md:wr-top-1/2 max-md:-wr-translate-y-[55%]",
+        "wr-h-[250px] max-md:wr-absolute md:wr-relative md:wr-w-full wr-max-w-[742px] wr-transition-all wr-duration-500 max-md:wr-h-[225px] max-md:wr-w-[575px] max-md:wr-rotate-90 md:wr-top-[72px] max-md:wr-top-1/2 max-md:-wr-translate-y-[50%]",
         {
           "wr-z-10 wr-blur-0 max-md:wr-absolute": !isPrepared,
           "max-md:wr-top-1/2 max-md:wr-blur-[4px] wr-select-none wr-pointer-events-none md:wr-z-0":
