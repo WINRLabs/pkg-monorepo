@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.30
+
+### Patch Changes
+
+- 1c83dbb: fix
+
 ## 2.15.29
 
 ### Patch Changes
