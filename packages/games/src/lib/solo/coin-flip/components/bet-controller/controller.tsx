@@ -32,10 +32,8 @@ export const CoinFlipController = () => {
         control={form.control}
         name="coinSide"
         render={({ field }) => (
-          <FormItem className="wr-h-10 wr-w-full lg:!wr-mb-[60px] wr-mb-0">
-            <FormLabel className="lg:!wr-block wr-hidden">
-              Choose Side
-            </FormLabel>
+          <FormItem className="wr-h-10 wr-w-full lg:wr-mb-[60px] wr-mb-0">
+            <FormLabel className="lg:wr-block wr-hidden">Choose Side</FormLabel>
             <FormControl>
               <RadioGroupPrimitive.Root
                 onValueChange={(v) => {
@@ -76,7 +74,7 @@ export const CoinFlipController = () => {
                       </RadioGroupPrimitive.Item>
                       <span
                         className={cn(
-                          "wr-relative wr-top-2 lg:!wr-flex wr-items-center wr-justify-center wr-gap-1 wr-text-zinc-100 wr-hidden",
+                          "wr-relative wr-top-2 lg:wr-flex wr-items-center wr-justify-center wr-gap-1 wr-text-zinc-100 wr-hidden",
                           {
                             "wr-text-lime-500": field.value === CoinSide.HEADS,
                             "wr-text-red-500": field.value === CoinSide.TAILS,
@@ -117,7 +115,7 @@ export const CoinFlipController = () => {
                     </FormControl>
                     <span
                       className={cn(
-                        "wr-relative wr-top-2 lg:!wr-flex wr-items-center wr-justify-center wr-gap-1 wr-text-zinc-100 wr-hidden",
+                        "wr-relative wr-top-2 lg:wr-flex wr-items-center wr-justify-center wr-gap-1 wr-text-zinc-100 wr-hidden",
                         {
                           "wr-text-lime-500": field.value === CoinSide.TAILS,
                           "wr-text-red-500": field.value === CoinSide.HEADS,

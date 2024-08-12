@@ -78,7 +78,7 @@ export const BetController: React.FC<Props> = ({
           }
           hideSm
         />
-        <div className="wr-mb-6 lg:!wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
+        <div className="wr-mb-6 lg:wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>
             <div
@@ -101,7 +101,7 @@ export const BetController: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="lg:!wr-block wr-hidden">
+        <div className="lg:wr-block wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField

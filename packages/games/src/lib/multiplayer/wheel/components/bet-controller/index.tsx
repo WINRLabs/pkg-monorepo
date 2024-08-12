@@ -92,7 +92,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
             name="color"
             render={({ field }) => (
               <FormItem className="wr-mb-0">
-                <FormLabel className="wr-text-white/50 lg:!wr-block wr-hidden">
+                <FormLabel className="wr-text-white/50 lg:wr-block wr-hidden">
                   Choose
                 </FormLabel>
                 <FormControl>
@@ -159,7 +159,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
           />
         </div>
 
-        <div className="wr-mb-6 lg:!wr-block wr-hidden">
+        <div className="wr-mb-6 lg:wr-block wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>
             <div

@@ -158,7 +158,7 @@ export const KenoScene: React.FC<KenoSceneProps> = ({
               name="selections"
               render={({ field }) => {
                 return (
-                  <FormItem className="wr-grid wr-h-full wr-w-full wr-grid-cols-5 wr-grid-rows-5 wr-items-center wr-justify-center lg:!wr-gap-2 wr-gap-1 max-lg:!wr-mb-3">
+                  <FormItem className="wr-grid wr-h-full wr-w-full wr-grid-cols-5 wr-grid-rows-5 wr-items-center wr-justify-center lg:wr-gap-2 wr-gap-1 max-lg:wr-mb-3">
                     {initialKenoCells.map((cell, idx) => {
                       return (
                         <FormItem key={idx} className="wr-mb-0 wr-w-full ">

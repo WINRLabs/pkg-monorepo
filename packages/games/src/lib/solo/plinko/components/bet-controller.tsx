@@ -92,7 +92,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
             gameStatus == "PLAYING"
           }
         />
-        <div className="wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden">
+        <div className="wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:wr-grid wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>
             <div

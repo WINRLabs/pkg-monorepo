@@ -25,7 +25,7 @@ export const Advanced: React.FC<Props> = ({ children, hideSm = true }) => {
         setAccordionValue(val);
       }}
       className={cn({
-        "lg:!wr-block wr-hidden": hideSm,
+        "lg:wr-block wr-hidden": hideSm,
       })}
     >
       <AccordionItem value="advanced" className="wr-border-b-0">

@@ -21,7 +21,7 @@ const Result = () => {
   const won = currentResult && currentResult?.payout > 0;
 
   return (
-    <div className="wr-w-full wr-h-full wr-flex wr-justify-center wr-items-center lg:!wr-text-[200px] wr-text-8xl wr-text-white wr-font-bold">
+    <div className="wr-w-full wr-h-full wr-flex wr-justify-center wr-items-center lg:wr-text-[200px] wr-text-8xl wr-text-white wr-font-bold">
       <div
         className={cn({
           "wr-text-lime-600": won && currentResult && isAnimated,

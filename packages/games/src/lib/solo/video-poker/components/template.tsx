@@ -191,7 +191,7 @@ const VideoPokerTemplate = ({
               minWager={minWager || 1}
             />
             <SceneContainer
-              className="wr-relative max-lg:wr-h-[420px] wr-h-[640px] lg:!wr-justify-start wr-overflow-hidden lg:wr-pb-0 lg:wr-pt-0 wr-flex wr-justify-end"
+              className="wr-relative max-lg:wr-h-[420px] wr-h-[640px] lg:wr-justify-start wr-overflow-hidden lg:wr-pb-0 lg:wr-pt-0 wr-flex wr-justify-end"
               style={{
                 perspectiveOrigin: "bottom",
                 perspective: "1000px",
@@ -202,7 +202,7 @@ const VideoPokerTemplate = ({
                 width={170}
                 height={234}
                 alt={"card_stack"}
-                className="wr-mb-[68px] wr-hidden lg:!wr-block"
+                className="wr-mb-[68px] wr-hidden lg:wr-block"
               />
               <VideoPokerResults />
               <div className="wr-left-0 max-lg:wr-top-3 lg:wr-bottom-0 wr-w-full lg:wr-h-full wr-flex wr-justify-center  wr-absolute max-lg:wr-scale-[.6] max-lg:wr-w-full max-lg:wr-flex max-lg:wr-justify-center wr-items-center">

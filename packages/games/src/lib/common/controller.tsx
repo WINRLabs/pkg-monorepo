@@ -60,7 +60,7 @@ export const BetCountFormField: React.FC<{
         control={form.control}
         name="betCount"
         render={({ field }) => (
-          <FormItem className={cn({ "wr-hidden lg:!wr-block": hideSm })}>
+          <FormItem className={cn({ "wr-hidden lg:wr-block": hideSm })}>
             <FormLabel>Multiple Bets (1-{maxValue}) </FormLabel>
 
             <FormControl>
@@ -191,7 +191,7 @@ export const WagerFormField: React.FC<WagerFormFieldProps> = ({
                 form={form}
               />
               <WagerSetterButtons
-                className="wr-hidden lg:!wr-block"
+                className="wr-hidden lg:wr-block"
                 isDisabled={isDisabled}
                 form={form}
                 minWager={minWager}

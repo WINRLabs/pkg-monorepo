@@ -66,9 +66,9 @@ export const WagerInput = ({
             className
           )}
         />
-        <WagerCurrencyIcon className="wr-hidden lg:!wr-block" />
+        <WagerCurrencyIcon className="wr-hidden lg:wr-block" />
 
-        <div className="wr-z-10 wr-flex -wr-m-[6px] wr-gap-[2px] lg:!wr-hidden">
+        <div className="wr-z-10 wr-flex -wr-m-[6px] wr-gap-[2px] lg:wr-hidden">
           <Button
             className={cn("wr-w-14 wr-font-[600] wr-text-base", className)}
             type="button"

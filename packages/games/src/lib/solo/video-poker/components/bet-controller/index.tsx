@@ -52,7 +52,7 @@ export const VideoPokerBetController: React.FC<Props> = ({
           isDisabled={form.formState.isSubmitting || form.formState.isLoading}
         />
 
-        <div className="wr-mb-6 lg:!wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
+        <div className="wr-mb-6 lg:wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>
             <div

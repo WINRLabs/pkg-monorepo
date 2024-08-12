@@ -78,7 +78,7 @@ const KenoTemplate = ({ ...props }: TemplateProps) => {
               maxWager={props?.maxWager || 2000}
               minWager={props?.minWager || 1}
             />
-            <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0">
+            <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:wr-border-0 max-lg:wr-p-0">
               <Keno.Scene {...props} />
               <WinAnimation />
             </SceneContainer>

@@ -151,7 +151,7 @@ const Scene: React.FC<GameAreaProps> = ({
         </div>
         <div
           className={cn(
-            "wr-absolute wr-left-1/2 md:!wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-rps-win-text wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent wr-duration-500 max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
+            "wr-absolute wr-left-1/2 md:wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-rps-win-text wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent wr-duration-500 max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
             { "wr-inline-block": winner?.payout === 0 },
             {
               "wr-hidden":
@@ -165,7 +165,7 @@ const Scene: React.FC<GameAreaProps> = ({
 
         <div
           className={cn(
-            "wr-absolute wr-left-1/2 md:!wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-gradient-to-b wr-from-yellow-300 wr-to-yellow-700 wr-bg-clip-text wr-font-druk   wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent wr-duration-500 max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
+            "wr-absolute wr-left-1/2 md:wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-gradient-to-b wr-from-yellow-300 wr-to-yellow-700 wr-bg-clip-text wr-font-druk   wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent wr-duration-500 max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
             {
               "wr-inline-block":
                 rpsChoice.toString() === winner?.rps.toString(),
@@ -247,7 +247,7 @@ const Scene: React.FC<GameAreaProps> = ({
         </div>
         <div
           className={cn(
-            "wr-relative wr-left-1/2 md:!wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-rps-win-text  wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
+            "wr-relative wr-left-1/2 md:wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-rps-win-text  wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
             { "wr-inline-block": winner?.payout || 0 > 0 },
             {
               "wr-hidden":
@@ -260,7 +260,7 @@ const Scene: React.FC<GameAreaProps> = ({
         </div>
         <div
           className={cn(
-            "wr-absolute wr-left-1/2 md:!wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-gradient-to-b wr-from-yellow-300 wr-to-yellow-700   wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
+            "wr-absolute wr-left-1/2 md:wr-top-[124px] wr-top-[70px] wr-hidden wr-transform wr-bg-gradient-to-b wr-from-yellow-300 wr-to-yellow-700   wr-bg-clip-text wr-font-druk wr-text-[41px] wr-font-bold wr-leading-[45px] wr-text-transparent max-md:-wr-translate-x-1/2 max-md:wr-text-2xl",
             {
               "wr-inline-block":
                 rpsChoice.toString() === winner?.rps.toString(),

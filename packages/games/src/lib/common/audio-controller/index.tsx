@@ -29,7 +29,7 @@ export const AudioController: React.FC<{
   return (
     <div
       className={cn(
-        "wr-relative wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2 lg:!wr-flex wr-hidden",
+        "wr-relative wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2 lg:wr-flex wr-hidden",
         className
       )}
       ref={ref}

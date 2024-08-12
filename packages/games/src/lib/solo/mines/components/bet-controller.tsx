@@ -183,11 +183,11 @@ export const MinesBetController: React.FC<Props> = ({
           }}
         />
 
-        <div className="lg:!wr-block wr-hidden">
+        <div className="lg:wr-block wr-hidden">
           <MinesCountDisplay />
         </div>
 
-        <div className="wr-mb-6 wr-mt-6 lg:!wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
+        <div className="wr-mb-6 wr-mt-6 lg:wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
           <div>
             <FormLabel>Max Payout</FormLabel>
             <div

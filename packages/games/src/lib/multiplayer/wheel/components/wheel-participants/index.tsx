@@ -13,7 +13,7 @@ const WheelParticipants = () => {
   ]);
 
   return (
-    <div className="wr-relative wr-h-[640px] wr-w-full lg:!wr-block wr-hidden">
+    <div className="wr-relative wr-h-[640px] wr-w-full lg:wr-block wr-hidden">
       <Button
         variant="outline"
         type="button"

@@ -163,7 +163,7 @@ export const CardComponent: React.FC<{
             "wr-bottom-full lg:wr-opacity-0": status === VideoPokerStatus.None,
           },
           {
-            "lg:!-wr-bottom-10 wr-block wr-opacity-100":
+            "lg:-wr-bottom-10 wr-block wr-opacity-100":
               status === VideoPokerStatus.Dealt ||
               status === VideoPokerStatus.Final,
           }

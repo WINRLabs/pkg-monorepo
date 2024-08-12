@@ -54,7 +54,7 @@ const Bucket: React.FC<PlinkoBucketProps> = ({ multiplier, value }) => {
   return (
     <div
       className={cn(
-        "wr-flex wr-w-12 wr-h-[35px] wr-border wr-rounded wr-transition-all wr-duration-500 wr-justify-center wr-items-center wr-not-italic wr-font-bold wr-text-xs wr-leading-5 wr-border-t-4 wr-border-solid wr-border-[#422137] wr-border-t-[#d9113a] wr-bg-[#422137] max-md:!wr-text-[9px] max-md:wr-w-[26px] max-md:wr-h-[23px] ",
+        "wr-flex wr-w-12 wr-h-[35px] wr-border wr-rounded wr-transition-all wr-duration-500 wr-justify-center wr-items-center wr-not-italic wr-font-bold wr-text-xs wr-leading-5 wr-border-t-4 wr-border-solid wr-border-[#422137] wr-border-t-[#d9113a] wr-bg-[#422137] max-md:wr-text-[9px] max-md:wr-w-[26px] max-md:wr-h-[23px] ",
         getBucketClassName(multiplier),
         {
           "wr-bg-[#283346] wr-transition-[0ms] wr-border-t-[#ff3d00] !wr-border-[#283346]":

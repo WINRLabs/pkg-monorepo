@@ -19,7 +19,7 @@ const ResultBox: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   return (
     <div
       className={cn(
-        "wr-flex wr-h-10 lg:!wr-h-20 wr-items-center wr-justify-between lg:wr-flex-col wr-flex-row lg:!wr-justify-center wr-rounded-lg wr-border wr-border-zinc-800 wr-text-md wr-font-bold wr-leading-[18px] max-md:wr-text-center max-md:wr-text-xs lg:wr-px-0 wr-px-4",
+        "wr-flex wr-h-10 lg:wr-h-20 wr-items-center wr-justify-between lg:wr-flex-col wr-flex-row lg:wr-justify-center wr-rounded-lg wr-border wr-border-zinc-800 wr-text-md wr-font-bold wr-leading-[18px] max-md:wr-text-center max-md:wr-text-xs lg:wr-px-0 wr-px-4",
         className
       )}
     >
@@ -69,12 +69,12 @@ export const VideoPokerResults = () => {
             )}
           >
             100x{" "}
-            <span className="lg:!wr-block wr-hidden">
+            <span className="lg:wr-block wr-hidden">
               ${toFormatted(100 * wager, 2)}
             </span>
           </div>
         </ResultBox>
-        <div className="wr-grid wr-w-full wr-grid-cols-2 lg:!wr-grid-cols-4 wr-grid-rows-2 wr-gap-3 wr-transition-all wr-duration-500">
+        <div className="wr-grid wr-w-full wr-grid-cols-2 lg:wr-grid-cols-4 wr-grid-rows-2 wr-gap-3 wr-transition-all wr-duration-500">
           {hands.map((hand, idx) => {
             return (
               <ResultBox
@@ -103,7 +103,7 @@ export const VideoPokerResults = () => {
                   )}
                 >
                   {hand.multiplier}x{" "}
-                  <span className=" wr-ml-[10px] lg:!wr-block wr-hidden">
+                  <span className=" wr-ml-[10px] lg:wr-block wr-hidden">
                     ${toFormatted(hand.multiplier * wager, 2)}
                   </span>
                 </div>

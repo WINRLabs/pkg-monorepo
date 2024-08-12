@@ -48,7 +48,7 @@ const MultiplierCarousel: React.FC<{ currentNumbers: number[][] }> = ({
     );
 
   return (
-    <div className="lg:!wr-w-[calc(100%-128px)] wr-w-[calc(100%-100px)] md:wr-absolute  md:wr-bottom-2">
+    <div className="lg:wr-w-[calc(100%-128px)] wr-w-[calc(100%-100px)] md:wr-absolute  md:wr-bottom-2">
       <Carousel
         opts={{
           align: "start",
@@ -79,7 +79,7 @@ const MultiplierCarousel: React.FC<{ currentNumbers: number[][] }> = ({
                         }
                       )}
                     >
-                      <CardContent className="wr-flex wr-h-full wr-flex-col wr-items-center wr-justify-center wr-gap-1 wr-p-1 lg:!wr-p-3.5 wr-px-0 wr-text-[14px]">
+                      <CardContent className="wr-flex wr-h-full wr-flex-col wr-items-center wr-justify-center wr-gap-1 wr-p-1 lg:wr-p-3.5 wr-px-0 wr-text-[14px]">
                         <div
                           className={cn(
                             "wr-text-nowrap wr-shrink-0 wr-break-normal wr-font-medium wr-text-zinc-500",

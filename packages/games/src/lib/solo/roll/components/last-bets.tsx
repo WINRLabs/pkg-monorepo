@@ -18,7 +18,7 @@ export const LastBets = () => {
         return (
           <div
             className={cn(
-              "wr-relative wr-aspect-square md:!wr-size-9 wr-size-12 wr-rounded-md wr-border-2 wr-border-zinc-800 wr-bg-black",
+              "wr-relative wr-aspect-square md:wr-size-9 wr-size-12 wr-rounded-md wr-border-2 wr-border-zinc-800 wr-bg-black",
               {
                 "wr-bg-green-500": result.payout > 0,
               }
