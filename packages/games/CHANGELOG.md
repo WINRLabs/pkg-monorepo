@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.15.32
+
+### Patch Changes
+
+- ff3207b: mobile ui updates
+
 ## 2.15.31
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.35
+
+### Patch Changes
+
+- ff3207b: mobile ui updates
+
 ## 0.10.34
 
 ### Patch Changes
