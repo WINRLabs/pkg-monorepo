@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 2.15.29
+
+### Patch Changes
+
+- 07975d9: revert
+- 52f3cce: cleanup
+- 52f3cce: clean lint
+
 ## 2.15.28
 
 ### Patch Changes

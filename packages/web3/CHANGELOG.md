@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.10.33
+
+### Patch Changes
+
+- 07975d9: revert
+  - @winrlabs/api@1.3.4
+
 ## 0.10.32
 
 ### Patch Changes
