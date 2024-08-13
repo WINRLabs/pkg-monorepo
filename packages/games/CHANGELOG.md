@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.1
+
+### Patch Changes
+
+- 0f26f46: make use handle tx to take client as a parameter
+
 ## 2.16.0
 
 ### Minor Changes

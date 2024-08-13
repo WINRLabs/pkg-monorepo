@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.37
+
+### Patch Changes
+
+- 0f26f46: make use handle tx to take client as a parameter
+
 ## 0.10.36
 
 ### Patch Changes

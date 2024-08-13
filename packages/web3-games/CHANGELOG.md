@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.1
+
+### Patch Changes
+
+- 0f26f46: make use handle tx to take client as a parameter
+- Updated dependencies [0f26f46]
+  - @winrlabs/web3@0.10.37
+  - @winrlabs/games@2.16.1
+  - @winrlabs/web3-games@8.0.1
+
 ## 8.0.0
 
 ### Minor Changes
