@@ -1,5 +1,16 @@
 # @winrlabs/games
 
+## 2.16.0
+
+### Minor Changes
+
+- 75aa3c7: eslint and prettier fix games.web3-games
+
+### Patch Changes
+
+- 0527643: fast or verified option
+- bfd6477: add bj mobile
+
 ## 2.15.32
 
 ### Patch Changes

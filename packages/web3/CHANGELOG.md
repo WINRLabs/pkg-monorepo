@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.10.36
+
+### Patch Changes
+
+- 0527643: fast or verified option
+  - @winrlabs/api@1.3.4
+
 ## 0.10.35
 
 ### Patch Changes

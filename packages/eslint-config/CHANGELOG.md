@@ -1,5 +1,11 @@
 # @winrlabs/eslint-config
 
+## 0.2.0
+
+### Minor Changes
+
+- 75aa3c7: eslint and prettier fix games.web3-games
+
 ## 0.1.1
 
 ### Patch Changes

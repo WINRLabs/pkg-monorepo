@@ -1,5 +1,23 @@
 # @winrlabs/web3-games
 
+## 8.0.0
+
+### Minor Changes
+
+- 75aa3c7: eslint and prettier fix games.web3-games
+
+### Patch Changes
+
+- 0527643: fast or verified option
+- bfd6477: add bj mobile
+- Updated dependencies [0527643]
+- Updated dependencies [bfd6477]
+- Updated dependencies [75aa3c7]
+  - @winrlabs/games@2.16.0
+  - @winrlabs/web3@0.10.36
+  - @winrlabs/web3-games@8.0.0
+  - @winrlabs/api@1.3.4
+
 ## 7.0.48
 
 ### Patch Changes
