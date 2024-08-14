@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.3
+
+### Patch Changes
+
+- 60006aa: minor game fixes
+
 ## 2.16.2
 
 ### Patch Changes

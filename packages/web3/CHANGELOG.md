@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.39
+
+### Patch Changes
+
+- 60006aa: minor game fixes
+
 ## 0.10.38
 
 ### Patch Changes
