@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.4
+
+### Patch Changes
+
+- 0b67519: fix hydration error games
+
 ## 2.16.3
 
 ### Patch Changes

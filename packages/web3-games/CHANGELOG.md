@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.5
+
+### Patch Changes
+
+- 08670c2: fix limbo controller multiplier issue
+- Updated dependencies [08670c2]
+- Updated dependencies [0b67519]
+  - @winrlabs/web3-games@8.0.5
+  - @winrlabs/games@2.16.4
+
 ## 8.0.4
 
 ### Patch Changes
