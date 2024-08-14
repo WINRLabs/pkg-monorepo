@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 8.0.4
+
+### Patch Changes
+
+- 9038686: fix dice slider bug
+- Updated dependencies [9038686]
+  - @winrlabs/web3-games@8.0.4
+
 ## 8.0.3
 
 ### Patch Changes
