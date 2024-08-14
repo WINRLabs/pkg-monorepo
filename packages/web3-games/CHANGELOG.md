@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.7
+
+### Patch Changes
+
+- 1eced69: update hash
+- Updated dependencies [1eced69]
+  - @winrlabs/web3@0.10.41
+  - @winrlabs/games@2.16.6
+  - @winrlabs/web3-games@8.0.7
+
 ## 8.0.6
 
 ### Patch Changes

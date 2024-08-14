@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.6
+
+### Patch Changes
+
+- 1eced69: update hash
+
 ## 2.16.5
 
 ### Patch Changes

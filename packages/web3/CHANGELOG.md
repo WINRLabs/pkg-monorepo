@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.41
+
+### Patch Changes
+
+- 1eced69: update hash
+
 ## 0.10.40
 
 ### Patch Changes
