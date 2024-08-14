@@ -16,6 +16,7 @@ import { cn } from '../../../utils/style';
 import {
   BlackjackCard,
   BlackjackGameStatus,
+  BlackjackHandStatus,
   distributeNewCards,
   getBlackjackSuit,
   TIMEOUT,
@@ -239,7 +240,12 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   }, [activeGameHands.splittedFirstHand.cards?.cards]);
 
   React.useEffect(() => {
-    if (isDistributionCompleted) {
+    const { firstHand, splittedFirstHand } = activeGameHands;
+    const isFirstHandBusted =
+      firstHand.hand?.status == BlackjackHandStatus.BUST && !splittedFirstHand.handId;
+    const isSplittedHandBusted = splittedFirstHand.hand?.status == BlackjackHandStatus.BUST;
+
+    if (isDistributionCompleted && !isFirstHandBusted && !isSplittedHandBusted) {
       const cards = activeGameHands.dealer.cards?.cards || [];
 
       setTimeout(() => {
@@ -304,9 +310,13 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
     if (isLastDistributionCompleted) onGameCompleted();
   }, [isLastDistributionCompleted]);
 
-  const handleSubmit = (values: SingleBJDealFormFields) => {
+  const handleClear = () => {
     onReset();
     resetUiCards();
+  };
+
+  const handleSubmit = (values: SingleBJDealFormFields) => {
+    handleClear();
     onDeal(values);
   };
 
@@ -395,6 +405,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
                     isDistributionCompleted={isDistributionCompleted}
                     isLastDistributionCompleted={isLastDistributionCompleted}
                     isSplitted={activeGameHands.firstHand.hand?.isSplitted}
+                    onClear={handleClear}
                   />
                   <CardArea
                     handType={SingleBlackjackHandIndex.FIRST}
@@ -405,6 +416,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
                     isDistributionCompleted={isDistributionCompleted}
                     isLastDistributionCompleted={isLastDistributionCompleted}
                     hasSplittedCards={!!activeGameHands.splittedFirstHand.cards?.amountCards}
+                    onClear={handleClear}
                   />
                 </>
               )}

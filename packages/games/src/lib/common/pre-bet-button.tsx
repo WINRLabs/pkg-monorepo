@@ -31,7 +31,12 @@ export const PreBetButton = ({
 
   if (!account?.isLoggedIn)
     return (
-      <Button variant={variant} className={cn('wr-w-full', className)} size={'xl'} type="button">
+      <Button
+        variant={variant}
+        className={cn('wr-w-full wr-uppercase', className)}
+        size={'xl'}
+        type="button"
+      >
         Login
       </Button>
     );
@@ -42,7 +47,7 @@ export const PreBetButton = ({
         disabled
         variant={variant}
         type="button"
-        className={cn('wr-w-full', className)}
+        className={cn('wr-w-full wr-uppercase', className)}
         size={'xl'}
       >
         Not enough Balance

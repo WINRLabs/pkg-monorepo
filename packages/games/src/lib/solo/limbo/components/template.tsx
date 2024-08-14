@@ -75,7 +75,7 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
             minWager={props?.minWager || 1}
             winMultiplier={multiplier}
           />
-          <SceneContainer className="md:wr-h-[700px] wr-h-[200px] wr-overflow-hidden  !wr-p-0">
+          <SceneContainer className="md:wr-h-[640px] wr-h-[200px] wr-overflow-hidden  !wr-p-0">
             <Limbo.Game {...props}>
               <Limbo.GameArea {...props}>
                 <Limbo.LastBets />

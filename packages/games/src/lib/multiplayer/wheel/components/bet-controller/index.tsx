@@ -14,7 +14,7 @@ import useCountdown from '../../../../hooks/use-time-left';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
-import { toDecimals } from '../../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { MultiplayerGameStatus } from '../../../core/type';
 import { colorMultipliers, WheelColor } from '../../constants';
 import { useWheelGameStore } from '../../store';
@@ -153,7 +153,9 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
         </div>
@@ -161,7 +163,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
           <Button
             type="submit"
             variant={'success'}
-            className="wr-w-full"
+            className="wr-w-full wr-uppercase"
             size={'xl'}
             onClick={() => betClickEffect.play()}
             isLoading={form.formState.isSubmitting || form.formState.isLoading}

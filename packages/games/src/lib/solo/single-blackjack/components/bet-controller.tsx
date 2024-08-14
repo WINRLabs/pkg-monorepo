@@ -183,7 +183,7 @@ export const BetController: React.FC<Props> = ({
             </div>
           )}
           <Button
-            className="wr-w-full wr-mt-3 lg:wr-mt-6"
+            className="wr-w-full wr-mt-3 lg:wr-mt-6 wr-uppercase"
             variant="success"
             isLoading={form.formState.isSubmitting || form.formState.isLoading}
             onClick={() => clickEffect.play()}

@@ -23,7 +23,7 @@ import { Button } from '../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../ui/form';
 import { NumberInput } from '../../../ui/number-input';
 import { cn } from '../../../utils/style';
-import { toDecimals } from '../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../utils/web3';
 import useLimboGameStore from '../store';
 import { LimboForm } from '../types';
 
@@ -35,7 +35,7 @@ interface Props {
 
 export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultiplier }) => {
   const form = useFormContext() as LimboForm;
-  // const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { limboGameResults, gameStatus } = useLimboGameStore(['limboGameResults', 'gameStatus']);
 
@@ -124,7 +124,9 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -133,7 +135,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
           </div>
         </div>
 
-        <div>
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField isDisabled={isFormInProgress} />
@@ -147,9 +149,9 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
             <Button
               type="submit"
               variant={'success'}
-              className="wr-w-full"
+              className="wr-w-full wr-uppercase"
               size={'xl'}
-              // onClick={() => clickEffect.play()}
+              onClick={() => clickEffect.play()}
               isLoading={form.formState.isSubmitting || form.formState.isLoading}
               disabled={
                 !form.formState.isValid ||

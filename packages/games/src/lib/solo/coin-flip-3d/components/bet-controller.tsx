@@ -17,7 +17,7 @@ import { TotalWager, WagerCurrencyIcon } from '../../../common/wager';
 import { Button } from '../../../ui/button';
 import { FormLabel } from '../../../ui/form';
 import { cn } from '../../../utils/style';
-import { toDecimals } from '../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../utils/web3';
 import useCoinFlip3dGameStore from '../store';
 import { CoinFlip3dForm } from '../types';
 import { CoinFlipController } from './controller';
@@ -98,7 +98,9 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -111,7 +113,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
           </div>
         </div>
 
-        <div>
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField
@@ -139,7 +141,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, winMultipli
           <Button
             type="submit"
             variant={'coinflip'}
-            className="wr-w-full max-lg:-wr-order-2"
+            className="wr-w-full max-lg:-wr-order-2 wr-uppercase"
             size={'xl'}
             disabled={
               !form.formState.isValid ||

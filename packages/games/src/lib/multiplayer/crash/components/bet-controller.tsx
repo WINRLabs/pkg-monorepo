@@ -174,7 +174,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
           <Button
             type="submit"
             variant={'crash'}
-            className="wr-w-full"
+            className="wr-w-full wr-uppercase"
             size={'xl'}
             onClick={() => clickEffect.play()}
             disabled={

@@ -20,7 +20,7 @@ import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { Button } from '../../../ui/button';
 import { FormLabel } from '../../../ui/form';
 import { cn } from '../../../utils/style';
-import { toDecimals } from '../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../utils/web3';
 import { rowMultipliers } from '../constants';
 import usePlinko3dGameStore from '../store';
 import { Plinko3dForm } from '../types';
@@ -103,7 +103,9 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, logo }) => 
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -116,7 +118,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, logo }) => 
           </div>
         </div>
 
-        <div>
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField
@@ -144,7 +146,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, logo }) => 
           <Button
             type="submit"
             variant="plinko"
-            className="wr-w-full !wr-rounded-none max-lg:wr-bg-cover"
+            className="wr-w-full !wr-rounded-none max-lg:wr-bg-cover wr-uppercase"
             size={'xl'}
             onClick={() => clickEffect.play()}
             disabled={

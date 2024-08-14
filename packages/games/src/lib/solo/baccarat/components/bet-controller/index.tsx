@@ -106,7 +106,7 @@ export const BetController: React.FC<Props> = ({
                 isDisabled
               }
               isLoading={form.formState.isSubmitting || form.formState.isLoading}
-              className="wr-w-full"
+              className="wr-w-full wr-uppercase"
             >
               Deal
             </Button>

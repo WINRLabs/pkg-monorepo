@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { WagerBalance, WagerCurrency, WagerInput } from '../../../common/wager';
+import { useGameOptions } from '../../../game-provider';
+import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { Button } from '../../../ui/button';
 import { cn } from '../../../utils/style';
 import { HOLDEM_POKER_GAME_STATUS } from '../types';
@@ -24,9 +26,12 @@ export const WagerBetController: React.FC<{
       </label>
       <WagerInput
         value={wager}
+        form={{} as any}
         onChange={setWager}
         isDisabled={status == HOLDEM_POKER_GAME_STATUS.OnPlay}
         hasError={wager < minWager || wager > maxWager}
+        minWager={minWager}
+        maxWager={maxWager}
         containerClassName={cn(
           'wr-border wr-border-solid wr-border-unity-white-15 wr-bg-unity-white-15 wr-backdrop-blur-md'
         )}
@@ -49,8 +54,12 @@ const WagerSetterButtons: React.FC<{
   maxWager: number;
   isDisabled: boolean;
 }> = ({ wager, setWager, minWager, maxWager, isDisabled }) => {
+  const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const { account } = useGameOptions();
+  const balanceAsDollar = account?.balanceAsDollar || 0;
+
   return (
-    <div className="wr-flex wr-items-center wr-gap-1">
+    <div className="wr-flex wr-items-center wr-gap-1 wr-mt-1.5">
       <Button
         className="wr-w-full wr-font-[500] wr-bg-unity-white-15 wr-backdrop-blur-md"
         type="button"
@@ -68,13 +77,13 @@ const WagerSetterButtons: React.FC<{
         disabled={isDisabled}
         variant={'secondary'}
         onClick={() => {
-          const newValue = wager / 3;
+          const newValue = wager / 2;
 
           if (newValue < minWager) setWager(minWager);
           else setWager(newValue);
         }}
       >
-        1/3
+        1/2
       </Button>
       <Button
         className="wr-w-full wr-font-[500] wr-bg-unity-white-15 wr-backdrop-blur-md"
@@ -82,9 +91,11 @@ const WagerSetterButtons: React.FC<{
         disabled={isDisabled}
         variant={'secondary'}
         onClick={() => {
+          clickEffect.play();
           const newValue = wager * 2;
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
 
-          if (newValue > maxWager) setWager(maxWager);
+          if (newValue > maxAmount) setWager(maxAmount);
           else setWager(newValue);
         }}
       >
@@ -96,7 +107,9 @@ const WagerSetterButtons: React.FC<{
         disabled={isDisabled}
         variant={'secondary'}
         onClick={() => {
-          setWager(maxWager);
+          clickEffect.play();
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
+          setWager(maxAmount);
         }}
       >
         MAX

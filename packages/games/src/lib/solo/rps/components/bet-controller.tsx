@@ -20,7 +20,7 @@ import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { Button } from '../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel } from '../../../ui/form';
 import { cn } from '../../../utils/style';
-import { toDecimals } from '../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../utils/web3';
 import { ALL_RPS_CHOICES, rpsChoiceMap } from '../constant';
 import useRpsGameStore from '../store';
 import { RockPaperScissors, RPSForm } from '../types';
@@ -113,7 +113,9 @@ export const BetController: React.FC<BetControllerProps> = ({
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -122,7 +124,7 @@ export const BetController: React.FC<BetControllerProps> = ({
           </div>
         </div>
 
-        <div>
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField isDisabled={isFormInProgress} />
@@ -136,7 +138,7 @@ export const BetController: React.FC<BetControllerProps> = ({
             <Button
               type="submit"
               variant={'success'}
-              className="wr-w-full"
+              className="wr-w-full wr-uppercase"
               size={'xl'}
               onClick={() => clickEffect.play()}
               isLoading={form.formState.isSubmitting || form.formState.isLoading}

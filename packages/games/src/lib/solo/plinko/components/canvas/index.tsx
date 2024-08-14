@@ -4,7 +4,7 @@
 // paths: number[][]
 // is skipped. is animation skipped
 
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -151,6 +151,13 @@ export const Canvas: React.FC<CanvasProps> = ({
       }, 300);
     }
   };
+
+  React.useEffect(() => {
+    return () => {
+      setPaths([]);
+      updatePlinkoGameResults([]);
+    };
+  }, []);
 
   return (
     <div className="wr-w-full wr-h-full wr-flex wr-justify-center wr-items-center max-md:wr-max-w-[280px] max-md:wr-mx-auto">

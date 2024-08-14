@@ -14,6 +14,7 @@ import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import useVideoPokerGameStore, { VideoPokerStatus } from '../../store';
 import { VideoPokerForm } from '../../types';
+import { toFormatted } from '../../../../utils/web3';
 
 interface Props {
   minWager: number;
@@ -51,7 +52,9 @@ export const VideoPokerBetController: React.FC<Props> = ({ maxPayout, maxWager, 
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -63,7 +66,7 @@ export const VideoPokerBetController: React.FC<Props> = ({ maxPayout, maxWager, 
           <Button
             type="submit"
             variant={'success'}
-            className="wr-w-full"
+            className="wr-w-full wr-uppercase"
             size={'xl'}
             onClick={() => clickEffect.play()}
             isLoading={form.formState.isSubmitting || form.formState.isLoading}

@@ -11,37 +11,37 @@
 }
 
 .dealerCardArea .card--1 {
-  top: -12px;
+  top: -5px;
   right: 530px;
   z-index: 1;
 }
 
 .dealerCardArea .card--2 {
-  top: -12px;
+  top: -5px;
   right: 505px;
   z-index: 2;
 }
 
 .dealerCardArea .card--3 {
-  top: -12px;
+  top: -5px;
   right: 480px;
   z-index: 3;
 }
 
 .dealerCardArea .card--4 {
-  top: -12px;
+  top: -5px;
   right: 455px;
   z-index: 4;
 }
 
 .dealerCardArea .card--5 {
-  top: -12px;
+  top: -5px;
   right: 430px;
   z-index: 5;
 }
 
 .dealerCardArea .card--6 {
-  top: -12px;
+  top: -5px;
   right: 405px;
   z-index: 6;
 }
@@ -60,11 +60,11 @@
 .cardAmount {
   position: absolute;
   left: 50%;
-  top: 115px;
+  top: 120px;
   transform: translateX(-50%);
-  font-size: 15px;
-  font-weight: 700;
-  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 12px;
   border-radius: 15px;
   background-color: white;
   display: flex;
@@ -75,7 +75,7 @@
 
 @media only screen and (max-width: 1024px) and (max-height: 600px) {
   .cardAmount {
-    padding: 1px 12px;
+    padding: 1px 11px;
     font-size: 12px;
   }
 }

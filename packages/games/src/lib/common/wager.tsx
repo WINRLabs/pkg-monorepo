@@ -134,9 +134,11 @@ export const WagerSetterButtons = ({
   isDisabled,
 }: WagerSetterButtonsProps) => {
   const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const { account } = useGameOptions();
+  const balanceAsDollar = account?.balanceAsDollar || 0;
 
   return (
-    <div className="wr-flex wr-items-center wr-gap-1">
+    <div className="wr-flex wr-items-center wr-gap-1 wr-mt-1.5">
       <Button
         className={cn('wr-w-full wr-font-[600] wr-text-base', className)}
         type="button"
@@ -156,13 +158,13 @@ export const WagerSetterButtons = ({
         variant={'secondary'}
         onClick={() => {
           clickEffect.play();
-          const newValue = currentWager / 3;
+          const newValue = currentWager / 2;
 
           if (newValue < minWager) form.setValue('wager', minWager);
           else form.setValue('wager', newValue);
         }}
       >
-        1/3
+        1/2
       </Button>
       <Button
         className={cn('wr-w-full wr-font-[600] wr-text-base', className)}
@@ -172,8 +174,9 @@ export const WagerSetterButtons = ({
         onClick={() => {
           clickEffect.play();
           const newValue = currentWager * 2;
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
 
-          if (newValue > maxWager) form.setValue('wager', maxWager);
+          if (newValue > maxAmount) form.setValue('wager', maxAmount);
           else form.setValue('wager', newValue);
         }}
       >
@@ -186,7 +189,8 @@ export const WagerSetterButtons = ({
         variant={'secondary'}
         onClick={() => {
           clickEffect.play();
-          form.setValue('wager', maxWager);
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
+          form.setValue('wager', maxAmount);
         }}
       >
         MAX

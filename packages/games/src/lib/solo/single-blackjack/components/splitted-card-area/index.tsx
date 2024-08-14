@@ -24,6 +24,7 @@ interface SplittedCardAreaProps {
   isDistributionCompleted: boolean;
   isLastDistributionCompleted: boolean;
   isSplitted: boolean | undefined;
+  onClear: () => void;
   className?: string;
 }
 
@@ -35,6 +36,7 @@ export const SplittedCardArea: React.FC<SplittedCardAreaProps> = ({
   hand,
   isDistributionCompleted,
   isLastDistributionCompleted,
+  onClear,
 }) => {
   const { cards: cardData, settledResult, handId } = hand;
   const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
@@ -54,7 +56,7 @@ export const SplittedCardArea: React.FC<SplittedCardAreaProps> = ({
   );
 
   React.useEffect(() => {
-    setTimeout(() => setDelayedCardAmounts(cardAmounts), 1000);
+    setTimeout(() => setDelayedCardAmounts(cardAmounts), 750);
   }, [cardAmounts]);
 
   const isBusted = React.useMemo(() => {
@@ -119,6 +121,10 @@ export const SplittedCardArea: React.FC<SplittedCardAreaProps> = ({
   React.useEffect(() => {
     if (isWinner) winEffect.play();
   }, [isWinner]);
+
+  React.useEffect(() => {
+    if (isBusted) setTimeout(() => onClear(), 1000);
+  }, [isCompletedAndBusted]);
 
   return (
     <div

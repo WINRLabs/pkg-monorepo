@@ -50,7 +50,7 @@ export const VideoPokerResults = () => {
         >
           Royal Flush
           <div
-            className={cn('wr-mt-1 wr-text-base wr-font-semibold wr-leading-5 wr-text-zinc-500', {
+            className={cn('wr-mt-1 wr-text-base wr-font-bold wr-leading-5 wr-text-zinc-500', {
               'wr-text-yellow-700': gameResult === VideoPokerResult.ROYAL_FLUSH,
             })}
           >
@@ -73,7 +73,7 @@ export const VideoPokerResults = () => {
                 {hand.name}
                 <div
                   className={cn(
-                    'wr-mt-1 wr-text-base wr-font-semibold wr-leading-5 wr-text-zinc-500 max-md:wr-text-xs wr-flex',
+                    'wr-mt-1 wr-text-base wr-font-bold wr-leading-5 wr-text-zinc-500 max-md:wr-text-xs wr-flex',
                     {
                       'wr-text-orange-200':
                         hand.name === 'Jacks or Better' &&

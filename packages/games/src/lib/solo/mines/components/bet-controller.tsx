@@ -14,7 +14,7 @@ import { Button } from '../../../ui/button';
 import { FormField, FormItem, FormLabel, FormMessage } from '../../../ui/form';
 import { NumberInput } from '../../../ui/number-input';
 import { cn } from '../../../utils/style';
-import { toDecimals } from '../../../utils/web3';
+import { toDecimals, toFormatted } from '../../../utils/web3';
 import { initialBoard } from '../constants';
 import mineMultipliers from '../constants/mines-multipliers.json';
 import { useMinesGameStateStore } from '../store';
@@ -188,7 +188,9 @@ export const MinesBetController: React.FC<Props> = ({
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -253,7 +255,7 @@ export const MinesBetController: React.FC<Props> = ({
                 <Button
                   type="submit"
                   variant={'success'}
-                  className="wr-mt-2 wr-flex wr-w-full wr-items-center wr-gap-2"
+                  className="wr-mt-2 wr-flex wr-w-full wr-items-center wr-gap-2 wr-uppercase"
                   size={'xl'}
                   isLoading={form.formState.isSubmitting || form.formState.isLoading}
                   onClick={() => {

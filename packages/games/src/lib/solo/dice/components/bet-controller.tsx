@@ -94,7 +94,7 @@ export const BetController: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="lg:!wr-block wr-hidden">
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid wr-grid-cols-2 wr-gap-2">
               <StopGainFormField
@@ -121,7 +121,7 @@ export const BetController: React.FC<Props> = ({
             <Button
               type="submit"
               variant={'success'}
-              className="wr-w-full"
+              className="wr-w-full wr-uppercase"
               size={'xl'}
               onClick={() => clickEffect.play()}
               isLoading={

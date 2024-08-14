@@ -70,12 +70,12 @@ const BetTable = ({
                 {/* TODO: ADD DYNAMIC ROUTE TO EXPLORER */}
                 <a target="_blank" href={`https://explorer.winr.games/tx/${bet.hash}`}>
                   <div className="wr-flex wr-gap-2 wr-items-center wr-justify-start">
-                    <span className="wr-hidden lg:wr-flex">
-                      {dayjs(bet.createdAt * 1000).format('DD-MM-YY, HH:mm')}
-                    </span>
-                    <div className="wr-p-1 wr-border wr-border-zinc-800 wr-rounded-sm">
+                    <span className="wr-p-1 wr-border wr-border-zinc-800 wr-rounded-sm">
                       <LinkIcon className="wr-w-4 wr-h-4 wr-text-zinc-500" />
-                    </div>
+                    </span>
+                    <span className="wr-hidden lg:wr-flex">
+                      {dayjs(bet.createdAt * 1000).format('HH:mm')}
+                    </span>
                   </div>
                 </a>
               </TableCell>
@@ -83,7 +83,9 @@ const BetTable = ({
                 {gameMap[bet.game]}
               </TableCell>
               <TableCell className="wr-text-center lg:wr-text-left">
-                {bet.username.length > 41 ? shorter(bet.username, 2) : bet.username}
+                <a href={`/profile/${bet.username}`}>
+                  {bet.username.length > 41 ? shorter(bet.username, 2) : bet.username}
+                </a>
               </TableCell>
               <TableCell className="wr-hidden lg:wr-table-cell wr-text-center lg:wr-text-left">
                 {bet.playedGameCount}
@@ -99,7 +101,7 @@ const BetTable = ({
                   className={cn(
                     'wr-w-max wr-rounded-full wr-bg-zinc-700 wr-px-2 wr-py-[6px] wr-font-semibold wr-leading-4',
                     {
-                      'wr-bg-green-500': bet.multiplier > 2,
+                      'wr-bg-green-500': bet.multiplier >= 2,
                     }
                   )}
                 >

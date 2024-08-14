@@ -99,11 +99,11 @@ export const CardComponent: React.FC<{
 
   React.useEffect(() => {
     const openHand = {
-      'wr-mr-40 wr-mt-5': index === 0,
+      'lg:!-wr-bottom-14 wr-mr-40 wr-mt-5': index === 0,
       'wr-mr-20': index === 1,
       '': index === 2,
       'wr-ml-20 ': index === 3,
-      'wr-ml-40 wr-mt-5': index === 4,
+      'lg:!-wr-bottom-14 wr-ml-40 wr-mt-5': index === 4,
     };
 
     const isMobile = window.innerWidth < 768;
@@ -145,14 +145,14 @@ export const CardComponent: React.FC<{
     <AnimatePresence>
       <motion.div
         className={cn(
-          'wr-absolute wr-mb-0 wr-h-[190px] wr-w-[128px] wr-transform-gpu wr-rounded-lg wr-bg-transparent wr-transition-[bottom_1000ms,margin-left_300ms,margin-right_300ms,padding-top_300ms] wr-duration-1000 wr-perspective-1000 wr-top-14 lg:wr-top-[unset]',
+          'wr-absolute wr-mb-0 wr-h-[190px] wr-w-[128px] wr-transform-gpu wr-rounded-lg wr-bg-transparent wr-transition-[bottom_750ms,margin-left_300ms,margin-right_300ms,padding-top_300ms] wr-duration-[750ms] wr-perspective-1000 wr-top-14 lg:wr-top-[unset]',
           animatedObj,
 
           {
             'wr-bottom-full lg:wr-opacity-0': status === VideoPokerStatus.None,
           },
           {
-            'lg:!-wr-bottom-10 wr-block wr-opacity-100':
+            'lg:-wr-bottom-10 wr-block wr-opacity-100':
               status === VideoPokerStatus.Dealt || status === VideoPokerStatus.Final,
           }
         )}

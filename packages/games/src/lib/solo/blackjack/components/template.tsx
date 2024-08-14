@@ -3,7 +3,6 @@
 import React from 'react';
 import { useDebounce } from 'use-debounce';
 
-import { ChipFixed } from '../../../common/chip-controller-fixed/types';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { RotatedBackButton } from '../../../common/rotated-back-button';
 import { CDN_URL } from '../../../constants';
@@ -22,6 +21,7 @@ import { DealerCardArea } from './dealer-card-area';
 import { MoveController } from './move-controller';
 import { SplittedCardArea } from './splitted-card-area';
 import styles from './styles.module.css';
+import { Chip } from '../../../common/chip-controller/types';
 
 type TemplateOptions = {
   scene?: {
@@ -58,7 +58,7 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
   onFormChange,
 }) => {
   const [wager, setWager] = React.useState<number>(minWager || 1);
-  const [selectedChip, setSelectedChip] = React.useState<ChipFixed>(ChipFixed.ONE);
+  const [selectedChip, setSelectedChip] = React.useState<Chip>(Chip.ONE);
 
   const [firstHandWager, setFirstHandWager] = React.useState<number>(0);
   const [secondHandWager, setSecondHandWager] = React.useState<number>(0);
@@ -827,6 +827,7 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
 
             <BetController
               wager={wager}
+              chipAmount={firstHandWager + secondHandWager + thirdHandWager}
               onWagerChange={setWager}
               maxWager={maxWager}
               minWager={minWager}

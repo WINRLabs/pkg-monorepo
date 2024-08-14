@@ -44,7 +44,7 @@ export const DealerCardArea: React.FC<DealerCardAreaProps> = ({
   const cardAmounts = React.useMemo(() => calcTotalAmounts(uiCards), [uiCards]);
 
   React.useEffect(() => {
-    setTimeout(() => setDelayedCardAmounts(cardAmounts), 1000);
+    setTimeout(() => setDelayedCardAmounts(cardAmounts), 750);
   }, [cardAmounts]);
 
   const isBusted = React.useMemo(() => {

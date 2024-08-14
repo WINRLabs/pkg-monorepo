@@ -206,7 +206,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
             </span>
           </div>
         </div>
-        <PreBetButton variant="horse-race" className="wr-mb-4 md:wr-mb-0">
+        <PreBetButton variant="horse-race" className="wr-mb-4 md:wr-mb-0 wr-uppercase">
           <Button
             type="submit"
             variant="horse-race"

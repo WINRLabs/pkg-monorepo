@@ -19,11 +19,11 @@
   border-radius: 10px;
 }
 
-.card[data-state="unflipped"] .innerWrapper {
+.card[data-state='unflipped'] .innerWrapper {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
-.card[data-state="flipped"] .innerWrapper {
+.card[data-state='flipped'] .innerWrapper {
   transform: rotateY(180deg);
 }
 

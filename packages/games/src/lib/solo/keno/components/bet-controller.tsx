@@ -19,6 +19,7 @@ import { FormLabel } from '../../../ui/form';
 import { cn } from '../../../utils/style';
 import useKenoGameStore from '../store';
 import { KenoForm } from '../types';
+import { toFormatted } from '../../../utils/web3';
 
 type Props = {
   minWager: number;
@@ -84,7 +85,9 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
               )}
             >
               <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>${maxPayout}</span>
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                ${toFormatted(maxPayout, 2)}
+              </span>
             </div>
           </div>
           <div>
@@ -93,7 +96,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
           </div>
         </div>
 
-        <div className="lg:!wr-block wr-hidden">
+        <div className="wr-hidden">
           <Advanced>
             <div className="wr-grid grid-cols-2 gap-2">
               <StopGainFormField isDisabled={isFormInProgress} />
@@ -127,7 +130,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
           <Button
             type="submit"
             variant={'success'}
-            className="wr-w-full max-lg:wr-mb-1"
+            className="wr-w-full max-lg:wr-mb-1 wr-uppercase"
             size={'xl'}
             onClick={() => clickEffect.play()}
             isLoading={isFormInProgress}

@@ -59,7 +59,7 @@ export const CardArea: React.FC<CardAreaProps> = ({
   }, [uiCards, splittedCard, hand.hand?.isSplitted]);
 
   React.useEffect(() => {
-    setTimeout(() => setDelayedCardAmounts(cardAmounts), 1000);
+    setTimeout(() => setDelayedCardAmounts(cardAmounts), 750);
   }, [cardAmounts]);
 
   const isBusted = React.useMemo(() => {

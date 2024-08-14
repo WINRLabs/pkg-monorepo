@@ -6,6 +6,7 @@ import { CDN_URL } from '../../../../constants';
 import { cn } from '../../../../utils/style';
 import { BlackjackCard, BlackjackSuit, getBlackjackIcon } from '../../utils';
 import styles from './card.module.css';
+import { TIMEOUT } from '../../constants';
 
 interface CardProps {
   card: BlackjackCard | null;
@@ -31,7 +32,7 @@ export const Card: React.FC<CardProps> = ({
 
     if (removeDelayFromFlipped) setFlippedWithDelay(flipped);
 
-    if (!flipped) setTimeout(() => setFlippedWithDelay(false), 500);
+    if (!flipped) setTimeout(() => setFlippedWithDelay(false), TIMEOUT);
 
     if (flipped) setFlippedWithDelay(true);
   }, [flipped, card, removeDelayFromFlipped]);
