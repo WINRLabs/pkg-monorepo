@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.2
+
+### Patch Changes
+
+- 7547bff: payout fix
+- Updated dependencies [7547bff]
+  - @winrlabs/games@2.16.2
+  - @winrlabs/web3@0.10.38
+  - @winrlabs/web3-games@8.0.2
+
 ## 8.0.1
 
 ### Patch Changes

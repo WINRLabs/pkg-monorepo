@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.2
+
+### Patch Changes
+
+- 7547bff: payout fix
+
 ## 2.16.1
 
 ### Patch Changes

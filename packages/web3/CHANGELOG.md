@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.38
+
+### Patch Changes
+
+- 7547bff: payout fix
+
 ## 0.10.37
 
 ### Patch Changes
