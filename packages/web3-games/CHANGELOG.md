@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.6
+
+### Patch Changes
+
+- 89e5a3f: ui ux updatse
+- Updated dependencies [89e5a3f]
+  - @winrlabs/games@2.16.5
+  - @winrlabs/web3@0.10.40
+  - @winrlabs/web3-games@8.0.6
+
 ## 8.0.5
 
 ### Patch Changes

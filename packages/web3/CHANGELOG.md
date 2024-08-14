@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.40
+
+### Patch Changes
+
+- 89e5a3f: ui ux updatse
+
 ## 0.10.39
 
 ### Patch Changes
