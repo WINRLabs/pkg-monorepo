@@ -36,7 +36,7 @@ import {
   BlackjackSettledEvent,
   BlackjackStandOffEvent,
 } from '../blackjack/types';
-import { useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
+import { useBetHistory, useGetBadges, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 
@@ -332,7 +332,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedBetParams.encodedTxData,
   });
@@ -351,7 +351,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedHitParams.encodedTxData,
   });
@@ -370,7 +370,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedStandParams.encodedTxData,
   });
@@ -389,7 +389,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedDoubleParams.encodedTxData,
   });
@@ -408,7 +408,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedSplitParams.encodedTxData,
   });
@@ -427,7 +427,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedBuyInsuranceParams.encodedTxData,
   });
@@ -936,8 +936,8 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
 
     const dealerCardsEvent = gameEvent.program.find((e) => e.type == BJ_EVENT_TYPES.DealerCards)
       ?.data as BlackjackDealerCardsEvent;
-    const gameResults = results.results[0];
-    const gamePayout = Number(formatUnits(BigInt(results.results[1]), selectedToken.decimals));
+    const gameResults = results.hands;
+    const gamePayout = Number(formatUnits(BigInt(results.payout), selectedToken.decimals));
     const gamePayoutAsDollar = gamePayout * priceFeed[selectedToken.priceKey];
 
     setActiveGameHands((prev) => ({
@@ -955,13 +955,13 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       firstHand: {
         ...prev.firstHand,
         settledResult: {
-          result: gameResults[0],
+          result: Number(gameResults[0]),
         },
       },
       splittedFirstHand: {
         ...prev.splittedFirstHand,
         settledResult: {
-          result: gameResults[1],
+          result: Number(gameResults[1]),
         },
       },
     }));
@@ -981,11 +981,34 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       },
     });
 
+  const { handleGetBadges } = useGetBadges();
+
+  const totalWager = React.useMemo(() => {
+    let totalChipAmount = 0;
+    const { firstHand, splittedFirstHand } = activeGameHands;
+
+    const hands = [firstHand, splittedFirstHand];
+
+    for (const h of hands) {
+      totalChipAmount += h.hand?.chipsAmount || 0;
+
+      if (h.hand?.isDouble) totalChipAmount += h.hand.chipsAmount || 0;
+      if (h.hand?.isInsured) totalChipAmount += (h.hand.chipsAmount || 0) / 2;
+    }
+
+    return formValues.wager * totalChipAmount;
+  }, [activeGameHands, formValues.wager]);
+
   const onGameCompleted = () => {
     props.onGameCompleted && props.onGameCompleted(activeGameData.payout || 0);
     refetchHistory();
     refetchPlayerGameStatus();
     updateBalances();
+
+    handleGetBadges({
+      totalWager,
+      totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
+    });
   };
 
   return (

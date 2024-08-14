@@ -144,8 +144,6 @@ export const CardArea: React.FC<CardAreaProps> = ({
     if (isWinner) winEffect.play();
   }, [isWinner]);
 
-  console.log(settledResult, 'settledres');
-
   return (
     <div
       className={cn(styles.cardArea, {

@@ -236,7 +236,6 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
   React.useEffect(() => {
     if (isAnimationCompleted && baccaratSettled) {
       // on animation completed
-      console.log(baccaratSettled, 'baccarat settled');
       if (baccaratSettled.won) {
         winEffect.play();
         const multiplier = baccaratSettled.payout / totalWager;

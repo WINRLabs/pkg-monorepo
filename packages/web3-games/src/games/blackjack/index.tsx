@@ -26,7 +26,7 @@ import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
 import { useReadContract } from 'wagmi';
 
-import { useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
+import { useBetHistory, useGetBadges, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 import {
@@ -90,6 +90,7 @@ const defaultGameData = {
   canInsure: false,
   status: BlackjackGameStatus.NONE,
   payout: 0,
+  payback: 0,
 };
 
 export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) {
@@ -382,7 +383,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedBetParams.encodedTxData,
   });
@@ -401,7 +402,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedHitParams.encodedTxData,
   });
@@ -420,7 +421,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedStandParams.encodedTxData,
   });
@@ -439,7 +440,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedDoubleParams.encodedTxData,
   });
@@ -458,7 +459,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedSplitParams.encodedTxData,
   });
@@ -477,7 +478,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedBuyInsuranceParams.encodedTxData,
   });
@@ -1120,9 +1121,11 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
     const dealerCardsEvent = gameEvent.program.find((e) => e.type == BJ_EVENT_TYPES.DealerCards)
       ?.data as BlackjackDealerCardsEvent;
-    const gameResults = results.results[0];
-    const gamePayout = Number(formatUnits(BigInt(results.results[1]), selectedToken.decimals));
+    const gameResults = results.hands;
+    const gamePayout = Number(formatUnits(BigInt(results.payout), selectedToken.decimals));
+    const gamePayback = Number(formatUnits(BigInt(results.payback), selectedToken.decimals));
     const gamePayoutAsDollar = gamePayout * priceFeed[selectedToken.priceKey];
+    const gamePaybackAsDollar = gamePayback * priceFeed[selectedToken.priceKey];
 
     setActiveGameHands((prev) => ({
       ...prev,
@@ -1139,26 +1142,26 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       firstHand: {
         ...prev.firstHand,
         settledResult: {
-          result: gameResults[0],
+          result: Number(gameResults[0]),
         },
       },
       secondHand: {
         ...prev.secondHand,
         settledResult: {
-          result: gameResults[1],
+          result: Number(gameResults[1]),
         },
       },
       thirdHand: {
         ...prev.thirdHand,
         settledResult: {
-          result: gameResults[2],
+          result: Number(gameResults[2]),
         },
       },
     }));
 
     for (let i = 3; i < 5; i++) {
-      const result = gameResults[i];
-      const handId = results.results[3][i];
+      const result = Number(gameResults[i]);
+      const handId = results.handIndexes[i];
 
       if (handId == activeGameHands.splittedFirstHand.handId) {
         setActiveGameHands((prev) => ({
@@ -1199,6 +1202,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       ...prev,
       status: BlackjackGameStatus.FINISHED,
       payout: gamePayoutAsDollar,
+      payback: gamePaybackAsDollar,
     }));
   };
 
@@ -1210,11 +1214,48 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       },
     });
 
+  const { handleGetBadges } = useGetBadges();
+
+  const totalWager = React.useMemo(() => {
+    let totalChipAmount = 0;
+    const {
+      firstHand,
+      secondHand,
+      thirdHand,
+      splittedFirstHand,
+      splittedSecondHand,
+      splittedThirdHand,
+    } = activeGameHands;
+
+    const hands = [
+      firstHand,
+      secondHand,
+      thirdHand,
+      splittedFirstHand,
+      splittedSecondHand,
+      splittedThirdHand,
+    ];
+
+    for (const h of hands) {
+      totalChipAmount += h.hand?.chipsAmount || 0;
+
+      if (h.hand?.isDouble) totalChipAmount += h.hand.chipsAmount || 0;
+      if (h.hand?.isInsured) totalChipAmount += (h.hand.chipsAmount || 0) / 2;
+    }
+
+    return formValues.wager * totalChipAmount;
+  }, [activeGameHands, formValues.wager]);
+
   const onGameCompleted = () => {
     props.onGameCompleted && props.onGameCompleted(activeGameData.payout || 0);
     refetchHistory();
     refetchPlayerGameStatus();
     updateBalances();
+
+    handleGetBadges({
+      totalWager,
+      totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
+    });
   };
 
   return (

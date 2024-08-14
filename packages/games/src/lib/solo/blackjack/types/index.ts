@@ -1,4 +1,4 @@
-import { BalanceMap,Token } from '@winrlabs/types';
+import { BalanceMap, Token } from '@winrlabs/types';
 
 export enum BlackjackHandIndex {
   FIRST,
@@ -24,6 +24,7 @@ export type GameStruct = {
   canInsure: boolean;
   status: BlackjackGameStatus;
   payout?: number;
+  payback?: number;
 };
 
 export type Cards = {

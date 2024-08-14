@@ -81,5 +81,8 @@ export interface BlackjackDealerCardsEvent {
 }
 
 export interface BlackjackResultEvent {
-  results: [BlackjackGameResult[], number, number, number[]];
+  handIndexes: number[];
+  hands: bigint[];
+  payback: bigint;
+  payout: bigint;
 }
