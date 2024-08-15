@@ -69,6 +69,7 @@ export const RouletteScene: React.FC<{
   const { isAnimationSkipped } = useGameSkip();
 
   const skipRef = React.useRef<boolean>(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
   const totalWager = React.useMemo(() => {
     const totalChipCount = selectedNumbers.reduce((acc, cur) => acc + cur, 0);
@@ -128,12 +129,19 @@ export const RouletteScene: React.FC<{
 
           return;
         } else {
-          setTimeout(() => turn(order), 100);
+          timeoutRef.current = setTimeout(() => turn(order), 100);
         }
       };
 
       turn(0);
     }
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+      updateGameStatus('IDLE');
+      updateLastBets([]);
+      updateRouletteGameResults([]);
+    };
   }, [rouletteResult]);
 
   const calculatePayout = (): {

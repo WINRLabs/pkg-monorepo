@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import { useGameOptions } from '../game-provider';
 import { SoundEffects, useAudioEffect } from '../hooks/use-audio-effect';
 import { Button } from '../ui/button';
@@ -10,15 +12,31 @@ interface Props {
   className?: string;
 }
 
-export const WagerBalance = ({ className }: Props) => {
+interface WagerBalanceProps extends Props {
+  maxWager: number;
+  onClick?: (maxAmount: number) => void;
+}
+
+const SLIPPAGE = 0.01;
+
+export const WagerBalance = ({ maxWager, onClick, className }: WagerBalanceProps) => {
   const { account } = useGameOptions();
+  const balanceAsDollar = account?.balanceAsDollar || 0;
+  const form = useFormContext();
+
+  const handleWagerUpdate = () => {
+    const betCount: number = form.getValues('betCount') ?? 1;
+
+    const maxAmount =
+      (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
+
+    form?.getValues('wager') && form.setValue('wager', maxAmount);
+    onClick && onClick(maxAmount);
+  };
 
   return (
-    <span
-      className={cn('wr-mr-2 wr-cursor-pointer', className)}
-      // onClick={() => form.setValue("wager", data?.maxWager || 10)}
-    >
-      ${toFormatted(account?.balanceAsDollar || 0, 2)}
+    <span className={cn('wr-mr-2 wr-cursor-pointer', className)} onClick={handleWagerUpdate}>
+      ${toFormatted(balanceAsDollar, 2)}
     </span>
   );
 };
@@ -47,6 +65,8 @@ export const WagerInput = ({
   ...rest
 }: WagerInputProps) => {
   const clickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const { account } = useGameOptions();
+  const balanceAsDollar = account?.balanceAsDollar || 0;
 
   return (
     <NumberInput.Root {...rest}>
@@ -61,6 +81,7 @@ export const WagerInput = ({
       >
         <span className="wr-mt-[1px] wr-text-md">$</span>
         <NumberInput.Input
+          decimalScale={2}
           className={cn(
             'wr-z-10 wr-border-none wr-bg-transparent wr-pl-1 wr-text-base wr-leading-4 wr-outline-none focus-visible:wr-ring-0 focus-visible:wr-ring-transparent focus-visible:wr-ring-offset-0',
             className
@@ -92,8 +113,9 @@ export const WagerInput = ({
             onClick={() => {
               clickEffect.play();
               const newValue = rest.value * 2;
+              const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
 
-              if (newValue > maxWager) form.setValue('wager', maxWager);
+              if (newValue > maxAmount) form.setValue('wager', maxAmount);
               else form.setValue('wager', newValue);
             }}
           >
@@ -106,7 +128,10 @@ export const WagerInput = ({
             variant={'secondary'}
             onClick={() => {
               clickEffect.play();
-              form.setValue('wager', maxWager);
+              const betCount = form?.getValues('betCount') ?? 1;
+              const maxAmount =
+                (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
+              form.setValue('wager', maxAmount);
             }}
           >
             MAX
@@ -174,7 +199,7 @@ export const WagerSetterButtons = ({
         onClick={() => {
           clickEffect.play();
           const newValue = currentWager * 2;
-          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
 
           if (newValue > maxAmount) form.setValue('wager', maxAmount);
           else form.setValue('wager', newValue);
@@ -189,7 +214,9 @@ export const WagerSetterButtons = ({
         variant={'secondary'}
         onClick={() => {
           clickEffect.play();
-          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar : maxWager;
+          const betCount = form?.getValues('betCount') ?? 1;
+          const maxAmount =
+            (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
           form.setValue('wager', maxAmount);
         }}
       >

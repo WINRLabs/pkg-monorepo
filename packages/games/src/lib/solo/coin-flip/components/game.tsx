@@ -12,9 +12,10 @@ export type CoinFlipGameProps = React.ComponentProps<'div'> & {
 };
 
 export const CoinFlipGame = ({ gameResults, children }: CoinFlipGameProps) => {
-  const { updateCoinFlipGameResults, updateGameStatus } = useCoinFlipGameStore([
+  const { updateCoinFlipGameResults, updateGameStatus, updateLastBets } = useCoinFlipGameStore([
     'updateCoinFlipGameResults',
     'updateGameStatus',
+    'updateLastBets',
   ]);
 
   const { updateSkipAnimation } = useGameSkip();
@@ -26,6 +27,14 @@ export const CoinFlipGame = ({ gameResults, children }: CoinFlipGameProps) => {
       updateGameStatus('PLAYING');
     }
   }, [gameResults]);
+
+  React.useEffect(() => {
+    return () => {
+      updateGameStatus('IDLE');
+      updateCoinFlipGameResults([]);
+      updateLastBets([]);
+    };
+  }, []);
 
   return <>{children}</>;
 };

@@ -19,6 +19,7 @@ const GameArea: React.FC<GameAreaProps> = ({
   children,
 }) => {
   const skipRef = React.useRef<boolean>(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
   const { isAnimationSkipped } = useGameSkip();
 
@@ -49,38 +50,39 @@ const GameArea: React.FC<GameAreaProps> = ({
       const payout = limboGameResults[i]?.payout || 0;
       const payoutInUsd = limboGameResults[i]?.payoutInUsd || 0;
 
-      const t = setTimeout(() => {
-        if (skipRef.current) {
-          clearTimeout(t);
-          return;
-        }
+      if (skipRef.current) {
+        return;
+      }
 
-        const curr = i + 1;
+      const curr = i + 1;
 
-        onAnimationStep && onAnimationStep(i);
+      onAnimationStep && onAnimationStep(i);
 
-        updateCurrentAnimationCount(curr);
+      updateCurrentAnimationCount(curr);
 
-        addLastBet({
-          number: resultNumber,
-          payout,
-          payoutInUsd,
-        });
+      addLastBet({
+        number: resultNumber,
+        payout,
+        payoutInUsd,
+      });
 
-        if (skipRef.current) {
-          onSkip();
-        } else if (limboGameResults.length === curr) {
-          onAnimationCompleted && onAnimationCompleted(limboGameResults);
-          updateCurrentAnimationCount(0);
-          // removed for last state stay in the screen
-          // updateLimboGameResults([]);
-          updateGameStatus('ENDED');
-        } else {
-          setTimeout(() => turn(curr), 350);
-        }
-      }, 1250);
+      if (skipRef.current) {
+        onSkip();
+      } else if (limboGameResults.length === curr) {
+        onAnimationCompleted && onAnimationCompleted(limboGameResults);
+        updateCurrentAnimationCount(0);
+        // removed for last state stay in the screen
+        // updateLimboGameResults([]);
+        updateGameStatus('ENDED');
+      } else {
+        timeoutRef.current = setTimeout(() => turn(curr), 750);
+      }
     };
     turn();
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
   }, [limboGameResults]);
 
   const onSkip = () => {
@@ -99,6 +101,12 @@ const GameArea: React.FC<GameAreaProps> = ({
       onSkip();
     }
   }, [isAnimationSkipped]);
+
+  React.useEffect(() => {
+    return () => {
+      onSkip();
+    };
+  }, []);
 
   return (
     <div

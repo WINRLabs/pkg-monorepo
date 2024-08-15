@@ -126,6 +126,13 @@ export const RangeGame = ({
     } else {
       onSkip();
     }
+
+    return () => {
+      intervalRef.current && clearInterval(intervalRef.current);
+      lastBetClearRef.current && clearTimeout(lastBetClearRef.current);
+      updateGameStatus('IDLE');
+      updateLastBets([]);
+    };
   }, [diceGameResults, isAnimationSkipped]);
 
   const onSkip = () => {

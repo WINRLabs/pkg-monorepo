@@ -20,6 +20,7 @@ export const Coin: React.FC<CoinProps> = ({
   onAnimationSkipped = () => {},
 }) => {
   const isMobile = useMediaQuery('(max-width:768px)');
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
   const [coinRotate] = useState<CoinRotate>(new CoinRotate());
   const handleLoad = (canvas: CoinCanvas) => {
@@ -93,12 +94,16 @@ export const Coin: React.FC<CoinProps> = ({
 
           setTimeout(() => updateGameStatus('ENDED'), delay);
         } else {
-          setTimeout(() => turn(curr), 350);
+          timeoutRef.current = setTimeout(() => turn(curr), 350);
         }
       });
     };
 
     turn();
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
   }, [coinFlipGameResults]);
 
   const onSkip = () => {

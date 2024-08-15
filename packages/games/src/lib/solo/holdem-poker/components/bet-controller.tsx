@@ -20,7 +20,11 @@ export const WagerBetController: React.FC<{
       <label className="wr-text-unity-white-50 wr-flex wr-justify-between wr-mb-1">
         Wager
         <div>
-          <WagerBalance className="wr-text-zinc-100" />
+          <WagerBalance
+            maxWager={maxWager}
+            onClick={(maxAmount) => setWager(maxAmount)}
+            className="wr-text-zinc-100"
+          />
           <WagerCurrency />
         </div>
       </label>

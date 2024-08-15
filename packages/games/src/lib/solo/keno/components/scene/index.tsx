@@ -28,17 +28,16 @@ export const KenoScene: React.FC<KenoSceneProps> = ({ onAnimationStep, onAnimati
 
   const [currentNumbers, setCurrentNumbers] = React.useState<number[][]>([]);
 
-  const { kenoGameResults, updateKenoGameResults, updateGameStatus } = useKenoGameStore([
-    'kenoGameResults',
-    'updateKenoGameResults',
-    'updateGameStatus',
-  ]);
+  const { kenoGameResults, gameStatus, updateKenoGameResults, updateGameStatus } = useKenoGameStore(
+    ['kenoGameResults', 'updateKenoGameResults', 'updateGameStatus', 'gameStatus']
+  );
 
   React.useEffect(() => {
     if (kenoGameResults.length == 0) return;
 
     const turn = (i = 0) => {
       const curr = i + 1;
+      setCurrentNumbers([]);
 
       onAnimationStep && onAnimationStep(curr);
 
@@ -65,7 +64,7 @@ export const KenoScene: React.FC<KenoSceneProps> = ({ onAnimationStep, onAnimati
         setTimeout(() => {
           // setCurrentNumbers([]);
           updateGameStatus('ENDED');
-        }, 1000);
+        }, 250);
       } else {
         setTimeout(() => turn(curr), 1500);
       }
@@ -87,6 +86,12 @@ export const KenoScene: React.FC<KenoSceneProps> = ({ onAnimationStep, onAnimati
       payout: totalPayout,
     };
   };
+
+  React.useEffect(() => {
+    if (kenoGameResults.length == 0 && gameStatus == 'ENDED') {
+      setCurrentNumbers([]);
+    }
+  }, [kenoGameResults]);
 
   const renderCell = (cell: number, win: boolean, loss: boolean) => {
     if (win) {
@@ -149,6 +154,8 @@ export const KenoScene: React.FC<KenoSceneProps> = ({ onAnimationStep, onAnimati
                               checked={field.value.includes(cell)}
                               onCheckedChange={(checked) => {
                                 pickEffect.play();
+                                updateKenoGameResults([]);
+                                setCurrentNumbers([]);
 
                                 if (!checked) {
                                   form.setValue(

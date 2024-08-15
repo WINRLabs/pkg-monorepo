@@ -26,5 +26,10 @@ export const LimboGame = ({ gameResults, children }: LimboGameProps) => {
     }
   }, [gameResults]);
 
+  React.useEffect(() => {
+    updateLimboGameResults([]);
+    updateGameStatus('IDLE');
+  }, []);
+
   return <>{children}</>;
 };

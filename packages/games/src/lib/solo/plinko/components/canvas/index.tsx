@@ -89,6 +89,16 @@ export const Canvas: React.FC<CanvasProps> = ({
       dispatch({ type: PlinkoResultActions.CLEAR });
       setPaths(plinkoGameResults.map((r) => r.outcomes));
     }
+
+    return () => {
+      dispatch({
+        type: PlinkoResultActions.CLEAR,
+      });
+      setPaths([]);
+      updatePlinkoGameResults([]);
+      updateLastBets([]);
+      updateGameStatus('IDLE');
+    };
   }, [plinkoGameResults]);
 
   const handleAnimationEnd = (order: number, skipped = false) => {
@@ -151,13 +161,6 @@ export const Canvas: React.FC<CanvasProps> = ({
       }, 300);
     }
   };
-
-  React.useEffect(() => {
-    return () => {
-      setPaths([]);
-      updatePlinkoGameResults([]);
-    };
-  }, []);
 
   return (
     <div className="wr-w-full wr-h-full wr-flex wr-justify-center wr-items-center max-md:wr-max-w-[280px] max-md:wr-mx-auto">

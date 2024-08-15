@@ -17,9 +17,10 @@ import { IconMagicStick, IconTrash } from '../../../svgs';
 import { Button } from '../../../ui/button';
 import { FormLabel } from '../../../ui/form';
 import { cn } from '../../../utils/style';
+import { toFormatted } from '../../../utils/web3';
+import { kenoMultipliers } from '../constants';
 import useKenoGameStore from '../store';
 import { KenoForm } from '../types';
-import { toFormatted } from '../../../utils/web3';
 
 type Props = {
   minWager: number;
@@ -31,15 +32,22 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager }) => {
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
+  const wager = form.watch('wager');
   const selections = form.watch('selections');
 
-  const { gameStatus } = useKenoGameStore(['gameStatus']);
+  const { gameStatus, updateKenoGameResults } = useKenoGameStore([
+    'gameStatus',
+    'updateKenoGameResults',
+  ]);
 
-  const maxPayout = 10;
+  const currentMultipliers = kenoMultipliers[selections.length] || [];
+  const maxMultiplier = Math.max(...currentMultipliers);
+  const maxPayout = wager * maxMultiplier;
 
   const clearBetHandler = () => {
     digitalClickEffect.play();
     form.setValue('selections', []);
+    updateKenoGameResults([]);
   };
 
   const getRandomNumber = (min: number, max: number) => {

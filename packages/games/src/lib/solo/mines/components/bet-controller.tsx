@@ -99,6 +99,10 @@ export const MinesBetController: React.FC<Props> = ({
     }
   }, [gameStatus]);
 
+  React.useEffect(() => {
+    if (numMines > 24) form.setValue('minesCount', 24);
+  }, [numMines]);
+
   return (
     <BetControllerContainer>
       <div>

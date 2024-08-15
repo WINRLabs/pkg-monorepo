@@ -130,20 +130,30 @@ const MineCell: React.FC<{
                         : 'radial-gradient(97.56% 97.56% at 69.23% 38.46%, #A3E635 24.51%, #65A30D 77.06%)',
                     }}
                   >
-                    <img
-                      src={
-                        mineCell.isBomb
-                          ? `${CDN_URL}/mines/revealed-mine.png`
-                          : `${CDN_URL}/mines/revealed-gem.png`
-                      }
-                      width={88}
-                      height={88}
-                      alt="revealed gem"
-                      className={cn('wr-duration-500 wr-transition-all', {
-                        'wr-opacity-0 wr-scale-0': !mineCell.isRevealed,
-                        'wr-opacity-100 wr-scale-100': mineCell.isRevealed,
-                      })}
-                    />
+                    {mineCell.isBomb && (
+                      <img
+                        src={`${CDN_URL}/mines/revealed-mine.png`}
+                        width={88}
+                        height={88}
+                        alt="revealed gem"
+                        className={cn('wr-duration-500 wr-transition-all', {
+                          'wr-opacity-0 wr-scale-0': !mineCell.isRevealed && mineCell.isBomb,
+                          'wr-opacity-100 wr-scale-100': mineCell.isRevealed && mineCell.isBomb,
+                        })}
+                      />
+                    )}
+                    {!mineCell.isBomb && (
+                      <img
+                        src={`${CDN_URL}/mines/revealed-gem.png`}
+                        width={88}
+                        height={88}
+                        alt="revealed gem"
+                        className={cn('wr-duration-500 wr-transition-all', {
+                          'wr-opacity-0 wr-scale-0': !mineCell.isRevealed && !mineCell.isBomb,
+                          'wr-opacity-100 wr-scale-100': mineCell.isRevealed && !mineCell.isBomb,
+                        })}
+                      />
+                    )}
                   </div>
                 </div>
               </CheckboxPrimitive.Root>

@@ -151,7 +151,7 @@ export const WagerFormField: React.FC<WagerFormFieldProps> = ({
           <FormLabel className={cn('wr-leading-4 wr-mb-3 lg:wr-mb-[6px] lg:wr-leading-6')}>
             {customLabel ? customLabel : 'Wager'}
             <div>
-              <WagerBalance className="wr-text-zinc-100" />
+              <WagerBalance maxWager={maxWager} className="wr-text-zinc-100" />
               <WagerCurrency />
             </div>
           </FormLabel>
@@ -200,7 +200,7 @@ export const UnityWagerFormField: React.FC<WagerFormFieldProps> = ({
           <FormLabel className="wr-text-unity-white-50">
             Wager
             <div>
-              <WagerBalance className="wr-text-zinc-100" />
+              <WagerBalance maxWager={maxWager} className="wr-text-zinc-100" />
               <WagerCurrency />
             </div>
           </FormLabel>

@@ -26,6 +26,7 @@ export const GameArea: React.FC<GameAreaProps> = ({
   const selectedDices = form.watch('dices');
 
   const skipRef = React.useRef<boolean>(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
   const { isAnimationSkipped } = useGameSkip();
 
@@ -61,6 +62,8 @@ export const GameArea: React.FC<GameAreaProps> = ({
     if (rollGameResults.length === 0) return;
 
     const turn = (i = 0) => {
+      updateCurrentAnimationCount(0);
+
       const dice = Number(rollGameResults[i]?.dice) || 0;
       const payout = rollGameResults[i]?.payout || 0;
       const payoutInUsd = rollGameResults[i]?.payoutInUsd || 0;
@@ -68,9 +71,9 @@ export const GameArea: React.FC<GameAreaProps> = ({
       flipEffect.play();
 
       setLoading(true);
-      const t = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         if (skipRef.current) {
-          clearTimeout(t);
+          clearTimeout(timeoutRef.current);
           return;
         }
         const curr = i + 1;
@@ -95,18 +98,23 @@ export const GameArea: React.FC<GameAreaProps> = ({
           updateRollGameResults([]);
           onAnimationCompleted && onAnimationCompleted(rollGameResults);
           setTimeout(() => {
-            updateCurrentAnimationCount(0);
-            updateRollGameResults([]);
             updateGameStatus('ENDED');
-          }, 1000);
+          }, 200);
         } else {
-          setTimeout(() => turn(curr), 350);
+          setTimeout(() => turn(curr), 150);
         }
 
         setLoading(false);
-      }, 1250);
+      }, 500);
     };
     turn();
+
+    return () => {
+      updateGameStatus('IDLE');
+      updateRollGameResults([]);
+      updateLastBets([]);
+      clearTimeout(timeoutRef.current);
+    };
   }, [rollGameResults]);
 
   const onSkip = () => {
@@ -146,21 +154,12 @@ export const GameArea: React.FC<GameAreaProps> = ({
                 key={item}
                 item={item}
                 winner={
-                  gameStatus === 'IDLE' || gameStatus === 'ENDED' || currentAnimationCount === 0
-                    ? undefined
-                    : lastBets[lastBets.length - 1]?.dice
+                  currentAnimationCount === 0 ? undefined : lastBets[lastBets.length - 1]?.dice
                 }
                 isBetting={gameStatus === 'PLAYING' ? true : false}
                 isDisabled={form.formState.isLoading || form.formState.isSubmitting}
               />
             ))}
-            {selectedDices.length === 0 ? (
-              <span className="wr-absolute -wr-bottom-10 wr-text-md wr-font-bold max-md:wr-w-full max-md:wr-text-center wr-whitespace-nowrap max-md:wr-hidden wr-text-center">
-                You have to select at least one dice.
-              </span>
-            ) : (
-              <FormMessage className="wr-absolute -wr-bottom-10 wr-text-md wr-font-bold" />
-            )}
           </FormItem>
         )}
       />

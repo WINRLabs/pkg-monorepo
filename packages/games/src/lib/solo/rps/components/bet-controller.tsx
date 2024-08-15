@@ -153,7 +153,7 @@ export const BetController: React.FC<BetControllerProps> = ({
             </Button>
           </PreBetButton>
         )}
-        {rpsGameResults.length > 3 && gameStatus == 'PLAYING' && <SkipButton />}
+        {rpsGameResults.length > 3 && gameStatus != 'IDLE' && <SkipButton />}
       </div>
       <footer className="lg:wr-mt-4 wr-flex wr-items-center wr-justify-between">
         <AudioController />

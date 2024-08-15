@@ -225,7 +225,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
 
     setIsAnimationCompleted(false);
 
-    flipEffect.play();
+    // flipEffect.play();
   };
 
   React.useEffect(() => {

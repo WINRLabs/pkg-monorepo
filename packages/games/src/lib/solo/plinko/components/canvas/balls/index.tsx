@@ -22,6 +22,7 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
   const [jump, setJump] = React.useState(false);
   const [style, setStyle] = React.useState(initialStyle);
   const skipRef = React.useRef<boolean>(isSkipped);
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
   React.useEffect(() => {
     skipRef.current = isSkipped;
@@ -58,7 +59,7 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
             return;
           }
         } else {
-          const t = setTimeout(
+          timeoutRef.current = setTimeout(
             () => {
               if (path[i - 1] === 0) {
                 x -= initialX;
@@ -68,14 +69,14 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
 
               setStyle({
                 transform: `translate(${x}px, ${i * initialY}px)`,
-                transitionDuration: '300ms',
+                transitionDuration: '200ms',
                 transitionTimingFunction: 'ease-in',
               });
 
               if (i - 1 === path.length && !skipRef.current) {
                 onAnimationEnd(order);
 
-                clearTimeout(t);
+                clearTimeout(timeoutRef.current);
 
                 // clearInterval(ballInterval);
               }
@@ -86,7 +87,7 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
                 const t = setTimeout(() => {
                   setStyle(initialStyle);
                   setJump(false);
-                }, 475);
+                }, 350);
 
                 if (skipRef.current) {
                   clearTimeout(t);
@@ -97,11 +98,15 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
                 // clearInterval(ballInterval);
               }
             },
-            delay + i * 275
+            delay + i * 200
           );
         }
       }
     }
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
   }, [path]);
 
   return (
