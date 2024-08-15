@@ -1,5 +1,53 @@
 # @winrlabs/web3-games
 
+## 8.0.7
+
+### Patch Changes
+
+- 1eced69: update hash
+- Updated dependencies [1eced69]
+  - @winrlabs/web3@0.10.41
+  - @winrlabs/games@2.16.6
+  - @winrlabs/web3-games@8.0.7
+
+## 8.0.6
+
+### Patch Changes
+
+- 89e5a3f: ui ux updatse
+- Updated dependencies [89e5a3f]
+  - @winrlabs/games@2.16.5
+  - @winrlabs/web3@0.10.40
+  - @winrlabs/web3-games@8.0.6
+
+## 8.0.5
+
+### Patch Changes
+
+- 08670c2: fix limbo controller multiplier issue
+- Updated dependencies [08670c2]
+- Updated dependencies [0b67519]
+  - @winrlabs/web3-games@8.0.5
+  - @winrlabs/games@2.16.4
+
+## 8.0.4
+
+### Patch Changes
+
+- 9038686: fix dice slider bug
+- Updated dependencies [9038686]
+  - @winrlabs/web3-games@8.0.4
+
+## 8.0.3
+
+### Patch Changes
+
+- 60006aa: minor game fixes
+- Updated dependencies [60006aa]
+  - @winrlabs/games@2.16.3
+  - @winrlabs/web3@0.10.39
+  - @winrlabs/web3-games@8.0.3
+
 ## 8.0.2
 
 ### Patch Changes

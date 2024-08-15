@@ -127,7 +127,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
           type: 'uint8',
         },
       ],
-      [Number(toDecimals(formValues.limboMultiplier * 100, 2))]
+      [Number(toDecimals(formValues.limboMultiplier * 100, 0))]
     );
 
     const encodedGameData = encodeAbiParameters(

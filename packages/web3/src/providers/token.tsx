@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useRef } from "react";
-import { Address } from "viem";
-import { createStore, StoreApi, useStore } from "zustand";
-import { persist } from "zustand/middleware";
+import { createContext, useContext, useRef } from 'react';
+import { Address } from 'viem';
+import { createStore, StoreApi, useStore } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { PriceFeedVariable } from "../hooks/use-price-feed";
+import { PriceFeedVariable } from '../hooks/use-price-feed';
 
 export interface Token {
   address: Address;
@@ -30,37 +30,37 @@ interface TokenState extends TokenProps {
 
 type TokenStore = StoreApi<TokenState>;
 
+function generateHash(token: Token): number {
+  const tokenString = JSON.stringify(token);
+
+  const hash = tokenString
+    .split('')
+    .map((c) => c.charCodeAt(0))
+    .reduce((acc, charCode) => acc + charCode, 0);
+
+  return hash;
+}
+
 export const createTokenStore = (initProps?: TokenProps) => {
   const DEFAULT_PROPS: TokenProps = {
     tokens: [],
     selectedToken: {
-      address: "0x",
-      bankrollIndex: "0x",
-      symbol: "",
-      icon: "",
+      address: '0x',
+      bankrollIndex: '0x',
+      symbol: '',
+      icon: '',
       decimals: 0,
       displayDecimals: 0,
       playable: false,
-      priceKey: "weth",
+      priceKey: 'weth',
     },
   };
 
   if (!initProps?.tokens?.length) {
-    throw new Error("Tokens must be provided");
+    throw new Error('Tokens must be provided');
   }
 
-  const version =
-    initProps?.tokens?.reduce(
-      (acc, token) =>
-        acc +
-        Number(
-          token.address
-            .split("")
-            .map((c) => c.charCodeAt(0))
-            .join("")
-        ),
-      0
-    ) % 1e9;
+  const version = initProps?.tokens?.reduce((acc, token) => acc + generateHash(token), 0) % 1e9;
 
   return createStore(
     persist<TokenState>(
@@ -75,7 +75,7 @@ export const createTokenStore = (initProps?: TokenProps) => {
         },
       }),
       {
-        name: "token-store",
+        name: 'token-store',
         version: version,
       }
     )
@@ -93,15 +93,11 @@ export function TokenProvider({ children, ...props }: TokenProviderProps) {
     storeRef.current = createTokenStore(props);
   }
 
-  return (
-    <TokenContext.Provider value={storeRef.current}>
-      {children}
-    </TokenContext.Provider>
-  );
+  return <TokenContext.Provider value={storeRef.current}>{children}</TokenContext.Provider>;
 }
 
 export function useTokenStore<T>(selector: (state: TokenState) => T): T {
   const store = useContext(TokenContext);
-  if (!store) throw new Error("Missing TokenContext.Provider in the tree");
+  if (!store) throw new Error('Missing TokenContext.Provider in the tree');
   return useStore(store, selector);
 }

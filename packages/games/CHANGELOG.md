@@ -1,5 +1,29 @@
 # @winrlabs/games
 
+## 2.16.6
+
+### Patch Changes
+
+- 1eced69: update hash
+
+## 2.16.5
+
+### Patch Changes
+
+- 89e5a3f: ui ux updatse
+
+## 2.16.4
+
+### Patch Changes
+
+- 0b67519: fix hydration error games
+
+## 2.16.3
+
+### Patch Changes
+
+- 60006aa: minor game fixes
+
 ## 2.16.2
 
 ### Patch Changes

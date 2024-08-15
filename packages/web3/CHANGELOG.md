@@ -1,5 +1,23 @@
 # @winrlabs/web3
 
+## 0.10.41
+
+### Patch Changes
+
+- 1eced69: update hash
+
+## 0.10.40
+
+### Patch Changes
+
+- 89e5a3f: ui ux updatse
+
+## 0.10.39
+
+### Patch Changes
+
+- 60006aa: minor game fixes
+
 ## 0.10.38
 
 ### Patch Changes

@@ -132,7 +132,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         },
       ],
       [
-        toDecimals(Number(formValues.rollValue * 100), 2),
+        toDecimals(Number(formValues.rollValue * 100), 0),
         formValues.rollType == 'UNDER' ? true : false,
       ]
     );
@@ -187,7 +187,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       address: controllerAddress as Address,
     },
     options: {
-      method: "sendGameOperation",
+      method: 'sendGameOperation',
     },
     encodedTxData: encodedParams.encodedTxData,
   });
