@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.42
+
+### Patch Changes
+
+- f198ed8: animation improvement
+
 ## 0.10.41
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.8
+
+### Patch Changes
+
+- f198ed8: animation improvement
+- Updated dependencies [f198ed8]
+  - @winrlabs/games@2.16.7
+  - @winrlabs/web3@0.10.42
+  - @winrlabs/web3-games@8.0.8
+
 ## 8.0.7
 
 ### Patch Changes

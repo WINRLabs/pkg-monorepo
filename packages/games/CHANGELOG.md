@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.7
+
+### Patch Changes
+
+- f198ed8: animation improvement
+
 ## 2.16.6
 
 ### Patch Changes
