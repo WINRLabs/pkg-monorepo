@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.10
+
+### Patch Changes
+
+- 160004f: dice new ui
+- Updated dependencies [160004f]
+  - @winrlabs/games@2.16.9
+  - @winrlabs/web3@0.10.44
+  - @winrlabs/web3-games@8.0.10
+
 ## 8.0.9
 
 ### Patch Changes

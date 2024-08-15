@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.44
+
+### Patch Changes
+
+- 160004f: dice new ui
+
 ## 0.10.43
 
 ### Patch Changes

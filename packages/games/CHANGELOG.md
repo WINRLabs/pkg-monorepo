@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.9
+
+### Patch Changes
+
+- 160004f: dice new ui
+
 ## 2.16.8
 
 ### Patch Changes
