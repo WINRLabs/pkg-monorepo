@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.43
+
+### Patch Changes
+
+- 743f0e4: game fixes
+
 ## 0.10.42
 
 ### Patch Changes

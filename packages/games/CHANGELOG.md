@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.8
+
+### Patch Changes
+
+- 743f0e4: game fixes
+
 ## 2.16.7
 
 ### Patch Changes
