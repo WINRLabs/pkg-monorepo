@@ -55,15 +55,15 @@ export const BetHistoryTemplate = ({
           });
         }}
       >
-        <Tabs.List className="wr-flex wr-w-full wr-items-center wr-border-b wr-border-zinc-800 wr-font-semibold wr-mt-1">
+        <Tabs.List className="wr-flex wr-w-full wr-items-center wr-border-none wr-font-semibold wr-mt-1">
           <Tabs.Trigger
-            className="wr-flex wr-items-center wr-gap-2 wr-pl-0 lg:wr-pl-3 wr-px-3 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-border-b-2 data-[state=active]:wr-border-red-600 data-[state=active]:wr-text-white"
+            className="wr-flex wr-items-center wr-gap-1.5 wr-pl-0 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
             value="bets"
           >
             <Document className="wr-h-5 wr-w-5" /> All Bets
           </Tabs.Trigger>
           <Tabs.Trigger
-            className="wr-flex wr-items-center wr-gap-2 wr-px-3 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-border-b-2 data-[state=active]:wr-border-red-600 data-[state=active]:wr-text-white"
+            className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
             value="player"
           >
             <Person className="wr-size-5" /> My Bets

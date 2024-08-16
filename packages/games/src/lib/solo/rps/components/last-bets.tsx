@@ -33,7 +33,7 @@ const LastBets = () => {
   const rpsChoice = form.watch('rpsChoice');
 
   return (
-    <LastBetsContainer className="wr-absolute wr-top-3 wr-z-10 wr-max-w-[430px] max-md:wr-max-w-[340px] max-md:wr-scale-90">
+    <LastBetsContainer className="wr-absolute wr-top-3 wr-z-10 wr-max-w-full max-md:wr-scale-90">
       {lastFiveBets?.map((result, index) => {
         return (
           <div

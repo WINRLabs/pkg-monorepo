@@ -31,7 +31,7 @@ export const CoinFlipLastBets: React.FC = () => {
   const lastFiveBets = lastBets?.slice(isMobile ? -4 : -8);
 
   return (
-    <section className="wr-absolute wr-left-1/2 wr-top-3 lg:wr-top-5 wr-flex wr-max-w-[400px] -wr-translate-x-1/2 wr-items-center wr-justify-end wr-gap-[6px] wr-overflow-hidden max-md:wr-scale-75">
+    <section className="wr-absolute wr-left-1/2 wr-top-3 lg:wr-top-5 wr-flex wr-max-w-full -wr-translate-x-1/2 wr-items-center wr-justify-end wr-gap-[6px] wr-overflow-hidden max-md:wr-scale-75">
       {lastFiveBets?.map((result, index) => {
         return <LastBet result={result} key={index} />;
       })}

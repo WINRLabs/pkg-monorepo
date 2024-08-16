@@ -9,7 +9,7 @@ export const RangeLastBets: React.FC = () => {
   const lastFiveBets = lastBets?.slice(isMobile ? -4 : -8);
 
   return (
-    <LastBetsContainer>
+    <LastBetsContainer className="wr-max-w-full">
       {lastFiveBets?.map((result, index) => {
         return (
           <div
