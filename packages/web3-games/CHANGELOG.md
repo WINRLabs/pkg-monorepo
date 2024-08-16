@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.13
+
+### Patch Changes
+
+- a7ae19a: last bets fixes
+- Updated dependencies [a7ae19a]
+  - @winrlabs/games@2.16.12
+  - @winrlabs/web3@0.10.47
+  - @winrlabs/web3-games@8.0.13
+
 ## 8.0.12
 
 ### Patch Changes

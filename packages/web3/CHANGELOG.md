@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.47
+
+### Patch Changes
+
+- a7ae19a: last bets fixes
+
 ## 0.10.46
 
 ### Patch Changes

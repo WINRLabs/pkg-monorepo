@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.12
+
+### Patch Changes
+
+- a7ae19a: last bets fixes
+
 ## 2.16.11
 
 ### Patch Changes
