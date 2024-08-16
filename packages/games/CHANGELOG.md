@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.11
+
+### Patch Changes
+
+- 1e34981: ui improvement
+
 ## 2.16.10
 
 ### Patch Changes

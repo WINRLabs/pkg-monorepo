@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.46
+
+### Patch Changes
+
+- 1e34981: ui improvement
+
 ## 0.10.45
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.12
+
+### Patch Changes
+
+- 1e34981: ui improvement
+- Updated dependencies [1e34981]
+  - @winrlabs/games@2.16.11
+  - @winrlabs/web3@0.10.46
+  - @winrlabs/web3-games@8.0.12
+
 ## 8.0.11
 
 ### Patch Changes
