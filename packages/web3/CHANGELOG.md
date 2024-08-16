@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.45
+
+### Patch Changes
+
+- d5ca306: bet history animation and level handling
+
 ## 0.10.44
 
 ### Patch Changes

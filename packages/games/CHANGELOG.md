@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.10
+
+### Patch Changes
+
+- d5ca306: bet history animation and level handling
+
 ## 2.16.9
 
 ### Patch Changes

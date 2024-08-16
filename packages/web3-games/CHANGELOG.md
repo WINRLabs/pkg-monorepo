@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.11
+
+### Patch Changes
+
+- d5ca306: bet history animation and level handling
+- Updated dependencies [d5ca306]
+  - @winrlabs/games@2.16.10
+  - @winrlabs/web3@0.10.45
+  - @winrlabs/web3-games@8.0.11
+
 ## 8.0.10
 
 ### Patch Changes
