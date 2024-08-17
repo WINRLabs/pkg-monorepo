@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.48
+
+### Patch Changes
+
+- c6bb0cc: update provider to take paymaster address
+
 ## 0.10.47
 
 ### Patch Changes

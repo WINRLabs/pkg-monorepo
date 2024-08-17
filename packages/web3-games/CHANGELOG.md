@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.14
+
+### Patch Changes
+
+- c6bb0cc: update provider to take paymaster address
+- Updated dependencies [c6bb0cc]
+  - @winrlabs/web3@0.10.48
+  - @winrlabs/games@2.16.13
+  - @winrlabs/web3-games@8.0.14
+
 ## 8.0.13
 
 ### Patch Changes

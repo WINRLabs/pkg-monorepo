@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.13
+
+### Patch Changes
+
+- c6bb0cc: update provider to take paymaster address
+
 ## 2.16.12
 
 ### Patch Changes
