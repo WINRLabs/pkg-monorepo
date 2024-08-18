@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 9.0.0
+
+### Minor Changes
+
+- 95d667d: add base error handling to all games
+
+### Patch Changes
+
+- Updated dependencies [95d667d]
+  - @winrlabs/web3-games@9.0.0
+
 ## 8.0.15
 
 ### Patch Changes
