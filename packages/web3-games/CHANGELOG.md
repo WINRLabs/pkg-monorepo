@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 8.0.15
+
+### Patch Changes
+
+- 580ae04: ui updates
+- Updated dependencies [580ae04]
+  - @winrlabs/games@2.16.14
+  - @winrlabs/web3@0.10.49
+  - @winrlabs/web3-games@8.0.15
+
 ## 8.0.14
 
 ### Patch Changes

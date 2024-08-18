@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.14
+
+### Patch Changes
+
+- 580ae04: ui updates
+
 ## 2.16.13
 
 ### Patch Changes

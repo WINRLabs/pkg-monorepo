@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.49
+
+### Patch Changes
+
+- 580ae04: ui updates
+
 ## 0.10.48
 
 ### Patch Changes
