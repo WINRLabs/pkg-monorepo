@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.52
+
+### Patch Changes
+
+- fa0f049: Add optional accountApi param to useHandleTx, export paymaster class
+
 ## 0.10.51
 
 ### Patch Changes

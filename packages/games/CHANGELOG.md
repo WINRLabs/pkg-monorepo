@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.17
+
+### Patch Changes
+
+- fa0f049: Add optional accountApi param to useHandleTx, export paymaster class
+
 ## 2.16.16
 
 ### Patch Changes
