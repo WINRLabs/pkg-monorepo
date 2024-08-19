@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.50
+
+### Patch Changes
+
+- be7adb7: plinko instant bet
+
 ## 0.10.49
 
 ### Patch Changes

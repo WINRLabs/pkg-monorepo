@@ -1,5 +1,11 @@
 # @winrlabs/tailwind-config
 
+## 1.3.2
+
+### Patch Changes
+
+- be7adb7: plinko instant bet
+
 ## 1.3.1
 
 ### Patch Changes

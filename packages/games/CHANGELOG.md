@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.15
+
+### Patch Changes
+
+- be7adb7: plinko instant bet
+
 ## 2.16.14
 
 ### Patch Changes
