@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.16
+
+### Patch Changes
+
+- bc663af: export smart wallet
+
 ## 2.16.15
 
 ### Patch Changes

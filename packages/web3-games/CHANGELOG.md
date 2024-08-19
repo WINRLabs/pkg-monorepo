@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.2
+
+### Patch Changes
+
+- bc663af: export smart wallet
+- Updated dependencies [bc663af]
+  - @winrlabs/web3@0.10.51
+  - @winrlabs/games@2.16.16
+  - @winrlabs/web3-games@9.0.2
+
 ## 9.0.1
 
 ### Patch Changes

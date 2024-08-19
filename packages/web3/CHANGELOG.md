@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.51
+
+### Patch Changes
+
+- bc663af: export smart wallet
+
 ## 0.10.50
 
 ### Patch Changes
