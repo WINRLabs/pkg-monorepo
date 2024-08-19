@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.53
+
+### Patch Changes
+
+- cfa1d21: update usehandletx to encode functiondata if encodedtx is not provided
+
 ## 0.10.52
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.18
+
+### Patch Changes
+
+- cfa1d21: update usehandletx to encode functiondata if encodedtx is not provided
+
 ## 2.16.17
 
 ### Patch Changes

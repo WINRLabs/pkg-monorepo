@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.4
+
+### Patch Changes
+
+- cfa1d21: update usehandletx to encode functiondata if encodedtx is not provided
+- Updated dependencies [cfa1d21]
+  - @winrlabs/web3@0.10.53
+  - @winrlabs/games@2.16.18
+  - @winrlabs/web3-games@9.0.4
+
 ## 9.0.3
 
 ### Patch Changes
