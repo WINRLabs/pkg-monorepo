@@ -129,15 +129,24 @@ export const prepareGameTransaction = (
   params: PrepareGameTransactionParams
 ): PrepareGameTransactionResult => {
   const { lastPrice, wager, selectedCurrency, stopGain = 0, stopLoss = 0 } = params;
+  let parseDecimal = 6;
+  if (selectedCurrency.priceKey == 'btc' || selectedCurrency.priceKey == 'weth') parseDecimal = 12;
 
-  const wagerInGameCurrency = toDecimals((wager / lastPrice).toString(), 6).toString();
+  const wagerInGameCurrency = toDecimals((wager / lastPrice).toString(), parseDecimal).toString();
 
-  const stopGainInGameCurrency = toDecimals((stopGain / lastPrice).toString(), 6).toString();
+  const stopGainInGameCurrency = toDecimals(
+    (stopGain / lastPrice).toString(),
+    parseDecimal
+  ).toString();
 
-  const stopLossInGameCurrency = toDecimals((stopLoss / lastPrice).toString(), 6).toString();
+  const stopLossInGameCurrency = toDecimals(
+    (stopLoss / lastPrice).toString(),
+    parseDecimal
+  ).toString();
 
   const decimal = selectedCurrency.decimals;
 
+  console.log(wagerInGameCurrency, 'wager in game');
   const wagerInWei = parseUnits(wagerInGameCurrency, decimal);
 
   const stopGainInWei = parseUnits(stopGainInGameCurrency, decimal);

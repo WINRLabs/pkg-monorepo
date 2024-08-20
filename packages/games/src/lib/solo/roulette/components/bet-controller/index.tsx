@@ -16,10 +16,10 @@ import { CDN_URL } from '../../../../constants';
 import { useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
+import { cn } from '../../../../utils/style';
 import { NUMBER_INDEX_COUNT } from '../../constants';
 import useRouletteGameStore from '../../store';
 import { RouletteForm } from '../../types';
-import { cn } from '../../../../utils/style';
 
 export interface Props {
   isPrepared: boolean;
