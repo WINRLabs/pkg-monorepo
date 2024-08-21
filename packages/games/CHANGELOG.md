@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.23
+
+### Patch Changes
+
+- 1c3d807: add profile levels to bet table
+
 ## 2.16.22
 
 ### Patch Changes

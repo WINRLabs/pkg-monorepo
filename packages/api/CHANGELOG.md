@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.5
+
+### Patch Changes
+
+- 1c3d807: add profile levels to bet table
+
 ## 1.3.4
 
 ### Patch Changes
