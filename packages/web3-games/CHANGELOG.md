@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.6
+
+### Patch Changes
+
+- b15c16a: update provider to accept wagmiconfig
+- Updated dependencies [b15c16a]
+  - @winrlabs/web3@0.10.55
+  - @winrlabs/games@2.16.20
+  - @winrlabs/web3-games@9.0.6
+
 ## 9.0.5
 
 ### Patch Changes

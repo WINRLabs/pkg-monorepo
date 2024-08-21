@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.55
+
+### Patch Changes
+
+- b15c16a: update provider to accept wagmiconfig
+
 ## 0.10.54
 
 ### Patch Changes

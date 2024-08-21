@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.20
+
+### Patch Changes
+
+- b15c16a: update provider to accept wagmiconfig
+
 ## 2.16.19
 
 ### Patch Changes
