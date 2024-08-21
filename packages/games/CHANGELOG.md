@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.22
+
+### Patch Changes
+
+- c6484c6: Update hooks to use config if provided
+
 ## 2.16.21
 
 ### Patch Changes

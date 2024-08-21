@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.56
+
+### Patch Changes
+
+- c6484c6: Update hooks to use config if provided
+
 ## 0.10.55
 
 ### Patch Changes
