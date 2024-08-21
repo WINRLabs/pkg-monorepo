@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.19
+
+### Patch Changes
+
+- 19e4556: update current account provider to take wagmi config as a parameter
+
 ## 2.16.18
 
 ### Patch Changes

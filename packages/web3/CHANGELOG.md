@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.54
+
+### Patch Changes
+
+- 19e4556: update current account provider to take wagmi config as a parameter
+
 ## 0.10.53
 
 ### Patch Changes

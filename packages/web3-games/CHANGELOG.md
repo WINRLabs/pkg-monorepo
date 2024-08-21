@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.5
+
+### Patch Changes
+
+- 19e4556: update current account provider to take wagmi config as a parameter
+- Updated dependencies [19e4556]
+  - @winrlabs/web3@0.10.54
+  - @winrlabs/games@2.16.19
+  - @winrlabs/web3-games@9.0.5
+
 ## 9.0.4
 
 ### Patch Changes
