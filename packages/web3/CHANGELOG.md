@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.58
+
+### Patch Changes
+
+- cf4b5b8: revert config cahnge
+
 ## 0.10.57
 
 ### Patch Changes

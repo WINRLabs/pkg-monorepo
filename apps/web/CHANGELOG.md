@@ -1,5 +1,15 @@
 # web
 
+## 1.0.89
+
+### Patch Changes
+
+- cf4b5b8: revert config cahnge
+- Updated dependencies [cf4b5b8]
+  - @winrlabs/web3@0.10.58
+  - @winrlabs/web3-games@9.0.10
+  - @winrlabs/ui@9.0.58
+
 ## 1.0.88
 
 ### Patch Changes
