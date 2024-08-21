@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.21
+
+### Patch Changes
+
+- 3141dfc: fix use address at the url, bet history
+
 ## 2.16.20
 
 ### Patch Changes
