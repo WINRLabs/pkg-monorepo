@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.24
+
+### Patch Changes
+
+- 0083875: holdem poker sm
+- 12e175b: game strategies
+
 ## 2.16.23
 
 ### Patch Changes

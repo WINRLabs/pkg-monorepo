@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.59
+
+### Patch Changes
+
+- 12e175b: game strategies
+
 ## 0.10.58
 
 ### Patch Changes

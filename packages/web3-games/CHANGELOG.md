@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 9.0.11
+
+### Patch Changes
+
+- 12e175b: game strategies
+- Updated dependencies [0083875]
+- Updated dependencies [12e175b]
+  - @winrlabs/games@2.16.24
+  - @winrlabs/web3@0.10.59
+  - @winrlabs/web3-games@9.0.11
+
 ## 9.0.10
 
 ### Patch Changes
