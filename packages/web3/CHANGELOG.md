@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.61
+
+### Patch Changes
+
+- 83420cd: bet history fixes
+
 ## 0.10.60
 
 ### Patch Changes
