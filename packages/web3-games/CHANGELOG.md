@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 9.0.14
+
+### Patch Changes
+
+- fb62578: coinflip auto
+- 0f36731: autobet
+- Updated dependencies [fb62578]
+- Updated dependencies [0f36731]
+  - @winrlabs/games@2.16.27
+  - @winrlabs/web3@0.10.62
+  - @winrlabs/web3-games@9.0.14
+
 ## 9.0.13
 
 ### Patch Changes

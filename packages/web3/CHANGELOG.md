@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.10.62
+
+### Patch Changes
+
+- fb62578: coinflip auto
+- 0f36731: autobet
+
 ## 0.10.61
 
 ### Patch Changes

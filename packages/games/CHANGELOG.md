@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.27
+
+### Patch Changes
+
+- fb62578: coinflip auto
+- 0f36731: autobet
+
 ## 2.16.26
 
 ### Patch Changes
