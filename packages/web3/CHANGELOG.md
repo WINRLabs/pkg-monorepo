@@ -1,5 +1,13 @@
 # @winrlabs/web3
 
+## 0.10.60
+
+### Patch Changes
+
+- c8c5cf5: update
+- Updated dependencies [c8c5cf5]
+  - @winrlabs/api@1.3.6
+
 ## 0.10.59
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.25
+
+### Patch Changes
+
+- c8c5cf5: update
+
 ## 2.16.24
 
 ### Patch Changes

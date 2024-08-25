@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.6
+
+### Patch Changes
+
+- c8c5cf5: update
+
 ## 1.3.5
 
 ### Patch Changes
