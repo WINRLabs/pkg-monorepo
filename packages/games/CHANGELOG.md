@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.33
+
+### Patch Changes
+
+- 3df3a89: rps autobet
+
 ## 2.16.32
 
 ### Patch Changes

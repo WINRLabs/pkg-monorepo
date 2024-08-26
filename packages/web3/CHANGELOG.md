@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.68
+
+### Patch Changes
+
+- 3df3a89: rps autobet
+
 ## 0.10.67
 
 ### Patch Changes

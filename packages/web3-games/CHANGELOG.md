@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.20
+
+### Patch Changes
+
+- 3df3a89: rps autobet
+- Updated dependencies [3df3a89]
+  - @winrlabs/games@2.16.33
+  - @winrlabs/web3@0.10.68
+  - @winrlabs/web3-games@9.0.20
+
 ## 9.0.19
 
 ### Patch Changes
