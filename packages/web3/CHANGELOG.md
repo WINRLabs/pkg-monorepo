@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.65
+
+### Patch Changes
+
+- 60def62: introduce new send tx hook
+
 ## 0.10.64
 
 ### Patch Changes

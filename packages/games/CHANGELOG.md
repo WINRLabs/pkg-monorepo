@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.30
+
+### Patch Changes
+
+- 60def62: introduce new send tx hook
+
 ## 2.16.29
 
 ### Patch Changes

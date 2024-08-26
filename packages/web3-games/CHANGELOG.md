@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.17
+
+### Patch Changes
+
+- 60def62: introduce new send tx hook
+- Updated dependencies [60def62]
+  - @winrlabs/web3@0.10.65
+  - @winrlabs/games@2.16.30
+  - @winrlabs/web3-games@9.0.17
+
 ## 9.0.16
 
 ### Patch Changes
