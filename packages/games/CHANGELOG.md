@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.28
+
+### Patch Changes
+
+- 0a20504: limbo autobet
+
 ## 2.16.27
 
 ### Patch Changes

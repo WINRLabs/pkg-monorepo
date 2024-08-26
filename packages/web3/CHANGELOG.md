@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.63
+
+### Patch Changes
+
+- 0a20504: limbo autobet
+
 ## 0.10.62
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.15
+
+### Patch Changes
+
+- 0a20504: limbo autobet
+- Updated dependencies [0a20504]
+  - @winrlabs/games@2.16.28
+  - @winrlabs/web3@0.10.63
+  - @winrlabs/web3-games@9.0.15
+
 ## 9.0.14
 
 ### Patch Changes
