@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.34
+
+### Patch Changes
+
+- 4da4b79: roll autobet
+
 ## 2.16.33
 
 ### Patch Changes

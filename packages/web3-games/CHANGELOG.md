@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.21
+
+### Patch Changes
+
+- 4da4b79: roll autobet
+- Updated dependencies [4da4b79]
+  - @winrlabs/games@2.16.34
+  - @winrlabs/web3@0.10.69
+  - @winrlabs/web3-games@9.0.21
+
 ## 9.0.20
 
 ### Patch Changes

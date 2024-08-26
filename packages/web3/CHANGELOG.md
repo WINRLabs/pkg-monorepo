@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.69
+
+### Patch Changes
+
+- 4da4b79: roll autobet
+
 ## 0.10.68
 
 ### Patch Changes
