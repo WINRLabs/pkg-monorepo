@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.19
+
+### Patch Changes
+
+- 42b50b2: export required files
+- Updated dependencies [42b50b2]
+  - @winrlabs/web3@0.10.67
+  - @winrlabs/games@2.16.32
+  - @winrlabs/web3-games@9.0.19
+
 ## 9.0.18
 
 ### Patch Changes

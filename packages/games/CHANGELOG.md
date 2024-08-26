@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.32
+
+### Patch Changes
+
+- 42b50b2: export required files
+
 ## 2.16.31
 
 ### Patch Changes

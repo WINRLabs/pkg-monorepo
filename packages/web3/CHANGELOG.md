@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.67
+
+### Patch Changes
+
+- 42b50b2: export required files
+
 ## 0.10.66
 
 ### Patch Changes
