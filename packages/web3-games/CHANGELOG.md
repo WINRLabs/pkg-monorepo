@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.18
+
+### Patch Changes
+
+- 1200cb0: plinko autobet
+- Updated dependencies [1200cb0]
+  - @winrlabs/games@2.16.31
+  - @winrlabs/web3@0.10.66
+  - @winrlabs/web3-games@9.0.18
+
 ## 9.0.17
 
 ### Patch Changes

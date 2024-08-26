@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.31
+
+### Patch Changes
+
+- 1200cb0: plinko autobet
+
 ## 2.16.30
 
 ### Patch Changes

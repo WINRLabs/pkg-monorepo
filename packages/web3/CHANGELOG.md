@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.66
+
+### Patch Changes
+
+- 1200cb0: plinko autobet
+
 ## 0.10.65
 
 ### Patch Changes
