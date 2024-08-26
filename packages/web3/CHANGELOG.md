@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.64
+
+### Patch Changes
+
+- 28f7dbe: hotfix
+
 ## 0.10.63
 
 ### Patch Changes

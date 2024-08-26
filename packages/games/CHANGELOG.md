@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.29
+
+### Patch Changes
+
+- 28f7dbe: hotfix
+
 ## 2.16.28
 
 ### Patch Changes
