@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.22
+
+### Patch Changes
+
+- d464187: nonce refresh
+- Updated dependencies [d464187]
+  - @winrlabs/games@2.16.35
+  - @winrlabs/web3@0.10.70
+  - @winrlabs/web3-games@9.0.22
+
 ## 9.0.21
 
 ### Patch Changes

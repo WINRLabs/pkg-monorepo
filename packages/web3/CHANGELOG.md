@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.70
+
+### Patch Changes
+
+- d464187: nonce refresh
+
 ## 0.10.69
 
 ### Patch Changes

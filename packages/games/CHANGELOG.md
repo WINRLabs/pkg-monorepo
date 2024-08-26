@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.35
+
+### Patch Changes
+
+- d464187: nonce refresh
+
 ## 2.16.34
 
 ### Patch Changes
