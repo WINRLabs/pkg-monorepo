@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.39
+
+### Patch Changes
+
+- a1c9f67: baccarat autobet
+
 ## 2.16.38
 
 ### Patch Changes

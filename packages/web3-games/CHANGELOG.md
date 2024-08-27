@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.26
+
+### Patch Changes
+
+- a1c9f67: baccarat autobet
+- Updated dependencies [a1c9f67]
+  - @winrlabs/games@2.16.39
+  - @winrlabs/web3@0.10.74
+  - @winrlabs/web3-games@9.0.26
+
 ## 9.0.25
 
 ### Patch Changes

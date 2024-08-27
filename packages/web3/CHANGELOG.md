@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.74
+
+### Patch Changes
+
+- a1c9f67: baccarat autobet
+
 ## 0.10.73
 
 ### Patch Changes
