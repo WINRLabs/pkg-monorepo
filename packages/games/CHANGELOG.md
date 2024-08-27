@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.42
+
+### Patch Changes
+
+- 271cf68: balance check logic in autobet
+
 ## 2.16.41
 
 ### Patch Changes

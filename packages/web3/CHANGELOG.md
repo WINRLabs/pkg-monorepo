@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.77
+
+### Patch Changes
+
+- 271cf68: balance check logic in autobet
+
 ## 0.10.76
 
 ### Patch Changes

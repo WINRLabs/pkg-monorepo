@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.29
+
+### Patch Changes
+
+- 271cf68: balance check logic in autobet
+- Updated dependencies [271cf68]
+  - @winrlabs/games@2.16.42
+  - @winrlabs/web3@0.10.77
+  - @winrlabs/web3-games@9.0.29
+
 ## 9.0.28
 
 ### Patch Changes
