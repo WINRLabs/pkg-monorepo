@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.10.71
+
+### Patch Changes
+
+- d607509: retry
+- 5bc2d47: fix
+
 ## 0.10.70
 
 ### Patch Changes

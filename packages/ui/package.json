@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/ui",
-  "version": "9.0.70",
+  "version": "9.0.71",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

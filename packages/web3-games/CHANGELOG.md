@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 9.0.23
+
+### Patch Changes
+
+- d607509: retry
+- 5bc2d47: fix
+- Updated dependencies [d607509]
+- Updated dependencies [5bc2d47]
+  - @winrlabs/games@2.16.36
+  - @winrlabs/web3@0.10.71
+  - @winrlabs/web3-games@9.0.23
+
 ## 9.0.22
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.36
+
+### Patch Changes
+
+- d607509: retry
+- 5bc2d47: fix
+
 ## 2.16.35
 
 ### Patch Changes
