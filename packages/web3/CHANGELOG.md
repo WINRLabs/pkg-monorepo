@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.73
+
+### Patch Changes
+
+- b5231e3: roulette autobet button fix
+
 ## 0.10.72
 
 ### Patch Changes

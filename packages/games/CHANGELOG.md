@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.38
+
+### Patch Changes
+
+- b5231e3: roulette autobet button fix
+
 ## 2.16.37
 
 ### Patch Changes
