@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.27
+
+### Patch Changes
+
+- d7b9e27: keno autobet
+- Updated dependencies [d7b9e27]
+  - @winrlabs/games@2.16.40
+  - @winrlabs/web3@0.10.75
+  - @winrlabs/web3-games@9.0.27
+
 ## 9.0.26
 
 ### Patch Changes

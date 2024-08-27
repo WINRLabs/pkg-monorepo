@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.40
+
+### Patch Changes
+
+- d7b9e27: keno autobet
+
 ## 2.16.39
 
 ### Patch Changes

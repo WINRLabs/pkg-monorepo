@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.75
+
+### Patch Changes
+
+- d7b9e27: keno autobet
+
 ## 0.10.74
 
 ### Patch Changes
