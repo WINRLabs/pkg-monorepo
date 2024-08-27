@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3",
-  "version": "0.10.75",
+  "version": "0.10.76",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

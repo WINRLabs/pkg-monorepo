@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.28
+
+### Patch Changes
+
+- d9258a4: nonce fix
+- Updated dependencies [d9258a4]
+  - @winrlabs/games@2.16.41
+  - @winrlabs/web3@0.10.76
+  - @winrlabs/web3-games@9.0.28
+
 ## 9.0.27
 
 ### Patch Changes

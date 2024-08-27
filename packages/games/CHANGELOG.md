@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.41
+
+### Patch Changes
+
+- d9258a4: nonce fix
+
 ## 2.16.40
 
 ### Patch Changes

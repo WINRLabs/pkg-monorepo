@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.76
+
+### Patch Changes
+
+- d9258a4: nonce fix
+
 ## 0.10.75
 
 ### Patch Changes
