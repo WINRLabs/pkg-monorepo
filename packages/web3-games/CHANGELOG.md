@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.30
+
+### Patch Changes
+
+- e68d742: on error
+- Updated dependencies [e68d742]
+  - @winrlabs/games@2.16.43
+  - @winrlabs/web3@0.10.78
+  - @winrlabs/web3-games@9.0.30
+
 ## 9.0.29
 
 ### Patch Changes

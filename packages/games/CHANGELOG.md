@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.43
+
+### Patch Changes
+
+- e68d742: on error
+
 ## 2.16.42
 
 ### Patch Changes

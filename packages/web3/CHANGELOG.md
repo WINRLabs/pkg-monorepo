@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.78
+
+### Patch Changes
+
+- e68d742: on error
+
 ## 0.10.77
 
 ### Patch Changes
