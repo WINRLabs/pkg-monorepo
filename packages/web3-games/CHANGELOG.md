@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.24
+
+### Patch Changes
+
+- 7677d1a: roulette autobet
+- Updated dependencies [7677d1a]
+  - @winrlabs/games@2.16.37
+  - @winrlabs/web3@0.10.72
+  - @winrlabs/web3-games@9.0.24
+
 ## 9.0.23
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.72
+
+### Patch Changes
+
+- 7677d1a: roulette autobet
+
 ## 0.10.71
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.37
+
+### Patch Changes
+
+- 7677d1a: roulette autobet
+
 ## 2.16.36
 
 ### Patch Changes
