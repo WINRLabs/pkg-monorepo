@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.45
+
+### Patch Changes
+
+- c46ca70: last bets animation
+
 ## 2.16.44
 
 ### Patch Changes

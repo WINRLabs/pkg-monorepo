@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.32
+
+### Patch Changes
+
+- c46ca70: last bets animation
+- Updated dependencies [c46ca70]
+  - @winrlabs/games@2.16.45
+  - @winrlabs/web3@0.10.80
+  - @winrlabs/web3-games@9.0.32
+
 ## 9.0.31
 
 ### Patch Changes

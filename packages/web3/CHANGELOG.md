@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.80
+
+### Patch Changes
+
+- c46ca70: last bets animation
+
 ## 0.10.79
 
 ### Patch Changes
