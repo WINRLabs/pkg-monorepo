@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.46
+
+### Patch Changes
+
+- a5b8cc2: live stats update
+
 ## 2.16.45
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.81
+
+### Patch Changes
+
+- a5b8cc2: live stats update
+
 ## 0.10.80
 
 ### Patch Changes

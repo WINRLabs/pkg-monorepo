@@ -1,5 +1,11 @@
 # @winrlabs/tailwind-config
 
+## 1.3.3
+
+### Patch Changes
+
+- a5b8cc2: live stats update
+
 ## 1.3.2
 
 ### Patch Changes
