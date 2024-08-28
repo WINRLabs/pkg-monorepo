@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.79
+
+### Patch Changes
+
+- aff3120: balance check
+
 ## 0.10.78
 
 ### Patch Changes

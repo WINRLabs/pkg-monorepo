@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.31
+
+### Patch Changes
+
+- aff3120: balance check
+- Updated dependencies [aff3120]
+  - @winrlabs/games@2.16.44
+  - @winrlabs/web3@0.10.79
+  - @winrlabs/web3-games@9.0.31
+
 ## 9.0.30
 
 ### Patch Changes

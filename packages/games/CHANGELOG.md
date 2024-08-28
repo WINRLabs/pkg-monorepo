@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.44
+
+### Patch Changes
+
+- aff3120: balance check
+
 ## 2.16.43
 
 ### Patch Changes
