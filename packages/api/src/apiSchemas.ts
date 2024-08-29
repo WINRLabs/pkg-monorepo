@@ -154,6 +154,7 @@ export type LiveWinsDto = {
   player: string;
   username: string | null;
   id: string;
+  level: number;
   /**
    * @default 0
    */
@@ -185,6 +186,7 @@ export type BigWinsDto = {
   player: string;
   username: string | null;
   id: string;
+  level: number;
   /**
    * @default 0
    */
@@ -216,6 +218,7 @@ export type LuckyWinsDto = {
   player: string;
   username: string | null;
   id: string;
+  level: number;
   /**
    * @default 0
    */
@@ -621,6 +624,59 @@ export type BadgeResponse = {
     | 'LuckyRoller';
 };
 
+export type NewPlayers = {
+  count: number;
+};
+
+export type TopPlayersByVolume = {
+  rank: number;
+  reward: number;
+  username: string;
+  address: string;
+};
+
+export type TopPlayersByBet = {
+  rank: number;
+  reward: number;
+  username: string;
+  address: string;
+};
+
+export type HighRollerPlayers = {
+  rank: number;
+  reward: number;
+  username: string;
+  address: string;
+};
+
+export type BadLuckPlayers = {
+  rank: number;
+  reward: number;
+  username: string;
+  address: string;
+};
+
+export type LotteryWinners = {
+  username: string;
+  address: string;
+};
+
+export type PlayerEpochStats = {
+  loss: string;
+  profit: string;
+  volume: string;
+};
+
+export type RewardSummary = {
+  newPlayers: NewPlayers;
+  topPlayersByVolume: TopPlayersByVolume[];
+  topPlayersByBet: TopPlayersByBet[];
+  highRollerPlayers: HighRollerPlayers[];
+  badLuckPlayers: BadLuckPlayers[];
+  lotteryWinners: LotteryWinners[];
+  playerEpochStat: PlayerEpochStats;
+};
+
 export type SummaryResponse = {
   totalEarnings: number;
   totalWINRLocked: number;
@@ -629,20 +685,4 @@ export type SummaryResponse = {
 
 export type TakeLevelupSnapshotInput = {
   player: string;
-};
-
-export type BridgeDepositDto = {
-  player: string;
-  amount: string;
-};
-
-export type BridgeWithdrawDto = {
-  player: string;
-  amount: string;
-};
-
-export type BridgeHistoryResponse = {
-  player: string;
-  amount: string;
-  status: string;
 };

@@ -9,6 +9,7 @@ import {
   MinesFormField,
   MinesGameResultOnComplete,
   MinesTemplate,
+  MinesTheme,
   toDecimals,
   useMinesGameStateStore,
 } from '@winrlabs/games';
@@ -50,6 +51,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  theme?: MinesTheme;
 }
 
 const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
@@ -460,6 +462,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         minWager={props.minWager}
         maxWager={props.maxWager}
         isLoading={isWaitingResponse}
+        theme={props.theme}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

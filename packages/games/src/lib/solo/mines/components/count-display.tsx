@@ -1,9 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 
 import { CDN_URL } from '../../../constants';
+import { useMinesTheme } from '../provider/theme';
 
 const MinesCountDisplay: React.FC = () => {
   const form = useFormContext();
+  const theme = useMinesTheme();
 
   const minesCount = form.watch('minesCount');
 
@@ -27,21 +29,21 @@ const MinesCountDisplay: React.FC = () => {
           alt="img_gem"
         />
       </div>
-      <div className="wr-relative wr-flex wr-h-[100px] wr-flex-col wr-items-start wr-justify-between wr-rounded-lg wr-border wr-border-zinc-800 wr-p-3">
-        <p className="wr-text-lg wr-font-semibold wr-text-white">GEMS</p>
-        <div className="wr-flex wr-h-9 wr-w-9 wr-items-center wr-justify-center wr-rounded-[8px] wr-bg-green-500 wr-text-zinc-100">
+      <div className="wr-relative wr-flex wr-h-[100px] wr-flex-col wr-items-start wr-justify-between wr-rounded-lg wr-border wr-border-zinc-800 wr-p-3 wr-overflow-hidden">
+        <p className="wr-text-lg wr-font-semibold wr-text-white wr-z-10">GEMS</p>
+        <div className="wr-flex wr-h-9 wr-w-9 wr-items-center wr-justify-center wr-rounded-[8px] wr-bg-green-500 wr-text-zinc-100 wr-z-10">
           <span className="wr-text-base wr-font-semibold">{25 - minesCount}</span>
         </div>
         <img
-          src={`${CDN_URL}/mines/gem-count-image.png`}
-          className="wr-absolute wr-bottom-0 wr-right-0 wr-z-10"
+          src={theme.gemImage}
+          className="wr-absolute -wr-bottom-4 -wr-right-3 wr-z-10"
           alt="img_gem"
-          width={62}
-          height={62}
+          width={72}
+          height={72}
         />
         <img
-          src={`${CDN_URL}/mines/gem-count-shade.png`}
-          className="wr-absolute wr-bottom-0 wr-right-0 wr-z-0"
+          src={theme.gemImage}
+          className="wr-absolute wr-bottom-0 wr-right-0 wr-z-0 wr-blur-2xl"
           alt="img_gem"
         />
       </div>

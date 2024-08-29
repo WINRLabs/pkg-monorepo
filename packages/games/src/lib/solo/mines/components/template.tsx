@@ -11,6 +11,7 @@ import { toDecimals } from '../../../utils/web3';
 import { Mines } from '..';
 import { initialBoard } from '../constants';
 import mineMultipliers from '../constants/mines-multipliers.json';
+import { MinesTheme, MinesThemeProvider } from '../provider/theme';
 import { useMinesGameStateStore } from '../store';
 import { FormSetValue, MINES_GAME_STATUS, MinesFormField } from '../types';
 import { MinesGameProps } from './game';
@@ -21,6 +22,7 @@ type TemplateProps = MinesGameProps & {
   onSubmitGameForm: (data: MinesFormField) => void;
   onFormChange?: (fields: MinesFormField) => void;
   formSetValue?: FormSetValue;
+  theme?: Partial<MinesTheme>;
 };
 
 const MinesTemplate = ({ ...props }: TemplateProps) => {
@@ -116,25 +118,27 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
   }, [gameStatus]);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
-        <GameContainer>
-          <Mines.Game {...props}>
-            <Mines.Controller
-              {...props}
-              currentCashoutAmount={currentCashoutAmount}
-              maxWager={props?.maxWager || 2000}
-              minWager={props?.minWager || 2}
-              currentMultiplier={currentMultiplier}
-            />
-            <SceneContainer className="lg:wr-h-[740px] lg:wr-py-10 max-lg:!wr-border-0 max-lg:!wr-p-0">
-              <Mines.Scene currentMultiplier={currentMultiplier} isLoading={props.isLoading} />
-              <WinAnimation />
-            </SceneContainer>
-          </Mines.Game>
-        </GameContainer>
-      </form>
-    </Form>
+    <MinesThemeProvider theme={props.theme || {}}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+          <GameContainer>
+            <Mines.Game {...props}>
+              <Mines.Controller
+                {...props}
+                currentCashoutAmount={currentCashoutAmount}
+                maxWager={props?.maxWager || 2000}
+                minWager={props?.minWager || 2}
+                currentMultiplier={currentMultiplier}
+              />
+              <SceneContainer className="lg:wr-h-[740px] lg:wr-py-10 max-lg:!wr-border-0 max-lg:!wr-p-0">
+                <Mines.Scene currentMultiplier={currentMultiplier} isLoading={props.isLoading} />
+                <WinAnimation />
+              </SceneContainer>
+            </Mines.Game>
+          </GameContainer>
+        </form>
+      </Form>
+    </MinesThemeProvider>
   );
 };
 

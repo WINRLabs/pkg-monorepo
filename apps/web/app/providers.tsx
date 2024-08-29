@@ -66,11 +66,11 @@ export function Providers(props: { children: ReactNode }) {
             network,
             entryPointAddress,
             factoryAddress,
-            paymasterAddress: '0xBADAF26D86c10c508bC014121fA621846Be361CF',
+            paymasterAddress: '0x37C6F569A0d68C8381Eb501b79F501aDc132c144',
           }}
           tokens={[
             {
-              address: '0x2e98C81df02278d82CD3E561025D8F1be3403256',
+              address: '0xaF31A7E835fA24f13ae1e0be8EB1fb56F906BE11',
               bankrollIndex: '0x0000000000000000000000000000000000000001',
               displayDecimals: 2,
               decimals: 6,
@@ -80,7 +80,7 @@ export function Providers(props: { children: ReactNode }) {
               priceKey: 'usdc',
             },
             {
-              address: '0xC8DbFdFc8882B8a33d11d1658e75E4858A1d338F',
+              address: '0xd777657B9a81a4E869458d52402e16C0dE187e3a',
               bankrollIndex: '0x0000000000000000000000000000000000000002',
               displayDecimals: 2,
               decimals: 6,

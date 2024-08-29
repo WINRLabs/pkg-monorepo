@@ -7,19 +7,25 @@ import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { FormControl, FormField, FormItem } from '../../../ui/form';
 import { cn } from '../../../utils/style';
 import { boardsSchema, initialBoard } from '../constants';
+import { useMinesTheme } from '../provider/theme';
 import { useMinesGameStateStore } from '../store';
 import { MINES_GAME_STATUS, MINES_SUBMIT_TYPE, MinesForm } from '../types';
 import { MineCellBg } from './mine-cell-bg';
 
-const MineCell: React.FC<{
+const MineCell = ({
+  mineCell,
+  idx,
+  isLoading,
+}: {
   mineCell: (typeof initialBoard)['0'];
   idx: number;
   isLoading?: boolean;
-}> = ({ mineCell, idx, isLoading }) => {
+}) => {
   const form = useFormContext() as MinesForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const bombEffect = useAudioEffect(SoundEffects.MINES_BOMB);
   const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
+  const theme = useMinesTheme();
 
   const { gameStatus, updateBoardItem, updateMinesGameState } = useMinesGameStateStore([
     'gameStatus',
@@ -144,7 +150,7 @@ const MineCell: React.FC<{
                     )}
                     {!mineCell.isBomb && (
                       <img
-                        src={`${CDN_URL}/mines/revealed-gem.png`}
+                        src={theme.gemImage}
                         width={88}
                         height={88}
                         alt="revealed gem"

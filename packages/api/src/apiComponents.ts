@@ -1859,6 +1859,50 @@ export const useBadgeControllerWeeklyClaimer = (
   });
 };
 
+export type RewardControllerSummaryQueryParams = {
+  player?: string;
+};
+
+export type RewardControllerSummaryError = Fetcher.ErrorWrapper<undefined>;
+
+export type RewardControllerSummaryVariables = {
+  queryParams?: RewardControllerSummaryQueryParams;
+} & ApiContext['fetcherOptions'];
+
+export const fetchRewardControllerSummary = (
+  variables: RewardControllerSummaryVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<
+    Schemas.RewardSummary,
+    RewardControllerSummaryError,
+    undefined,
+    {},
+    RewardControllerSummaryQueryParams,
+    {}
+  >({ url: '/reward/summary', method: 'get', ...variables, signal });
+
+export const useRewardControllerSummary = <TData = Schemas.RewardSummary,>(
+  variables: RewardControllerSummaryVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<Schemas.RewardSummary, RewardControllerSummaryError, TData>,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<Schemas.RewardSummary, RewardControllerSummaryError, TData>({
+    queryKey: queryKeyFn({
+      path: '/reward/summary',
+      operationId: 'rewardControllerSummary',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchRewardControllerSummary({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
 export type StakeControllerSummaryError = Fetcher.ErrorWrapper<undefined>;
 
 export type StakeControllerSummaryVariables = ApiContext['fetcherOptions'];
@@ -1933,174 +1977,6 @@ export const useRankControllerTakeLevelupSnapshot = (
     mutationFn: (variables: RankControllerTakeLevelupSnapshotVariables) =>
       fetchRankControllerTakeLevelupSnapshot({ ...fetcherOptions, ...variables }),
     ...options,
-  });
-};
-
-export type BridgeControllerDepositError = Fetcher.ErrorWrapper<undefined>;
-
-export type BridgeControllerDepositVariables = {
-  body: Schemas.BridgeDepositDto;
-} & ApiContext['fetcherOptions'];
-
-export const fetchBridgeControllerDeposit = (
-  variables: BridgeControllerDepositVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    Schemas.BridgeDepositDto,
-    BridgeControllerDepositError,
-    Schemas.BridgeDepositDto,
-    {},
-    {},
-    {}
-  >({ url: '/deposit', method: 'post', ...variables, signal });
-
-export const useBridgeControllerDeposit = (
-  options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.BridgeDepositDto,
-      BridgeControllerDepositError,
-      BridgeControllerDepositVariables
-    >,
-    'mutationFn'
-  >
-) => {
-  const { fetcherOptions } = useApiContext();
-  return reactQuery.useMutation<
-    Schemas.BridgeDepositDto,
-    BridgeControllerDepositError,
-    BridgeControllerDepositVariables
-  >({
-    mutationFn: (variables: BridgeControllerDepositVariables) =>
-      fetchBridgeControllerDeposit({ ...fetcherOptions, ...variables }),
-    ...options,
-  });
-};
-
-export type BridgeControllerWithdrawError = Fetcher.ErrorWrapper<undefined>;
-
-export type BridgeControllerWithdrawVariables = {
-  body: Schemas.BridgeWithdrawDto;
-} & ApiContext['fetcherOptions'];
-
-export const fetchBridgeControllerWithdraw = (
-  variables: BridgeControllerWithdrawVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    Schemas.BridgeWithdrawDto,
-    BridgeControllerWithdrawError,
-    Schemas.BridgeWithdrawDto,
-    {},
-    {},
-    {}
-  >({ url: '/withdraw', method: 'post', ...variables, signal });
-
-export const useBridgeControllerWithdraw = (
-  options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.BridgeWithdrawDto,
-      BridgeControllerWithdrawError,
-      BridgeControllerWithdrawVariables
-    >,
-    'mutationFn'
-  >
-) => {
-  const { fetcherOptions } = useApiContext();
-  return reactQuery.useMutation<
-    Schemas.BridgeWithdrawDto,
-    BridgeControllerWithdrawError,
-    BridgeControllerWithdrawVariables
-  >({
-    mutationFn: (variables: BridgeControllerWithdrawVariables) =>
-      fetchBridgeControllerWithdraw({ ...fetcherOptions, ...variables }),
-    ...options,
-  });
-};
-
-export type BridgeControllerHistoryPathParams = {
-  player: string;
-};
-
-export type BridgeControllerHistoryError = Fetcher.ErrorWrapper<undefined>;
-
-export type BridgeControllerHistoryResponse = any[];
-
-export type BridgeControllerHistoryVariables = {
-  pathParams: BridgeControllerHistoryPathParams;
-} & ApiContext['fetcherOptions'];
-
-export const fetchBridgeControllerHistory = (
-  variables: BridgeControllerHistoryVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    BridgeControllerHistoryResponse,
-    BridgeControllerHistoryError,
-    undefined,
-    {},
-    {},
-    BridgeControllerHistoryPathParams
-  >({ url: '/history', method: 'get', ...variables, signal });
-
-export const useBridgeControllerHistory = <TData = BridgeControllerHistoryResponse,>(
-  variables: BridgeControllerHistoryVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<
-      BridgeControllerHistoryResponse,
-      BridgeControllerHistoryError,
-      TData
-    >,
-    'queryKey' | 'queryFn' | 'initialData'
-  >
-) => {
-  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<BridgeControllerHistoryResponse, BridgeControllerHistoryError, TData>({
-    queryKey: queryKeyFn({ path: '/history', operationId: 'bridgeControllerHistory', variables }),
-    queryFn: ({ signal }) =>
-      fetchBridgeControllerHistory({ ...fetcherOptions, ...variables }, signal),
-    ...options,
-    ...queryOptions,
-  });
-};
-
-export type BridgeControllerLatestPathParams = {
-  player: string;
-};
-
-export type BridgeControllerLatestError = Fetcher.ErrorWrapper<undefined>;
-
-export type BridgeControllerLatestVariables = {
-  pathParams: BridgeControllerLatestPathParams;
-} & ApiContext['fetcherOptions'];
-
-export const fetchBridgeControllerLatest = (
-  variables: BridgeControllerLatestVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    Schemas.BridgeHistoryResponse,
-    BridgeControllerLatestError,
-    undefined,
-    {},
-    {},
-    BridgeControllerLatestPathParams
-  >({ url: '/latest', method: 'get', ...variables, signal });
-
-export const useBridgeControllerLatest = <TData = Schemas.BridgeHistoryResponse,>(
-  variables: BridgeControllerLatestVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<Schemas.BridgeHistoryResponse, BridgeControllerLatestError, TData>,
-    'queryKey' | 'queryFn' | 'initialData'
-  >
-) => {
-  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<Schemas.BridgeHistoryResponse, BridgeControllerLatestError, TData>({
-    queryKey: queryKeyFn({ path: '/latest', operationId: 'bridgeControllerLatest', variables }),
-    queryFn: ({ signal }) =>
-      fetchBridgeControllerLatest({ ...fetcherOptions, ...variables }, signal),
-    ...options,
-    ...queryOptions,
   });
 };
 
@@ -2251,17 +2127,12 @@ export type QueryOperation =
       variables: ReferralControllerCodesVolumeAndRewardAmountsVariables;
     }
   | {
+      path: '/reward/summary';
+      operationId: 'rewardControllerSummary';
+      variables: RewardControllerSummaryVariables;
+    }
+  | {
       path: '/stake/summary';
       operationId: 'stakeControllerSummary';
       variables: StakeControllerSummaryVariables;
-    }
-  | {
-      path: '/history';
-      operationId: 'bridgeControllerHistory';
-      variables: BridgeControllerHistoryVariables;
-    }
-  | {
-      path: '/latest';
-      operationId: 'bridgeControllerLatest';
-      variables: BridgeControllerLatestVariables;
     };
