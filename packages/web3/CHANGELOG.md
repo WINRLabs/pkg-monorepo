@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.85
+
+### Patch Changes
+
+- ef56ffd: update session tx
+
 ## 0.10.84
 
 ### Patch Changes

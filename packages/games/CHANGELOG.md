@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.50
+
+### Patch Changes
+
+- ef56ffd: update session tx
+
 ## 2.16.49
 
 ### Patch Changes

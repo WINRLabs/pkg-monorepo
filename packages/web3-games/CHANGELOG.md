@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.37
+
+### Patch Changes
+
+- ef56ffd: update session tx
+- Updated dependencies [ef56ffd]
+  - @winrlabs/web3@0.10.85
+  - @winrlabs/games@2.16.50
+  - @winrlabs/web3-games@9.0.37
+
 ## 9.0.36
 
 ### Patch Changes
