@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.86
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+
 ## 0.10.85
 
 ### Patch Changes

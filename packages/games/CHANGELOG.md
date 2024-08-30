@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.51
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+
 ## 2.16.50
 
 ### Patch Changes

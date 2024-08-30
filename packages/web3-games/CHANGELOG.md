@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.38
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+- Updated dependencies [c0dcc6d]
+  - @winrlabs/web3@0.10.86
+  - @winrlabs/games@2.16.51
+  - @winrlabs/web3-games@9.0.38
+
 ## 9.0.37
 
 ### Patch Changes
