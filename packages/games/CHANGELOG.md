@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.48
+
+### Patch Changes
+
+- 043475b: add new mm auth
+
 ## 2.16.47
 
 ### Patch Changes

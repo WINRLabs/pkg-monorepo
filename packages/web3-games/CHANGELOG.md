@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.35
+
+### Patch Changes
+
+- 043475b: add new mm auth
+- Updated dependencies [043475b]
+  - @winrlabs/web3@0.10.83
+  - @winrlabs/games@2.16.48
+  - @winrlabs/web3-games@9.0.35
+
 ## 9.0.34
 
 ### Patch Changes

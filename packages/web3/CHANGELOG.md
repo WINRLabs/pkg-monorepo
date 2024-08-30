@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.83
+
+### Patch Changes
+
+- 043475b: add new mm auth
+
 ## 0.10.82
 
 ### Patch Changes
