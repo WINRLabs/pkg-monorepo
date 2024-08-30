@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.49
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+
 ## 2.16.48
 
 ### Patch Changes

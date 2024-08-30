@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.84
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+
 ## 0.10.83
 
 ### Patch Changes

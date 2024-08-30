@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.36
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+- Updated dependencies [dbe1938]
+  - @winrlabs/games@2.16.49
+  - @winrlabs/web3@0.10.84
+  - @winrlabs/web3-games@9.0.36
+
 ## 9.0.35
 
 ### Patch Changes
