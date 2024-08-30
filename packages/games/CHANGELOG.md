@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.47
+
+### Patch Changes
+
+- c017cb1: on login props
+
 ## 2.16.46
 
 ### Patch Changes

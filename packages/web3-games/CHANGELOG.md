@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.34
+
+### Patch Changes
+
+- c017cb1: on login props
+- Updated dependencies [c017cb1]
+  - @winrlabs/games@2.16.47
+  - @winrlabs/web3@0.10.82
+  - @winrlabs/web3-games@9.0.34
+
 ## 9.0.33
 
 ### Patch Changes

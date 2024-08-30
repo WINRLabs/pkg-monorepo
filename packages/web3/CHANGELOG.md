@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.82
+
+### Patch Changes
+
+- c017cb1: on login props
+
 ## 0.10.81
 
 ### Patch Changes
