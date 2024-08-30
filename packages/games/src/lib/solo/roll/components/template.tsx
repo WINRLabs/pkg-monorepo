@@ -118,6 +118,7 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: RollGameResult[]) => {

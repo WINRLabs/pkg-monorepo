@@ -206,6 +206,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: RouletteGameResult[]) => {

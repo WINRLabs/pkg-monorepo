@@ -22,7 +22,15 @@ export const load = (input: Input) => {
   let bet = 0;
   let win = 0;
   let lose = 0;
-  const getNextWagerOrAction = (wager: bigint, profit: bigint, loss: bigint) => {
+  let cumulativeProfit = 0n;
+  let cumulativeLoss = 0n;
+  const getNextWagerOrAction = (
+    wager: bigint,
+    profit: bigint,
+    loss: bigint,
+    cumulativeProfit: bigint,
+    cumulativeLoss: bigint
+  ) => {
     for (let i = 0; i < input.items.length; i++) {
       const item = input.items[i];
 
@@ -30,7 +38,7 @@ export const load = (input: Input) => {
         return { wager: item.action.applyTo(input.wager, wager), action: item.action };
       } else if (
         item.condition.t == 'profit' &&
-        item.condition.satisfy(input.balance, profit, loss)
+        item.condition.satisfy(input.balance, profit, loss, cumulativeProfit, cumulativeLoss)
       ) {
         return { wager: item.action.applyTo(input.wager, wager), action: item.action };
       }
@@ -49,18 +57,29 @@ export const load = (input: Input) => {
       lose = 0;
 
       profit = payout - wager;
+      cumulativeProfit = cumulativeProfit + profit;
     } else {
       bet += 1;
       lose += 1;
       win = 0;
 
       loss = wager - payout;
+      cumulativeLoss = cumulativeLoss + loss;
     }
 
-    return getNextWagerOrAction(wager, profit, loss);
+    return getNextWagerOrAction(wager, profit, loss, cumulativeProfit, cumulativeLoss);
+  };
+
+  const reset = () => {
+    bet = 0;
+    win = 0;
+    lose = 0;
+    cumulativeLoss = 0n;
+    cumulativeProfit = 0n;
   };
 
   return {
     process,
+    reset,
   };
 };

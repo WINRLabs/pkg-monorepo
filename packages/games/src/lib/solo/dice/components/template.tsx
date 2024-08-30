@@ -116,6 +116,7 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: DiceGameResult[]) => {

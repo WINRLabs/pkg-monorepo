@@ -53,7 +53,9 @@ export const liveResultStore = create<LiveResultStore>()((set, get) => ({
     set((state) => {
       const currentProfit = get()?.currentProfit;
 
-      let newProfit = item.won ? currentProfit + item.payout : currentProfit - get()?.wager;
+      let newProfit = item.won
+        ? currentProfit + item.payout - get()?.wager
+        : currentProfit - get()?.wager;
 
       if (item?.gameType == GameType.PLINKO)
         newProfit = item.won

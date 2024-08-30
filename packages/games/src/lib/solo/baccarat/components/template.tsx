@@ -246,6 +246,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: BaccaratGameSettledResult) => {
