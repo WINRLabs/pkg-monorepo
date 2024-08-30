@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.87
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+
 ## 0.10.86
 
 ### Patch Changes

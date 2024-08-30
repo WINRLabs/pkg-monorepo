@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.39
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+- Updated dependencies [f5f0a13]
+  - @winrlabs/games@2.16.52
+  - @winrlabs/web3@0.10.87
+  - @winrlabs/web3-games@9.0.39
+
 ## 9.0.38
 
 ### Patch Changes

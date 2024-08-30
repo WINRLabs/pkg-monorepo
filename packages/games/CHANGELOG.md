@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.52
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+
 ## 2.16.51
 
 ### Patch Changes
