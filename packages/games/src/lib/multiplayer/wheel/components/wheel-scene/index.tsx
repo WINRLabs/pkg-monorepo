@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import {
   CountdownContextState,
@@ -16,26 +15,18 @@ import { Wheel } from './wheel';
 import styles from './wheel-scene.module.css';
 
 export const WheelScene = ({ onComplete }: { onComplete?: () => void }) => {
-  const {
-    winnerAngle,
-    winnerColor,
-    joiningFinish,
-    status,
-    showResult,
-    wheelParticipants,
-    setShowResult,
-  } = useWheelGameStore([
-    'winnerAngle',
-    'winnerColor',
-    'joiningFinish',
-    'status',
-    'showResult',
-    'setShowResult',
-    'wheelParticipants',
-  ]);
+  const { winnerAngle, winnerColor, joiningFinish, status, showResult, setShowResult } =
+    useWheelGameStore([
+      'winnerAngle',
+      'winnerColor',
+      'joiningFinish',
+      'status',
+      'showResult',
+      'setShowResult',
+      'wheelParticipants',
+    ]);
   const multiplier = colorMultipliers[winnerColor];
   const countdownEffect = useAudioEffect(SoundEffects.COUNTDOWN);
-  const { account } = useGameOptions();
 
   const handleTimeLeftChange = (timeLeft: CountdownContextState) =>
     timeLeft.seconds == 3 && countdownEffect.play();

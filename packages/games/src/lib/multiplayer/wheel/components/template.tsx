@@ -7,20 +7,15 @@ import * as z from 'zod';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { Form } from '../../../ui/form';
 import { WheelColor } from '../constants';
+import { WheelTeme } from '../providers/theme';
 import { WheelFormFields } from '../types';
 import BetController from './bet-controller';
 import LastBets from './last-bet';
 import WheelParticipants from './wheel-participants';
 import { WheelScene } from './wheel-scene';
 
-type TemplateOptions = {
-  scene?: {
-    backgroundImage?: string;
-  };
-};
-
 type TemplateProps = {
-  options: TemplateOptions;
+  theme?: WheelTeme;
   minWager?: number;
   maxWager?: number;
   onSubmitGameForm: (data: WheelFormFields) => void;

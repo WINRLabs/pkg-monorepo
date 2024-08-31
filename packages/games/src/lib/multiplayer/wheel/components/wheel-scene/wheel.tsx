@@ -4,6 +4,7 @@ import { CDN_URL } from '../../../../constants';
 import { genNumberArray } from '../../../../utils/number';
 import { cn } from '../../../../utils/style';
 import { WheelColor } from '../../constants';
+import { useWheelTeme } from '../../providers/theme';
 import WheelRotate from './wheel-rotate';
 import styles from './wheel-scene.module.css';
 
@@ -41,6 +42,7 @@ export interface WheelContainerProps {
 }
 
 export const Wheel: React.FC<WheelContainerProps> = ({ units, spin, degree, onComplete }) => {
+  const theme = useWheelTeme();
   const diameter = 720;
 
   const dpi = diameter / 180;
@@ -88,7 +90,7 @@ export const Wheel: React.FC<WheelContainerProps> = ({ units, spin, degree, onCo
       <div
         className={styles.cursor}
         style={{
-          backgroundImage: `url(${CDN_URL}/wheel/cursor-wheel.svg)`,
+          backgroundImage: `url(${theme.wheelBackground})`,
         }}
       />
 

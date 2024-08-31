@@ -16,6 +16,7 @@ import {
   useWheelGameStore,
   WheelColor,
   WheelFormFields,
+  WheelTeme,
   WheelTemplate,
 } from '@winrlabs/games';
 import {
@@ -41,14 +42,8 @@ import {
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
 
-type TemplateOptions = {
-  scene?: {
-    backgroundImage?: string;
-  };
-};
-
 interface TemplateWithWeb3Props extends BaseGameProps {
-  options: TemplateOptions;
+  theme?: WheelTeme;
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
@@ -403,6 +398,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     <>
       <WheelTemplate
         {...props}
+        theme={props.theme}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {
           setFormValues(val);
