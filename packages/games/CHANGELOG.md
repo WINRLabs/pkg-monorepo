@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.53
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+
 ## 2.16.52
 
 ### Patch Changes

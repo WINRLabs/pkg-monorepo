@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.88
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+
 ## 0.10.87
 
 ### Patch Changes

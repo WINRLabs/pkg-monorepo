@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.40
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+- Updated dependencies [234528a]
+  - @winrlabs/web3@0.10.88
+  - @winrlabs/games@2.16.53
+  - @winrlabs/web3-games@9.0.40
+
 ## 9.0.39
 
 ### Patch Changes
