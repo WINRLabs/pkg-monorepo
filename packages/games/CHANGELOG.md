@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.54
+
+### Patch Changes
+
+- 4d65a07: bj 21 fix
+
 ## 2.16.53
 
 ### Patch Changes

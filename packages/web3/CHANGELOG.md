@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.89
+
+### Patch Changes
+
+- 4d65a07: bj 21 fix
+
 ## 0.10.88
 
 ### Patch Changes
