@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.90
+
+### Patch Changes
+
+- 0cd4321: fixes
+
 ## 0.10.89
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.55
+
+### Patch Changes
+
+- 0cd4321: fixes
+- 1656fc8: sse for global bets
+
 ## 2.16.54
 
 ### Patch Changes

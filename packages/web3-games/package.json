@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3-games",
-  "version": "9.0.41",
+  "version": "9.0.42",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
