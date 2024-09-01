@@ -1,5 +1,13 @@
 # @winrlabs/web3
 
+## 0.10.91
+
+### Patch Changes
+
+- b401541: fix
+- Updated dependencies [b401541]
+  - @winrlabs/api@1.3.7
+
 ## 0.10.90
 
 ### Patch Changes

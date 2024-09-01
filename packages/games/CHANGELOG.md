@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.56
+
+### Patch Changes
+
+- b401541: fix
+
 ## 2.16.55
 
 ### Patch Changes
