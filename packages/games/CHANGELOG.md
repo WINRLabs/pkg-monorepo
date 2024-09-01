@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.57
+
+### Patch Changes
+
+- 2133fb8: max wager
+
 ## 2.16.56
 
 ### Patch Changes

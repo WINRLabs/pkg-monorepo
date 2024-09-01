@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.44
+
+### Patch Changes
+
+- 2133fb8: max wager
+- Updated dependencies [2133fb8]
+  - @winrlabs/games@2.16.57
+  - @winrlabs/web3@0.10.92
+  - @winrlabs/web3-games@9.0.44
+
 ## 9.0.43
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.92
+
+### Patch Changes
+
+- 2133fb8: max wager
+
 ## 0.10.91
 
 ### Patch Changes
