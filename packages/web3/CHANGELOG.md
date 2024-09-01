@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.93
+
+### Patch Changes
+
+- 0cd776a: fix
+
 ## 0.10.92
 
 ### Patch Changes

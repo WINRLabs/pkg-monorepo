@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.58
+
+### Patch Changes
+
+- 0cd776a: fix
+
 ## 2.16.57
 
 ### Patch Changes
