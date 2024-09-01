@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.46
+
+### Patch Changes
+
+- 273eac2: bet history update
+- Updated dependencies [273eac2]
+  - @winrlabs/games@2.16.59
+  - @winrlabs/web3@0.10.94
+  - @winrlabs/web3-games@9.0.46
+
 ## 9.0.45
 
 ### Patch Changes

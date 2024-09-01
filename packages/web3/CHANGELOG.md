@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.94
+
+### Patch Changes
+
+- 273eac2: bet history update
+
 ## 0.10.93
 
 ### Patch Changes

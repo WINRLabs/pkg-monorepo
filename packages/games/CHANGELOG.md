@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.59
+
+### Patch Changes
+
+- 273eac2: bet history update
+
 ## 2.16.58
 
 ### Patch Changes
