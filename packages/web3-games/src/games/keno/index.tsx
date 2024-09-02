@@ -21,6 +21,7 @@ import {
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -213,7 +214,8 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
   });
 
   const onGameSubmit = async (f: KenoFormField, errorCount = 0) => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     updateGameStatus('PLAYING');
     if (!allowance.hasAllowance) {

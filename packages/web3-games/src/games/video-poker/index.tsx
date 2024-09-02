@@ -19,6 +19,7 @@ import {
   useTokenStore,
   useWrapWinr,
   videoPokerAbi,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -208,7 +209,8 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   });
 
   const handleStartGame = async () => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     console.log('SUBMITTING!');
     if (!allowance.hasAllowance) {

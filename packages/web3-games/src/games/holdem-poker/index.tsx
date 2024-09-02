@@ -18,6 +18,7 @@ import {
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { useDebounce } from 'use-debounce';
@@ -279,7 +280,8 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
   });
 
   const handleDeal = async () => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({

@@ -18,6 +18,7 @@ import {
   useTokenStore,
   useWrapWinr,
   winrBonanzaAbi,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -250,7 +251,8 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const handleBet = async (errorCount = 0) => {
     console.log('spin button called!');
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     // if (!allowance.hasAllowance) {
     //   const handledAllowance = await allowance.handleAllowance({
@@ -280,7 +282,8 @@ export default function WinrBonanzaTemplateWithWeb3({
   };
 
   const handleBuyFreeSpins = async () => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({

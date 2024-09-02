@@ -24,6 +24,7 @@ import {
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -295,9 +296,13 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     amount: nativeWinr.balance,
     spender: cashierAddress,
   });
+  const { selectedToken } = useTokenStore((s) => ({
+    selectedToken: s.selectedToken,
+  }));
 
   const onGameSubmit = async (values: MinesFormField) => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     setIsWaitingResponse(true);
     console.log(values, 'form values');

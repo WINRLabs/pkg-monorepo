@@ -18,6 +18,7 @@ import {
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -209,7 +210,8 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
   });
 
   const onGameSubmit = async () => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({

@@ -24,6 +24,7 @@ import {
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -517,7 +518,8 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   });
 
   const handleStart = async () => {
-    if (nativeWinr.balance > 0.1) await wrapWinrTx();
+    if (nativeWinr.balance > 0.1 && selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL)
+      await wrapWinrTx();
 
     setIsLoading(true); // Set loading state to true
     if (!allowance.hasAllowance) {
