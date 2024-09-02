@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.96
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+
 ## 0.10.95
 
 ### Patch Changes

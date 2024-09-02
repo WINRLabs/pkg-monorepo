@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.49
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+- Updated dependencies [5cd0bc5]
+  - @winrlabs/games@2.16.62
+  - @winrlabs/web3@0.10.96
+  - @winrlabs/web3-games@9.0.49
+
 ## 9.0.48
 
 ### Patch Changes

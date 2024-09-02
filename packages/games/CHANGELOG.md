@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.62
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+
 ## 2.16.61
 
 ### Patch Changes
