@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.60
+
+### Patch Changes
+
+- 37beee5: mobile height adjust for sm devices wb
+
 ## 2.16.59
 
 ### Patch Changes
