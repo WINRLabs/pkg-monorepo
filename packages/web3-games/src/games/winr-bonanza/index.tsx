@@ -11,10 +11,12 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
   winrBonanzaAbi,
 } from '@winrlabs/web3';
 import React from 'react';
@@ -239,8 +241,16 @@ export default function WinrBonanzaTemplateWithWeb3({
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const handleBet = async (errorCount = 0) => {
     console.log('spin button called!');
+    if (nativeWinr.balance > 0) await wrapWinrTx();
 
     // if (!allowance.hasAllowance) {
     //   const handledAllowance = await allowance.handleAllowance({

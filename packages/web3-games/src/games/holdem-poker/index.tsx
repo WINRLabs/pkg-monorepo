@@ -12,10 +12,12 @@ import {
   Token,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
 } from '@winrlabs/web3';
 import React from 'react';
 import { useDebounce } from 'use-debounce';
@@ -269,8 +271,16 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const handleDeal = async () => {
-    console.log('SUBMITTING!');
+    if (nativeWinr.balance > 0) await wrapWinrTx();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {

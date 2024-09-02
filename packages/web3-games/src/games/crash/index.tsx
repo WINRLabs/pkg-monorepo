@@ -14,10 +14,12 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
 } from '@winrlabs/web3';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
@@ -238,7 +240,16 @@ const CrashGame = (props: CrashTemplateProps) => {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const onGameSubmit = async () => {
+    if (nativeWinr.balance > 0) await wrapWinrTx();
+
     clearLiveResults();
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({

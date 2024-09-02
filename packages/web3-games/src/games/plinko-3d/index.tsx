@@ -12,10 +12,12 @@ import {
   useCurrentAccount,
   useFastOrVerified,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
 } from '@winrlabs/web3';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -199,7 +201,16 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const onGameSubmit = async () => {
+    if (nativeWinr.balance > 0) await wrapWinrTx();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {

@@ -212,9 +212,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   });
 
   const onGameSubmit = async (f: CoinFlipFormFields, errorCount = 0) => {
-    console.log(nativeWinr.balance, 'native winr balance');
     if (nativeWinr.balance > 0) await wrapWinrTx();
-    console.log(nativeWinr.balance, 'new native winr balance');
 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -304,11 +302,8 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     };
   }, []);
 
-  const unwrapWinrTx = useUnWrapWinr({ account: currentAccount.address || '0x' });
-
   return (
     <>
-      <div onClick={() => unwrapWinrTx()}>UNWRAP</div>
       <CoinFlipTemplate
         {...props}
         isGettingResult={isLoading}

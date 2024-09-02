@@ -18,10 +18,12 @@ import {
   Token,
   useCurrentAccount,
   useHandleTxUncached,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
 } from '@winrlabs/web3';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -287,7 +289,16 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const onGameSubmit = async (values: MinesFormField) => {
+    if (nativeWinr.balance > 0) await wrapWinrTx();
+
     setIsWaitingResponse(true);
     console.log(values, 'form values');
 

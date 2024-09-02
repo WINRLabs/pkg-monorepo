@@ -12,10 +12,12 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
   videoPokerAbi,
 } from '@winrlabs/web3';
 import React from 'react';
@@ -198,7 +200,16 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const nativeWinr = useNativeTokenBalance({ account: currentAccount.address || '0x' });
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+    amount: nativeWinr.balance,
+    spender: cashierAddress,
+  });
+
   const handleStartGame = async () => {
+    if (nativeWinr.balance > 0) await wrapWinrTx();
+
     console.log('SUBMITTING!');
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
