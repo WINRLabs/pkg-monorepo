@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.48
+
+### Patch Changes
+
+- 29019b0: wrap unwrap
+- Updated dependencies [29019b0]
+  - @winrlabs/games@2.16.61
+  - @winrlabs/web3@0.10.95
+  - @winrlabs/web3-games@9.0.48
+
 ## 9.0.47
 
 ### Patch Changes

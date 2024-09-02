@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.95
+
+### Patch Changes
+
+- 29019b0: wrap unwrap
+
 ## 0.10.94
 
 ### Patch Changes
