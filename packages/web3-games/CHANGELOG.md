@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.50
+
+### Patch Changes
+
+- cf6eccc: dont wrap the token if its not the wrapped
+- Updated dependencies [cf6eccc]
+- Updated dependencies [83202af]
+  - @winrlabs/web3-games@9.0.50
+  - @winrlabs/games@2.16.63
+
 ## 9.0.49
 
 ### Patch Changes
