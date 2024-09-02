@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.65
+
+### Patch Changes
+
+- 714191f: handle holdem parse
+- b7ce907: back btn fix
+
 ## 2.16.64
 
 ### Patch Changes
