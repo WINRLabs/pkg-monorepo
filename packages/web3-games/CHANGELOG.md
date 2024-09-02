@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.53
+
+### Patch Changes
+
+- a29b735: remove allowance
+- Updated dependencies [a29b735]
+  - @winrlabs/games@2.16.66
+  - @winrlabs/web3@0.10.98
+  - @winrlabs/web3-games@9.0.53
+
 ## 9.0.52
 
 ### Patch Changes

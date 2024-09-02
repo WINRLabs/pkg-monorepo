@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.66
+
+### Patch Changes
+
+- a29b735: remove allowance
+
 ## 2.16.65
 
 ### Patch Changes

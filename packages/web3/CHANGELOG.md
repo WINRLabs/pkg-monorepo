@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.98
+
+### Patch Changes
+
+- a29b735: remove allowance
+
 ## 0.10.97
 
 ### Patch Changes
