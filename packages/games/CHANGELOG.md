@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.68
+
+### Patch Changes
+
+- f8fe052: mines fix
+
 ## 2.16.67
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.55
+
+### Patch Changes
+
+- f8fe052: mines fix
+- Updated dependencies [f8fe052]
+  - @winrlabs/games@2.16.68
+  - @winrlabs/web3@0.10.100
+  - @winrlabs/web3-games@9.0.55
+
 ## 9.0.54
 
 ### Patch Changes

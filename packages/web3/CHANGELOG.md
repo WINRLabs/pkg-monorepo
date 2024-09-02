@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.100
+
+### Patch Changes
+
+- f8fe052: mines fix
+
 ## 0.10.99
 
 ### Patch Changes
