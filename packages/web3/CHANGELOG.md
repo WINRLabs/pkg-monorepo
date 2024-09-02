@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.99
+
+### Patch Changes
+
+- 2248db1: value fix
+
 ## 0.10.98
 
 ### Patch Changes

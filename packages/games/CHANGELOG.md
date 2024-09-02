@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.67
+
+### Patch Changes
+
+- 2248db1: value fix
+
 ## 2.16.66
 
 ### Patch Changes
