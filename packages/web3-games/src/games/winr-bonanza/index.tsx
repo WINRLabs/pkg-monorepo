@@ -86,7 +86,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const encodedParams = React.useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
-      wager: formValues.actualBetAmount,
+      wager: formValues.betAmount,
       selectedCurrency: selectedToken,
       lastPrice: priceFeed[selectedToken.priceKey],
     });
@@ -118,7 +118,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     };
   }, [
     formValues.isDoubleChance,
-    formValues.actualBetAmount,
+    formValues.betAmount,
     selectedToken.address,
     priceFeed[selectedToken.priceKey],
   ]);

@@ -110,14 +110,24 @@ export function Providers(props: { children: ReactNode }) {
               priceKey: 'weth',
             },
             {
+              address: '0xBF6FA9d2BF9f681E7b6521b49Cf8ecCF9ad8d31d',
+              bankrollIndex: '0x0000000000000000000000000000000000000006',
+              displayDecimals: 2,
+              decimals: 18,
+              icon: '/tokens/winr.png',
+              symbol: 'WINR',
+              playable: true,
+              priceKey: 'winr',
+            },
+            {
               address: '0x372B5997502E668B8804D11d1569eB28F51a7e4e',
               bankrollIndex: '0x0000000000000000000000000000000000000007',
               displayDecimals: 2,
               decimals: 18,
-              icon: '/tokens/usdc.png',
+              icon: '/tokens/usdt.png',
               symbol: 'MCK',
               playable: true,
-              priceKey: 'mock token',
+              priceKey: 'usdt',
             },
           ]}
           selectedToken={{
@@ -125,10 +135,10 @@ export function Providers(props: { children: ReactNode }) {
             bankrollIndex: '0x0000000000000000000000000000000000000007',
             displayDecimals: 2,
             decimals: 18,
-            icon: '/tokens/usdc.png',
+            icon: '/tokens/usdt.png',
             symbol: 'MCK',
             playable: true,
-            priceKey: 'mock token',
+            priceKey: 'usdt',
           }}
         >
           <AppUiProviders wagmiConfig={config}>

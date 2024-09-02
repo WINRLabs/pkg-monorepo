@@ -11,7 +11,7 @@ export default function CoinFlipPage() {
             backgroundImage: 'url(/coin-flip/coin-flip-bg.png)',
           },
         }}
-        minWager={0.1}
+        minWager={0.01}
         maxWager={2000}
         onPlayerStatusUpdate={(d) => {
           console.log(d, 'DATA DATA DATA');

@@ -12,7 +12,7 @@ export type PriceFeedVariable =
   | 'weth'
   | 'sol'
   | 'usdt'
-  | 'mock token';
+  | 'mck';
 
 type TPriceFeed = Record<PriceFeedVariable, number>;
 
@@ -25,7 +25,7 @@ const defaultValues: TPriceFeed = {
   weth: 1,
   sol: 1,
   usdt: 1,
-  'mock token': 1,
+  mck: 1,
 };
 
 export const usePriceFeed = () => {
@@ -35,6 +35,7 @@ export const usePriceFeed = () => {
     {
       refetchInterval: 5000,
       refetchOnWindowFocus: false,
+      retry: false,
     }
   );
 

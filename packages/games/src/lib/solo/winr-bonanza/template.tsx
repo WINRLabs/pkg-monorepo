@@ -619,7 +619,7 @@ export const WinrBonanzaTemplate = ({
     [betAmount, actualBetAmount, isDoubleChance]
   );
 
-  const debouncedFormFields = useDebounce(formFields, 400);
+  const debouncedFormFields = useDebounce(formFields, 0);
 
   React.useEffect(() => {
     onFormChange(debouncedFormFields[0]);

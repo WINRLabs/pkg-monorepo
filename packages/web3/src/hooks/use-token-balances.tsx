@@ -1,11 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { Address, formatUnits } from "viem";
-import { useReadContracts } from "wagmi";
+import { useEffect, useMemo } from 'react';
+import { Address, formatUnits } from 'viem';
+import { useReadContracts } from 'wagmi';
 
-import { erc20Abi } from "../abis";
-import { BalanceMap, useBalanceStore } from "../providers/balance";
-import { useTokenStore } from "../providers/token";
-import { toDecimals } from "../utils/number";
+import { erc20Abi } from '../abis';
+import { BalanceMap, useBalanceStore } from '../providers/balance';
+import { useTokenStore } from '../providers/token';
+import { toDecimals } from '../utils/number';
+import { useNativeTokenBalance } from './use-native-token-balance';
+
+export const WRAPPED_WINR_BANKROLL = '0x0000000000000000000000000000000000000006';
 
 const getContractsToRead = ({
   balancesToRead,
@@ -18,7 +21,7 @@ const getContractsToRead = ({
     return {
       address: tokenAddress,
       abi: erc20Abi,
-      functionName: "balanceOf",
+      functionName: 'balanceOf',
       args: [account],
     };
   });
@@ -58,6 +61,8 @@ export const useTokenBalances = ({
     },
   });
 
+  const nativeWinr = useNativeTokenBalance({ account });
+
   useEffect(() => {
     let balances: BalanceMap = {};
     if (!result || !result.data) return;
@@ -69,15 +74,19 @@ export const useTokenBalances = ({
 
       if (!token) return;
 
-      const balance = Number(
-        formatUnits(value.result as bigint, token.decimals)
-      );
+      let balance = Number(formatUnits(value.result as bigint, token.decimals));
+
+      if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) {
+        console.log(balance, 'balance', nativeWinr.balance);
+      }
+
+      if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) balance += nativeWinr.balance;
 
       balances[token.address] = toDecimals(balance, token.displayDecimals);
     });
 
     updateBalances(balances);
-  }, [result.data, tokens]);
+  }, [result.data, tokens, nativeWinr.balance]);
 
   return result;
 };
