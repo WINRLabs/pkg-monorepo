@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.60
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+- Updated dependencies [9eb20b4]
+  - @winrlabs/games@2.16.73
+  - @winrlabs/web3@0.10.105
+  - @winrlabs/web3-games@9.0.60
+
 ## 9.0.59
 
 ### Patch Changes

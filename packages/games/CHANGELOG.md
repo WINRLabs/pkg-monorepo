@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.73
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+
 ## 2.16.72
 
 ### Patch Changes

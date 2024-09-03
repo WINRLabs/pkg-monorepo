@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.105
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+
 ## 0.10.104
 
 ### Patch Changes
