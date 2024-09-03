@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 2.16.71
+
+### Patch Changes
+
+- dc7122d: wrap unwrap improvement
+- ed5b338: fix
+
 ## 2.16.70
 
 ### Patch Changes
