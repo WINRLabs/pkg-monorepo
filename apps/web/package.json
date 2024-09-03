@@ -1,7 +1,7 @@
 {
   "name": "web",
   "private": true,
-  "version": "1.0.134",
+  "version": "1.0.135",
   "scripts": {
     "dev": "next dev -p 3001",
     "start": "next start",

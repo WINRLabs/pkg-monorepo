@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.69
+
+### Patch Changes
+
+- f415b7b: wrap fix
+
 ## 2.16.68
 
 ### Patch Changes

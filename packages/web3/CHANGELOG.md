@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.101
+
+### Patch Changes
+
+- f415b7b: wrap fix
+
 ## 0.10.100
 
 ### Patch Changes

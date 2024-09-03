@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.56
+
+### Patch Changes
+
+- f415b7b: wrap fix
+- Updated dependencies [f415b7b]
+  - @winrlabs/games@2.16.69
+  - @winrlabs/web3@0.10.101
+  - @winrlabs/web3-games@9.0.56
+
 ## 9.0.55
 
 ### Patch Changes
