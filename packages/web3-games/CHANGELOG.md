@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.61
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+- Updated dependencies [9c9fcda]
+  - @winrlabs/web3@0.10.106
+  - @winrlabs/games@2.16.74
+  - @winrlabs/web3-games@9.0.61
+
 ## 9.0.60
 
 ### Patch Changes

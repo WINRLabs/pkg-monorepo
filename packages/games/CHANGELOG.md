@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.74
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+
 ## 2.16.73
 
 ### Patch Changes

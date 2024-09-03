@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.106
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+
 ## 0.10.105
 
 ### Patch Changes
