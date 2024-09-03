@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.104
+
+### Patch Changes
+
+- bbabd6b: bet history fix
+
 ## 0.10.103
 
 ### Patch Changes
