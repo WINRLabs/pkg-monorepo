@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.70
+
+### Patch Changes
+
+- 4bf1693: update
+
 ## 2.16.69
 
 ### Patch Changes
