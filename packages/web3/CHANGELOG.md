@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.108
+
+### Patch Changes
+
+- 0a76021: refactor
+
 ## 0.10.107
 
 ### Patch Changes

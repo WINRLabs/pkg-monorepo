@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 9.0.63
+
+### Patch Changes
+
+- 0a76021: refactor
+- Updated dependencies [0a76021]
+  - @winrlabs/web3@0.10.108
+  - @winrlabs/web3-games@9.0.63
+
 ## 9.0.62
 
 ### Patch Changes
