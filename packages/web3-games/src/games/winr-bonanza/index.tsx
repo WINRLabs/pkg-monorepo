@@ -11,11 +11,14 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
   winrBonanzaAbi,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -74,6 +77,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -86,7 +90,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const encodedParams = React.useMemo(() => {
     const { tokenAddress, wagerInWei } = prepareGameTransaction({
-      wager: formValues.actualBetAmount,
+      wager: formValues.betAmount,
       selectedCurrency: selectedToken,
       lastPrice: priceFeed[selectedToken.priceKey],
     });
@@ -118,7 +122,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     };
   }, [
     formValues.isDoubleChance,
-    formValues.actualBetAmount,
+    formValues.betAmount,
     selectedToken.address,
     priceFeed[selectedToken.priceKey],
   ]);
@@ -233,8 +237,19 @@ export default function WinrBonanzaTemplateWithWeb3({
     encodedTxData: encodedFreeSpinParams.encodedTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const handleBet = async (errorCount = 0) => {
     console.log('spin button called!');
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     // if (!allowance.hasAllowance) {
     //   const handledAllowance = await allowance.handleAllowance({
@@ -251,7 +266,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     // await handleTx.mutateAsync();
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -264,6 +279,8 @@ export default function WinrBonanzaTemplateWithWeb3({
   };
 
   const handleBuyFreeSpins = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -274,7 +291,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     }
     console.log('buy feature');
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleBuyFeatureTx.mutateAsync();
@@ -297,7 +314,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     console.log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleFreeSpinTx.mutateAsync();

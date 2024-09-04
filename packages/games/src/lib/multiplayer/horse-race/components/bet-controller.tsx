@@ -24,6 +24,7 @@ interface Props {
   maxPayout: number;
   isGamblerParticipant: boolean;
   logo?: string;
+  onLogin?: () => void;
 }
 
 export const HorseRaceBetController: React.FC<Props> = ({
@@ -32,6 +33,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
   maxPayout,
   isGamblerParticipant,
   logo,
+  onLogin,
 }) => {
   const form = useFormContext() as HorseRaceForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
@@ -206,7 +208,11 @@ export const HorseRaceBetController: React.FC<Props> = ({
             </span>
           </div>
         </div>
-        <PreBetButton variant="horse-race" className="wr-mb-4 md:wr-mb-0 wr-uppercase">
+        <PreBetButton
+          onLogin={onLogin}
+          variant="horse-race"
+          className="wr-mb-4 md:wr-mb-0 wr-uppercase"
+        >
           <Button
             type="submit"
             variant="horse-race"

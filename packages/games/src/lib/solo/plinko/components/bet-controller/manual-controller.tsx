@@ -19,9 +19,10 @@ import { PlinkoForm } from '../../types';
 interface Props {
   minWager: number;
   maxWager: number;
+  onLogin?: () => void;
 }
 
-export const ManualController: React.FC<Props> = ({ minWager, maxWager }) => {
+export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
   const form = useFormContext() as PlinkoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -60,7 +61,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager }) => {
         </div>
       </div>
 
-      <PreBetButton>
+      <PreBetButton onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

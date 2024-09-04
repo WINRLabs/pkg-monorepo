@@ -16,9 +16,15 @@ interface ManualControllerProps {
   winMultiplier: number;
   minWager: number;
   maxWager: number;
+  onLogin?: () => void;
 }
 
-export const ManualController = ({ winMultiplier, minWager, maxWager }: ManualControllerProps) => {
+export const ManualController = ({
+  winMultiplier,
+  minWager,
+  maxWager,
+  onLogin,
+}: ManualControllerProps) => {
   const form = useFormContext() as CoinFlipForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -51,7 +57,7 @@ export const ManualController = ({ winMultiplier, minWager, maxWager }: ManualCo
           <TotalWager betCount={1} wager={form.getValues().wager} />
         </div>
       </div>
-      <PreBetButton>
+      <PreBetButton onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

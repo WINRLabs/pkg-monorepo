@@ -168,7 +168,7 @@ export const Canvas: React.FC<CanvasProps> = ({
       const multiplier = multipliers[
         getMultiplierIndex(plinkoSize, paths[order] as number[])
       ] as number;
-      onAnimationStep(order, multiplier);
+      onAnimationStep(0, multiplier);
       addLastBet({
         multiplier,
         ...(plinkoGameResults[order] as PlinkoGameResult),

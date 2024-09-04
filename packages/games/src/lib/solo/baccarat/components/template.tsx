@@ -32,7 +32,9 @@ type TemplateProps = BaccaratGameProps & {
 
   onSubmitGameForm: (data: BaccaratFormFields) => void;
   onFormChange?: (fields: BaccaratFormFields) => void;
+
   onError?: (e: any) => void;
+  onLogin?: () => void;
 };
 
 const BaccaratTemplate: React.FC<TemplateProps> = ({
@@ -46,6 +48,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   onSubmitGameForm,
   onFormChange,
   onError,
+  onLogin,
 }) => {
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
@@ -70,34 +73,34 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
     wager: z
       .number()
       .min(minWager || 1, {
-        message: `Minimum wager is ${minWager || 1}`,
+        message: `Minimum wager is $${minWager || 1}`,
       })
       .max(maxWager || 2000, {
-        message: `Maximum wager is ${maxWager || 2000}`,
+        message: `Maximum wager is $${maxWager || 2000}`,
       }),
     playerWager: z
       .number()
       .min(0, {
-        message: `Minimum wager is ${minWager || 1}`,
+        message: `Minimum wager is $${minWager || 1}`,
       })
       .max(maxWager || 2000, {
-        message: `Maximum wager is ${maxWager || 2000}`,
+        message: `Maximum wager is $${maxWager || 2000}`,
       }),
     bankerWager: z
       .number()
       .min(0, {
-        message: `Minimum wager is ${minWager || 1}`,
+        message: `Minimum wager is $${minWager || 1}`,
       })
       .max(maxWager || 2000, {
-        message: `Maximum wager is ${maxWager || 2000}`,
+        message: `Maximum wager is $${maxWager || 2000}`,
       }),
     tieWager: z
       .number()
       .min(0, {
-        message: `Minimum wager is ${minWager || 1}`,
+        message: `Minimum wager is $${minWager || 1}`,
       })
       .max(maxWager || 2000, {
-        message: `Maximum wager is ${maxWager || 2000}`,
+        message: `Maximum wager is $${maxWager || 2000}`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -243,6 +246,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: BaccaratGameSettledResult) => {
@@ -292,6 +296,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
             onSelectedChipChange={setSelectedChip}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={onLogin}
           />
           <SceneContainer
             className="wr-relative wr-flex wr-h-[340px] lg:wr-h-[640px] wr-overflow-hidden"

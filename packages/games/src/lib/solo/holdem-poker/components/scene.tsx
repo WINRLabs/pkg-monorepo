@@ -5,6 +5,7 @@ import React from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import { useDebounce } from 'use-debounce';
 
+import { RotatedBackButton } from '../../../common/rotated-back-button';
 import { CDN_URL } from '../../../constants';
 import { useListenUnityEvent } from '../../../hooks/use-listen-unity-event';
 import { useEqualizeUnitySound } from '../../../hooks/use-unity-sound';
@@ -15,7 +16,6 @@ import {
   UnityDealEvent,
   UnityFoldEvent,
   UnityNextGameAvailable,
-  UnityPlayerHandWin,
   UnitySlotBetValue,
   UnityWaitForResult,
 } from '../constants';
@@ -101,20 +101,31 @@ export const HoldemPokerScene = ({
       setLastMove('call');
     }
 
-    if (unityEvent.name === UnityPlayerHandWin) {
+    // if (unityEvent.name === UnityPlayerHandWin) {
+    //   console.log(activeGameData.payoutAmount, 'PAYOUT');
+
+    //   sendMessage(
+    //     'WebGLHandler',
+    //     'ReceiveMessage',
+    //     `HP_SetResult|${toDecimals(activeGameData.payoutAmount, 2)}`
+    //   );
+    // }
+
+    if (unityEvent.name === UnityWaitForResult) {
+      sendMessage(
+        'WebGLHandler',
+        'ReceiveMessage',
+        `HP_SetWinResult|${toDecimals(activeGameData.result, 2)}`
+      );
+
+      console.log(activeGameData.payoutAmount, 'PAYOUT');
+
       sendMessage(
         'WebGLHandler',
         'ReceiveMessage',
         `HP_SetResult|${toDecimals(activeGameData.payoutAmount, 2)}`
       );
     }
-
-    if (unityEvent.name === UnityWaitForResult)
-      sendMessage(
-        'WebGLHandler',
-        'ReceiveMessage',
-        `HP_SetWinResult|${toDecimals(activeGameData.result, 2)}`
-      );
 
     if (unityEvent.name === UnityNextGameAvailable) {
       onRefresh();
@@ -124,9 +135,12 @@ export const HoldemPokerScene = ({
     }
 
     if (unityEvent.name == UnitySlotBetValue) {
-      const param = JSON.parse(unityEvent.strParam);
-
-      handleUnityChipEvent(param);
+      try {
+        const param = JSON.parse(unityEvent.strParam);
+        handleUnityChipEvent(param);
+      } catch (error) {
+        console.log('HOLDEM POKER HANDLE CHIP EVENT ERROR', error);
+      }
     }
   }, [unityEvent]);
 
@@ -158,7 +172,7 @@ export const HoldemPokerScene = ({
   const handleFinalizeEvent = async () => {
     await handleFinalize();
 
-    sendMessage('WebGLHandler', 'ReceiveMessage', `ChangeState|${HOLDEM_POKER_GAME_STATUS.OnPlay}`);
+    // sendMessage('WebGLHandler', 'ReceiveMessage', `ChangeState|${HOLDEM_POKER_GAME_STATUS.OnIdle}`);
     setStatus(HOLDEM_POKER_GAME_STATUS.OnIdle);
     onRefresh();
   };
@@ -167,7 +181,7 @@ export const HoldemPokerScene = ({
     await handleFinalizeFold();
 
     sendMessage('WebGLHandler', 'ReceiveMessage', 'FoldPermission|true');
-    sendMessage('WebGLHandler', 'ReceiveMessage', `ChangeState|${HOLDEM_POKER_GAME_STATUS.OnPlay}`);
+    // sendMessage('WebGLHandler', 'ReceiveMessage', `ChangeState|${HOLDEM_POKER_GAME_STATUS.OnIdle}`);
     setStatus(HOLDEM_POKER_GAME_STATUS.OnIdle);
     onRefresh();
   };
@@ -266,7 +280,7 @@ export const HoldemPokerScene = ({
 
   React.useEffect(() => {
     if (wager <= 0 && !isUnityLoaded) return;
-    sendMessage('WebGLHandler', 'ReceiveMessage', `HP_SetWager|${wager}`);
+    sendMessage('WebGLHandler', 'ReceiveMessage', `HP_SetWager|${wager || 0.01}`);
   }, [wager, isUnityLoaded]);
 
   const formFields = React.useMemo(() => ({ ante, aaBonus, wager }), [ante, aaBonus, wager]);
@@ -320,7 +334,7 @@ export const HoldemPokerScene = ({
       )}
       <Unity
         unityProvider={unityProvider}
-        devicePixelRatio={1}
+        devicePixelRatio={1.5}
         className={cn('wr-h-full wr-w-full wr-rounded-md wr-bg-zinc-900')}
       />
       <WagerBetController
@@ -331,6 +345,9 @@ export const HoldemPokerScene = ({
         maxWager={maxWager || 2000}
         status={status}
       />
+      <div className="lg:wr-hidden">
+        <RotatedBackButton />
+      </div>
     </>
   );
 };

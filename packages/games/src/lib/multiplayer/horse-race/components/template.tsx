@@ -29,6 +29,7 @@ type TemplateProps = {
   onSubmitGameForm: (props: HorseRaceFormFields) => void;
   onFormChange?: (fields: HorseRaceFormFields) => void;
   onComplete?: () => void;
+  onLogin?: () => void;
   buildedGameUrl: string;
 };
 
@@ -104,6 +105,7 @@ const HorseRaceTemplate = (props: TemplateProps) => {
               maxPayout={maxPayout}
               isGamblerParticipant={isGamblerParticipant}
               logo={props.options.scene?.logo}
+              onLogin={props.onLogin}
             />
             <LastBets />
             <RacingScene

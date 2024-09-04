@@ -5,7 +5,7 @@ import { SoundEffects, useAudioEffect } from '../hooks/use-audio-effect';
 import { Button } from '../ui/button';
 import { INumberInputContext, NumberInput } from '../ui/number-input';
 import { cn } from '../utils/style';
-import { toFormatted } from '../utils/web3';
+import { toDecimals, toFormatted } from '../utils/web3';
 
 interface Props {
   children?: React.ReactNode;
@@ -25,13 +25,10 @@ export const WagerBalance = ({ maxWager, onClick, className }: WagerBalanceProps
   const form = useFormContext();
 
   const handleWagerUpdate = () => {
-    const betCount: number = form.getValues('betCount') ?? 1;
+    const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
 
-    const maxAmount =
-      (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
-
-    form?.getValues('wager') && form.setValue('wager', maxAmount);
-    onClick && onClick(maxAmount);
+    form?.getValues('wager') && form.setValue('wager', toDecimals(maxAmount, 2));
+    onClick && onClick(toDecimals(maxAmount, 2));
   };
 
   return (
@@ -109,8 +106,8 @@ export const WagerInput = ({
               clickEffect.play();
               const newValue = rest.value / 2;
 
-              if (newValue < minWager) form.setValue('wager', minWager);
-              else form.setValue('wager', newValue);
+              if (newValue < minWager) form.setValue('wager', toDecimals(minWager, 2));
+              else form.setValue('wager', toDecimals(newValue, 2));
             }}
           >
             1/2
@@ -125,8 +122,8 @@ export const WagerInput = ({
               const newValue = rest.value * 2;
               const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
 
-              if (newValue > maxAmount) form.setValue('wager', maxAmount);
-              else form.setValue('wager', newValue);
+              if (newValue > maxAmount) form.setValue('wager', toDecimals(maxAmount, 2));
+              else form.setValue('wager', toDecimals(newValue, 2));
             }}
           >
             2x
@@ -139,10 +136,9 @@ export const WagerInput = ({
               variant={'secondary'}
               onClick={() => {
                 clickEffect.play();
-                const betCount = form?.getValues('betCount') ?? 1;
                 const maxAmount =
-                  (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
-                form.setValue('wager', maxAmount);
+                  maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
+                form.setValue('wager', toDecimals(maxAmount, 2));
               }}
             >
               MAX
@@ -183,7 +179,7 @@ export const WagerSetterButtons = ({
         variant={'secondary'}
         onClick={() => {
           clickEffect.play();
-          form.setValue('wager', minWager);
+          form.setValue('wager', toDecimals(minWager, 2));
         }}
       >
         MIN
@@ -197,8 +193,8 @@ export const WagerSetterButtons = ({
           clickEffect.play();
           const newValue = currentWager / 2;
 
-          if (newValue < minWager) form.setValue('wager', minWager);
-          else form.setValue('wager', newValue);
+          if (newValue < minWager) form.setValue('wager', toDecimals(minWager, 2));
+          else form.setValue('wager', toDecimals(newValue, 2));
         }}
       >
         1/2
@@ -213,8 +209,8 @@ export const WagerSetterButtons = ({
           const newValue = currentWager * 2;
           const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
 
-          if (newValue > maxAmount) form.setValue('wager', maxAmount);
-          else form.setValue('wager', newValue);
+          if (newValue > maxAmount) form.setValue('wager', toDecimals(maxAmount, 2));
+          else form.setValue('wager', toDecimals(newValue, 2));
         }}
       >
         2x
@@ -226,10 +222,8 @@ export const WagerSetterButtons = ({
         variant={'secondary'}
         onClick={() => {
           clickEffect.play();
-          const betCount = form?.getValues('betCount') ?? 1;
-          const maxAmount =
-            (maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager) / betCount;
-          form.setValue('wager', maxAmount);
+          const maxAmount = maxWager > balanceAsDollar ? balanceAsDollar - SLIPPAGE : maxWager;
+          form.setValue('wager', toDecimals(maxAmount, 2));
         }}
       >
         MAX

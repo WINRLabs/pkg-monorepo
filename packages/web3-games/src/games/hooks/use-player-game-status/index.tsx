@@ -61,6 +61,7 @@ export const usePlayerGameStatus = ({
       enabled: !!currentAccount.address,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      retry: false,
     },
   });
 
@@ -74,6 +75,7 @@ export const usePlayerGameStatus = ({
       enabled: !!currentAccount.address && !!gameAddress,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      retry: false,
     },
   });
 
@@ -87,6 +89,7 @@ export const usePlayerGameStatus = ({
       enabled: !!currentAccount.address,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      retry: false,
     },
   });
 
@@ -100,6 +103,7 @@ export const usePlayerGameStatus = ({
       enabled: !!currentAccount.address,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      retry: false,
     },
   });
 

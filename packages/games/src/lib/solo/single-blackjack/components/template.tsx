@@ -38,6 +38,7 @@ type TemplateProps = SingleBlackjackGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  onLogin?: () => void;
 };
 
 const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
@@ -60,6 +61,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   onInsure,
   onGameCompleted,
   onFormChange,
+  onLogin,
 }) => {
   // ui cards
   const [dealerCards, setDealerCards] = React.useState<(BlackjackCard | null)[]>([]);
@@ -351,6 +353,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
             onSplit={onSplit}
             onStand={onStand}
             onInsure={onInsure}
+            onLogin={onLogin}
           />
           <SceneContainer
             className={cn('wr-relative wr-flex !wr-p-0 wr-max-w-full', styles.sceneWrapper)}

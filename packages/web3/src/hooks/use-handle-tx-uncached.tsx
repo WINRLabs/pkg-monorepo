@@ -1,19 +1,37 @@
-"use client";
+'use client';
 
-import { useMutation } from "@tanstack/react-query";
-import { Abi, Address, ContractFunctionArgs, ContractFunctionName } from "viem";
-import { Config } from "wagmi";
-import { WriteContractVariables } from "wagmi/query";
+import { useMutation } from '@tanstack/react-query';
+import {
+  Abi,
+  Address,
+  ContractFunctionArgs,
+  ContractFunctionName,
+  encodeFunctionData,
+  EncodeFunctionDataParameters,
+  SwitchChainError,
+} from 'viem';
+import { Config, useSwitchChain } from 'wagmi';
+import { WriteContractVariables } from 'wagmi/query';
 
-import { SimpleAccountAPI } from "../smart-wallet";
-import { useBundlerClient } from "./use-bundler-client";
-import { useSmartAccountApi } from "./use-smart-account-api";
+import { SimpleAccountAPI } from '../smart-wallet';
+import { useBundlerClient, WinrBundlerClient } from './use-bundler-client';
+import { useSmartAccountApi } from './use-smart-account-api';
+import { useCurrentAccount } from './use-current-address';
+import { useCreateSession, useSessionStore } from './session';
+import { ErrorCode, mmAuthSessionErr, mmAuthSignErrors } from '../utils/error-codes';
+import { delay } from './use-token-allowance';
 
 export interface UseHandleTxUncachedOptions {
   successMessage?: string;
   successCb?: () => void;
   errorCb?: (e?: any) => void;
-  method?: "sendUserOperation" | "sendGameOperation";
+  confirmations?: number;
+  showDefaultToasts?: boolean;
+  refetchInterval?: number;
+  unauthRedirectionCb?: () => void;
+  method?: 'sendUserOperation' | 'sendGameOperation';
+  client?: WinrBundlerClient;
+  accountApi?: SimpleAccountAPI;
 }
 
 interface UseHandleTxParams {
@@ -22,25 +40,22 @@ interface UseHandleTxParams {
 
 interface HandleTxParams<
   abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, "nonpayable" | "payable">,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
 > {
   writeContractVariables: WriteContractVariables<
     abi,
-    ContractFunctionName<abi, "nonpayable" | "payable">,
-    ContractFunctionArgs<abi, "nonpayable" | "payable", functionName>,
+    ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+    ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
     Config,
-    Config["chains"][number]["id"]
+    Config['chains'][number]['id']
   >;
 }
 
-const getCachedSignature = async <
+const createUserOp = async <
   abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, "nonpayable" | "payable">,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
 >(
-  writeContractVariables: HandleTxParams<
-    abi,
-    functionName
-  >["writeContractVariables"],
+  writeContractVariables: HandleTxParams<abi, functionName>['writeContractVariables'],
   encodedData: `0x${string}`,
   accountApi?: SimpleAccountAPI
 ) => {
@@ -57,34 +72,118 @@ const getCachedSignature = async <
 
 export const useHandleTxUncached = <
   abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, "nonpayable" | "payable">,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
 >(
   params: UseHandleTxParams
 ) => {
   const { options } = params;
-  const { method = "sendUserOperation" } = options;
-  const { accountApi } = useSmartAccountApi();
-  const { client } = useBundlerClient();
+  const { method = 'sendUserOperation' } = options;
+  const { address, isSocialLogin, rootAddress } = useCurrentAccount();
+  const { accountApi: defaultAccountApi } = useSmartAccountApi();
+  const { client: defaultClient } = useBundlerClient();
+  const { switchChainAsync } = useSwitchChain();
+
+  const createSession = useCreateSession();
+
+  const sessionStore = useSessionStore();
 
   const handleTxUncached = async ({
     encodedTxData,
+    params,
     writeContractVariables,
   }: {
     encodedTxData: Address;
-    writeContractVariables: HandleTxParams<
-      abi,
-      functionName
-    >["writeContractVariables"];
+    params: {
+      networkId?: number;
+    };
+    writeContractVariables: HandleTxParams<abi, functionName>['writeContractVariables'];
   }) => {
+    const networkId = params && 'networkId' in params ? params.networkId : 777777;
+
+    if (!address && options.unauthRedirectionCb) {
+      options.unauthRedirectionCb();
+
+      return;
+    }
+
+    let client = options.client ? options.client : defaultClient;
+
+    let accountApi = options.accountApi ? options.accountApi : defaultAccountApi;
+
+    let encodedData = encodedTxData
+      ? encodedTxData
+      : encodeFunctionData<abi, functionName>({
+          abi: writeContractVariables.abi,
+          functionName: writeContractVariables.functionName,
+          args: writeContractVariables.args,
+        } as EncodeFunctionDataParameters<abi, functionName>);
+
     if (!client) return;
 
-    const userOp = await getCachedSignature(
-      writeContractVariables,
-      encodedTxData,
-      accountApi
-    );
+    if (!isSocialLogin) {
+      try {
+        await switchChainAsync({ chainId: networkId! });
+      } catch (error) {
+        throw new SwitchChainError(error as Error);
+      }
+
+      let _part = sessionStore.part;
+      let _permit = sessionStore.permit;
+
+      const getNewSession = async () => {
+        const session = await createSession.mutateAsync({
+          customClient: client,
+          signerAddress: rootAddress!,
+          untilInHours: 24,
+        });
+
+        sessionStore.setPart(session.part);
+        sessionStore.setPermit(session.permit);
+
+        return { part: session.part, permit: session.permit };
+      };
+
+      let retryCount = 0;
+      const maxRetries = 3;
+
+      const makeRequest = async () => {
+        try {
+          return await client?.request('call', {
+            call: {
+              dest: writeContractVariables.address as Address,
+              data: encodedData,
+              value: Number(writeContractVariables.value || 0),
+            },
+            owner: rootAddress!,
+            part: _part ?? '0x',
+            permit: _permit ?? '0x',
+          });
+        } catch (error: any) {
+          if (retryCount < maxRetries) {
+            retryCount++;
+            // If the first attempt fails, get a new session and try again
+            if (
+              error?.code !== ErrorCode.InvalidNonce &&
+              (mmAuthSignErrors.includes(error?.message) ||
+                error?.message?.includes(mmAuthSessionErr))
+            ) {
+              ({ part: _part, permit: _permit } = await getNewSession());
+            }
+            await delay(200);
+            return await makeRequest();
+          } else {
+            throw error; // Rethrow the error if max retries reached
+          }
+        }
+      };
+
+      return makeRequest();
+    }
+
+    const userOp = await createUserOp(writeContractVariables, encodedData, accountApi);
+
     if (!userOp) {
-      throw new Error("No cached signature found");
+      throw new Error('No cached signature found');
     }
 
     const { status, hash } = await client.request(method, {
@@ -101,20 +200,21 @@ export const useHandleTxUncached = <
       paymaster: userOp.paymaster,
       paymasterVerificationGasLimit: userOp.paymasterVerificationGasLimit
         ? userOp.paymasterVerificationGasLimit.toString()
-        : "",
+        : '',
       paymasterPostOpGasLimit: userOp.paymasterPostOpGasLimit
         ? userOp.paymasterPostOpGasLimit.toString()
-        : "",
+        : '',
       paymasterData: userOp.paymasterData,
       signature: userOp.signature,
     });
 
-    if (status !== "success") {
+    if (status !== 'success') {
+      accountApi && (await accountApi.refreshNonce());
       throw new Error(status);
     } else {
-      console.log(accountApi?.cachedNonce, "cached nonce");
+      console.log(accountApi?.cachedNonce, 'cached nonce');
       accountApi?.cachedNonce && accountApi.increaseNonce();
-      console.log(accountApi?.cachedNonce, "cached nonce updated");
+      console.log(accountApi?.cachedNonce, 'cached nonce updated');
     }
 
     return { status, hash };

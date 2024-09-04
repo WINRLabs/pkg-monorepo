@@ -22,6 +22,7 @@ type TemplateProps = LimboGameProps & {
   maxWager?: number;
   onSubmitGameForm: (props: LimboFormField) => void;
   onFormChange?: (fields: LimboFormField) => void;
+  onLogin?: () => void;
 };
 
 const LimboTemplate = ({ ...props }: TemplateProps) => {
@@ -33,10 +34,10 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -87,6 +88,7 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: LimboGameResult[]) => {
@@ -133,6 +135,7 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={multiplier}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={props.onLogin}
           />
           <SceneContainer className="md:wr-h-[640px] wr-h-[200px] wr-overflow-hidden !wr-p-0">
             <Limbo.Game {...props}>

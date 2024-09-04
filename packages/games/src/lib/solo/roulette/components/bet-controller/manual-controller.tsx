@@ -21,6 +21,7 @@ interface Props {
   maxWager: number;
   onSelectedChipChange: (c: Chip) => void;
   undoBet: () => void;
+  onLogin?: () => void;
 }
 
 export const ManualController: React.FC<Props> = ({
@@ -30,6 +31,7 @@ export const ManualController: React.FC<Props> = ({
   maxWager,
   onSelectedChipChange,
   undoBet,
+  onLogin,
 }) => {
   const { account } = useGameOptions();
   const form = useFormContext() as RouletteForm;
@@ -112,7 +114,7 @@ export const ManualController: React.FC<Props> = ({
       </div>
 
       <div className="wr-w-full lg:wr-mb-6">
-        <PreBetButton totalWager={totalWager}>
+        <PreBetButton onLogin={onLogin} totalWager={totalWager}>
           <Button
             type="submit"
             variant="success"

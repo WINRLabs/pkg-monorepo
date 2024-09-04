@@ -7,6 +7,7 @@ import {
   horseRaceParticipantMapWithStore,
   HorseRaceStatus,
   HorseRaceTemplate,
+  toDecimals,
   useConfigureMultiplayerLiveResultStore,
   useHorseRaceGameStore,
   useLiveResultStore,
@@ -15,12 +16,15 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
 import { BaseGameProps } from '../../type';
@@ -55,6 +59,15 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   }) => void;
 }
 
+const selectionMultipliers = {
+  [Horse.IDLE]: 1,
+  [Horse.ONE]: 2,
+  [Horse.TWO]: 3,
+  [Horse.THREE]: 8,
+  [Horse.FOUR]: 15,
+  [Horse.FIVE]: 60,
+};
+
 const HorseRaceGame = (props: TemplateWithWeb3Props) => {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
@@ -75,6 +88,11 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     horse: Horse.IDLE,
     wager: props.minWager || 1,
   });
+
+  const maxWagerBySelection = toDecimals(
+    (props.maxWager || 100) / selectionMultipliers[formValues.horse],
+    2
+  );
 
   useConfigureMultiplayerLiveResultStore();
   const {
@@ -100,6 +118,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -230,7 +249,19 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     encodedTxData: encodedClaimParams.encodedClaimTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const onGameSubmit = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     clearLiveResults();
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -248,7 +279,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     } catch (error) {}
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -367,6 +398,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     <>
       <HorseRaceTemplate
         {...props}
+        maxWager={maxWagerBySelection}
         currentAccount={currentAccount.address as `0x${string}`}
         buildedGameUrl={props.buildedGameUrl}
         onSubmitGameForm={onGameSubmit}

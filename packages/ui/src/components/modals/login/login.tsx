@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import { SmartWalletConnectorWagmiType } from "@winrlabs/web3";
 import Link from "next/link";

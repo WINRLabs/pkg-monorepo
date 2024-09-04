@@ -76,7 +76,7 @@ export const AudioContextProvider = ({ children }: { children: React.ReactNode }
     const storedVolume = window.localStorage.getItem('volume');
 
     if (storedVolume === null) {
-      const defaultVolume = 1; // Set your desired default volume here
+      const defaultVolume = 50; // Set your desired default volume here
 
       window.localStorage.setItem('volume', String(defaultVolume));
 
@@ -85,7 +85,7 @@ export const AudioContextProvider = ({ children }: { children: React.ReactNode }
 
     const parsedVolume = Number(storedVolume);
 
-    return isNaN(parsedVolume) ? 1 : parsedVolume;
+    return isNaN(parsedVolume) ? 50 : parsedVolume;
   });
 
   const onVolumeChange = (vol: number) => {

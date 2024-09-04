@@ -31,6 +31,8 @@ type TemplateProps = RangeGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: DiceFormFields) => void;
   onFormChange: (fields: DiceFormFields) => void;
+  onError?: (e: any) => void;
+  onLogin?: () => void;
 };
 
 const defaultOptions: TemplateOptions = {
@@ -52,10 +54,10 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(MIN_BET_COUNT, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -114,6 +116,7 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: DiceGameResult[]) => {
@@ -159,6 +162,7 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={winMultiplier}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={props.onLogin}
           />
           <SceneContainer
             className={cn('wr-h-[640px]  max-md:wr-h-auto max-md:wr-pt-[130px] lg:wr-py-12')}

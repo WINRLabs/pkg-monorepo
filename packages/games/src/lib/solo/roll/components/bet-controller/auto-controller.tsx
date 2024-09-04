@@ -24,6 +24,7 @@ interface AutoControllerProps {
   maxWager: number;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+  onLogin?: () => void;
 }
 
 export const AutoController = ({
@@ -31,6 +32,7 @@ export const AutoController = ({
   maxWager,
   isAutoBetMode,
   onAutoBetModeChange,
+  onLogin,
 }: AutoControllerProps) => {
   const form = useFormContext() as RollForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
@@ -69,7 +71,7 @@ export const AutoController = ({
         />
       </div>
 
-      <PreBetButton className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

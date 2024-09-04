@@ -14,6 +14,7 @@ interface IUseStrategist {
   increasePercentageOnLoss: number;
   stopProfit: number;
   stopLoss: number;
+  isAutoBetMode: boolean;
 }
 
 export const useStrategist = ({
@@ -22,6 +23,7 @@ export const useStrategist = ({
   increasePercentageOnLoss,
   stopProfit,
   stopLoss,
+  isAutoBetMode,
 }: IUseStrategist) => {
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
@@ -30,14 +32,14 @@ export const useStrategist = ({
     const stopStrategyItems = [];
     // stop action and conditions
     const stopOnProfitCondition = Profit.toCondition({
-      type: Profit.ProfitType.Profit,
+      type: Profit.ProfitType.CumulativeProfit,
       term: Profit.ProfitTerm.GreaterThanOrEqualTo,
       amount: parseToBigInt(stopProfit, 8),
     });
 
     const stopOnLossCondition = Profit.toCondition({
-      type: Profit.ProfitType.Lost,
-      term: Profit.ProfitTerm.GreaterThan,
+      type: Profit.ProfitType.CumulativeLost,
+      term: Profit.ProfitTerm.GreaterThanOrEqualTo,
       amount: parseToBigInt(stopLoss, 8),
     });
 
@@ -107,14 +109,11 @@ export const useStrategist = ({
       wager: parseToBigInt(wager, 8),
       balance: parseToBigInt(balanceAsDollar, 8),
     });
-  }, [
-    increasePercentageOnWin,
-    increasePercentageOnLoss,
-    wager,
-    balanceAsDollar,
-    stopProfit,
-    stopLoss,
-  ]);
+  }, [increasePercentageOnWin, increasePercentageOnLoss, wager, stopProfit, stopLoss]);
+
+  React.useEffect(() => {
+    isAutoBetMode && strategist.reset();
+  }, [isAutoBetMode]);
 
   return strategist;
 };

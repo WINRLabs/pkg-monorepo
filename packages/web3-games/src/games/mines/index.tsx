@@ -19,10 +19,13 @@ import {
   Token,
   useCurrentAccount,
   useHandleTxUncached,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -69,6 +72,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const { priceFeed } = usePriceFeed();
 
   const selectedTokenAddress = useTokenStore((s) => s.selectedToken);
+
   const tokens = useTokenStore((s) => s.tokens);
 
   const [formSetValue, setFormSetValue] = useState<FormSetValue>();
@@ -76,7 +80,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const [revealCells, setRevealCells] = useState<boolean[]>([]);
 
   const [formValues, setFormValues] = useState<MinesFormField>({
-    wager: props?.minWager || 1,
+    wager: props?.minWager || 0.01,
     minesCount: 1,
     selectedCells: [],
   });
@@ -88,6 +92,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedTokenAddress.address],
   });
 
   const { submitType, updateMinesGameState, board, gameStatus } = useMinesGameStateStore([
@@ -176,6 +181,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         ],
         address: controllerAddress as Address,
       },
+      params: {},
     });
   };
 
@@ -229,6 +235,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         ],
         address: controllerAddress as Address,
       },
+      params: {},
     });
   };
 
@@ -272,6 +279,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         ],
         address: controllerAddress as Address,
       },
+      params: {},
     });
   };
 
@@ -283,7 +291,19 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     showDefaultToasts: false,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const onGameSubmit = async (values: MinesFormField) => {
+    if (selectedTokenAddress.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     setIsWaitingResponse(true);
     console.log(values, 'form values');
 
@@ -298,7 +318,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         if (!handledAllowance) return;
       }
       console.log('submit Type:', submitType);
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       if (submitType === MINES_SUBMIT_TYPE.FIRST_REVEAL) {
@@ -459,7 +479,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         onFormChange={(val) => {
           setFormValues(val);
         }}
-        minWager={props.minWager}
+        minWager={props?.minWager || 0.01}
         maxWager={props.maxWager}
         isLoading={isWaitingResponse}
         theme={props.theme}

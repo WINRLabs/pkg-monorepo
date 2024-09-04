@@ -31,6 +31,7 @@ type TemplateProps = Plinko3dGameProps & {
   buildedGameUrl: string;
   onSubmitGameForm: (data: Plinko3dFormFields) => void;
   onFormChange?: (fields: Plinko3dFormFields) => void;
+  onLogin?: () => void;
 };
 
 export function PlinkoGame({ ...props }: TemplateProps) {
@@ -40,11 +41,11 @@ export function PlinkoGame({ ...props }: TemplateProps) {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
 
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z
       .number()
@@ -91,6 +92,7 @@ export function PlinkoGame({ ...props }: TemplateProps) {
               maxWager={props?.maxWager || 2000}
               minWager={props?.minWager || 1}
               logo={props.options.betController.logo}
+              onLogin={props.onLogin}
             />
             <Plinko3d.Scene
               {...props}

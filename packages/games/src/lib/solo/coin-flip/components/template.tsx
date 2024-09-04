@@ -26,9 +26,12 @@ type TemplateProps = CoinFlipGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isGettingResult?: boolean;
   onSubmitGameForm: (data: CoinFlipFormFields) => void;
   onFormChange?: (fields: CoinFlipFormFields) => void;
-  isGettingResult?: boolean;
+
+  onError?: (error: any) => void;
+  onLogin?: () => void;
 };
 
 const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
@@ -41,10 +44,10 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(MIN_BET_COUNT, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -93,6 +96,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: CoinFlipGameResult[]) => {
@@ -139,6 +143,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={WIN_MULTIPLIER}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={props.onLogin}
           />
           <SceneContainer
             className={cn(

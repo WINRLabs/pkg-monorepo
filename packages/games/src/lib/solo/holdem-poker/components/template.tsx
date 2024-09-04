@@ -15,6 +15,7 @@ type TemplateProps = HoldemPokerGameProps & {
   minWager?: number;
   maxWager?: number;
   buildedGameUrl: string;
+  onLogin?: () => void;
 };
 
 const HoldemPokerTemplate = (props: TemplateProps) => {

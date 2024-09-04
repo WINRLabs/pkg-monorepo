@@ -30,6 +30,7 @@ type TemplateProps = RollGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: RollFormFields) => void;
   onFormChange?: (fields: RollFormFields) => void;
+  onLogin?: () => void;
 };
 
 const RollTemplate = ({ ...props }: TemplateProps) => {
@@ -42,10 +43,10 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(MIN_BET_COUNT, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -117,6 +118,7 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: RollGameResult[]) => {
@@ -164,6 +166,7 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={winMultiplier}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={props.onLogin}
           />
 
           <SceneContainer

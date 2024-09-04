@@ -27,6 +27,9 @@ type TemplateProps = RpsGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: RpsFormFields) => void;
   onFormChange?: (fields: RpsFormFields) => void;
+
+  onError?: (e: any) => void;
+  onLogin?: () => void;
 };
 
 const RpsTemplate = ({ ...props }: TemplateProps) => {
@@ -39,10 +42,10 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -91,6 +94,7 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: RPSGameResult[]) => {
@@ -136,6 +140,7 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={1.96}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={props.onLogin}
           />
           <SceneContainer
             className="wr-relative wr-h-[640px] wr-overflow-hidden !wr-p-0 max-md:wr-h-[300px]"

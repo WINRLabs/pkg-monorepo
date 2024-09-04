@@ -31,11 +31,11 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
   const formSchema = z.object({
     wager: z
       .number()
-      .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+      .min(props?.minWager || 0.01, {
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     minesCount: z.number().max(24).min(1),
     selectedCells: z.array(z.boolean()).length(25),
@@ -47,7 +47,7 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
     }),
     mode: 'all',
     defaultValues: {
-      wager: props?.minWager || 1,
+      wager: props?.minWager || 0.01,
       minesCount: 1,
       selectedCells: initialBoard.map((mine) => mine.isSelected),
     },

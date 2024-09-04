@@ -20,6 +20,7 @@ export interface Props {
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectedChipChange: (c: Chip) => void;
   undoBet: () => void;
+  onLogin?: () => void;
 }
 
 export const BetController: React.FC<Props> = (props) => {

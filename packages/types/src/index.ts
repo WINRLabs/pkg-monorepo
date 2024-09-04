@@ -1,14 +1,15 @@
-import { Address } from "viem";
+import { Address } from 'viem';
 
 export type PriceFeedVariable =
-  | "winr"
-  | "arb"
-  | "btc"
-  | "eth"
-  | "usdc"
-  | "weth"
-  | "sol"
-  | "usdt";
+  | 'winr'
+  | 'arb'
+  | 'btc'
+  | 'eth'
+  | 'usdc'
+  | 'weth'
+  | 'sol'
+  | 'usdt'
+  | 'mck';
 
 export interface Token {
   address: Address;

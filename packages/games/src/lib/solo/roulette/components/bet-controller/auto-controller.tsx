@@ -29,6 +29,7 @@ interface AutoControllerProps {
   undoBet: () => void;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+  onLogin?: () => void;
 }
 
 export const AutoController = ({
@@ -40,6 +41,7 @@ export const AutoController = ({
   onSelectedChipChange,
   undoBet,
   onAutoBetModeChange,
+  onLogin,
 }: AutoControllerProps) => {
   const form = useFormContext() as RouletteForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
@@ -139,7 +141,7 @@ export const AutoController = ({
         />
       </div>
 
-      <PreBetButton className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} totalWager={totalWager} className="wr-mb-3 lg:wr-mb-0">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

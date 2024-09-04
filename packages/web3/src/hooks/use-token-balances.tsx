@@ -1,11 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { Address, formatUnits } from "viem";
-import { useReadContracts } from "wagmi";
+import { useEffect, useMemo } from 'react';
+import { Address, formatUnits } from 'viem';
+import { useReadContracts } from 'wagmi';
 
-import { erc20Abi } from "../abis";
-import { BalanceMap, useBalanceStore } from "../providers/balance";
-import { useTokenStore } from "../providers/token";
-import { toDecimals } from "../utils/number";
+import { erc20Abi } from '../abis';
+import { BalanceMap, useBalanceStore } from '../providers/balance';
+import { useTokenStore } from '../providers/token';
+import { toDecimals } from '../utils/number';
+import { useNativeTokenBalance } from './use-native-token-balance';
+
+export const WRAPPED_WINR_BANKROLL = '0x0000000000000000000000000000000000000006';
 
 const getContractsToRead = ({
   balancesToRead,
@@ -18,7 +21,7 @@ const getContractsToRead = ({
     return {
       address: tokenAddress,
       abi: erc20Abi,
-      functionName: "balanceOf",
+      functionName: 'balanceOf',
       args: [account],
     };
   });
@@ -39,7 +42,10 @@ export const useTokenBalances = ({
   account: Address;
   balancesToRead?: Address[];
 }) => {
-  const updateBalances = useBalanceStore((state) => state.updateBalances);
+  const balanceStore = useBalanceStore((state) => ({
+    balances: state.balances,
+    updateBalances: state.updateBalances,
+  }));
   const tokens = useTokenStore((s) => s.tokens);
   const targetBalanceToRead =
     balancesToRead && balancesToRead?.length > 0
@@ -48,6 +54,7 @@ export const useTokenBalances = ({
 
   const contractsToRead = useMemo(() => {
     if (!targetBalanceToRead || !account) return [];
+
     return getContractsToRead({ balancesToRead: targetBalanceToRead, account });
   }, [targetBalanceToRead, account]);
 
@@ -58,6 +65,8 @@ export const useTokenBalances = ({
     },
   });
 
+  const nativeWinr = useNativeTokenBalance({ account });
+
   useEffect(() => {
     let balances: BalanceMap = {};
     if (!result || !result.data) return;
@@ -65,19 +74,25 @@ export const useTokenBalances = ({
     Object.entries(result.data).forEach(([key, value]) => {
       if (value.error) return;
 
-      const token = tokens[Number(key)];
+      const tokenAddress = targetBalanceToRead[Number(key)];
+
+      const token = tokens.find((t) => t.address == tokenAddress);
 
       if (!token) return;
 
-      const balance = Number(
-        formatUnits(value.result as bigint, token.decimals)
-      );
+      let balance = Number(formatUnits(value.result as bigint, token.decimals));
+
+      if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) {
+        console.log(balance, 'wrapped <- balance -> native', nativeWinr.balance);
+      }
+
+      if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) balance += nativeWinr.balance;
 
       balances[token.address] = toDecimals(balance, token.displayDecimals);
     });
 
-    updateBalances(balances);
-  }, [result.data, tokens]);
+    balanceStore.updateBalances({ ...balanceStore.balances, ...balances });
+  }, [result.data, tokens, nativeWinr.balance, targetBalanceToRead.length]);
 
   return result;
 };

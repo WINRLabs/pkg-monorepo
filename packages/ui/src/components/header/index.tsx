@@ -7,6 +7,7 @@ import {
   useCurrentAccount,
   useFastOrVerifiedStore,
   useHandleTx,
+  useSendTx,
   useTokenBalances,
   useTokenStore,
 } from '@winrlabs/web3';
@@ -85,6 +86,12 @@ export const Header = ({ appLogo, leftSideComponents, chat, containerClassName }
     options: {},
   });
 
+  const send = useSendTx({
+    onError: (error) => {
+      console.log(error, 'mint tx error');
+    },
+  });
+
   return (
     <header
       className={cn(
@@ -139,7 +146,19 @@ export const Header = ({ appLogo, leftSideComponents, chat, containerClassName }
                 variant={'success'}
                 onClick={async () => {
                   try {
-                    await mintTx.mutateAsync();
+                    // await mintTx.mutateAsync();
+
+                    await send.mutateAsync({
+                      encodedTxData: encodeFunctionData({
+                        abi: erc20Abi,
+                        functionName: 'mint',
+                        args: [
+                          account.address as `0x${string}`,
+                          parseUnits('100', selectedToken.decimals),
+                        ],
+                      }),
+                      target: selectedToken.address,
+                    });
                   } catch (e: any) {
                     console.log('error', e);
                   }

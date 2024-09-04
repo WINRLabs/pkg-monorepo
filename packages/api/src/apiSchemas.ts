@@ -260,6 +260,51 @@ export type PlayerRankObject = {
   refPlayerCount: number;
 };
 
+export type WagerInfoResponse = {
+  minWager: number;
+  maxWager: number;
+};
+
+export type WagerResponse = {};
+
+export type VaultOutput = {
+  bankrollTokenAddress: string;
+  liquidityManagerAddress: string;
+  shareTokenAddress: string;
+  vaultAddress: string;
+  price: number;
+  wallet: number;
+  poolSupply: number;
+  weeklyProfit: number;
+  allTimeProfit: number;
+  apr: number;
+};
+
+export type VaultDetailOutput = {
+  vaultIndex: string;
+  bankrollBytesIdentifier: string;
+  vaultAddress: string;
+  bankrollTokenAddress: string;
+  shareTokenAddress: string;
+  controllerAddress: string;
+  liquidityManagerAddress: string;
+};
+
+export type VaultAmountOutput = {
+  bankrollAmount: string;
+  shareTokenAmount: string;
+  epochAmount: string;
+  totalAmount: string;
+  bankrollTokenPrice: string;
+  isProfitEpcoh: number;
+  isProfitTotal: number;
+};
+
+export type PoolOutput = {
+  detail: VaultDetailOutput;
+  amount: VaultAmountOutput;
+};
+
 export type RefundInput = {
   game:
     | 'COINFLIP'
@@ -432,46 +477,6 @@ export type LeaderboardLossLegendsObject = {
 export type LeaderboardLossLegendsResponse = {
   leaderboard: LeaderboardLossLegendsObject[];
   playerStats: LeaderboardLossLegendsObject;
-};
-
-export type WagerResponse = {};
-
-export type VaultOutput = {
-  bankrollTokenAddress: string;
-  liquidityManagerAddress: string;
-  shareTokenAddress: string;
-  vaultAddress: string;
-  price: number;
-  wallet: number;
-  poolSupply: number;
-  weeklyProfit: number;
-  allTimeProfit: number;
-  apr: number;
-};
-
-export type VaultDetailOutput = {
-  vaultIndex: string;
-  bankrollBytesIdentifier: string;
-  vaultAddress: string;
-  bankrollTokenAddress: string;
-  shareTokenAddress: string;
-  controllerAddress: string;
-  liquidityManagerAddress: string;
-};
-
-export type VaultAmountOutput = {
-  bankrollAmount: string;
-  shareTokenAmount: string;
-  epochAmount: string;
-  totalAmount: string;
-  bankrollTokenPrice: string;
-  isProfitEpcoh: number;
-  isProfitTotal: number;
-};
-
-export type PoolOutput = {
-  detail: VaultDetailOutput;
-  amount: VaultAmountOutput;
 };
 
 export type ReferralRewardEntity = {
@@ -685,4 +690,10 @@ export type SummaryResponse = {
 
 export type TakeLevelupSnapshotInput = {
   player: string;
+};
+
+export type BridgeHistoryResponse = {
+  player: string;
+  amount: string;
+  status: string;
 };

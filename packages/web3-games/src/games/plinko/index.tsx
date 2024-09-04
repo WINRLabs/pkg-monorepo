@@ -14,10 +14,13 @@ import {
   useCurrentAccount,
   useFastOrVerified,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -96,6 +99,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -191,7 +195,19 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedParams.encodedTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const onGameSubmit = async (f: PlinkoFormFields, errorCount = 0) => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -203,7 +219,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -266,10 +282,10 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
       if (!currentStepResult) return;
 
       const isWon = currentStepResult.payout > formValues.wager;
-
       addResult({
         won: isWon,
         payout: currentStepResult.payout,
+        gameType: GameType.PLINKO,
       });
     },
     [plinkoResult]

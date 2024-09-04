@@ -1,5 +1,182 @@
 # @winrlabs/games
 
+## 2.16.75
+
+### Patch Changes
+
+- e11c4a7: session err
+
+## 2.16.74
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+
+## 2.16.73
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+
+## 2.16.72
+
+### Patch Changes
+
+- bbabd6b: bet history fix
+
+## 2.16.71
+
+### Patch Changes
+
+- dc7122d: wrap unwrap improvement
+- ed5b338: fix
+
+## 2.16.70
+
+### Patch Changes
+
+- 4bf1693: update
+
+## 2.16.69
+
+### Patch Changes
+
+- f415b7b: wrap fix
+
+## 2.16.68
+
+### Patch Changes
+
+- f8fe052: mines fix
+
+## 2.16.67
+
+### Patch Changes
+
+- 2248db1: value fix
+
+## 2.16.66
+
+### Patch Changes
+
+- a29b735: remove allowance
+
+## 2.16.65
+
+### Patch Changes
+
+- 714191f: handle holdem parse
+- b7ce907: back btn fix
+
+## 2.16.64
+
+### Patch Changes
+
+- 4078aa7: fix
+
+## 2.16.63
+
+### Patch Changes
+
+- 83202af: holdem poker mobile
+
+## 2.16.62
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+
+## 2.16.61
+
+### Patch Changes
+
+- 29019b0: wrap unwrap
+
+## 2.16.60
+
+### Patch Changes
+
+- 37beee5: mobile height adjust for sm devices wb
+
+## 2.16.59
+
+### Patch Changes
+
+- 273eac2: bet history update
+
+## 2.16.58
+
+### Patch Changes
+
+- 0cd776a: fix
+
+## 2.16.57
+
+### Patch Changes
+
+- 2133fb8: max wager
+
+## 2.16.56
+
+### Patch Changes
+
+- b401541: fix
+
+## 2.16.55
+
+### Patch Changes
+
+- 0cd4321: fixes
+- 1656fc8: sse for global bets
+
+## 2.16.54
+
+### Patch Changes
+
+- 4d65a07: bj 21 fix
+
+## 2.16.53
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+
+## 2.16.52
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+
+## 2.16.51
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+
+## 2.16.50
+
+### Patch Changes
+
+- ef56ffd: update session tx
+
+## 2.16.49
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+
+## 2.16.48
+
+### Patch Changes
+
+- 043475b: add new mm auth
+
+## 2.16.47
+
+### Patch Changes
+
+- c017cb1: on login props
+
 ## 2.16.46
 
 ### Patch Changes

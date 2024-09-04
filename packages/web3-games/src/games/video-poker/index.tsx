@@ -12,11 +12,14 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
   videoPokerAbi,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
@@ -76,6 +79,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const { priceFeed } = usePriceFeed();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -192,7 +196,19 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedFinishParams.encodedTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const handleStartGame = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     console.log('SUBMITTING!');
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -205,7 +221,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -229,7 +245,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleFinishTx.mutateAsync();
@@ -307,6 +323,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   return (
     <>
       <VideoPokerTemplate
+        {...props}
         minWager={props.minWager || 1}
         maxWager={props.maxWager || 2000}
         handleStartGame={handleStartGame}

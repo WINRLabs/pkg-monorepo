@@ -9,7 +9,6 @@ export type RpsGameProps = React.ComponentProps<'div'> & {
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: RPSGameResult[]) => void;
   onAnimationSkipped?: (result: RPSGameResult[]) => void;
-  onError?: (e: any) => void;
 };
 
 export const RpsGame = ({ gameResults, children }: RpsGameProps) => {

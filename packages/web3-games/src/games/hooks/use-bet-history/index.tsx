@@ -1,10 +1,15 @@
 'use client';
 
-import { GameControllerBetHistoryResponse, useGameControllerBetHistory } from '@winrlabs/api';
+import {
+  baseUrl,
+  GameControllerGlobalBetHistoryResponse,
+  useGameControllerBetHistory,
+  useGameControllerGlobalBetHistory,
+} from '@winrlabs/api';
 import { GameType } from '@winrlabs/games';
 import { BetHistoryCurrencyList, BetHistoryFilter } from '@winrlabs/games';
 import { useCurrentAccount, useTokenStore } from '@winrlabs/web3';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface IUseBetHistory {
   gameType: GameType;
@@ -14,7 +19,7 @@ interface IUseBetHistory {
 }
 
 export const useBetHistory = ({ gameType, options }: IUseBetHistory) => {
-  const [filter, setFilter] = React.useState<BetHistoryFilter>({
+  const [filter, setFilter] = useState<BetHistoryFilter>({
     type: 'bets',
   });
 
@@ -25,21 +30,55 @@ export const useBetHistory = ({ gameType, options }: IUseBetHistory) => {
     page: 1,
   };
 
-  const { data, isLoading, refetch } = useGameControllerBetHistory(
+  const [globalBets, setGlobalBets] = useState<GameControllerGlobalBetHistoryResponse>([]);
+  const sseBuffer = useRef<GameControllerGlobalBetHistoryResponse>([]);
+
+  const { data: initialData, isLoading } = useGameControllerGlobalBetHistory(
     {
-      queryParams:
-        filter.type === 'player'
-          ? {
-              player: address,
-              ...defaultParams,
-            }
-          : defaultParams,
+      queryParams: defaultParams,
     },
     {
       enabled: options?.enabled,
-      refetchInterval: 7500,
+      retry: false,
     }
   );
+
+  useEffect(() => {
+    if (initialData) {
+      setGlobalBets(initialData);
+    }
+  }, [initialData]);
+
+  useEffect(() => {
+    const es = new EventSource(baseUrl + '/game/sse-global-bet-history');
+
+    es.onmessage = (event) => {
+      if (!event.data) return;
+
+      const newData = JSON.parse(String(event.data));
+
+      sseBuffer.current = [newData.payload, ...sseBuffer.current].slice(0, 30);
+    };
+
+    return () => {
+      es.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setGlobalBets((prev) => {
+        const updatedBets = [...sseBuffer.current, ...prev].slice(0, 30);
+        sseBuffer.current = [];
+
+        return updatedBets;
+      });
+    }, 2000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   const {
     data: myBetsData,
@@ -56,7 +95,8 @@ export const useBetHistory = ({ gameType, options }: IUseBetHistory) => {
           : defaultParams,
     },
     {
-      enabled: options?.enabled,
+      enabled: options?.enabled && filter.type == 'player' && !!address,
+      retry: false,
       refetchInterval: 7500,
     }
   );
@@ -76,14 +116,13 @@ export const useBetHistory = ({ gameType, options }: IUseBetHistory) => {
   return {
     betHistory: (filter.type == 'player'
       ? myBetsData?.data
-      : data?.data) as GameControllerBetHistoryResponse['data'],
+      : globalBets) as GameControllerGlobalBetHistoryResponse,
     isHistoryLoading: isLoading || myBetsIsLoading,
     mapHistoryTokens: mapTokens,
     historyFilter: filter,
     setHistoryFilter: setFilter,
     refetchHistory: () => {
-      refetch();
-      refetchMyBets();
+      filter.type == 'player' && refetchMyBets();
     },
   };
 };

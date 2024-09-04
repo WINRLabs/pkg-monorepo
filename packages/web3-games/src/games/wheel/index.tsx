@@ -10,6 +10,7 @@ import {
   MultiplayerGameStatus,
   Multiplier,
   participantMapWithStore,
+  toDecimals,
   toFormatted,
   useConfigureMultiplayerLiveResultStore,
   useLiveResultStore,
@@ -27,6 +28,8 @@ import {
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
@@ -55,6 +58,14 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     level: number | undefined;
   }) => void;
 }
+
+const selectionMultipliers = {
+  [WheelColor.IDLE]: 1,
+  [WheelColor.GREY]: 2,
+  [WheelColor.BLUE]: 3,
+  [WheelColor.GREEN]: 6,
+  [WheelColor.RED]: 48,
+};
 
 export default function WheelGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
@@ -90,6 +101,11 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     wager: props?.minWager || 1,
   });
 
+  const maxWagerBySelection = toDecimals(
+    (props.maxWager || 100) / selectionMultipliers[formValues.color],
+    2
+  );
+
   useConfigureMultiplayerLiveResultStore();
   const {
     addResult,
@@ -104,6 +120,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
   const { priceFeed } = usePriceFeed();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
 
   const allowance = useTokenAllowance({
@@ -240,7 +257,19 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedClaimParams.encodedClaimTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const onGameSubmit = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     clearLiveResults();
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -260,19 +289,18 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     console.log('cLAIM TX SUCCESS, TRYING BET TX');
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
-
+      setIsGamblerParticipant(true);
       await handleTx.mutateAsync();
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
+      setIsGamblerParticipant(false);
       // props.onError && props.onError(e);
     }
 
     console.log('BET TX COMPLETED');
-
-    setIsGamblerParticipant(true);
   };
 
   React.useEffect(() => {
@@ -399,6 +427,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       <WheelTemplate
         {...props}
         theme={props.theme}
+        maxWager={maxWagerBySelection}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {
           setFormValues(val);

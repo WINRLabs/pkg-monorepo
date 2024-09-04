@@ -1,5 +1,170 @@
 # @winrlabs/web3
 
+## 0.10.108
+
+### Patch Changes
+
+- 0a76021: refactor
+
+## 0.10.107
+
+### Patch Changes
+
+- e11c4a7: session err
+
+## 0.10.106
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+
+## 0.10.105
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+
+## 0.10.104
+
+### Patch Changes
+
+- bbabd6b: bet history fix
+
+## 0.10.103
+
+### Patch Changes
+
+- dc7122d: wrap unwrap improvement
+- ed5b338: fix
+
+## 0.10.102
+
+### Patch Changes
+
+- 4bf1693: update
+
+## 0.10.101
+
+### Patch Changes
+
+- f415b7b: wrap fix
+
+## 0.10.100
+
+### Patch Changes
+
+- f8fe052: mines fix
+
+## 0.10.99
+
+### Patch Changes
+
+- 2248db1: value fix
+
+## 0.10.98
+
+### Patch Changes
+
+- a29b735: remove allowance
+
+## 0.10.97
+
+### Patch Changes
+
+- 4078aa7: fix
+
+## 0.10.96
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+
+## 0.10.95
+
+### Patch Changes
+
+- 29019b0: wrap unwrap
+
+## 0.10.94
+
+### Patch Changes
+
+- 273eac2: bet history update
+
+## 0.10.93
+
+### Patch Changes
+
+- 0cd776a: fix
+
+## 0.10.92
+
+### Patch Changes
+
+- 2133fb8: max wager
+
+## 0.10.91
+
+### Patch Changes
+
+- b401541: fix
+- Updated dependencies [b401541]
+  - @winrlabs/api@1.3.7
+
+## 0.10.90
+
+### Patch Changes
+
+- 0cd4321: fixes
+
+## 0.10.89
+
+### Patch Changes
+
+- 4d65a07: bj 21 fix
+
+## 0.10.88
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+
+## 0.10.87
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+
+## 0.10.86
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+
+## 0.10.85
+
+### Patch Changes
+
+- ef56ffd: update session tx
+
+## 0.10.84
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+
+## 0.10.83
+
+### Patch Changes
+
+- 043475b: add new mm auth
+
+## 0.10.82
+
+### Patch Changes
+
+- c017cb1: on login props
+
 ## 0.10.81
 
 ### Patch Changes

@@ -132,7 +132,7 @@ export const prepareGameTransaction = (
   let parseDecimal = 6;
   if (selectedCurrency.priceKey == 'btc' || selectedCurrency.priceKey == 'weth') parseDecimal = 12;
 
-  const wagerInGameCurrency = toDecimals((wager / lastPrice).toString(), parseDecimal).toString();
+  const wagerInGameCurrency = (wager / lastPrice).toFixed(parseDecimal);
 
   const stopGainInGameCurrency = toDecimals(
     (stopGain / lastPrice).toString(),
@@ -146,7 +146,6 @@ export const prepareGameTransaction = (
 
   const decimal = selectedCurrency.decimals;
 
-  console.log(wagerInGameCurrency, 'wager in game');
   const wagerInWei = parseUnits(wagerInGameCurrency, decimal);
 
   const stopGainInWei = parseUnits(stopGainInGameCurrency, decimal);

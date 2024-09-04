@@ -619,7 +619,7 @@ export const WinrBonanzaTemplate = ({
     [betAmount, actualBetAmount, isDoubleChance]
   );
 
-  const debouncedFormFields = useDebounce(formFields, 400);
+  const debouncedFormFields = useDebounce(formFields, 0);
 
   React.useEffect(() => {
     onFormChange(debouncedFormFields[0]);
@@ -631,7 +631,7 @@ export const WinrBonanzaTemplate = ({
         <Unity
           unityProvider={unityProvider}
           devicePixelRatio={2}
-          className="wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[360px] lg:wr-rounded-md"
+          className="wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[575px] lg:wr-rounded-md"
         />
       </div>
     </UnityGameContainer>

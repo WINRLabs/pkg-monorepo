@@ -25,3 +25,10 @@ export class BundlerRequestError extends Error {
     this.name = 'BundlerRequestError';
   }
 }
+
+export class SwitchChainError extends Error {
+  constructor(message: string = 'Please switch to the correct network') {
+    super(message);
+    this.name = 'SwitchChainError';
+  }
+}

@@ -3,10 +3,12 @@ import { create } from 'zustand';
 
 import { createSelectors } from '../../utils/store';
 import { toDecimals } from '../../utils/web3';
+import { GameType } from '../../constants';
 
 export interface Result {
   won: boolean;
   payout: number;
+  gameType?: GameType;
 }
 
 export interface LiveResultState {
@@ -51,7 +53,14 @@ export const liveResultStore = create<LiveResultStore>()((set, get) => ({
     set((state) => {
       const currentProfit = get()?.currentProfit;
 
-      const newProfit = item.won ? currentProfit + item.payout : currentProfit - get()?.wager;
+      let newProfit = item.won
+        ? currentProfit + item.payout - get()?.wager
+        : currentProfit - get()?.wager;
+
+      if (item?.gameType == GameType.PLINKO)
+        newProfit = item.won
+          ? currentProfit + item.payout
+          : currentProfit + item.payout - get()?.wager;
 
       return {
         ...state,

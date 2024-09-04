@@ -70,7 +70,7 @@ export function Providers(props: { children: ReactNode }) {
           }}
           tokens={[
             {
-              address: '0xaF31A7E835fA24f13ae1e0be8EB1fb56F906BE11',
+              address: '0x59edbB343991D30f77dcdBad94003777e9B09BA9',
               bankrollIndex: '0x0000000000000000000000000000000000000001',
               displayDecimals: 2,
               decimals: 6,
@@ -80,7 +80,7 @@ export function Providers(props: { children: ReactNode }) {
               priceKey: 'usdc',
             },
             {
-              address: '0xd777657B9a81a4E869458d52402e16C0dE187e3a',
+              address: '0x0381132632E9E27A8f37F1bc56bd5a62d21a382B',
               bankrollIndex: '0x0000000000000000000000000000000000000002',
               displayDecimals: 2,
               decimals: 6,
@@ -90,7 +90,7 @@ export function Providers(props: { children: ReactNode }) {
               priceKey: 'usdt',
             },
             {
-              address: '0xF73A655cae59E0E7e08DE3F4606EA97D88AcA32F',
+              address: '0x44BD533C211C78e01f0F738826e8b18Bb9b936f5',
               bankrollIndex: '0x0000000000000000000000000000000000000003',
               displayDecimals: 6,
               decimals: 8,
@@ -100,8 +100,8 @@ export function Providers(props: { children: ReactNode }) {
               priceKey: 'btc',
             },
             {
-              address: '0xaa54Ca4f14B57777895f7342778919B8ee5B9D7B',
-              bankrollIndex: '0x0000000000000000000000000000000000000005',
+              address: '0xE60256921AE414D7B35d6e881e47931f45E027cf',
+              bankrollIndex: '0x0000000000000000000000000000000000000004',
               displayDecimals: 6,
               decimals: 18,
               icon: '/tokens/weth.png',
@@ -109,16 +109,36 @@ export function Providers(props: { children: ReactNode }) {
               playable: true,
               priceKey: 'weth',
             },
+            {
+              address: '0xBF6FA9d2BF9f681E7b6521b49Cf8ecCF9ad8d31d',
+              bankrollIndex: '0x0000000000000000000000000000000000000006',
+              displayDecimals: 2,
+              decimals: 18,
+              icon: '/tokens/winr.png',
+              symbol: 'WINR',
+              playable: true,
+              priceKey: 'winr',
+            },
+            {
+              address: '0x372B5997502E668B8804D11d1569eB28F51a7e4e',
+              bankrollIndex: '0x0000000000000000000000000000000000000007',
+              displayDecimals: 2,
+              decimals: 18,
+              icon: '/tokens/usdt.png',
+              symbol: 'MCK',
+              playable: true,
+              priceKey: 'usdt',
+            },
           ]}
           selectedToken={{
-            address: '0xaa54Ca4f14B57777895f7342778919B8ee5B9D7B',
-            bankrollIndex: '0x0000000000000000000000000000000000000005',
-            displayDecimals: 6,
+            address: '0x372B5997502E668B8804D11d1569eB28F51a7e4e',
+            bankrollIndex: '0x0000000000000000000000000000000000000007',
+            displayDecimals: 2,
             decimals: 18,
-            icon: '/tokens/weth.png',
-            symbol: 'ETH',
+            icon: '/tokens/usdt.png',
+            symbol: 'MCK',
             playable: true,
-            priceKey: 'weth',
+            priceKey: 'usdt',
           }}
         >
           <AppUiProviders wagmiConfig={config}>

@@ -8,14 +8,18 @@ import {
   ContractFunctionName,
   encodeFunctionData,
   EncodeFunctionDataParameters,
+  SwitchChainError,
 } from 'viem';
-import { Config } from 'wagmi';
+import { Config, useSwitchChain } from 'wagmi';
 import { WriteContractVariables } from 'wagmi/query';
 
 import { SimpleAccountAPI } from '../smart-wallet';
 import { useBundlerClient, WinrBundlerClient } from './use-bundler-client';
 import { useCurrentAccount } from './use-current-address';
 import { useSmartAccountApi } from './use-smart-account-api';
+import { useCreateSession, useSessionStore } from './session';
+import { ErrorCode, mmAuthSessionErr, mmAuthSignErrors } from '../utils/error-codes';
+import { delay } from './use-token-allowance';
 
 export interface UseHandleTxOptions {
   successMessage?: string;
@@ -72,14 +76,20 @@ export const useHandleTx = <
 ) => {
   const { writeContractVariables, options, encodedTxData } = params;
   const { method = 'sendUserOperation' } = options;
-  const { address } = useCurrentAccount();
+  const { address, isSocialLogin, rootAddress } = useCurrentAccount();
   const { accountApi: defaultAccountApi } = useSmartAccountApi();
   const { client: defaultClient } = useBundlerClient();
+  const { switchChainAsync } = useSwitchChain();
 
+  const createSession = useCreateSession();
+
+  const sessionStore = useSessionStore();
   const handleTxMutation = useMutation({
-    mutationFn: async () => {
-      if (!address && params.options.unauthRedirectionCb) {
-        params.options.unauthRedirectionCb();
+    mutationFn: async (params: { networkId?: number } | void) => {
+      const networkId = params && 'networkId' in params ? params.networkId : 777777;
+
+      if (!address && options.unauthRedirectionCb) {
+        options.unauthRedirectionCb();
 
         return;
       }
@@ -97,19 +107,66 @@ export const useHandleTx = <
           } as EncodeFunctionDataParameters<abi, functionName>);
 
       if (!client) return;
-      /* 
+
       if (!isSocialLogin) {
-        return await client?.request('call', {
-          call: {
-            dest: writeContractVariables.address as Address,
-            data: encodedData,
-            value: 0,
-          },
-          owner: address!,
-          part: variables?.part ?? '0x',
-          permit: variables?.permit ?? '0x',
-        });
-      } */
+        try {
+          await switchChainAsync({ chainId: networkId! });
+        } catch (error) {
+          throw new SwitchChainError(error as Error);
+        }
+
+        let _part = sessionStore.part;
+        let _permit = sessionStore.permit;
+
+        const getNewSession = async () => {
+          const session = await createSession.mutateAsync({
+            customClient: client,
+            signerAddress: rootAddress!,
+            untilInHours: 24,
+          });
+
+          sessionStore.setPart(session.part);
+          sessionStore.setPermit(session.permit);
+
+          return { part: session.part, permit: session.permit };
+        };
+
+        let retryCount = 0;
+        const maxRetries = 3;
+
+        const makeRequest = async () => {
+          try {
+            return await client?.request('call', {
+              call: {
+                dest: writeContractVariables.address as Address,
+                data: encodedData,
+                value: Number(writeContractVariables.value || 0),
+              },
+              owner: rootAddress!,
+              part: _part ?? '0x',
+              permit: _permit ?? '0x',
+            });
+          } catch (error: any) {
+            if (retryCount < maxRetries) {
+              retryCount++;
+              // If the first attempt fails, get a new session and try again
+              if (
+                error?.code !== ErrorCode.InvalidNonce &&
+                (mmAuthSignErrors.includes(error?.message) ||
+                  error?.message?.includes(mmAuthSessionErr))
+              ) {
+                ({ part: _part, permit: _permit } = await getNewSession());
+              }
+              await delay(200);
+              return await makeRequest();
+            } else {
+              throw error; // Rethrow the error if max retries reached
+            }
+          }
+        };
+
+        return makeRequest();
+      }
 
       const userOp = await createUserOp(writeContractVariables, encodedData, accountApi);
 

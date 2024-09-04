@@ -52,9 +52,15 @@ export const useCreateSession: MutationHook<CreateSessionRequest, { permit: Hex;
         owner: request.signerAddress,
       });
 
+      console.log(typedMessage, 'typed message');
+
       const parsedMessage = superjson.parse<Hex>(typedMessage);
 
+      console.log(parsedMessage, 'parsed message');
+
       const userPermission = await walletClient.signTypedData(parsedMessage as any);
+
+      console.log(userPermission, 'user permission');
 
       const userKeys = await client.request('permit', {
         owner: request.signerAddress,

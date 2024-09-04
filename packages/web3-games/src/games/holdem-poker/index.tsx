@@ -12,10 +12,13 @@ import {
   Token,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { useDebounce } from 'use-debounce';
@@ -96,13 +99,15 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
 
   const currentAccount = useCurrentAccount();
 
-  const { refetch: updateBalances } = useTokenBalances({
-    account: currentAccount.address || '0x',
-  });
-
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
+
+  const { refetch: updateBalances } = useTokenBalances({
+    account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
+  });
+
   const tokens = useTokenStore((s) => s.tokens);
 
   const { priceFeed } = usePriceFeed();
@@ -263,8 +268,19 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     encodedTxData: encodedFinalizeFoldParams.encodedTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const handleDeal = async () => {
-    console.log('SUBMITTING!');
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -276,7 +292,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -299,7 +315,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleFinalizeTx.mutateAsync();

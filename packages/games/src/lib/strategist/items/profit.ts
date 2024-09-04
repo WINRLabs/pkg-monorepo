@@ -2,6 +2,8 @@ export enum ProfitType {
   Balance,
   Lost,
   Profit,
+  CumulativeProfit,
+  CumulativeLost,
 }
 
 export enum ProfitTerm {
@@ -81,7 +83,13 @@ export const toCondition = (input: Input) => {
     return false;
   };
 
-  const satisfy = (amount: bigint, profitAmount: bigint, loss: bigint) => {
+  const satisfy = (
+    amount: bigint,
+    profitAmount: bigint,
+    loss: bigint,
+    cumulativeProfit: bigint,
+    cumulativeLoss: bigint
+  ) => {
     if (input.type == ProfitType.Balance) {
       return balance(amount, profitAmount, loss);
     }
@@ -92,6 +100,18 @@ export const toCondition = (input: Input) => {
 
     if (input.type == ProfitType.Profit) {
       return profit(profitAmount);
+    }
+
+    if (input.type == ProfitType.CumulativeProfit) {
+      const totalProfit = Number(cumulativeProfit) - Number(cumulativeLoss);
+      const totalGain = totalProfit < 0 ? BigInt(0) : BigInt(totalProfit);
+      return profit(totalGain);
+    }
+
+    if (input.type == ProfitType.CumulativeLost) {
+      const totalProfit = Number(cumulativeProfit) - Number(cumulativeLoss);
+      const totalLoss = totalProfit < 0 ? BigInt(totalProfit * -1) : BigInt(0);
+      return lost(totalLoss);
     }
 
     return false;

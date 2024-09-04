@@ -26,6 +26,7 @@ type TemplateProps = KenoGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: KenoFormField) => void;
   onFormChange?: (fields: KenoFormField) => void;
+  onLogin?: () => void;
 };
 
 const KenoTemplate = ({ ...props }: TemplateProps) => {
@@ -37,10 +38,10 @@ const KenoTemplate = ({ ...props }: TemplateProps) => {
     wager: z
       .number()
       .min(props?.minWager || 1, {
-        message: `Minimum wager is ${props?.minWager}`,
+        message: `Minimum wager is $${props?.minWager}`,
       })
       .max(props?.maxWager || 2000, {
-        message: `Maximum wager is ${props?.maxWager}`,
+        message: `Maximum wager is $${props?.maxWager}`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     selections: z.array(z.number()),
@@ -90,6 +91,7 @@ const KenoTemplate = ({ ...props }: TemplateProps) => {
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: KenoGameResult[]) => {
@@ -135,6 +137,7 @@ const KenoTemplate = ({ ...props }: TemplateProps) => {
               minWager={props?.minWager || 1}
               isAutoBetMode={isAutoBetMode}
               onAutoBetModeChange={setIsAutoBetMode}
+              onLogin={props.onLogin}
             />
             <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0">
               <Keno.Scene

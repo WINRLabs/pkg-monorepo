@@ -3,15 +3,8 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { AudioController } from '../../../../common/audio-controller';
-import { BetControllerContainer } from '../../../../common/containers';
-import {
-  BetControllerTitle,
-  BetCountFormField,
-  WagerFormField,
-} from '../../../../common/controller';
+import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
-import { SkipButton } from '../../../../common/skip-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
@@ -26,6 +19,7 @@ interface BetControllerProps {
   minWager: number;
   maxWager: number;
   winMultiplier: number;
+  onLogin?: () => void;
 }
 
 export const RPSChoiceRadio: React.FC<{
@@ -50,12 +44,11 @@ export const ManualController: React.FC<BetControllerProps> = ({
   minWager,
   maxWager,
   winMultiplier,
+  onLogin,
 }) => {
   const form = useFormContext() as RPSForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.LIMBO_TICK);
-
-  const { rpsGameResults, gameStatus } = useRpsGameStore(['rpsGameResults', 'gameStatus']);
 
   const maxPayout = React.useMemo(() => {
     const { wager } = form.getValues();
@@ -111,7 +104,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
           <TotalWager betCount={1} wager={form.getValues().wager} />
         </div>
       </div>
-      <PreBetButton>
+      <PreBetButton onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

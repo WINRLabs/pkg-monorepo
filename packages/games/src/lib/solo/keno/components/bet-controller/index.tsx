@@ -14,6 +14,7 @@ export interface Props {
   maxWager: number;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+  onLogin?: () => void;
 }
 
 export const BetController: React.FC<Props> = (props) => {

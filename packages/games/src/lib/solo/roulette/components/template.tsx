@@ -30,6 +30,8 @@ type TemplateProps = RouletteGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: RouletteFormFields) => void;
   onFormChange?: (fields: RouletteFormFields) => void;
+  onError?: (e: any) => void;
+  onLogin?: () => void;
 };
 
 const RouletteTemplate: React.FC<TemplateProps> = ({
@@ -42,6 +44,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   onAnimationSkipped,
   onAnimationStep,
   onError,
+  onLogin,
 }) => {
   const [selectedChip, setSelectedChip] = React.useState<Chip>(Chip.ONE);
   const [isPrepared, setIsPrepared] = React.useState<boolean>(false);
@@ -61,19 +64,19 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     wager: z
       .number()
       .min(minWager || 1, {
-        message: `Minimum wager is ${minWager || 1}`,
+        message: `Minimum wager is $${minWager || 1}`,
       })
       .max(maxWager || 2000, {
-        message: `Maximum wager is ${maxWager || 2000}`,
+        message: `Maximum wager is $${maxWager || 2000}`,
       }),
     selectedNumbers: z.array(z.number()),
     totalWager: z
       .number()
       .min(1, {
-        message: `Minimum wager is ${minWager}`,
+        message: `Minimum wager is $${minWager}`,
       })
       .max(2000, {
-        message: `Maximum wager is ${maxWager}`,
+        message: `Maximum wager is $${maxWager}`,
       }),
     stopGain: z.number(),
     stopLoss: z.number(),
@@ -203,6 +206,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     increasePercentageOnWin,
     stopLoss,
     stopProfit,
+    isAutoBetMode,
   });
 
   const processStrategy = (result: RouletteGameResult[]) => {
@@ -251,6 +255,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
             maxWager={maxWager || 2000}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onLogin={onLogin}
           />
           <SceneContainer
             style={{

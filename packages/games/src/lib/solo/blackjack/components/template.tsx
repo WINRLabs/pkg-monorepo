@@ -3,6 +3,7 @@
 import React from 'react';
 import { useDebounce } from 'use-debounce';
 
+import { Chip } from '../../../common/chip-controller/types';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { RotatedBackButton } from '../../../common/rotated-back-button';
 import { CDN_URL } from '../../../constants';
@@ -21,7 +22,6 @@ import { DealerCardArea } from './dealer-card-area';
 import { MoveController } from './move-controller';
 import { SplittedCardArea } from './splitted-card-area';
 import styles from './styles.module.css';
-import { Chip } from '../../../common/chip-controller/types';
 
 type TemplateOptions = {
   scene?: {
@@ -33,6 +33,8 @@ type TemplateProps = BlackjackGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  onError?: (error: any) => void;
+  onLogin?: () => void;
 };
 
 const BlackjackTemplate: React.FC<TemplateProps> = ({
@@ -56,6 +58,7 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
   onInsure,
   onStand,
   onFormChange,
+  onLogin,
 }) => {
   const [wager, setWager] = React.useState<number>(minWager || 1);
   const [selectedChip, setSelectedChip] = React.useState<Chip>(Chip.ONE);
@@ -848,6 +851,7 @@ const BlackjackTemplate: React.FC<TemplateProps> = ({
                 onReset();
                 resetUiCards();
               }}
+              onLogin={onLogin}
             />
             {/* controller end */}
           </div>

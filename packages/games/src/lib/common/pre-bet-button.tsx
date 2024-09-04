@@ -9,11 +9,13 @@ export const PreBetButton = ({
   variant = 'success',
   className,
   totalWager,
+  onLogin,
 }: {
   totalWager?: number;
   children: React.ReactNode;
   variant?: ButtonProps['variant'];
   className?: string;
+  onLogin?: () => void;
 }) => {
   const form = useFormContext();
 
@@ -30,8 +32,9 @@ export const PreBetButton = ({
         className={cn('wr-w-full wr-uppercase', className)}
         size={'xl'}
         type="button"
+        onClick={onLogin}
       >
-        Login
+        BET
       </Button>
     );
 

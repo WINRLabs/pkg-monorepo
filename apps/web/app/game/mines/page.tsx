@@ -8,7 +8,7 @@ const MinesPage = () => {
     <>
       <MinesGame
         maxWager={100}
-        minWager={1}
+        minWager={0.01}
         onAnimationCompleted={() => {
           console.log('game completed');
         }}

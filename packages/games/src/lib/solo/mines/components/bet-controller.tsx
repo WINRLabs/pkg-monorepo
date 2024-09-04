@@ -114,7 +114,7 @@ export const MinesBetController: React.FC<Props> = ({
           className="wr-mb-3 lg:wr-mb-6"
           minWager={minWager}
           maxWager={maxWager}
-          isDisabled={gameStatus !== MINES_GAME_STATUS.IDLE}
+          // isDisabled={gameStatus !== MINES_GAME_STATUS.IDLE}
         />
 
         <FormField

@@ -21,6 +21,7 @@ type TemplateProps = {
   onSubmitGameForm: (data: WheelFormFields) => void;
   onFormChange?: (fields: WheelFormFields) => void;
   onComplete?: () => void;
+  onLogin?: () => void;
 };
 
 const WheelTemplate = (props: TemplateProps) => {
@@ -65,7 +66,11 @@ const WheelTemplate = (props: TemplateProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
         <GameContainer>
-          <BetController maxWager={props?.maxWager || 2000} minWager={props?.minWager || 1} />
+          <BetController
+            maxWager={props?.maxWager || 2000}
+            minWager={props?.minWager || 1}
+            onLogin={props.onLogin}
+          />
           <SceneContainer className="wr-h-[640px] max-md:wr-h-[360px] lg:wr-p-[14px]">
             <LastBets />
             <WheelScene onComplete={onComplete} />

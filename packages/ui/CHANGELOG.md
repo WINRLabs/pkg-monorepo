@@ -1,5 +1,195 @@
 # @winrlabs/ui
 
+## 9.0.108
+
+### Patch Changes
+
+- Updated dependencies [0a76021]
+  - @winrlabs/web3@0.10.108
+
+## 9.0.107
+
+### Patch Changes
+
+- Updated dependencies [e11c4a7]
+  - @winrlabs/web3@0.10.107
+
+## 9.0.106
+
+### Patch Changes
+
+- Updated dependencies [9c9fcda]
+  - @winrlabs/web3@0.10.106
+
+## 9.0.105
+
+### Patch Changes
+
+- Updated dependencies [9eb20b4]
+  - @winrlabs/web3@0.10.105
+
+## 9.0.104
+
+### Patch Changes
+
+- Updated dependencies [bbabd6b]
+  - @winrlabs/web3@0.10.104
+
+## 9.0.103
+
+### Patch Changes
+
+- Updated dependencies [dc7122d]
+- Updated dependencies [ed5b338]
+  - @winrlabs/web3@0.10.103
+
+## 9.0.102
+
+### Patch Changes
+
+- Updated dependencies [4bf1693]
+  - @winrlabs/web3@0.10.102
+
+## 9.0.101
+
+### Patch Changes
+
+- Updated dependencies [f415b7b]
+  - @winrlabs/web3@0.10.101
+
+## 9.0.100
+
+### Patch Changes
+
+- Updated dependencies [f8fe052]
+  - @winrlabs/web3@0.10.100
+
+## 9.0.99
+
+### Patch Changes
+
+- Updated dependencies [2248db1]
+  - @winrlabs/web3@0.10.99
+
+## 9.0.98
+
+### Patch Changes
+
+- Updated dependencies [a29b735]
+  - @winrlabs/web3@0.10.98
+
+## 9.0.97
+
+### Patch Changes
+
+- Updated dependencies [4078aa7]
+  - @winrlabs/web3@0.10.97
+
+## 9.0.96
+
+### Patch Changes
+
+- Updated dependencies [5cd0bc5]
+  - @winrlabs/web3@0.10.96
+
+## 9.0.95
+
+### Patch Changes
+
+- Updated dependencies [29019b0]
+  - @winrlabs/web3@0.10.95
+
+## 9.0.94
+
+### Patch Changes
+
+- Updated dependencies [273eac2]
+  - @winrlabs/web3@0.10.94
+
+## 9.0.93
+
+### Patch Changes
+
+- Updated dependencies [0cd776a]
+  - @winrlabs/web3@0.10.93
+
+## 9.0.92
+
+### Patch Changes
+
+- Updated dependencies [2133fb8]
+  - @winrlabs/web3@0.10.92
+
+## 9.0.91
+
+### Patch Changes
+
+- Updated dependencies [b401541]
+  - @winrlabs/web3@0.10.91
+
+## 9.0.90
+
+### Patch Changes
+
+- Updated dependencies [0cd4321]
+  - @winrlabs/web3@0.10.90
+
+## 9.0.89
+
+### Patch Changes
+
+- Updated dependencies [4d65a07]
+  - @winrlabs/web3@0.10.89
+
+## 9.0.88
+
+### Patch Changes
+
+- Updated dependencies [234528a]
+  - @winrlabs/web3@0.10.88
+
+## 9.0.87
+
+### Patch Changes
+
+- Updated dependencies [f5f0a13]
+  - @winrlabs/web3@0.10.87
+
+## 9.0.86
+
+### Patch Changes
+
+- Updated dependencies [c0dcc6d]
+  - @winrlabs/web3@0.10.86
+
+## 9.0.85
+
+### Patch Changes
+
+- Updated dependencies [ef56ffd]
+  - @winrlabs/web3@0.10.85
+
+## 9.0.84
+
+### Patch Changes
+
+- Updated dependencies [dbe1938]
+  - @winrlabs/web3@0.10.84
+
+## 9.0.83
+
+### Patch Changes
+
+- Updated dependencies [043475b]
+  - @winrlabs/web3@0.10.83
+
+## 9.0.82
+
+### Patch Changes
+
+- Updated dependencies [c017cb1]
+  - @winrlabs/web3@0.10.82
+
 ## 9.0.81
 
 ### Patch Changes

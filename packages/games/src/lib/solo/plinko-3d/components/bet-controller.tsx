@@ -28,9 +28,10 @@ type Props = {
   maxWager: number;
   count: number;
   logo: string;
+  onLogin?: () => void;
 };
 
-export const BetController: React.FC<Props> = ({ minWager, maxWager, logo }) => {
+export const BetController: React.FC<Props> = ({ minWager, maxWager, logo, onLogin }) => {
   const form = useFormContext() as Plinko3dForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -115,7 +116,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, logo }) => 
           </div>
         </div>
 
-        <PreBetButton variant={'plinko'}>
+        <PreBetButton onLogin={onLogin} variant={'plinko'}>
           <Button
             type="submit"
             variant="plinko"

@@ -28,6 +28,7 @@ interface Props {
   onSplit: (handIndex: number) => void;
   onDoubleDown: (handIndex: number) => void;
   onInsure: (handIndex: number) => void;
+  onLogin?: () => void;
 }
 
 export const BetController: React.FC<Props> = ({
@@ -46,6 +47,7 @@ export const BetController: React.FC<Props> = ({
   onDoubleDown,
   onSplit,
   onInsure,
+  onLogin,
 }) => {
   const [showInsuranceBox, setShowInsuranceBox] = React.useState<'show' | 'hide'>('hide');
 
@@ -91,7 +93,7 @@ export const BetController: React.FC<Props> = ({
           }
         />
 
-        <PreBetButton>
+        <PreBetButton onLogin={onLogin}>
           {showInsuranceBox == 'show' && status !== BlackjackGameStatus.FINISHED ? (
             <InsuranceBox
               activeGameIndex={activeHandByIndex.handId || 0}

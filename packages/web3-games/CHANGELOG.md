@@ -1,5 +1,305 @@
 # @winrlabs/web3-games
 
+## 9.0.63
+
+### Patch Changes
+
+- 0a76021: refactor
+- Updated dependencies [0a76021]
+  - @winrlabs/web3@0.10.108
+  - @winrlabs/web3-games@9.0.63
+
+## 9.0.62
+
+### Patch Changes
+
+- e11c4a7: session err
+- Updated dependencies [e11c4a7]
+  - @winrlabs/games@2.16.75
+  - @winrlabs/web3@0.10.107
+  - @winrlabs/web3-games@9.0.62
+
+## 9.0.61
+
+### Patch Changes
+
+- 9c9fcda: update usesendtx
+- Updated dependencies [9c9fcda]
+  - @winrlabs/web3@0.10.106
+  - @winrlabs/games@2.16.74
+  - @winrlabs/web3-games@9.0.61
+
+## 9.0.60
+
+### Patch Changes
+
+- 9eb20b4: mm auth unnecessary sign fix
+- Updated dependencies [9eb20b4]
+  - @winrlabs/games@2.16.73
+  - @winrlabs/web3@0.10.105
+  - @winrlabs/web3-games@9.0.60
+
+## 9.0.59
+
+### Patch Changes
+
+- bbabd6b: bet history fix
+- Updated dependencies [bbabd6b]
+  - @winrlabs/games@2.16.72
+  - @winrlabs/web3@0.10.104
+  - @winrlabs/web3-games@9.0.59
+
+## 9.0.58
+
+### Patch Changes
+
+- dc7122d: wrap unwrap improvement
+- ed5b338: fix
+- Updated dependencies [dc7122d]
+- Updated dependencies [ed5b338]
+  - @winrlabs/games@2.16.71
+  - @winrlabs/web3@0.10.103
+  - @winrlabs/web3-games@9.0.58
+
+## 9.0.57
+
+### Patch Changes
+
+- 4bf1693: update
+- Updated dependencies [4bf1693]
+  - @winrlabs/games@2.16.70
+  - @winrlabs/web3@0.10.102
+  - @winrlabs/web3-games@9.0.57
+
+## 9.0.56
+
+### Patch Changes
+
+- f415b7b: wrap fix
+- Updated dependencies [f415b7b]
+  - @winrlabs/games@2.16.69
+  - @winrlabs/web3@0.10.101
+  - @winrlabs/web3-games@9.0.56
+
+## 9.0.55
+
+### Patch Changes
+
+- f8fe052: mines fix
+- Updated dependencies [f8fe052]
+  - @winrlabs/games@2.16.68
+  - @winrlabs/web3@0.10.100
+  - @winrlabs/web3-games@9.0.55
+
+## 9.0.54
+
+### Patch Changes
+
+- 2248db1: value fix
+- Updated dependencies [2248db1]
+  - @winrlabs/games@2.16.67
+  - @winrlabs/web3@0.10.99
+  - @winrlabs/web3-games@9.0.54
+
+## 9.0.53
+
+### Patch Changes
+
+- a29b735: remove allowance
+- Updated dependencies [a29b735]
+  - @winrlabs/games@2.16.66
+  - @winrlabs/web3@0.10.98
+  - @winrlabs/web3-games@9.0.53
+
+## 9.0.52
+
+### Patch Changes
+
+- Updated dependencies [714191f]
+- Updated dependencies [b7ce907]
+  - @winrlabs/games@2.16.65
+  - @winrlabs/web3-games@9.0.52
+
+## 9.0.51
+
+### Patch Changes
+
+- 4078aa7: fix
+- Updated dependencies [4078aa7]
+  - @winrlabs/games@2.16.64
+  - @winrlabs/web3@0.10.97
+  - @winrlabs/web3-games@9.0.51
+
+## 9.0.50
+
+### Patch Changes
+
+- cf6eccc: dont wrap the token if its not the wrapped
+- Updated dependencies [cf6eccc]
+- Updated dependencies [83202af]
+  - @winrlabs/web3-games@9.0.50
+  - @winrlabs/games@2.16.63
+
+## 9.0.49
+
+### Patch Changes
+
+- 5cd0bc5: native balance fix
+- Updated dependencies [5cd0bc5]
+  - @winrlabs/games@2.16.62
+  - @winrlabs/web3@0.10.96
+  - @winrlabs/web3-games@9.0.49
+
+## 9.0.48
+
+### Patch Changes
+
+- 29019b0: wrap unwrap
+- Updated dependencies [29019b0]
+  - @winrlabs/games@2.16.61
+  - @winrlabs/web3@0.10.95
+  - @winrlabs/web3-games@9.0.48
+
+## 9.0.47
+
+### Patch Changes
+
+- Updated dependencies [37beee5]
+  - @winrlabs/games@2.16.60
+  - @winrlabs/web3-games@9.0.47
+
+## 9.0.46
+
+### Patch Changes
+
+- 273eac2: bet history update
+- Updated dependencies [273eac2]
+  - @winrlabs/games@2.16.59
+  - @winrlabs/web3@0.10.94
+  - @winrlabs/web3-games@9.0.46
+
+## 9.0.45
+
+### Patch Changes
+
+- 0cd776a: fix
+- Updated dependencies [0cd776a]
+  - @winrlabs/games@2.16.58
+  - @winrlabs/web3@0.10.93
+  - @winrlabs/web3-games@9.0.45
+
+## 9.0.44
+
+### Patch Changes
+
+- 2133fb8: max wager
+- Updated dependencies [2133fb8]
+  - @winrlabs/games@2.16.57
+  - @winrlabs/web3@0.10.92
+  - @winrlabs/web3-games@9.0.44
+
+## 9.0.43
+
+### Patch Changes
+
+- b401541: fix
+- Updated dependencies [b401541]
+  - @winrlabs/api@1.3.7
+  - @winrlabs/games@2.16.56
+  - @winrlabs/web3@0.10.91
+  - @winrlabs/web3-games@9.0.43
+
+## 9.0.42
+
+### Patch Changes
+
+- 0cd4321: fixes
+- Updated dependencies [0cd4321]
+- Updated dependencies [1656fc8]
+  - @winrlabs/games@2.16.55
+  - @winrlabs/web3@0.10.90
+  - @winrlabs/web3-games@9.0.42
+
+## 9.0.41
+
+### Patch Changes
+
+- 4d65a07: bj 21 fix
+- Updated dependencies [4d65a07]
+  - @winrlabs/games@2.16.54
+  - @winrlabs/web3@0.10.89
+  - @winrlabs/web3-games@9.0.41
+
+## 9.0.40
+
+### Patch Changes
+
+- 234528a: update switch chain for non-social login
+- Updated dependencies [234528a]
+  - @winrlabs/web3@0.10.88
+  - @winrlabs/games@2.16.53
+  - @winrlabs/web3-games@9.0.40
+
+## 9.0.39
+
+### Patch Changes
+
+- f5f0a13: halt check fix
+- Updated dependencies [f5f0a13]
+  - @winrlabs/games@2.16.52
+  - @winrlabs/web3@0.10.87
+  - @winrlabs/web3-games@9.0.39
+
+## 9.0.38
+
+### Patch Changes
+
+- c0dcc6d: update to send tx on error
+- Updated dependencies [c0dcc6d]
+  - @winrlabs/web3@0.10.86
+  - @winrlabs/games@2.16.51
+  - @winrlabs/web3-games@9.0.38
+
+## 9.0.37
+
+### Patch Changes
+
+- ef56ffd: update session tx
+- Updated dependencies [ef56ffd]
+  - @winrlabs/web3@0.10.85
+  - @winrlabs/games@2.16.50
+  - @winrlabs/web3-games@9.0.37
+
+## 9.0.36
+
+### Patch Changes
+
+- dbe1938: strategist cumulative profit loss calculation
+- Updated dependencies [dbe1938]
+  - @winrlabs/games@2.16.49
+  - @winrlabs/web3@0.10.84
+  - @winrlabs/web3-games@9.0.36
+
+## 9.0.35
+
+### Patch Changes
+
+- 043475b: add new mm auth
+- Updated dependencies [043475b]
+  - @winrlabs/web3@0.10.83
+  - @winrlabs/games@2.16.48
+  - @winrlabs/web3-games@9.0.35
+
+## 9.0.34
+
+### Patch Changes
+
+- c017cb1: on login props
+- Updated dependencies [c017cb1]
+  - @winrlabs/games@2.16.47
+  - @winrlabs/web3@0.10.82
+  - @winrlabs/web3-games@9.0.34
+
 ## 9.0.33
 
 ### Patch Changes

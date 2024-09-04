@@ -191,7 +191,7 @@ const BetTable = ({
                             <LinkIcon className="wr-w-4 wr-h-4 wr-text-zinc-500" />
                           </span>
                           <span className="wr-hidden lg:wr-flex">
-                            {dayjs(bet.createdAt * 1000).format('HH:mm')}
+                            {dayjs(bet.time * 1000).format('HH:mm')}
                           </span>
                         </div>
                       </a>

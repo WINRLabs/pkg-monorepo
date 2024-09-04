@@ -20,9 +20,15 @@ interface Props {
   minWager: number;
   maxWager: number;
   winMultiplier: number;
+  onLogin?: () => void;
 }
 
-export const ManualController: React.FC<Props> = ({ minWager, maxWager, winMultiplier }) => {
+export const ManualController: React.FC<Props> = ({
+  minWager,
+  maxWager,
+  winMultiplier,
+  onLogin,
+}) => {
   const form = useFormContext() as LimboForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -110,7 +116,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, winMulti
         </div>
       </div>
 
-      <PreBetButton>
+      <PreBetButton onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

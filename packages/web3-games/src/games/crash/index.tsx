@@ -14,12 +14,15 @@ import {
   controllerAbi,
   useCurrentAccount,
   useHandleTx,
+  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
 import { BaseGameProps } from '../../type';
@@ -81,6 +84,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     });
   const { refetch: refetchBalances } = useTokenBalances({
     account: currentAccount.address || '0x0000000',
+    balancesToRead: [selectedToken.address],
   });
 
   useConfigureMultiplayerLiveResultStore();
@@ -98,6 +102,8 @@ const CrashGame = (props: CrashTemplateProps) => {
     multiplier: 1,
     wager: 1,
   });
+
+  const maxWagerBySelection = toDecimals((props.maxWager || 100) / formValues.multiplier, 2);
 
   const { updateState, addParticipant, setIsGamblerParticipant } = useCrashGameStore([
     'updateState',
@@ -230,7 +236,19 @@ const CrashGame = (props: CrashTemplateProps) => {
     encodedTxData: encodedClaimParams.encodedClaimTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const onGameSubmit = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     clearLiveResults();
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -248,7 +266,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleTx.mutateAsync();
@@ -256,6 +274,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     } catch (e: any) {
       console.log('handleTx error', e);
       refetchPlayerGameStatus();
+      setIsGamblerParticipant(false);
       // props.onError && props.onError(e);
     }
   };
@@ -370,6 +389,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     <>
       <CrashTemplate
         {...props}
+        maxWager={maxWagerBySelection}
         onComplete={onComplete}
         onSubmitGameForm={onGameSubmit}
         onFormChange={(val) => {

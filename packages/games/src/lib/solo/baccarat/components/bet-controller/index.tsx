@@ -17,6 +17,7 @@ interface Props {
   isDisabled: boolean;
   minWager: number;
   maxWager: number;
+  onLogin?: () => void;
   onSelectedChipChange: (chip: Chip) => void;
   undoBet: () => void;
   isAutoBetMode: boolean;

@@ -26,6 +26,8 @@ interface BetControllerProps {
   onClear: () => void;
   onRebet: () => void;
   onDeal: () => void;
+
+  onLogin?: () => void;
 }
 
 export const BetController: React.FC<BetControllerProps> = ({
@@ -44,6 +46,7 @@ export const BetController: React.FC<BetControllerProps> = ({
   onClear,
   onRebet,
   onDeal,
+  onLogin,
 }) => {
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const { account } = useGameOptions();
@@ -98,7 +101,7 @@ export const BetController: React.FC<BetControllerProps> = ({
 
       <div className="wr-flex wr-w-full wr-max-w-[220px] wr-flex-col wr-items-end wr-gap-2 max-lg:wr-max-w-[200px] max-lg:wr-flex-row-reverse max-md:wr-max-w-[165px]">
         <div className="wr-flex wr-w-full wr-items-center wr-gap-2">
-          <PreBetButton>
+          <PreBetButton onLogin={onLogin}>
             {(status === BlackjackGameStatus.NONE || status === BlackjackGameStatus.FINISHED) && (
               <Button
                 variant="success"

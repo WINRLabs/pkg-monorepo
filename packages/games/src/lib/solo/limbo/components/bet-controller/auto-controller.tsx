@@ -1,3 +1,4 @@
+import * as Slider from '@radix-ui/react-slider';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -11,11 +12,10 @@ import {
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
-import { cn } from '../../../../utils/style';
-import { LimboForm } from '../../types';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../../ui/form';
 import { NumberInput } from '../../../../ui/number-input';
-import * as Slider from '@radix-ui/react-slider';
+import { cn } from '../../../../utils/style';
+import { LimboForm } from '../../types';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -24,6 +24,7 @@ interface AutoControllerProps {
   maxWager: number;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+  onLogin?: () => void;
 }
 
 export const AutoController = ({
@@ -31,6 +32,7 @@ export const AutoController = ({
   maxWager,
   isAutoBetMode,
   onAutoBetModeChange,
+  onLogin,
 }: AutoControllerProps) => {
   const form = useFormContext() as LimboForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
@@ -125,7 +127,7 @@ export const AutoController = ({
         />
       </div>
 
-      <PreBetButton className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

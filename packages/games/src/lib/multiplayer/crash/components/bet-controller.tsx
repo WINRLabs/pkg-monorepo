@@ -28,12 +28,14 @@ interface CrashBetControllerProps {
       logo?: string;
     };
   };
+  onLogin?: () => void;
 }
 
 export const CrashBetController: React.FC<CrashBetControllerProps> = ({
   minWager,
   maxWager,
   options,
+  onLogin,
 }) => {
   const form: CrashForm = useFormContext();
   const wager = form.watch('wager');
@@ -170,7 +172,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
             </span>
           </div>
         </div>
-        <PreBetButton>
+        <PreBetButton onLogin={onLogin}>
           <Button
             type="submit"
             variant={'crash'}

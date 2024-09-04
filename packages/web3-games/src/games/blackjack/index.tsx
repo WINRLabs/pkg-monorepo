@@ -10,6 +10,7 @@ import {
   BlackjackTemplate,
   GameStruct,
   GameType,
+  toDecimals,
 } from '@winrlabs/games';
 import {
   blackjackReaderAbi,
@@ -21,6 +22,8 @@ import {
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
+  useWrapWinr,
+  WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -105,7 +108,11 @@ const defaultGameData = {
   payback: 0,
 };
 
+const MAX_WAGER_MULTIPLIER = 3;
+
 export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) {
+  const maxWager = toDecimals((props?.maxWager || 100) / MAX_WAGER_MULTIPLIER, 2);
+
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
@@ -157,6 +164,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
+    balancesToRead: [selectedToken.address],
   });
   const allowance = useTokenAllowance({
     amountToApprove: 999,
@@ -496,7 +504,19 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     encodedTxData: encodedBuyInsuranceParams.encodedTxData,
   });
 
+  const isPlayerHaltedRef = React.useRef<boolean>(false);
+
+  React.useEffect(() => {
+    isPlayerHaltedRef.current = isPlayerHalted;
+  }, [isPlayerHalted]);
+
+  const wrapWinrTx = useWrapWinr({
+    account: currentAccount.address || '0x',
+  });
+
   const handleStart = async () => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+
     setIsLoading(true); // Set loading state to true
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -509,7 +529,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleBetTx.mutateAsync();
@@ -525,7 +545,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleHit = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleHitTx.mutateAsync();
@@ -549,7 +569,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleDoubleDown = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleDoubleTx.mutateAsync();
@@ -574,7 +594,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHalted) await playerLevelUp();
+      if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
       await handleSplitTx.mutateAsync();
@@ -756,16 +776,31 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     switch (gameEvent.program[0]?.type) {
       case BJ_EVENT_TYPES.Settled: {
         const status = Number(gameEvent.program[0].data.game.status);
+        const playerCardsEvent = gameEvent.program[2]?.data as BlackjackPlayerCardsEvent;
 
         // handle events by game status
         if (status == BlackjackGameStatus.FINISHED) {
-          console.log('game finished');
-          handleGameFinalizeEvent(gameEvent);
+          if (
+            gameEvent.program[2]?.type == 'PlayerCards' &&
+            playerCardsEvent.cards.amountCards == 2 &&
+            playerCardsEvent.cards.totalCount == 21 &&
+            activeMove == 'Created'
+          ) {
+            console.log('edge case');
+            setInitialDataFetched(true);
+            handleFirstBlackjackDistribution(gameEvent);
+            setTimeout(() => {
+              setInitialDataFetched(false);
+            }, 1000);
+          } else {
+            console.log('game finished');
+            handleGameFinalizeEvent(gameEvent);
+          }
         }
 
         console.log(activeMove, 'ACTIVE MOVE!');
         // handle events by active move
-        if (activeMove == 'Created') {
+        if (activeMove == 'Created' && playerCardsEvent.cards.totalCount !== 21) {
           setTimeout(() => {
             gameDataRead.refetch();
           }, 200);
@@ -821,6 +856,59 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   };
 
   // event handlers
+  const handleFirstBlackjackDistribution = (results: DecodedEvent<any, any>) => {
+    const settledEvent = results.program[0]?.data as BlackjackSettledEvent;
+    const playerCardsEvent = results.program[2]?.data as BlackjackPlayerCardsEvent;
+    const dealerCardsEvent = results.program[3]?.data as BlackjackPlayerCardsEvent;
+
+    const newPlayerHand = {
+      cards: {
+        cards: playerCardsEvent.cards.cards,
+        amountCards: playerCardsEvent.cards.cards.filter((n) => n !== 0).length,
+        totalCount: playerCardsEvent.cards.totalCount,
+        isSoftHand: playerCardsEvent.cards.isSoftHand,
+        canSplit: playerCardsEvent.cards?.canSplit || false,
+      },
+      hand: {
+        chipsAmount: formValues.firstHandWager,
+        isInsured: false,
+        status: BlackjackHandStatus.BLACKJACK,
+        isDouble: false,
+        isSplitted: false,
+        splittedHandIndex: null,
+      },
+      handId: playerCardsEvent.handIndex,
+    };
+
+    const newDealerHand = {
+      cards: {
+        cards: dealerCardsEvent.cards.cards,
+        amountCards: dealerCardsEvent.cards.cards.filter((n) => n !== 0).length,
+        totalCount: dealerCardsEvent.cards.totalCount,
+        isSoftHand: dealerCardsEvent.cards.isSoftHand,
+        canSplit: dealerCardsEvent.cards?.canSplit || false,
+      },
+      hand: {
+        chipsAmount: 0,
+        isInsured: false,
+        status: BlackjackHandStatus.BLACKJACK,
+        isDouble: false,
+        isSplitted: false,
+        splittedHandIndex: null,
+      },
+      handId: playerCardsEvent.handIndex,
+    };
+
+    setActiveGameHands((prev) => ({ ...prev, firstHand: newPlayerHand, dealer: newDealerHand }));
+
+    // set new game data
+    setActiveGameData((prev) => ({
+      ...prev,
+      activeHandIndex: Number(settledEvent.game.activeHandIndex),
+      status: Number(settledEvent.game.status),
+    }));
+  };
+
   const handlePlayerEvent = (results: DecodedEvent<any, any>) => {
     const hitCardEvent = results.program[0]?.data as BlackjackSettledEvent;
     const playerCardsEvent = results.program[2]?.data as BlackjackPlayerCardsEvent;
@@ -1277,11 +1365,12 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   return (
     <>
       <BlackjackTemplate
+        {...props}
         activeGameData={activeGameData}
         activeGameHands={activeGameHands}
         initialDataFetched={initialDataFetched}
         minWager={props.minWager}
-        maxWager={props.maxWager}
+        maxWager={maxWager}
         onFormChange={(v) => setFormValues(v)}
         onGameCompleted={onGameCompleted}
         isControllerDisabled={isLoading}

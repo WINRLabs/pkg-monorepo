@@ -9,6 +9,6 @@ export const ROLL_TYPE = {
 
 export const LUCK_MULTIPLIER = 0.98;
 
-export const MIN_VALUE = 0.1;
+export const MIN_VALUE = 2.01;
 
-export const MAX_VALUE = 99.9;
+export const MAX_VALUE = 97.99;

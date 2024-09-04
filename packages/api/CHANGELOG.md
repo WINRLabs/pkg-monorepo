@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.3.7
+
+### Patch Changes
+
+- b401541: fix
+
 ## 1.3.6
 
 ### Patch Changes

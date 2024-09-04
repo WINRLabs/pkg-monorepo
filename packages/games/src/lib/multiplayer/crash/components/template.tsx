@@ -28,6 +28,7 @@ type TemplateProps = {
   onSubmitGameForm: (props: CrashFormFields) => void;
   onFormChange?: (fields: CrashFormFields) => void;
   onComplete?: (multiplier: number) => void;
+  onLogin?: () => void;
   gameUrl?: string;
 };
 
@@ -84,6 +85,7 @@ const CrashTemplate = (props: TemplateProps) => {
               minWager={props?.minWager || 2}
               maxWager={props?.maxWager || 2000}
               options={props.options}
+              onLogin={props.onLogin}
             />
             <LastBets />
             <CrashScene onComplete={onComplete} gameUrl={props.gameUrl} options={props.options} />

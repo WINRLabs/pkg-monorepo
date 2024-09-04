@@ -12,17 +12,23 @@ import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect
 import { Button } from '../../../../ui/button';
 import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
+import { toFormatted } from '../../../../utils/web3';
 import useVideoPokerGameStore, { VideoPokerStatus } from '../../store';
 import { VideoPokerForm } from '../../types';
-import { toFormatted } from '../../../../utils/web3';
 
 interface Props {
   minWager: number;
   maxWager: number;
   maxPayout: number;
+  onLogin?: () => void;
 }
 
-export const VideoPokerBetController: React.FC<Props> = ({ maxPayout, maxWager, minWager }) => {
+export const VideoPokerBetController: React.FC<Props> = ({
+  maxPayout,
+  maxWager,
+  minWager,
+  onLogin,
+}) => {
   const form = useFormContext() as VideoPokerForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -62,7 +68,7 @@ export const VideoPokerBetController: React.FC<Props> = ({ maxPayout, maxWager, 
             <TotalWager betCount={1} wager={wager} />
           </div>
         </div>
-        <PreBetButton>
+        <PreBetButton onLogin={onLogin}>
           <Button
             type="submit"
             variant={'success'}

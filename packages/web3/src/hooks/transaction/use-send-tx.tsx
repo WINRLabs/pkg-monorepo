@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { Hex } from 'viem';
+import { Hex, SwitchChainError } from 'viem';
+import { useSwitchChain } from 'wagmi';
 
 import { MutationHook } from '../../utils/types';
 import { useCurrentAccount } from '../use-current-address';
@@ -16,19 +17,15 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
 
   const { mutateAsync: sendWeb3AccountTx } = useWeb3AccountTx();
 
+  const { switchChainAsync } = useSwitchChain();
+
   return useMutation({
     ...options,
     mutationFn: async (request) => {
-      const {
-        part,
-        permit,
-        method,
-        target,
-        encodedTxData,
-        customAccountApi,
-        value,
-        customBundlerClient,
-      } = request;
+      const { method, target, encodedTxData, customAccountApi, value, customBundlerClient } =
+        request;
+
+      const networkId = request.networkId || 777777;
 
       if (isSocialLogin) {
         return await sendSocialAccountTx({
@@ -39,17 +36,21 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           method,
           value,
         });
-      }
+      } else {
+        try {
+          await switchChainAsync({ chainId: networkId! });
+        } catch (error) {
+          throw new SwitchChainError(error as Error);
+        }
 
-      return await sendWeb3AccountTx({
-        part,
-        permit,
-        customAccountApi,
-        customBundlerClient,
-        target,
-        encodedTxData,
-        value,
-      });
+        return await sendWeb3AccountTx({
+          customAccountApi,
+          customBundlerClient,
+          target,
+          encodedTxData,
+          value,
+        });
+      }
     },
   });
 };
