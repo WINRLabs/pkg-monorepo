@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 9.0.62
+
+### Patch Changes
+
+- e11c4a7: session err
+- Updated dependencies [e11c4a7]
+  - @winrlabs/games@2.16.75
+  - @winrlabs/web3@0.10.107
+  - @winrlabs/web3-games@9.0.62
+
 ## 9.0.61
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.16.75
+
+### Patch Changes
+
+- e11c4a7: session err
+
 ## 2.16.74
 
 ### Patch Changes

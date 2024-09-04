@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.10.107
+
+### Patch Changes
+
+- e11c4a7: session err
+
 ## 0.10.106
 
 ### Patch Changes
