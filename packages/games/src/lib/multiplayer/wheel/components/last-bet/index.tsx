@@ -31,6 +31,7 @@ const LastBets = () => {
             }
           )}
           key={i}
+          data-wheel-last-bets-multiplier={`${colorMultipliers[String(h.color) as WheelColor]}x`}
         >
           {colorMultipliers[String(h.color) as WheelColor]}x
         </div>

@@ -19,7 +19,6 @@ import {
   Token,
   useCurrentAccount,
   useHandleTxUncached,
-  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,

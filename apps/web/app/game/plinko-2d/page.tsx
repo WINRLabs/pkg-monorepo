@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { LiveResults, PlinkoGame, Web3GamesModals } from "@winrlabs/web3-games";
+import { LiveResults, PlinkoGame, Web3GamesModals } from '@winrlabs/web3-games';
 
 export default function PlinkoPage() {
   return (
@@ -8,7 +8,7 @@ export default function PlinkoPage() {
       <PlinkoGame
         options={{
           scene: {
-            backgroundImage: "url(/plinko.png)",
+            backgroundImage: 'url(/plinko.png)',
           },
         }}
         minWager={0.1}

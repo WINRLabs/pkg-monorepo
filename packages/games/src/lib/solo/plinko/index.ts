@@ -10,6 +10,7 @@ export const Plinko = {
   LastBets: PlinkoLastBets,
 };
 
+export type { PlinkoTemplateOptions } from './components/template';
 export { default as PlinkoTemplate } from './components/template';
 export * from './store';
 export * from './types';

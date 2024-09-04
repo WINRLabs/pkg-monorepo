@@ -1,0 +1,72 @@
+/* 
+WHEEL CUSTOM UNIT COLORS
+
+div[data-wheel-color='blue'],
+div[data-wheel-color='blue'] div::after,
+div[data-wheel-color='blue'] div::before {
+  background: #ffcb67;
+}
+
+div[data-wheel-color='grey'],
+div[data-wheel-color='grey'] div::after,
+div[data-wheel-color='grey'] div::before {
+  background: #10283c;
+}
+
+div[data-wheel-color='green'],
+div[data-wheel-color='green'] div::after,
+div[data-wheel-color='green'] div::before {
+  background: #fe9a4c;
+} */
+
+/*
+WHEEL PARTICIPANT DETAIL COLORS
+div[data-wheel-participant-detail='red'] {
+  background: #ff443340;
+  color: #ff4433;
+} */
+
+/* 
+WHEEL BET CONTROOLLER MULTIPLER BUTTONS
+button[data-wheel-controller-multiplier='48x'] {
+  background: blue;
+  color: blue;
+} */
+
+/* multiplerStyles: {
+  '2x': {
+    backgroundColor: '#FFFFFF26',
+  },
+  '3x': {
+    backgroundColor: '#FFCB67',
+    color: '#141416',
+  },
+  '6x': {
+    backgroundColor: '#FE9A4C',
+    color: '#141416',
+  },
+  '48x': {
+    backgroundColor: '#FF4433',
+    color: '#141416',
+  }, */
+/* 
+WHEEL LAST BETS MULTIPLER
+
+div[data-wheel-last-bets-multiplier='2x'] {
+  background-color: #ffffff26;
+}
+
+div[data-wheel-last-bets-multiplier='3x'] {
+  background-color: #ffcb67;
+  color: #141416;
+}
+
+div[data-wheel-last-bets-multiplier='6x'] {
+  background-color: #fe9a4c;
+  color: #141416;
+}
+
+div[data-wheel-last-bets-multiplier='48x'] {
+  background-color: #ff4433;
+  color: #141416;
+} */

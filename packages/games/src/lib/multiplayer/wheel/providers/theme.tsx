@@ -2,35 +2,35 @@ import { createContext, useContext } from 'react';
 
 import { CDN_URL } from '../../../constants';
 
-export interface WheelTeme {
-  wheelBackground: string;
+export interface WheelTheme {
+  wheelBackground?: string;
 }
 
-const defaultTheme: Partial<WheelTeme> = {
+const defaultTheme: Partial<WheelTheme> = {
   wheelBackground: `${CDN_URL}/wheel/cursor-wheel.svg`,
 };
 
-const WheelTemeContext = createContext<Partial<WheelTeme>>(defaultTheme);
+const WheelThemeContext = createContext<Partial<WheelTheme>>(defaultTheme);
 
-export const WheelTemeProvider = ({
+export const WheelThemeProvider = ({
   children,
   theme = {},
 }: {
   children: React.ReactNode;
-  theme: Partial<WheelTeme>;
+  theme?: Partial<WheelTheme>;
 }) => {
   const currentTheme = {
     ...defaultTheme,
     ...theme,
   };
 
-  return <WheelTemeContext.Provider value={currentTheme}>{children}</WheelTemeContext.Provider>;
+  return <WheelThemeContext.Provider value={currentTheme}>{children}</WheelThemeContext.Provider>;
 };
 
-export const useWheelTeme = () => {
-  const context = useContext(WheelTemeContext);
+export const useWheelTheme = () => {
+  const context = useContext(WheelThemeContext);
   if (!context) {
-    throw new Error('useWheelTeme must be used within a WheelTemeProvider');
+    throw new Error('useWheelTheme must be used within a WheelThemeProvider');
   }
   return context;
 };

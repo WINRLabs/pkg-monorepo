@@ -15,14 +15,15 @@ import { PlinkoFormFields, PlinkoGameResult } from '../types';
 import { BetController } from './bet-controller';
 import { PlinkoGameProps } from './game';
 
-type TemplateOptions = {
+export type PlinkoTemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    backgroundColor?: string;
   };
 };
 
 type TemplateProps = PlinkoGameProps & {
-  options: TemplateOptions;
+  options: PlinkoTemplateOptions;
   minWager?: number;
   maxWager?: number;
   onSubmitGameForm: (data: PlinkoFormFields) => void;
@@ -147,6 +148,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
             )}
             style={{
               backgroundImage: options?.scene?.backgroundImage,
+              backgroundColor: options?.scene?.backgroundColor,
             }}
           >
             <Plinko.Body>

@@ -17,8 +17,8 @@ import {
   useWheelGameStore,
   WheelColor,
   WheelFormFields,
-  WheelTeme,
   WheelTemplate,
+  WheelTheme,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -46,7 +46,7 @@ import { useContractConfigContext } from '../hooks/use-contract-config';
 import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
 
 interface TemplateWithWeb3Props extends BaseGameProps {
-  theme?: WheelTeme;
+  theme?: WheelTheme;
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;

@@ -109,9 +109,10 @@ const WheelParticipantDetail: React.FC<WheelParticipantDetailProps> = ({ variant
 
       <div
         className={cn(
-          'wr-flex wr-h-[40px] wr-w-[184px] wr-flex-row wr-items-center wr-justify-center wr-gap-1 wr-rounded-md wr-p-2  wr-text-[14px] wr-font-semibold ',
+          'wr-flex wr-h-[40px] wr-w-[184px] wr-flex-row wr-items-center wr-justify-center wr-gap-1 wr-rounded-md wr-p-2  wr-text-[14px] wr-font-semibold',
           color[variant]
         )}
+        data-wheel-participant-detail={variant}
       >
         <Wheel className={(cn('wr-h-5 wr-w-5'), iconColor[variant])} />
         <div>{multiplier}</div>

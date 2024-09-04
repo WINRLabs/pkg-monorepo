@@ -16,5 +16,6 @@ export const Mines = {
 
 export { default as MinesTemplate } from './components/template';
 export * from './constants';
+export * from './provider/theme';
 export * from './store';
 export * from './types';

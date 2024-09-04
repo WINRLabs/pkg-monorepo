@@ -4,7 +4,7 @@ import { CDN_URL } from '../../../../constants';
 import { genNumberArray } from '../../../../utils/number';
 import { cn } from '../../../../utils/style';
 import { WheelColor } from '../../constants';
-import { useWheelTeme } from '../../providers/theme';
+import { useWheelTheme } from '../../providers/theme';
 import WheelRotate from './wheel-rotate';
 import styles from './wheel-scene.module.css';
 
@@ -28,6 +28,17 @@ const Unit: React.FC<WheelUnitProps> = ({ color, width, rotation }) => {
         width: `${width}px`,
         transform: `translateX(-${width / 2}px) rotate(${rotation}deg)`,
       }}
+      data-wheel-color={
+        color === WheelColor.BLUE
+          ? 'blue'
+          : color === WheelColor.GREEN
+            ? 'green'
+            : color === WheelColor.GREY
+              ? 'grey'
+              : color === WheelColor.RED
+                ? 'red'
+                : 'idle'
+      }
     >
       <div></div>
     </div>
@@ -42,7 +53,7 @@ export interface WheelContainerProps {
 }
 
 export const Wheel: React.FC<WheelContainerProps> = ({ units, spin, degree, onComplete }) => {
-  const theme = useWheelTeme();
+  const theme = useWheelTheme();
   const diameter = 720;
 
   const dpi = diameter / 180;

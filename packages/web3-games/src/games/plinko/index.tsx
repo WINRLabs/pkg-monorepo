@@ -6,6 +6,7 @@ import {
   PlinkoFormFields,
   PlinkoGameResult,
   PlinkoTemplate,
+  PlinkoTemplateOptions,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
@@ -14,7 +15,6 @@ import {
   useCurrentAccount,
   useFastOrVerified,
   useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
   useTokenAllowance,
   useTokenBalances,
@@ -36,14 +36,8 @@ import {
   SingleStepSettledEvent,
 } from '../utils';
 
-type TemplateOptions = {
-  scene?: {
-    backgroundImage?: string;
-  };
-};
-
 interface TemplateWithWeb3Props extends BaseGameProps {
-  options: TemplateOptions;
+  options: PlinkoTemplateOptions;
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
