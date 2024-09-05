@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.2
+
+### Patch Changes
+
+- a041c51: up
+
 ## 2.17.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.2
+
+### Patch Changes
+
+- a041c51: up
+
 ## 0.11.1
 
 ### Patch Changes
