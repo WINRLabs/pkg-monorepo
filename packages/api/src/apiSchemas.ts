@@ -263,9 +263,8 @@ export type PlayerRankObject = {
 export type WagerInfoResponse = {
   minWager: number;
   maxWager: number;
+  multiplier: number;
 };
-
-export type WagerResponse = {};
 
 export type VaultOutput = {
   bankrollTokenAddress: string;
@@ -273,6 +272,7 @@ export type VaultOutput = {
   shareTokenAddress: string;
   vaultAddress: string;
   price: number;
+  lpPrice: number;
   wallet: number;
   poolSupply: number;
   weeklyProfit: number;

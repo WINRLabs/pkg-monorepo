@@ -27,7 +27,7 @@ export const WinrLabsWeb3Provider = ({
   wagmiConfig?: Config;
   tokens: Token[];
   selectedToken: Token;
-  globalChainId: number;
+  globalChainId?: number;
 }) => {
   return (
     <BundlerClientProvider

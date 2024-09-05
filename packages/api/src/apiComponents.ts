@@ -4,8 +4,7 @@
  * @version 2.0
  */
 import * as reactQuery from '@tanstack/react-query';
-
-import { ApiContext, useApiContext } from './apiContext';
+import { useApiContext, ApiContext } from './apiContext';
 import type * as Fetcher from './apiFetcher';
 import { apiFetch } from './apiFetcher';
 import type * as Schemas from './apiSchemas';
@@ -25,7 +24,7 @@ export const fetchAppControllerStatus = (
     signal,
   });
 
-export const useAppControllerStatus = <TData = undefined>(
+export const useAppControllerStatus = <TData = undefined,>(
   variables: AppControllerStatusVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, AppControllerStatusError, TData>,
@@ -148,7 +147,7 @@ export const fetchGameControllerBetHistory = (
     {}
   >({ url: '/game/bet-history', method: 'get', ...variables, signal });
 
-export const useGameControllerBetHistory = <TData = GameControllerBetHistoryResponse>(
+export const useGameControllerBetHistory = <TData = GameControllerBetHistoryResponse,>(
   variables: GameControllerBetHistoryVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -196,7 +195,7 @@ export const fetchGameControllerGlobalBetHistory = (
     {}
   >({ url: '/game/global-bet-history', method: 'get', ...variables, signal });
 
-export const useGameControllerGlobalBetHistory = <TData = GameControllerGlobalBetHistoryResponse>(
+export const useGameControllerGlobalBetHistory = <TData = GameControllerGlobalBetHistoryResponse,>(
   variables: GameControllerGlobalBetHistoryVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -250,7 +249,7 @@ export const fetchGameControllerGetChart = (
     {}
   >({ url: '/game/chart', method: 'get', ...variables, signal });
 
-export const useGameControllerGetChart = <TData = GameControllerGetChartResponse>(
+export const useGameControllerGetChart = <TData = GameControllerGetChartResponse,>(
   variables: GameControllerGetChartVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<GameControllerGetChartResponse, GameControllerGetChartError, TData>,
@@ -291,7 +290,7 @@ export const fetchGameControllerFreeSpinTriggger = (
     {}
   >({ url: '/game/free-spin-trigger', method: 'get', ...variables, signal });
 
-export const useGameControllerFreeSpinTriggger = <TData = Schemas.TransactionResponse>(
+export const useGameControllerFreeSpinTriggger = <TData = Schemas.TransactionResponse,>(
   variables: GameControllerFreeSpinTrigggerVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -384,7 +383,7 @@ export const fetchGameControllerGetUserProfile = (
     {}
   >({ url: '/game/user-profile', method: 'get', ...variables, signal });
 
-export const useGameControllerGetUserProfile = <TData = Schemas.UsernameObject>(
+export const useGameControllerGetUserProfile = <TData = Schemas.UsernameObject,>(
   variables: GameControllerGetUserProfileVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<Schemas.UsernameObject, GameControllerGetUserProfileError, TData>,
@@ -501,7 +500,7 @@ export const fetchGameControllerGetLiveWins = (
     {}
   >({ url: '/game/live-wins', method: 'get', ...variables, signal });
 
-export const useGameControllerGetLiveWins = <TData = GameControllerGetLiveWinsResponse>(
+export const useGameControllerGetLiveWins = <TData = GameControllerGetLiveWinsResponse,>(
   variables: GameControllerGetLiveWinsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -555,7 +554,7 @@ export const fetchGameControllerGetBigWins = (
     {}
   >({ url: '/game/live-big-wins', method: 'get', ...variables, signal });
 
-export const useGameControllerGetBigWins = <TData = GameControllerGetBigWinsResponse>(
+export const useGameControllerGetBigWins = <TData = GameControllerGetBigWinsResponse,>(
   variables: GameControllerGetBigWinsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -609,7 +608,7 @@ export const fetchGameControllerGetLiveLuckyWins = (
     {}
   >({ url: '/game/live-lucky-wins', method: 'get', ...variables, signal });
 
-export const useGameControllerGetLiveLuckyWins = <TData = GameControllerGetLiveLuckyWinsResponse>(
+export const useGameControllerGetLiveLuckyWins = <TData = GameControllerGetLiveLuckyWinsResponse,>(
   variables: GameControllerGetLiveLuckyWinsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -674,7 +673,7 @@ export const fetchGameControllerGetLuckyWins = (
     {}
   >({ url: '/game/lucky-wins', method: 'get', ...variables, signal });
 
-export const useGameControllerGetLuckyWins = <TData = GameControllerGetLuckyWinsResponse>(
+export const useGameControllerGetLuckyWins = <TData = GameControllerGetLuckyWinsResponse,>(
   variables: GameControllerGetLuckyWinsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -739,7 +738,7 @@ export const fetchGameControllerGetTopBets = (
     {}
   >({ url: '/game/top-bets', method: 'get', ...variables, signal });
 
-export const useGameControllerGetTopBets = <TData = GameControllerGetTopBetsResponse>(
+export const useGameControllerGetTopBets = <TData = GameControllerGetTopBetsResponse,>(
   variables: GameControllerGetTopBetsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -791,7 +790,7 @@ export const fetchGameControllerGetStatsByPlayer = (
     {}
   >({ url: '/game/stats-by-player', method: 'get', ...variables, signal });
 
-export const useGameControllerGetStatsByPlayer = <TData = Schemas.PlayerRankObject>(
+export const useGameControllerGetStatsByPlayer = <TData = Schemas.PlayerRankObject,>(
   variables: GameControllerGetStatsByPlayerVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -860,7 +859,7 @@ export const fetchGameControllerGetWagerInfo = (
     {}
   >({ url: '/game/wager-info', method: 'get', ...variables, signal });
 
-export const useGameControllerGetWagerInfo = <TData = Schemas.WagerInfoResponse>(
+export const useGameControllerGetWagerInfo = <TData = Schemas.WagerInfoResponse,>(
   variables: GameControllerGetWagerInfoVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<Schemas.WagerInfoResponse, GameControllerGetWagerInfoError, TData>,
@@ -896,7 +895,7 @@ export const fetchGameControllerSseLiveWins = (
     signal,
   });
 
-export const useGameControllerSseLiveWins = <TData = undefined>(
+export const useGameControllerSseLiveWins = <TData = undefined,>(
   variables: GameControllerSseLiveWinsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, GameControllerSseLiveWinsError, TData>,
@@ -932,7 +931,7 @@ export const fetchGameControllerSseGlobalBetHistory = (
     signal,
   });
 
-export const useGameControllerSseGlobalBetHistory = <TData = undefined>(
+export const useGameControllerSseGlobalBetHistory = <TData = undefined,>(
   variables: GameControllerSseGlobalBetHistoryVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, GameControllerSseGlobalBetHistoryError, TData>,
@@ -979,7 +978,7 @@ export const fetchBankrollControllerUpdateSingleSidedPoolsNotify = (
     {}
   >({ url: '/bankroll/update-notify-single-sided-pools', method: 'get', ...variables, signal });
 
-export const useBankrollControllerUpdateSingleSidedPoolsNotify = <TData = undefined>(
+export const useBankrollControllerUpdateSingleSidedPoolsNotify = <TData = undefined,>(
   variables: BankrollControllerUpdateSingleSidedPoolsNotifyVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -1007,54 +1006,6 @@ export const useBankrollControllerUpdateSingleSidedPoolsNotify = <TData = undefi
       ...queryOptions,
     }
   );
-};
-
-export type BankrollControllerGetWagerInfoError = Fetcher.ErrorWrapper<undefined>;
-
-export type BankrollControllerGetWagerInfoResponse = Schemas.WagerResponse[];
-
-export type BankrollControllerGetWagerInfoVariables = ApiContext['fetcherOptions'];
-
-export const fetchBankrollControllerGetWagerInfo = (
-  variables: BankrollControllerGetWagerInfoVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    BankrollControllerGetWagerInfoResponse,
-    BankrollControllerGetWagerInfoError,
-    undefined,
-    {},
-    {},
-    {}
-  >({ url: '/bankroll/wager-info', method: 'get', ...variables, signal });
-
-export const useBankrollControllerGetWagerInfo = <TData = BankrollControllerGetWagerInfoResponse>(
-  variables: BankrollControllerGetWagerInfoVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<
-      BankrollControllerGetWagerInfoResponse,
-      BankrollControllerGetWagerInfoError,
-      TData
-    >,
-    'queryKey' | 'queryFn' | 'initialData'
-  >
-) => {
-  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<
-    BankrollControllerGetWagerInfoResponse,
-    BankrollControllerGetWagerInfoError,
-    TData
-  >({
-    queryKey: queryKeyFn({
-      path: '/bankroll/wager-info',
-      operationId: 'bankrollControllerGetWagerInfo',
-      variables,
-    }),
-    queryFn: ({ signal }) =>
-      fetchBankrollControllerGetWagerInfo({ ...fetcherOptions, ...variables }, signal),
-    ...options,
-    ...queryOptions,
-  });
 };
 
 export type BankrollControllerGetSingleSidedPoolsQueryParams = {
@@ -1136,7 +1087,7 @@ export const fetchBankrollControllerGetPoolList = (
     {}
   >({ url: '/bankroll/pool-list', method: 'get', ...variables, signal });
 
-export const useBankrollControllerGetPoolList = <TData = BankrollControllerGetPoolListResponse>(
+export const useBankrollControllerGetPoolList = <TData = BankrollControllerGetPoolListResponse,>(
   variables: BankrollControllerGetPoolListVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -1262,7 +1213,7 @@ export const fetchStatisticControllerGetStats = (
     signal,
   });
 
-export const useStatisticControllerGetStats = <TData = Schemas.JustBetStats>(
+export const useStatisticControllerGetStats = <TData = Schemas.JustBetStats,>(
   variables: StatisticControllerGetStatsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<Schemas.JustBetStats, StatisticControllerGetStatsError, TData>,
@@ -1295,7 +1246,7 @@ export const fetchStatisticControllerGetMiningStats = (
     { url: '/statistic/mininig-stats', method: 'get', ...variables, signal }
   );
 
-export const useStatisticControllerGetMiningStats = <TData = Schemas.MiningStatistics>(
+export const useStatisticControllerGetMiningStats = <TData = Schemas.MiningStatistics,>(
   variables: StatisticControllerGetMiningStatsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -1341,7 +1292,7 @@ export const fetchStatisticControllerGetDashboardStats = (
     {}
   >({ url: '/statistic/dashboard-stats', method: 'get', ...variables, signal });
 
-export const useStatisticControllerGetDashboardStats = <TData = Schemas.DashboardStats>(
+export const useStatisticControllerGetDashboardStats = <TData = Schemas.DashboardStats,>(
   variables: StatisticControllerGetDashboardStatsVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -1992,45 +1943,45 @@ export const useBadgeControllerWeeklyClaimer = (
   });
 };
 
-export type RewardControllerSummaryQueryParams = {
+export type RewardControllerContestQueryParams = {
   player?: string;
 };
 
-export type RewardControllerSummaryError = Fetcher.ErrorWrapper<undefined>;
+export type RewardControllerContestError = Fetcher.ErrorWrapper<undefined>;
 
-export type RewardControllerSummaryVariables = {
-  queryParams?: RewardControllerSummaryQueryParams;
+export type RewardControllerContestVariables = {
+  queryParams?: RewardControllerContestQueryParams;
 } & ApiContext['fetcherOptions'];
 
-export const fetchRewardControllerSummary = (
-  variables: RewardControllerSummaryVariables,
+export const fetchRewardControllerContest = (
+  variables: RewardControllerContestVariables,
   signal?: AbortSignal
 ) =>
   apiFetch<
     Schemas.RewardSummary,
-    RewardControllerSummaryError,
+    RewardControllerContestError,
     undefined,
     {},
-    RewardControllerSummaryQueryParams,
+    RewardControllerContestQueryParams,
     {}
-  >({ url: '/reward/summary', method: 'get', ...variables, signal });
+  >({ url: '/reward/contest', method: 'get', ...variables, signal });
 
-export const useRewardControllerSummary = <TData = Schemas.RewardSummary>(
-  variables: RewardControllerSummaryVariables,
+export const useRewardControllerContest = <TData = Schemas.RewardSummary,>(
+  variables: RewardControllerContestVariables,
   options?: Omit<
-    reactQuery.UseQueryOptions<Schemas.RewardSummary, RewardControllerSummaryError, TData>,
+    reactQuery.UseQueryOptions<Schemas.RewardSummary, RewardControllerContestError, TData>,
     'queryKey' | 'queryFn' | 'initialData'
   >
 ) => {
   const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<Schemas.RewardSummary, RewardControllerSummaryError, TData>({
+  return reactQuery.useQuery<Schemas.RewardSummary, RewardControllerContestError, TData>({
     queryKey: queryKeyFn({
-      path: '/reward/summary',
-      operationId: 'rewardControllerSummary',
+      path: '/reward/contest',
+      operationId: 'rewardControllerContest',
       variables,
     }),
     queryFn: ({ signal }) =>
-      fetchRewardControllerSummary({ ...fetcherOptions, ...variables }, signal),
+      fetchRewardControllerContest({ ...fetcherOptions, ...variables }, signal),
     ...options,
     ...queryOptions,
   });
@@ -2051,7 +2002,7 @@ export const fetchStakeControllerSummary = (
     signal,
   });
 
-export const useStakeControllerSummary = <TData = Schemas.SummaryResponse>(
+export const useStakeControllerSummary = <TData = Schemas.SummaryResponse,>(
   variables: StakeControllerSummaryVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<Schemas.SummaryResponse, StakeControllerSummaryError, TData>,
@@ -2138,7 +2089,7 @@ export const fetchBridgeControllerHistory = (
     BridgeControllerHistoryPathParams
   >({ url: '/history', method: 'get', ...variables, signal });
 
-export const useBridgeControllerHistory = <TData = BridgeControllerHistoryResponse>(
+export const useBridgeControllerHistory = <TData = BridgeControllerHistoryResponse,>(
   variables: BridgeControllerHistoryVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -2182,7 +2133,7 @@ export const fetchBridgeControllerLatest = (
     BridgeControllerLatestPathParams
   >({ url: '/latest', method: 'get', ...variables, signal });
 
-export const useBridgeControllerLatest = <TData = Schemas.BridgeHistoryResponse>(
+export const useBridgeControllerLatest = <TData = Schemas.BridgeHistoryResponse,>(
   variables: BridgeControllerLatestVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<Schemas.BridgeHistoryResponse, BridgeControllerLatestError, TData>,
@@ -2291,11 +2242,6 @@ export type QueryOperation =
       variables: BankrollControllerUpdateSingleSidedPoolsNotifyVariables;
     }
   | {
-      path: '/bankroll/wager-info';
-      operationId: 'bankrollControllerGetWagerInfo';
-      variables: BankrollControllerGetWagerInfoVariables;
-    }
-  | {
       path: '/bankroll/single-sided-pools';
       operationId: 'bankrollControllerGetSingleSidedPools';
       variables: BankrollControllerGetSingleSidedPoolsVariables;
@@ -2361,12 +2307,22 @@ export type QueryOperation =
       variables: ReferralControllerCodesVolumeAndRewardAmountsVariables;
     }
   | {
-      path: '/reward/summary';
-      operationId: 'rewardControllerSummary';
-      variables: RewardControllerSummaryVariables;
+      path: '/reward/contest';
+      operationId: 'rewardControllerContest';
+      variables: RewardControllerContestVariables;
     }
   | {
       path: '/stake/summary';
       operationId: 'stakeControllerSummary';
       variables: StakeControllerSummaryVariables;
+    }
+  | {
+      path: '/history';
+      operationId: 'bridgeControllerHistory';
+      variables: BridgeControllerHistoryVariables;
+    }
+  | {
+      path: '/latest';
+      operationId: 'bridgeControllerLatest';
+      variables: BridgeControllerLatestVariables;
     };
