@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.1
+
+### Patch Changes
+
+- f114b55: up
+
 ## 0.11.0
 
 ### Minor Changes

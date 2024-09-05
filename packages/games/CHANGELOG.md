@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.1
+
+### Patch Changes
+
+- f114b55: up
+
 ## 2.17.0
 
 ### Minor Changes
