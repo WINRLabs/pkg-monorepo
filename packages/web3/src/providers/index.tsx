@@ -14,6 +14,7 @@ export const WinrLabsWeb3Provider = ({
   tokens,
   selectedToken,
   wagmiConfig,
+  globalChainId,
 }: {
   children: React.ReactNode;
   smartAccountConfig: {
@@ -26,11 +27,13 @@ export const WinrLabsWeb3Provider = ({
   wagmiConfig?: Config;
   tokens: Token[];
   selectedToken: Token;
+  globalChainId: number;
 }) => {
   return (
     <BundlerClientProvider
       rpcUrl={smartAccountConfig.bundlerUrl}
       initialNetwork={smartAccountConfig.network}
+      globalChainId={globalChainId}
     >
       <SmartAccountApiProvider
         entryPointAddress={smartAccountConfig.entryPointAddress}

@@ -69,9 +69,9 @@ export type BundlerMethods = {
   'permit'(params: { owner: Address; signature: Hex }): {
     pubKey: Hex;
     hashKey: Hex;
-  }
+  };
 
-  'permitTypedMessage'(params: { owner: Address; }): {
+  'permitTypedMessage'(params: { owner: Address }): {
     typedMessage: Hex;
   };
 };
@@ -96,6 +96,7 @@ interface UseBundlerClient {
   isLoading: boolean;
   error?: Error;
   changeBundlerNetwork: (network: BundlerNetwork) => void;
+  globalChainId?: number;
 }
 
 export const fetchBundlerClient = async ({
@@ -142,7 +143,8 @@ export const BundlerClientProvider: React.FC<{
   rpcUrl: string;
   initialNetwork?: BundlerNetwork;
   config?: Config;
-}> = ({ children, rpcUrl, initialNetwork = BundlerNetwork.WINR, config }) => {
+  globalChainId?: number;
+}> = ({ children, rpcUrl, initialNetwork = BundlerNetwork.WINR, config, globalChainId }) => {
   const { address } = useAccount();
 
   const [network, setNetwork] = React.useState<BundlerNetwork>(initialNetwork);
@@ -180,6 +182,7 @@ export const BundlerClientProvider: React.FC<{
         isLoading,
         error: error as unknown as Error | undefined,
         changeBundlerNetwork,
+        globalChainId,
       }}
     >
       {children}
