@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.4.0
+
+### Minor Changes
+
+- e064044: custom
+
 ## 1.3.7
 
 ### Patch Changes

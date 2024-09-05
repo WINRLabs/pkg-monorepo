@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.0
+
+### Minor Changes
+
+- e064044: custom
+
 ## 2.16.75
 
 ### Patch Changes

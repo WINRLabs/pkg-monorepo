@@ -1,5 +1,16 @@
 # @winrlabs/web3
 
+## 0.11.0
+
+### Minor Changes
+
+- e064044: custom
+
+### Patch Changes
+
+- Updated dependencies [e064044]
+  - @winrlabs/api@1.4.0
+
 ## 0.10.108
 
 ### Patch Changes
