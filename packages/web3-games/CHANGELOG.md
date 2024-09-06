@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 10.0.5
+
+### Patch Changes
+
+- 15e8d86: add submitBtnText custom
+- Updated dependencies [15e8d86]
+  - @winrlabs/web3-games@10.0.5
+  - @winrlabs/games@2.17.5
+
 ## 10.0.4
 
 ### Patch Changes

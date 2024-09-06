@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.5
+
+### Patch Changes
+
+- 15e8d86: add submitBtnText custom
+
 ## 2.17.4
 
 ### Patch Changes
