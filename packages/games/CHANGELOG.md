@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.4
+
+### Patch Changes
+
+- 861cde0: wrap unwrap fix
+
 ## 2.17.3
 
 ### Patch Changes

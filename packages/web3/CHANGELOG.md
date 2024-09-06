@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.3
+
+### Patch Changes
+
+- 861cde0: wrap unwrap fix
+
 ## 0.11.2
 
 ### Patch Changes
