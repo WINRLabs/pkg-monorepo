@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.8
+
+### Patch Changes
+
+- a17dfae: support submitBtnText on plinko
+
 ## 2.17.7
 
 ### Patch Changes
