@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.6
+
+### Patch Changes
+
+- 06b8cb9: change all game txs
+
 ## 2.17.5
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 10.0.6
+
+### Patch Changes
+
+- 06b8cb9: change all game txs
+- Updated dependencies [06b8cb9]
+  - @winrlabs/games@2.17.6
+  - @winrlabs/web3@0.11.4
+  - @winrlabs/web3-games@10.0.6
+
 ## 10.0.5
 
 ### Patch Changes
