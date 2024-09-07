@@ -40,6 +40,13 @@ interface GameContextProps {
      * Button text for the games
      */
     submitBtnText?: string;
+
+    /**
+     * API configuration
+     */
+    api?: {
+      baseUrl?: string;
+    };
   };
 }
 
@@ -74,6 +81,7 @@ export const GameProvider = ({ children, options }: GameProviderProps) => {
         options: {
           ...options,
           submitBtnText: options.submitBtnText || 'Bet',
+          api: options.api,
         },
         updateSkipAnimation: setIsAnimationSkipped,
         isAnimationSkipped,

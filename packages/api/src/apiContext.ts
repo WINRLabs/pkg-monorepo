@@ -1,8 +1,9 @@
 // @ts-ignore
 // @ts-nocheck
 
-import type { QueryKey, UseQueryOptions } from "@tanstack/react-query";
-import { QueryOperation } from "./apiComponents";
+import type { QueryKey, UseQueryOptions } from '@tanstack/react-query';
+
+import { QueryOperation } from './apiComponents';
 
 export type ApiContext = {
   fetcherOptions: {
@@ -14,6 +15,11 @@ export type ApiContext = {
      * Query params to inject in the fetcher
      */
     queryParams?: {};
+
+    /**
+     * Base url to inject in the fetcher
+     */
+    baseUrl?: string;
   };
   queryOptions: {
     /**
@@ -41,7 +47,7 @@ export function useApiContext<
 >(
   _queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    "queryKey" | "queryFn"
+    'queryKey' | 'queryFn'
   >
 ): ApiContext {
   return {
@@ -54,10 +60,10 @@ export function useApiContext<
 export const queryKeyFn = (operation: QueryOperation) => {
   const queryKey: unknown[] = hasPathParams(operation)
     ? operation.path
-        .split("/")
+        .split('/')
         .filter(Boolean)
         .map((i) => resolvePathParam(i, operation.variables.pathParams))
-    : operation.path.split("/").filter(Boolean);
+    : operation.path.split('/').filter(Boolean);
 
   if (hasQueryParams(operation)) {
     queryKey.push(operation.variables.queryParams);
@@ -71,7 +77,7 @@ export const queryKeyFn = (operation: QueryOperation) => {
 };
 // Helpers
 const resolvePathParam = (key: string, pathParams: Record<string, string>) => {
-  if (key.startsWith("{") && key.endsWith("}")) {
+  if (key.startsWith('{') && key.endsWith('}')) {
     return pathParams[key.slice(1, -1)];
   }
   return key;

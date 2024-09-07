@@ -4,7 +4,7 @@ export * from './lib/common/bet-history';
 export * from './lib/common/live-results';
 export * from './lib/common/modals';
 export { GameType } from './lib/constants';
-export { GameProvider } from './lib/game-provider';
+export { GameProvider, useGameOptions } from './lib/game-provider';
 export {
   AudioContextProvider,
   SoundEffects,

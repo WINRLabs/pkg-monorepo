@@ -147,6 +147,7 @@ export function Providers(props: { children: ReactNode }) {
                 wagmiConfig: config,
                 bundlerWsUrl,
                 network,
+                api: {},
                 contracts: {
                   gameAddresses,
                   controllerAddress,

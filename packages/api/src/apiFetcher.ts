@@ -3,7 +3,7 @@
 
 import { ApiContext } from './apiContext';
 
-export const baseUrl = 'https://gateway.winr.games'; // TODO add your baseUrl
+export const baseUrl = 'https://gateway.winr.games';
 
 export type ErrorWrapper<TError> = TError | { status: 'unknown'; payload: string };
 
@@ -32,6 +32,7 @@ export async function apiFetch<
   pathParams,
   queryParams,
   signal,
+  baseUrl: dynamicBaseUrl,
 }: ApiFetcherOptions<TBody, THeaders, TQueryParams, TPathParams>): Promise<TData> {
   try {
     const requestHeaders: HeadersInit = {
@@ -49,12 +50,15 @@ export async function apiFetch<
       delete requestHeaders['Content-Type'];
     }
 
-    const response = await window.fetch(`${baseUrl}${resolveUrl(url, queryParams, pathParams)}`, {
-      signal,
-      method: method.toUpperCase(),
-      body: body ? (body instanceof FormData ? body : JSON.stringify(body)) : undefined,
-      headers: requestHeaders,
-    });
+    const response = await window.fetch(
+      `${dynamicBaseUrl || baseUrl}${resolveUrl(url, queryParams, pathParams)}`,
+      {
+        signal,
+        method: method.toUpperCase(),
+        body: body ? (body instanceof FormData ? body : JSON.stringify(body)) : undefined,
+        headers: requestHeaders,
+      }
+    );
     if (!response.ok) {
       let error: ErrorWrapper<TError>;
       try {

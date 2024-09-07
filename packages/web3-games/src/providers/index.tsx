@@ -17,6 +17,9 @@ type WinrLabsWeb3GamesConfig = {
   network: BundlerNetwork;
   contracts: ContractConfig;
   submitBtnText?: string;
+  api?: {
+    baseUrl?: string;
+  };
 };
 
 type WinrLabsWeb3GamesProviderProps = {
@@ -51,6 +54,10 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
             isLoggedIn: !!address,
             balance,
             balanceAsDollar,
+          },
+          api: {
+            ...config.api,
+            baseUrl: config.api?.baseUrl,
           },
         }}
       >

@@ -6,7 +6,7 @@ import {
   useRefundControllerRefundGame,
   useRefundControllerReIterate,
 } from '@winrlabs/api';
-import { GameType, useWeb3GamesModalsStore } from '@winrlabs/games';
+import { GameType, useGameOptions, useWeb3GamesModalsStore } from '@winrlabs/games';
 import { controllerAbi, rankMiddlewareAbi, useCurrentAccount } from '@winrlabs/web3';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -48,6 +48,8 @@ export const usePlayerGameStatus = ({
   const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
+
+  const { api } = useGameOptions();
 
   // Reads
   const playerLevelStatusRead = useReadContract({
@@ -154,6 +156,7 @@ export const usePlayerGameStatus = ({
       body: {
         player: currentAccount.address || '0x',
       },
+      baseUrl: api?.baseUrl,
     })) as unknown as TransactionResponse;
 
     if (mutation?.success && onPlayerStatusUpdate)
@@ -170,6 +173,7 @@ export const usePlayerGameStatus = ({
         game: gameType,
         player: currentAccount.address || '0x',
       },
+      baseUrl: api?.baseUrl,
     });
 
     sessionRead.refetch();
@@ -183,6 +187,7 @@ export const usePlayerGameStatus = ({
         game: gameType,
         player: currentAccount.address || '0x',
       },
+      baseUrl: api?.baseUrl,
     });
 
   React.useEffect(() => {
