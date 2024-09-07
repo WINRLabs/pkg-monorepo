@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.7
+
+### Patch Changes
+
+- 5787e65: allow set base url for reqs
+
 ## 2.17.6
 
 ### Patch Changes

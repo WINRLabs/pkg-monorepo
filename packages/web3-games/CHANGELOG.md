@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 10.0.7
+
+### Patch Changes
+
+- 5787e65: allow set base url for reqs
+- Updated dependencies [5787e65]
+  - @winrlabs/web3-games@10.0.7
+  - @winrlabs/games@2.17.7
+  - @winrlabs/api@1.4.1
+  - @winrlabs/web3@0.11.5
+
 ## 10.0.6
 
 ### Patch Changes
