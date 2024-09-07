@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.6
+
+### Patch Changes
+
+- 515c1ff: support global chain id
+
 ## 0.11.5
 
 ### Patch Changes
