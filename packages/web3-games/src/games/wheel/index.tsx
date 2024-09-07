@@ -13,7 +13,6 @@ import {
   toDecimals,
   toFormatted,
   useConfigureMultiplayerLiveResultStore,
-  useGameOptions,
   useLiveResultStore,
   useWheelGameStore,
   WheelColor,
@@ -23,6 +22,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  useApiOptions,
   useCurrentAccount,
   useHandleTx,
   usePriceFeed,
@@ -82,7 +82,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
 
   const selectedToken = useTokenStore((s) => s.selectedToken);
   const selectedTokenAddress = selectedToken.address;
-  const { api } = useGameOptions();
+  const { baseUrl } = useApiOptions();
   const { data: betHistory, refetch: refetchBetHistory } =
     useGameControllerGetMultiplayerGameHistory({
       queryParams: {
@@ -92,7 +92,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
         limit: 8,
       },
 
-      baseUrl: api?.baseUrl,
+      baseUrl,
     });
   const { updateState, setWheelParticipant, setIsGamblerParticipant } = useWheelGameStore([
     'updateState',

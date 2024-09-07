@@ -61,6 +61,9 @@ export function Providers(props: { children: ReactNode }) {
     <WagmiProvider reconnectOnMount={isPreviouslyConnected} config={config}>
       <QueryClientProvider client={queryClient}>
         <WinrLabsWeb3Provider
+          apiConfig={{
+            baseUrl: 'https://abc.com',
+          }}
           smartAccountConfig={{
             bundlerUrl,
             network,
@@ -147,7 +150,6 @@ export function Providers(props: { children: ReactNode }) {
                 wagmiConfig: config,
                 bundlerWsUrl,
                 network,
-                api: {},
                 contracts: {
                   gameAddresses,
                   controllerAddress,

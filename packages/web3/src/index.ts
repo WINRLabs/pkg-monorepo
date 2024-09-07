@@ -19,6 +19,7 @@ export * from './hooks/use-unwrap-winr';
 export * from './hooks/use-web3-auth-account';
 export * from './hooks/use-wrap-winr';
 export * from './providers';
+export * from "./providers/api"
 export * from './providers/balance';
 export * from './providers/token';
 export * from './smart-wallet';

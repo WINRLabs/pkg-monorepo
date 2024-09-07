@@ -6,8 +6,8 @@ export default function WheelPage() {
   return (
     <>
       <WheelGame
-        minWager={0.1}
-        maxWager={2000}
+        minWager={1}
+        maxWager={1}
         theme={{
           wheelBackground: '#000',
         }}

@@ -6,8 +6,8 @@ import {
   useRefundControllerRefundGame,
   useRefundControllerReIterate,
 } from '@winrlabs/api';
-import { GameType, useGameOptions, useWeb3GamesModalsStore } from '@winrlabs/games';
-import { controllerAbi, rankMiddlewareAbi, useCurrentAccount } from '@winrlabs/web3';
+import { GameType, useWeb3GamesModalsStore } from '@winrlabs/games';
+import { controllerAbi, rankMiddlewareAbi, useApiOptions, useCurrentAccount } from '@winrlabs/web3';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Address } from 'viem';
@@ -49,7 +49,7 @@ export const usePlayerGameStatus = ({
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
 
-  const { api } = useGameOptions();
+  const { baseUrl } = useApiOptions();
 
   // Reads
   const playerLevelStatusRead = useReadContract({
@@ -156,7 +156,7 @@ export const usePlayerGameStatus = ({
       body: {
         player: currentAccount.address || '0x',
       },
-      baseUrl: api?.baseUrl,
+      baseUrl: baseUrl,
     })) as unknown as TransactionResponse;
 
     if (mutation?.success && onPlayerStatusUpdate)
@@ -173,7 +173,7 @@ export const usePlayerGameStatus = ({
         game: gameType,
         player: currentAccount.address || '0x',
       },
-      baseUrl: api?.baseUrl,
+      baseUrl: baseUrl,
     });
 
     sessionRead.refetch();
@@ -187,7 +187,7 @@ export const usePlayerGameStatus = ({
         game: gameType,
         player: currentAccount.address || '0x',
       },
-      baseUrl: api?.baseUrl,
+      baseUrl: baseUrl,
     });
 
   React.useEffect(() => {
