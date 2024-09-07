@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.9
+
+### Patch Changes
+
+- 29a0c98: customize games
+
 ## 2.17.8
 
 ### Patch Changes
