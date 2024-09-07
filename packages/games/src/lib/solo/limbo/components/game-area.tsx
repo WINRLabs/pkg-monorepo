@@ -81,7 +81,7 @@ const GameArea: React.FC<GameAreaProps> = ({
       }
     };
     turn();
-  }, [limboGameResults]);
+  }, [limboGameResults, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;

@@ -118,7 +118,7 @@ export const RangeGame = ({
     };
 
     stepTrigger();
-  }, [diceGameResults]);
+  }, [diceGameResults, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;

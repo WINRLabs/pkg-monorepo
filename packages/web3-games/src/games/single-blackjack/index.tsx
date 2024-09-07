@@ -17,9 +17,8 @@ import {
   blackjackReaderAbi,
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -150,8 +149,8 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     showDefaultToasts: false,
   });
 
-  const encodedBetParams = React.useMemo(() => {
-    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+  const getEncodedBetTxData = () => {
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedToken,
       lastPrice: priceFeed[selectedToken.priceKey],
@@ -166,7 +165,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       [wagerInWei, [1, 0, 0], 1]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -177,27 +176,15 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [formValues.wager, selectedToken.address, priceFeed[selectedToken.priceKey]]);
-
-  const encodedHitParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
-    });
-
+  const getEncodedHitTxData = () => {
     const encodedGameData = encodeAbiParameters(
       [{ name: 'handIndex', type: 'uint256' }],
       [activeGameData.activeHandIndex as unknown as bigint]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -208,27 +195,15 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [selectedToken.address, activeGameData.activeHandIndex]);
-
-  const encodedStandParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
-    });
-
+  const getEncodedStandTxData = () => {
     const encodedGameData = encodeAbiParameters(
       [{ name: 'handIndex', type: 'uint256' }],
       [activeGameData.activeHandIndex as unknown as bigint]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -239,27 +214,15 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [activeGameData.activeHandIndex, selectedToken.address]);
-
-  const encodedDoubleParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
-    });
-
+  const getEncodedDoubleTxData = () => {
     const encodedGameData = encodeAbiParameters(
       [{ name: 'handIndex', type: 'uint256' }],
       [activeGameData.activeHandIndex as unknown as bigint]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -270,27 +233,15 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [activeGameData.activeHandIndex, selectedToken.address]);
-
-  const encodedSplitParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
-    });
-
+  const getEncodedSplitTxData = () => {
     const encodedGameData = encodeAbiParameters(
       [{ name: 'handIndex', type: 'uint256' }],
       [activeGameData.activeHandIndex as unknown as bigint]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -301,27 +252,15 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [activeGameData.activeHandIndex, selectedToken.address]);
-
-  const encodedBuyInsuranceParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
-    });
-
+  const getEncodedBuyInsuranceTxData = () => {
     const encodedGameData = encodeAbiParameters(
       [{ name: 'handIndex', type: 'uint256' }],
       [activeGameData.activeHandIndex as unknown as bigint]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -332,128 +271,9 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [activeGameData.activeHandIndex, selectedToken.address]);
-
-  const handleBetTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'bet',
-        encodedBetParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedBetParams.encodedTxData,
-  });
-
-  const handleHitTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'hitAnotherCard',
-        encodedHitParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedHitParams.encodedTxData,
-  });
-
-  const handleStandTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'standOff',
-        encodedStandParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedStandParams.encodedTxData,
-  });
-
-  const handleDoubleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'doubleDown',
-        encodedDoubleParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedDoubleParams.encodedTxData,
-  });
-
-  const handleSplitTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'splitHand',
-        encodedSplitParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedSplitParams.encodedTxData,
-  });
-
-  const handleBuyInsuranceTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.singleBlackjack,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'buyInsurance',
-        encodedBuyInsuranceParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedBuyInsuranceParams.encodedTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
@@ -482,7 +302,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleBetTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedBetTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -496,7 +320,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleHitTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedHitTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -508,7 +336,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
   const handleStand = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      await handleStandTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedStandTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
     }
@@ -521,7 +353,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleDoubleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedDoubleTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -545,7 +381,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleSplitTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedSplitTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -566,7 +406,11 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      await handleBuyInsuranceTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedBuyInsuranceTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
     }

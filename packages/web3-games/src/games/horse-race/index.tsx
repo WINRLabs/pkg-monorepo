@@ -15,16 +15,15 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
 import { BaseGameProps } from '../../type';
@@ -131,8 +130,8 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
   const { priceFeed } = usePriceFeed();
 
-  const encodedParams = useMemo(() => {
-    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+  const getEncodedBetTxData = () => {
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
@@ -148,7 +147,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       [wagerInWei, formValues.horse as any]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -159,41 +158,10 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [
-    formValues?.horse,
-    formValues?.wager,
-    priceFeed[selectedToken.priceKey],
-    selectedToken.address,
-  ]);
-
-  const handleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.horseRace,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'bet',
-        encodedParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedParams.encodedTxData,
-  });
-
-  const encodedClaimParams = useMemo(() => {
+  const getEncodedClaimTxData = () => {
     const encodedChoice = encodeAbiParameters([], []);
-
     const encodedParams = encodeAbiParameters(
       [
         { name: 'address', type: 'address' },
@@ -213,7 +181,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       ]
     );
 
-    const encodedClaimData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -224,31 +192,9 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         encodedParams,
       ],
     });
+  };
 
-    return {
-      encodedClaimData,
-      encodedClaimTxData: encodedClaimData,
-      currentAccount,
-    };
-  }, [formValues.horse, formValues.wager, selectedToken.bankrollIndex]);
-
-  const handleClaimTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.horseRace,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'claim',
-        encodedClaimParams.encodedClaimData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {},
-    encodedTxData: encodedClaimParams.encodedClaimTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
@@ -275,14 +221,21 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
     console.log('submit');
     try {
-      await handleClaimTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedClaimTxData(),
+        target: controllerAddress,
+      });
     } catch (error) {}
 
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedBetTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -403,9 +356,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         buildedGameUrl={props.buildedGameUrl}
         onSubmitGameForm={onGameSubmit}
         onComplete={onGameCompleted}
-        onFormChange={(val) => {
-          setFormValues(val);
-        }}
+        onFormChange={setFormValues}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

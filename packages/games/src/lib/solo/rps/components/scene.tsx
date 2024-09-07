@@ -107,7 +107,7 @@ const Scene: React.FC<GameAreaProps> = ({
       setWinnerAnimation(false);
     };
     turn();
-  }, [rpsGameResults]);
+  }, [rpsGameResults, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;
@@ -129,7 +129,7 @@ const Scene: React.FC<GameAreaProps> = ({
   }, [form.getValues('rpsChoice')]);
 
   return (
-    <div className="wr-relative wr-flex wr-h-full wr-w-full  ">
+    <div className="wr-relative wr-flex wr-h-full wr-w-full">
       <div className="wr-relative wr-basis-1/2 ">
         <div
           className={cn(

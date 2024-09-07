@@ -11,9 +11,8 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -90,8 +89,8 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     showDefaultToasts: false,
   });
 
-  const encodedParams = React.useMemo(() => {
-    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+  const getEncodedStartTxData = () => {
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
@@ -101,7 +100,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
 
     const encodedGameData = encodeAbiParameters([{ name: 'wager', type: 'uint128' }], [wagerInWei]);
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -112,40 +111,9 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [formValues.wager, selectedToken.address, priceFeed[selectedToken.priceKey]]);
-
-  const handleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.videoPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'start',
-        encodedParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedParams.encodedTxData,
-  });
-
-  const encodedFinishParams = React.useMemo(() => {
-    const { tokenAddress } = prepareGameTransaction({
-      wager: formValues.wager,
-      selectedCurrency: selectedToken,
-      lastPrice: 1,
-    });
-
+  const getEncodedFinishTxData = () => {
     const mappedCards = formValues.cardsToSend
       .map((item) => (item === 0 ? 1 : 0))
       .reverse()
@@ -158,7 +126,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       [_cardsToSend]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -169,33 +137,9 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [formValues.cardsToSend]);
-
-  const handleFinishTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.videoPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'finish',
-        encodedFinishParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedFinishParams.encodedTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
@@ -224,7 +168,11 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedStartTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -248,7 +196,11 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleFinishTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedFinishTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();

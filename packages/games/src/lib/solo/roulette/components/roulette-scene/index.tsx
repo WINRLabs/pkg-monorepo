@@ -141,7 +141,7 @@ export const RouletteScene: React.FC<{
 
       turn(0);
     }
-  }, [rouletteResult]);
+  }, [rouletteResult, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;

@@ -14,9 +14,8 @@ import {
   delay,
   useCurrentAccount,
   useFastOrVerified,
-  useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -126,11 +125,11 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
     }));
   }, [kenoResult]);
 
-  const encodedParams = useMemo(() => {
-    const { tokenAddress, wagerInWei, stopGainInWei, stopLossInWei } = prepareGameTransaction({
-      wager: formValues.wager,
-      stopGain: formValues.stopGain,
-      stopLoss: formValues.stopLoss,
+  const getEncodedTxData = (v: KenoFormField) => {
+    const { wagerInWei, stopGainInWei, stopLossInWei } = prepareGameTransaction({
+      wager: v.wager,
+      stopGain: v.stopGain,
+      stopLoss: v.stopLoss,
       selectedCurrency: selectedToken,
       lastPrice: priceFeed[selectedToken.priceKey],
     });
@@ -142,7 +141,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
           type: 'uint8[]',
         },
       ],
-      [formValues.selections]
+      [v.selections]
     );
 
     const encodedGameData = encodeAbiParameters(
@@ -156,7 +155,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
       [wagerInWei, stopGainInWei as bigint, stopLossInWei as bigint, 1, encodedChoice]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -167,51 +166,22 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [
-    formValues.selections,
-    formValues.stopGain,
-    formValues.stopLoss,
-    formValues.wager,
-    selectedToken.address,
-    priceFeed[selectedToken.priceKey],
-  ]);
-
-  const handleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.keno,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'bet',
-        encodedParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedParams.encodedTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
+  const isReIterableRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     isPlayerHaltedRef.current = isPlayerHalted;
-  }, [isPlayerHalted]);
+    isReIterableRef.current = isReIterable;
+  }, [isPlayerHalted, isReIterable]);
 
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
 
-  const onGameSubmit = async (f: KenoFormField, errorCount = 0) => {
+  const onGameSubmit = async (v: KenoFormField, errorCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     updateGameStatus('PLAYING');
@@ -227,9 +197,13 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
 
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
-      if (isReIterable) await playerReIterate();
+      if (isReIterableRef.current) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedTxData(v),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -237,7 +211,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
 
       if (errorCount < 3) {
         await delay(150);
-        onGameSubmit(f, errorCount + 1);
+        onGameSubmit(v, errorCount + 1);
       }
     }
   };
@@ -308,9 +282,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
         onSubmitGameForm={onGameSubmit}
         gameResults={kenoSteps || []}
         onAnimationCompleted={onGameCompleted}
-        onFormChange={(val) => {
-          setFormValues(val);
-        }}
+        onFormChange={setFormValues}
         onAnimationStep={onAnimationStep}
       />
       {!props.hideBetHistory && (

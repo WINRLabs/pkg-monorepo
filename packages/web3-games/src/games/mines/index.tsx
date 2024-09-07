@@ -18,8 +18,8 @@ import {
   minesAbi,
   Token,
   useCurrentAccount,
-  useHandleTxUncached,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -147,11 +147,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   }, [dataUpdatedAt]);
 
-  const handlePerformTx = useHandleTxUncached<typeof controllerAbi, 'perform'>({
-    options: {
-      method: 'sendGameOperation',
-    },
-  });
+  const sendTx = useSendTx();
 
   const handleCashout = async () => {
     const encodedTxData: `0x${string}` = encodeFunctionData({
@@ -166,21 +162,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       ],
     });
 
-    await handlePerformTx.mutateAsync({
+    await sendTx.mutateAsync({
       encodedTxData,
-      writeContractVariables: {
-        abi: controllerAbi,
-        functionName: 'perform',
-        args: [
-          gameAddresses.mines,
-          selectedTokenAddress.bankrollIndex,
-          uiOperatorAddress as Address,
-          'endGame',
-          '0x',
-        ],
-        address: controllerAddress as Address,
-      },
-      params: {},
+      target: controllerAddress,
+      method: 'sendGameOperation',
     });
   };
 
@@ -220,21 +205,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       ],
     });
 
-    await handlePerformTx.mutateAsync({
+    await sendTx.mutateAsync({
       encodedTxData,
-      writeContractVariables: {
-        abi: controllerAbi,
-        functionName: 'perform',
-        args: [
-          gameAddresses.mines,
-          selectedTokenAddress.bankrollIndex,
-          uiOperatorAddress as Address,
-          'bet',
-          encodedFirstRevealGameData,
-        ],
-        address: controllerAddress as Address,
-      },
-      params: {},
+      target: controllerAddress,
+      method: 'sendGameOperation',
     });
   };
 
@@ -264,21 +238,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       ],
     });
 
-    await handlePerformTx.mutateAsync({
+    await sendTx.mutateAsync({
       encodedTxData: encodedRevealTxData,
-      writeContractVariables: {
-        abi: controllerAbi,
-        functionName: 'perform',
-        args: [
-          gameAddresses.mines,
-          selectedTokenAddress.bankrollIndex,
-          uiOperatorAddress as Address,
-          'revealCells',
-          encodedRevealGameData,
-        ],
-        address: controllerAddress as Address,
-      },
-      params: {},
+      target: controllerAddress,
+      method: 'sendGameOperation',
     });
   };
 
@@ -291,10 +254,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   });
 
   const isPlayerHaltedRef = React.useRef<boolean>(false);
+  const isReIterableRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     isPlayerHaltedRef.current = isPlayerHalted;
-  }, [isPlayerHalted]);
+    isReIterableRef.current = isReIterable;
+  }, [isPlayerHalted, isReIterable]);
 
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
@@ -318,7 +283,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       }
       console.log('submit Type:', submitType);
       if (isPlayerHaltedRef.current) await playerLevelUp();
-      if (isReIterable) await playerReIterate();
+      if (isReIterableRef.current) await playerReIterate();
 
       if (submitType === MINES_SUBMIT_TYPE.FIRST_REVEAL) {
         await handleFirstReveal(values);

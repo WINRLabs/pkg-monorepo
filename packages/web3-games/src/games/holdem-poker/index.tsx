@@ -11,9 +11,8 @@ import {
   holdemPokerAbi,
   Token,
   useCurrentAccount,
-  useHandleTx,
-  useNativeTokenBalance,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -126,8 +125,8 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     showDefaultToasts: false,
   });
 
-  const encodedBetParams = React.useMemo(() => {
-    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+  const getEncodedBetTxData = () => {
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedToken,
       lastPrice: priceFeed[selectedToken.priceKey],
@@ -144,7 +143,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
       [ante, aaBonus, wagerInWei]
     );
 
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -155,24 +154,12 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [
-    formValues.aaBonus,
-    formValues.ante,
-    formValues.wager,
-    selectedToken.address,
-    priceFeed[selectedToken.priceKey],
-  ]);
+  const getEncodedFinalizeTxData = (isFold = false) => {
+    const encodedGameData = encodeAbiParameters([{ name: 'fold', type: 'bool' }], [isFold]);
 
-  const encodedFinalizeParams = React.useMemo(() => {
-    const encodedGameData = encodeAbiParameters([{ name: 'fold', type: 'bool' }], [false]);
-
-    const encodedData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -183,91 +170,9 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [selectedToken.address]);
-
-  const encodedFinalizeFoldParams = React.useMemo(() => {
-    const encodedGameData = encodeAbiParameters([{ name: 'fold', type: 'bool' }], [true]);
-
-    const encodedData: `0x${string}` = encodeFunctionData({
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.holdemPoker as Address,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'decide',
-        encodedGameData,
-      ],
-    });
-
-    return {
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [selectedToken.address]);
-
-  const handleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.holdemPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'bet',
-        encodedBetParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedBetParams.encodedTxData,
-  });
-
-  const handleFinalizeTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.holdemPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'decide',
-        encodedFinalizeParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedFinalizeParams.encodedTxData,
-  });
-
-  const handleFinalizeFoldTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.holdemPoker,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'decide',
-        encodedFinalizeFoldParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedFinalizeFoldParams.encodedTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
@@ -295,7 +200,11 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedBetTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -318,7 +227,11 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleFinalizeTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedFinalizeTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
       refetchPlayerGameStatus();
@@ -337,7 +250,11 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      await handleFinalizeFoldTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedFinalizeTxData(true),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
     } catch (e: any) {
       console.log('error', e);
     }

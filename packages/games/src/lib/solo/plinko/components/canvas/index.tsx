@@ -114,7 +114,7 @@ export const Canvas: React.FC<CanvasProps> = ({
       dispatch({ type: PlinkoResultActions.CLEAR });
       setPaths(plinkoGameResults.map((r) => r.outcomes));
     }
-  }, [plinkoGameResults]);
+  }, [plinkoGameResults, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;

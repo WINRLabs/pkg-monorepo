@@ -271,7 +271,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
       console.log('GAME COMPLETED!');
       onAnimationCompleted(baccaratSettled);
     }
-  }, [isAnimationCompleted, baccaratSettled]);
+  }, [isAnimationCompleted, baccaratSettled, form.getValues]);
 
   React.useEffect(() => {
     if (!isAutoBetMode) clearTimeout(timeoutRef.current);

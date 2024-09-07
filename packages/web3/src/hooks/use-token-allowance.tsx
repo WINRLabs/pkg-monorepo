@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { useCallback, useMemo, useState } from "react";
-import { encodeFunctionData, formatUnits, parseEther } from "viem";
-import { useReadContract } from "wagmi";
+import { useCallback, useMemo, useState } from 'react';
+import { encodeFunctionData, formatUnits, parseEther } from 'viem';
+import { useReadContract } from 'wagmi';
 
-import { erc20Abi } from "../abis";
-import { WinrBundlerClient } from "./use-bundler-client";
-import { useHandleTx } from "./use-handle-tx";
+import { erc20Abi } from '../abis';
+import { WinrBundlerClient } from './use-bundler-client';
+import { useHandleTx } from './use-handle-tx';
+import { useSendTx } from './transaction';
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -27,25 +28,9 @@ export function useTokenAllowance({
   tokenAddress,
   amountToApprove,
   showDefaultToasts = true,
-  client
+  client,
 }: UseTokenAllowanceParams) {
-
-  const handleTx = useHandleTx<typeof erc20Abi, "approve">({
-    writeContractVariables: {
-      address: tokenAddress,
-      abi: erc20Abi,
-      functionName: "approve",
-      args: [spender as `0x${string}`, parseEther(UNLIMITED_AMOUNT.toString())],
-    },
-    options: {
-      client: client || undefined,
-    },
-    encodedTxData: encodeFunctionData({
-      abi: erc20Abi,
-      functionName: "approve",
-      args: [spender as `0x${string}`, parseEther(UNLIMITED_AMOUNT.toString())],
-    }),
-  });
+  const sendTx = useSendTx();
 
   const [isApproving, setIsApproving] = useState(false);
 
@@ -53,7 +38,7 @@ export function useTokenAllowance({
     abi: erc20Abi,
     address: tokenAddress,
     account: owner,
-    functionName: "allowance",
+    functionName: 'allowance',
     args: [owner as `0x${string}`, spender as `0x${string}`],
     query: {
       enabled: !!owner && !!spender && !!tokenAddress && !!amountToApprove,
@@ -64,7 +49,7 @@ export function useTokenAllowance({
     abi: erc20Abi,
     address: tokenAddress,
     account: owner,
-    functionName: "decimals",
+    functionName: 'decimals',
     query: {
       enabled: !!owner && !!spender && !!tokenAddress,
     },
@@ -73,7 +58,7 @@ export function useTokenAllowance({
   const allowance = useMemo(() => {
     if (!tokenDecimalRead.data) return undefined;
 
-    console.log("ALLOWANCE", allowanceRead.data, tokenDecimalRead.data);
+    console.log('ALLOWANCE', allowanceRead.data, tokenDecimalRead.data);
 
     const allowanceAmountInEther = Number(
       formatUnits(allowanceRead.data || BigInt(0), tokenDecimalRead.data)
@@ -84,8 +69,8 @@ export function useTokenAllowance({
 
   const handleAllowance = useCallback(
     async ({ errorCb }: { errorCb: (e?: any) => void }) => {
-      console.log("tokenAddress", tokenAddress);
-      console.log("spender", spender);
+      console.log('tokenAddress', tokenAddress);
+      console.log('spender', spender);
 
       if (!allowance && allowance !== 0) return false;
 
@@ -94,7 +79,14 @@ export function useTokenAllowance({
         try {
           setIsApproving(true);
 
-          await handleTx.mutateAsync();
+          await sendTx.mutateAsync({
+            encodedTxData: encodeFunctionData({
+              abi: erc20Abi,
+              functionName: 'approve',
+              args: [spender as `0x${string}`, parseEther(UNLIMITED_AMOUNT.toString())],
+            }),
+            target: tokenAddress,
+          });
 
           await delay(500);
 
@@ -114,7 +106,7 @@ export function useTokenAllowance({
         }
       }
     },
-    [allowance, tokenAddress, spender, amountToApprove, owner, handleTx]
+    [allowance, tokenAddress, spender, amountToApprove, owner, sendTx]
   );
 
   const hasAllowance = useMemo(() => {
@@ -127,8 +119,6 @@ export function useTokenAllowance({
     hasAllowance,
     isApproving,
     isFetchingAllowance:
-      allowanceRead.isFetching ||
-      allowanceRead.isLoading ||
-      allowanceRead.isRefetching,
+      allowanceRead.isFetching || allowanceRead.isLoading || allowanceRead.isRefetching,
   };
 }

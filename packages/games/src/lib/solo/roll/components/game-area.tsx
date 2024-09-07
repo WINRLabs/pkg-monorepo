@@ -120,7 +120,7 @@ export const GameArea: React.FC<GameAreaProps> = ({
       }, 350);
     };
     turn();
-  }, [rollGameResults]);
+  }, [rollGameResults, form.getValues]);
 
   React.useEffect(() => {
     return () => {

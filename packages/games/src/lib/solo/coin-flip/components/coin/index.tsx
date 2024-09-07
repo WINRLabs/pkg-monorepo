@@ -101,7 +101,7 @@ export const Coin: React.FC<CoinProps> = ({
     };
 
     turn();
-  }, [coinFlipGameResults]);
+  }, [coinFlipGameResults, form.getValues]);
 
   useEffect(() => {
     coinRotate.flipTo(coinSide, 1000);

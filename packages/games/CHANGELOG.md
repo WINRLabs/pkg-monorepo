@@ -1,5 +1,17 @@
 # @winrlabs/games
 
+## 2.17.6
+
+### Patch Changes
+
+- 06b8cb9: change all game txs
+
+## 2.17.5
+
+### Patch Changes
+
+- 15e8d86: add submitBtnText custom
+
 ## 2.17.4
 
 ### Patch Changes

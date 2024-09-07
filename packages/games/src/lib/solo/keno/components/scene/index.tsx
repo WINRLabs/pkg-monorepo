@@ -99,7 +99,7 @@ export const KenoScene: React.FC<KenoSceneProps> = ({
     };
 
     turn();
-  }, [kenoGameResults]);
+  }, [kenoGameResults, form.getValues]);
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;

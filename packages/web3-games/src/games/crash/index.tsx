@@ -16,13 +16,14 @@ import {
   useCurrentAccount,
   useHandleTx,
   usePriceFeed,
+  useSendTx,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
 import { BaseGameProps } from '../../type';
@@ -125,8 +126,8 @@ const CrashGame = (props: CrashTemplateProps) => {
 
   const { priceFeed } = usePriceFeed();
 
-  const encodedParams = useMemo(() => {
-    const { tokenAddress, wagerInWei } = prepareGameTransaction({
+  const getEncodedBetTxData = () => {
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues?.wager || 0,
       stopGain: 0,
       stopLoss: 0,
@@ -142,7 +143,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       [wagerInWei, toDecimals(formValues.multiplier * 100)]
     );
 
-    const encodedData = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -153,36 +154,10 @@ const CrashGame = (props: CrashTemplateProps) => {
         encodedGameData,
       ],
     });
+  };
 
-    return {
-      tokenAddress,
-      encodedGameData,
-      encodedTxData: encodedData,
-    };
-  }, [formValues.multiplier, formValues.wager, priceFeed[selectedToken.priceKey]]);
-
-  const handleTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.crash,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'bet',
-        encodedParams.encodedGameData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {
-      method: 'sendGameOperation',
-    },
-    encodedTxData: encodedParams.encodedTxData,
-  });
-
-  const encodedClaimParams = useMemo(() => {
+  const getEncodedClaimTxData = () => {
     const encodedChoice = encodeAbiParameters([], []);
-
     const encodedParams = encodeAbiParameters(
       [
         { name: 'address', type: 'address' },
@@ -202,7 +177,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       ]
     );
 
-    const encodedClaimData: `0x${string}` = encodeFunctionData({
+    return encodeFunctionData({
       abi: controllerAbi,
       functionName: 'perform',
       args: [
@@ -213,31 +188,9 @@ const CrashGame = (props: CrashTemplateProps) => {
         encodedParams,
       ],
     });
+  };
 
-    return {
-      encodedClaimData,
-      encodedClaimTxData: encodedClaimData,
-      currentAccount,
-    };
-  }, [formValues.multiplier, formValues.wager]);
-
-  const handleClaimTx = useHandleTx<typeof controllerAbi, 'perform'>({
-    writeContractVariables: {
-      abi: controllerAbi,
-      functionName: 'perform',
-      args: [
-        gameAddresses.crash,
-        selectedToken.bankrollIndex,
-        uiOperatorAddress as Address,
-        'claim',
-        encodedClaimParams.encodedClaimData,
-      ],
-      address: controllerAddress as Address,
-    },
-    options: {},
-    encodedTxData: encodedClaimParams.encodedClaimTxData,
-  });
-
+  const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
 
   React.useEffect(() => {
@@ -250,8 +203,8 @@ const CrashGame = (props: CrashTemplateProps) => {
 
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
-
     clearLiveResults();
+
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
@@ -262,7 +215,10 @@ const CrashGame = (props: CrashTemplateProps) => {
       if (!handledAllowance) return;
     }
     try {
-      await handleClaimTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedClaimTxData(),
+        target: controllerAddress,
+      });
     } catch (error) {
       console.log('handleClaimTx error', error);
     }
@@ -271,7 +227,11 @@ const CrashGame = (props: CrashTemplateProps) => {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
 
-      await handleTx.mutateAsync();
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedBetTxData(),
+        method: 'sendGameOperation',
+        target: controllerAddress,
+      });
       setIsGamblerParticipant(true);
     } catch (e: any) {
       console.log('handleTx error', e);
@@ -394,9 +354,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         maxWager={maxWagerBySelection}
         onComplete={onComplete}
         onSubmitGameForm={onGameSubmit}
-        onFormChange={(val) => {
-          setFormValues(val);
-        }}
+        onFormChange={setFormValues}
         gameUrl={props.gameUrl}
       />
       {!props.hideBetHistory && (

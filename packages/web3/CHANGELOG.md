@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.4
+
+### Patch Changes
+
+- 06b8cb9: change all game txs
+
 ## 0.11.3
 
 ### Patch Changes
