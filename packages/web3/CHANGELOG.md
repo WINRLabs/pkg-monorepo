@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.7
+
+### Patch Changes
+
+- 960de63: price feed logic
+
 ## 0.11.6
 
 ### Patch Changes

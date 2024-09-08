@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.10
+
+### Patch Changes
+
+- 960de63: price feed logic
+
 ## 2.17.9
 
 ### Patch Changes

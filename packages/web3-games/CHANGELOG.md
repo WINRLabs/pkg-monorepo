@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 10.0.11
+
+### Patch Changes
+
+- 960de63: price feed logic
+- Updated dependencies [960de63]
+  - @winrlabs/games@2.17.10
+  - @winrlabs/web3@0.11.7
+  - @winrlabs/web3-games@10.0.11
+
 ## 10.0.10
 
 ### Patch Changes
