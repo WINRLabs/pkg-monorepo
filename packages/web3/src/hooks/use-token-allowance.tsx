@@ -1,13 +1,15 @@
 'use client';
 
+import debug from 'debug';
 import { useCallback, useMemo, useState } from 'react';
 import { encodeFunctionData, formatUnits, parseEther } from 'viem';
 import { useReadContract } from 'wagmi';
 
 import { erc20Abi } from '../abis';
-import { WinrBundlerClient } from './use-bundler-client';
-import { useHandleTx } from './use-handle-tx';
 import { useSendTx } from './transaction';
+import { WinrBundlerClient } from './use-bundler-client';
+
+const log = debug('worker:UseTokenAllowance');
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -58,7 +60,7 @@ export function useTokenAllowance({
   const allowance = useMemo(() => {
     if (!tokenDecimalRead.data) return undefined;
 
-    console.log('ALLOWANCE', allowanceRead.data, tokenDecimalRead.data);
+    log('ALLOWANCE', allowanceRead.data, tokenDecimalRead.data);
 
     const allowanceAmountInEther = Number(
       formatUnits(allowanceRead.data || BigInt(0), tokenDecimalRead.data)
@@ -69,8 +71,8 @@ export function useTokenAllowance({
 
   const handleAllowance = useCallback(
     async ({ errorCb }: { errorCb: (e?: any) => void }) => {
-      console.log('tokenAddress', tokenAddress);
-      console.log('spender', spender);
+      log('tokenAddress', tokenAddress);
+      log('spender', spender);
 
       if (!allowance && allowance !== 0) return false;
 

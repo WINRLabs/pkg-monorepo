@@ -24,6 +24,9 @@ import {
 } from '../constants';
 import { RouletteFormFields, RouletteGameProps, RouletteGameResult } from '../types';
 import { MobileController } from './mobile-controller';
+import debug from 'debug';
+
+const log = debug('worker:RouletteTemplate');
 
 type TemplateProps = RouletteGameProps & {
   minWager?: number;
@@ -111,8 +114,6 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   const addWager = (n: number, wager: Chip) => {
     const _selectedNumbers = [...selectedNumbers];
 
-    console.log(n, 'index', chunkMinWagerIndexes.includes(n));
-
     let newWager = 0;
 
     // min wager for side bets
@@ -136,7 +137,6 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     const chipAmount = form.watch('wager');
 
     if (totalWager * chipAmount > currentBalance) {
-      console.log('balance reached!');
       return;
     } else {
       form.setValue('selectedNumbers', [..._selectedNumbers]);
@@ -211,7 +211,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
 
   const processStrategy = (result: RouletteGameResult[]) => {
     const payout = result[0]?.payoutInUsd || 0;
-    console.log(result, 'result');
+    log(result, 'result');
     const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - totalWager + payout;

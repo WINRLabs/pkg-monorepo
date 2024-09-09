@@ -4,11 +4,13 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useCurrentAccount, useGameStrategy, useWeb3AuthAccount } from '@winrlabs/web3';
 import React from 'react';
 import { smartWalletConnectors } from './wagmi';
+import debug from 'debug';
+
+const log = debug('worker:App');
 
 function App() {
   const account = useAccount();
   const currentAcc = useCurrentAccount();
-  const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const currentAA = useCurrentAccount();
 
@@ -19,23 +21,17 @@ function App() {
 
   const { createStrategy } = useGameStrategy();
 
-  console.log('account', account);
-
-  console.log('data', currentAcc);
+  log('account', account, currentAcc);
 
   /*   const currentConnector = smartWalletConnectors.connectors.find(
     (c) => c.loginProvider === account.connector?.name
   );
-
-  console.log("hey", currentConnector?.web3AuthInstance.getUserInfo());
 
   React.useEffect(() => {
     if (!currentConnector) return;
 
     const getUserInfo = async () => {
       const res = await currentConnector?.web3AuthInstance?.getUserInfo();
-
-      console.log("res", res);
     };
 
     getUserInfo();  

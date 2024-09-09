@@ -13,6 +13,7 @@ import { useUnityBonanza } from './hooks/use-bonanza-unity';
 import { useBonanzaGameStore } from './store';
 import { Bonanza_Unity_Events, ReelSpinSettled, SpinType, WinrBonanzaFormFields } from './types';
 import { CDN_URL } from '../../constants';
+import debug from 'debug';
 
 interface TemplateProps {
   onRefresh: () => void;
@@ -43,6 +44,8 @@ const unityEventDefaultValue: UnityEventData = {
   name: '',
   strParam: '',
 };
+
+const log = debug('worker:WinrBonanzaTemplate');
 
 export const WinrBonanzaTemplate = ({
   onRefresh,
@@ -131,7 +134,7 @@ export const WinrBonanzaTemplate = ({
         }
 
         if (obj.name === 'M3_OnActiveAutoSpinMode') {
-          console.log('ACTIVATE AUTOPLAY');
+          log('ACTIVATE AUTOPLAY');
 
           handleInitialAutoPlay();
 
@@ -139,7 +142,7 @@ export const WinrBonanzaTemplate = ({
         }
 
         if (obj.name === 'M3_ScatterMatch') {
-          console.log('SCATTER MATCH');
+          log('SCATTER MATCH');
 
           if (currentAction == 'buyFeature') {
             handleEnterFreespinWithoutScatter();
@@ -159,7 +162,7 @@ export const WinrBonanzaTemplate = ({
         }
 
         if (obj.name === 'M3_OnDeactiveAutoSpinMode') {
-          console.log('DEACTIVATE AUTOPLAY');
+          log('DEACTIVATE AUTOPLAY');
 
           setIsInAutoPlay(false);
         }
@@ -175,9 +178,9 @@ export const WinrBonanzaTemplate = ({
         }
 
         if (obj.name === Bonanza_Unity_Events.DOUBLE_CHANCE_CLICK) {
-          console.log('DOUBLE CHANCE CLICK', obj.strParam);
+          log('DOUBLE CHANCE CLICK', obj.strParam);
 
-          console.log('DOUBLE CHANCE CLICK VAL', obj.strParam === 'true');
+          log('DOUBLE CHANCE CLICK VAL', obj.strParam === 'true');
 
           setIsDoubleChance(obj.strParam === 'true');
         }
@@ -187,7 +190,7 @@ export const WinrBonanzaTemplate = ({
         } */
 
         if (obj.name === Bonanza_Unity_Events.GRID_ANIMATION_FINISHED) {
-          console.log('GRID ANIMATION FINISHED');
+          log('GRID ANIMATION FINISHED');
 
           if (isInFreeSpinMode) {
             sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetFreeSpinCount|${freeSpins}`);
@@ -210,7 +213,7 @@ export const WinrBonanzaTemplate = ({
               handleFreespin();
             }
           } else if (isInAutoPlay && !wonFreeSpins) {
-            console.log('GRID ANIMATION FINISHED AND CALLED AUTOPLAY');
+            log('GRID ANIMATION FINISHED AND CALLED AUTOPLAY');
 
             handleAutoPlay();
           } else if (!wonFreeSpins) {
@@ -289,7 +292,7 @@ export const WinrBonanzaTemplate = ({
   );
 
   const handleFreespin = async () => {
-    console.log('FREESPIN');
+    log('FREESPIN');
     await wait(300);
     setCurrentPayoutAmount(0);
     setWonFreeSpins(false);
@@ -361,7 +364,7 @@ export const WinrBonanzaTemplate = ({
   };
 
   const handleInitialAutoPlay = async () => {
-    console.log('INITIAL AUTOPLAY');
+    log('INITIAL AUTOPLAY');
 
     setInitialBuyEvent(undefined);
 
@@ -386,7 +389,7 @@ export const WinrBonanzaTemplate = ({
       handleSendGrid(gameEvent.grid);
 
       onFormChange({ betAmount, actualBetAmount, isDoubleChance });
-      console.log('SUBMIT gameEvent', gameEvent);
+      log('SUBMIT gameEvent', gameEvent);
 
       if (gameEvent.freeSpinsLeft > 0) {
         setWonFreeSpins(true);
@@ -397,7 +400,7 @@ export const WinrBonanzaTemplate = ({
       if (gameEvent.payoutMultiplier > 0) {
         let _wager = gameEvent.betAmount;
 
-        console.log('betamount', gameEvent.betAmount);
+        log('betamount', gameEvent.betAmount);
 
         if (gameEvent.spinType === SpinType.DOUBLE_CHANCE) {
           _wager = (gameEvent.betAmount * 2) / 3;
@@ -405,7 +408,7 @@ export const WinrBonanzaTemplate = ({
           _wager = gameEvent.betAmount;
         }
 
-        console.log('WAGER', _wager);
+        log('WAGER', _wager);
 
         const payout = toDecimals(gameEvent.payoutMultiplier * _wager, 2);
 
@@ -424,8 +427,8 @@ export const WinrBonanzaTemplate = ({
         window.GetMessageFromUnity = handleMessageFromUnity;
       }
 
-      console.log('buy feature event', gameEvent.grid);
-      console.log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
+      log('buy feature event', gameEvent.grid);
+      log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
@@ -453,9 +456,9 @@ export const WinrBonanzaTemplate = ({
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
-      console.log('free spin event', gameEvent);
+      log('free spin event', gameEvent);
 
-      console.log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
+      log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
 
       handleSendGrid(gameEvent.grid);
 
@@ -471,7 +474,7 @@ export const WinrBonanzaTemplate = ({
     }
 
     if (currentAction == 'autoPlay' && gameEvent?.type == 'Game') {
-      console.log('AUTOPLAY SUCCESS');
+      log('AUTOPLAY SUCCESS');
 
       if (
         !window.GetMessageFromUnity ||
@@ -494,7 +497,7 @@ export const WinrBonanzaTemplate = ({
       if (gameEvent.payoutMultiplier > 0) {
         let _wager = gameEvent.betAmount;
 
-        console.log('betamount', gameEvent.betAmount);
+        log('betamount', gameEvent.betAmount);
 
         if (gameEvent.spinType === SpinType.DOUBLE_CHANCE) {
           _wager = (gameEvent.betAmount * 2) / 3;
@@ -502,7 +505,7 @@ export const WinrBonanzaTemplate = ({
           _wager = gameEvent.betAmount;
         }
 
-        console.log('WAGER', _wager);
+        log('WAGER', _wager);
 
         const payout = toDecimals(gameEvent.payoutMultiplier * _wager, 2);
 
@@ -523,7 +526,7 @@ export const WinrBonanzaTemplate = ({
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
-      console.log('INITIAL AUTOPLAY RESULT');
+      log('INITIAL AUTOPLAY RESULT');
 
       handleSendGrid(gameEvent.grid);
 
@@ -536,7 +539,7 @@ export const WinrBonanzaTemplate = ({
       if (gameEvent.payoutMultiplier > 0) {
         let _wager = gameEvent.betAmount;
 
-        console.log('betamount', gameEvent.betAmount);
+        log('betamount', gameEvent.betAmount);
 
         if (gameEvent.spinType === SpinType.DOUBLE_CHANCE) {
           _wager = (gameEvent.betAmount * 2) / 3;
@@ -544,7 +547,7 @@ export const WinrBonanzaTemplate = ({
           _wager = gameEvent.betAmount;
         }
 
-        console.log('WAGER', _wager);
+        log('WAGER', _wager);
 
         const payout = toDecimals(gameEvent.payoutMultiplier * _wager, 2);
 

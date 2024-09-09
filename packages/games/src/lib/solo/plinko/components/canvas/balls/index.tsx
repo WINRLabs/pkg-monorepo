@@ -42,7 +42,6 @@ const Ball: React.FC<PlinkoBallProps> = ({ path, order, isSkipped, onAnimationEn
       }
 
       for (let i = 0; i < path.length + 2; i++) {
-        console.log(i, 'i');
         if (i === 0) {
           const t = setTimeout(() => {
             setStyle({

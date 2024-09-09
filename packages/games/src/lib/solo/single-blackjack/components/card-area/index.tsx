@@ -154,7 +154,6 @@ export const CardArea: React.FC<CardAreaProps> = ({
     else setIsSplittedWithDelay(false);
   }, [hand.hand?.isSplitted]);
 
-  console.log(uiCards, 'uicards');
   const winEffect = useAudioEffect(SoundEffects.WIN_COIN_DIGITAL);
 
   React.useEffect(() => {

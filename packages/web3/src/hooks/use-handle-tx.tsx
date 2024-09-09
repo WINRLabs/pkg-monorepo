@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import debug from 'debug';
 import {
   Abi,
   Address,
@@ -20,6 +21,8 @@ import { useBundlerClient, WinrBundlerClient } from './use-bundler-client';
 import { useCurrentAccount } from './use-current-address';
 import { useSmartAccountApi } from './use-smart-account-api';
 import { delay } from './use-token-allowance';
+
+const log = debug('worker:UseHandleTx');
 
 export interface UseHandleTxOptions {
   successMessage?: string;
@@ -201,9 +204,9 @@ export const useHandleTx = <
         accountApi && (await accountApi.refreshNonce());
         throw new Error(status);
       } else {
-        console.log(accountApi?.cachedNonce, 'cached nonce');
+        log(accountApi?.cachedNonce, 'cached nonce');
         accountApi?.cachedNonce && accountApi.increaseNonce();
-        console.log(accountApi?.cachedNonce, 'cached nonce updated');
+        log(accountApi?.cachedNonce, 'cached nonce updated');
       }
 
       return { status, hash };

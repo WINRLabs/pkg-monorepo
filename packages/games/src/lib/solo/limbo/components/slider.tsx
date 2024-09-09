@@ -107,8 +107,6 @@ function interpolate(value: number, points: ScalePoint[]): number {
   // Interpolate the topPercent for the value
   const interpolatedPercent = lowerPoint.topPercent + valuePosition * rangePercent;
 
-  // console.log("interpolatedPercent", interpolatedPercent);
-
   return interpolatedPercent;
 }
 

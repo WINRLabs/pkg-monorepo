@@ -9,9 +9,6 @@ const MinesPage = () => {
       <MinesGame
         maxWager={100}
         minWager={0.01}
-        onAnimationCompleted={() => {
-          console.log('game completed');
-        }}
         theme={{
           gemImage: '/custom/mines/rev-gem.png',
           cellImage: '/custom/mines/cell.svg',

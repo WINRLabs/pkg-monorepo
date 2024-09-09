@@ -6,11 +6,14 @@ import { useUnityContext } from 'react-unity-webgl';
 import { useEqualizeUnitySound } from '../../../hooks/use-unity-sound';
 import { useBonanzaGameStore } from '../store';
 import { Bonanza_Unity_Methods } from '../types';
+import debug from 'debug';
 
 interface UseUnityBonanzaParams {
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
 }
+
+const log = debug('worker:UseBonanzaUnity');
 
 export const useUnityBonanza = ({
   buildedGameUrl,
@@ -101,7 +104,7 @@ export const useUnityBonanza = ({
 
       const _grid = JSON.stringify(grid).replace(/,/g, ', ');
 
-      console.log(_grid, 'replaced grid');
+      log(_grid, 'replaced grid');
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `${Bonanza_Unity_Methods.SEND_GRID}|${_grid}`);
     },
@@ -149,7 +152,7 @@ export const useUnityBonanza = ({
   const handleEnterFreespin = React.useCallback(() => {
     if (!sendMessage) return;
 
-    console.log('ENTER WITH SCATTER');
+    log('ENTER WITH SCATTER');
 
     sendMessage('WebGLHandler', 'ReceiveMessage', Bonanza_Unity_Methods.ENTER_FREE_SPIN);
   }, [sendMessage]);
@@ -157,7 +160,7 @@ export const useUnityBonanza = ({
   const handleEnterFreespinWithoutScatter = React.useCallback(() => {
     if (!sendMessage) return;
 
-    console.log('ENTER WITHOUT SCATTER');
+    log('ENTER WITHOUT SCATTER');
 
     sendMessage('WebGLHandler', 'ReceiveMessage', 'M3_EnterFreeSpinWithoutScatter');
   }, [sendMessage]);

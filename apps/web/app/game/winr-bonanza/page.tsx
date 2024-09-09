@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Web3GamesModals } from "@winrlabs/web3-games";
-import dynamic from "next/dynamic";
+import { Web3GamesModals } from '@winrlabs/web3-games';
+import dynamic from 'next/dynamic';
 
 const WinrBonanzaTemplateWithWeb3 = dynamic(
-  () => import("@winrlabs/web3-games").then((mod) => mod.WinrBonanzaGame),
+  () => import('@winrlabs/web3-games').then((mod) => mod.WinrBonanzaGame),
   {
     ssr: false,
   }
 );
-const CDN_URL = process.env.NEXT_PUBLIC_BASE_CDN_URL || "";
+const CDN_URL = process.env.NEXT_PUBLIC_BASE_CDN_URL || '';
 
 export default function WinrBonanzaPage() {
   // randomNumber
@@ -29,8 +29,6 @@ export default function WinrBonanzaPage() {
   //   },
   // });
 
-  // console.log(weights, "weights");
-
   // const processReel = useSimulateContract({
   //   abi: winrBonanzaAbi,
   //   address: gameAddresses.winrBonanza,
@@ -47,8 +45,6 @@ export default function WinrBonanzaPage() {
   //     enabled: !!weights.data,
   //   },
   // });
-
-  // console.log(processReel, "PROCESS REEL");
 
   return (
     <>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import debug from 'debug';
 import React, { createContext, useContext, useState } from 'react';
 import { Address } from 'viem';
 import { Config, useAccount } from 'wagmi';
@@ -8,6 +9,8 @@ import { Config, useAccount } from 'wagmi';
 import { SmartWalletConnectorWagmiType } from '../config/smart-wallet-connectors';
 import { SimpleAccountAPI } from '../smart-wallet';
 import { useSmartAccountApi } from './use-smart-account-api';
+
+const log = debug('worker:UseCurrentAddress');
 
 interface UseCurrentAccount {
   rootAddress?: Address;
@@ -56,7 +59,7 @@ export const CurrentAccountProvider: React.FC<{
   });
 
   React.useEffect(() => {
-    console.log('Status', status);
+    log('Status', status);
 
     setCurrentAccount({
       rootAddress: address,

@@ -11,6 +11,9 @@ import { parseToBigInt } from '../../../utils/number';
 import { Limbo, LimboFormField, LimboGameResult } from '..';
 import { BetController } from './bet-controller';
 import { LimboGameProps } from './game';
+import debug from 'debug';
+
+const log = debug('worker:LimboTemplate');
 
 type TemplateOptions = {
   scene?: {};
@@ -93,7 +96,7 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
 
   const processStrategy = (result: LimboGameResult[]) => {
     const payout = result[0]?.payoutInUsd || 0;
-    console.log(result, 'result');
+    log(result, 'result');
     const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;

@@ -70,8 +70,6 @@ export const CoinFlipScene = ({
 
     const parsedResults = gameResult?.map((item) => item.coinSide).join(',');
 
-    console.log(parsedResults, 'parseddresults');
-
     sendMessage('WebGLHandler', 'ReceiveMessage', `CF_Flip|${parsedResults}`);
   }, [coinFlipGameResults]);
 

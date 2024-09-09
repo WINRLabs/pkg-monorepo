@@ -87,9 +87,7 @@ export const Header = ({ appLogo, leftSideComponents, chat, containerClassName }
   });
 
   const send = useSendTx({
-    onError: (error) => {
-      console.log(error, 'mint tx error');
-    },
+    onError: (error) => {},
   });
 
   return (
@@ -159,9 +157,7 @@ export const Header = ({ appLogo, leftSideComponents, chat, containerClassName }
                       }),
                       target: selectedToken.address,
                     });
-                  } catch (e: any) {
-                    console.log('error', e);
-                  }
+                  } catch (e: any) {}
                 }}
               >
                 MINT

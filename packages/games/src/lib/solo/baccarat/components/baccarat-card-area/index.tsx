@@ -20,6 +20,9 @@ import {
 import styles from './baccarat-card.module.css';
 import { BaccaratCard, countCalculator, generateBaccaratSuits, getBaccaratIcon } from './card';
 import Confetti from './lottie/confetti.json';
+import debug from 'debug';
+
+const log = debug('worker:BaccaratCardArea');
 
 const TIMEOUT = 500;
 
@@ -258,7 +261,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
           if (betCount >= 0 && newBetCount != 0) {
             onSubmitGameForm(form.getValues());
           } else {
-            console.log('auto bet finished!');
+            log('auto bet finished!');
             onAutoBetModeChange(false);
           }
         }
@@ -268,7 +271,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
         winEffect.play();
         setTimeout(() => showWinAnimation({ payout, multiplier }), 750);
       }
-      console.log('GAME COMPLETED!');
+      log('GAME COMPLETED!');
       onAnimationCompleted(baccaratSettled);
     }
   }, [isAnimationCompleted, baccaratSettled, form.getValues]);

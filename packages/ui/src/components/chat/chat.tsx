@@ -1,12 +1,9 @@
-import SvgChat from "../../svgs/Chat";
-import { Button } from "../button";
+import SvgChat from '../../svgs/Chat';
+import { Button } from '../button';
 
 export const Chat = () => {
   return (
     <Button
-      onClick={() => {
-        console.log("chat");
-      }}
       variant="outline"
       className="wr-hidden wr-h-9 wr-w-9 wr-items-center wr-justify-center wr-p-0 wr-text-center lg:wr-flex"
     >

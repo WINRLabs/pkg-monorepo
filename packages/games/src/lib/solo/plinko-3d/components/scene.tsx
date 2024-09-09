@@ -81,8 +81,6 @@ export const PlinkoScene = ({
     onAnimationStep && onAnimationStep(count);
 
     if (unityEvent.name === UnityScoreEvent) {
-      console.log('multiplier', unityEvent.strParam);
-
       addLastBet({
         isWon: Number(unityEvent.strParam) > 1,
         multiplier: unityEvent.strParam,

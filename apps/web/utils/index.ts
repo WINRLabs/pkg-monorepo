@@ -1,26 +1,26 @@
-import { parseUnits } from "viem";
-import SuperJSON from "superjson";
-import { Address, Hex } from "viem";
-import { toDecimals } from "@winrlabs/games";
-import { EventLogic } from "@winrlabs/web3";
+import { parseUnits } from 'viem';
+import SuperJSON from 'superjson';
+import { Address, Hex } from 'viem';
+import { toDecimals } from '@winrlabs/games';
+import { EventLogic } from '@winrlabs/web3';
 
 export enum GAME_HUB_GAMES {
-  rps = "rps",
-  dice = "dice",
-  keno = "keno",
-  slot = "slot",
-  limbo = "limbo",
-  mines = "mines",
-  range = "range",
-  plinko = "plinko",
-  roulette = "roulette",
-  coin_flip = "coin_flip",
-  baccarat = "baccarat",
-  black_jack = "black_jack",
-  video_poker = "video_poker",
-  wheel = "wheel",
-  moon = "moon",
-  horse_race = "horse_race",
+  rps = 'rps',
+  dice = 'dice',
+  keno = 'keno',
+  slot = 'slot',
+  limbo = 'limbo',
+  mines = 'mines',
+  range = 'range',
+  plinko = 'plinko',
+  roulette = 'roulette',
+  coin_flip = 'coin_flip',
+  baccarat = 'baccarat',
+  black_jack = 'black_jack',
+  video_poker = 'video_poker',
+  wheel = 'wheel',
+  moon = 'moon',
+  horse_race = 'horse_race',
 }
 
 export type GameHubCurrency = {
@@ -31,37 +31,37 @@ export type GameHubCurrency = {
 };
 
 export enum GAME_HUB_EVENT_TYPES {
-  Dealt = "Dealt",
-  Reveal = "Reveal",
-  Resolve = "Resolve",
-  Settled = "Settled",
-  Created = "Created",
-  Finalized = "Finalized",
-  Finishing = "Finishing",
-  HandFinalized = "HandFinalized",
-  RevealAndCashout = "RevealAndCashout",
+  Dealt = 'Dealt',
+  Reveal = 'Reveal',
+  Resolve = 'Resolve',
+  Settled = 'Settled',
+  Created = 'Created',
+  Finalized = 'Finalized',
+  Finishing = 'Finishing',
+  HandFinalized = 'HandFinalized',
+  RevealAndCashout = 'RevealAndCashout',
 
   // Wheel
-  Participated = "Participated",
-  ClaimedBatch = "ClaimedBatch",
+  Participated = 'Participated',
+  ClaimedBatch = 'ClaimedBatch',
 
-  KenoResult = "KenoResult",
+  KenoResult = 'KenoResult',
 
   // BJ
-  HandSplit = "HandSplit",
-  HandCreated = "HandCreated",
-  HandInsured = "HandInsured",
-  HandStandOff = "HandStandOff",
-  PlayerHandInfo = "PlayerHandInfo",
-  DealerHandInfo = "DealerHandInfo",
-  HandDoubleDown = "HandDoubleDown",
-  BJFinalized = "BjFinalized",
-  BJSettled = "BjSettled",
+  HandSplit = 'HandSplit',
+  HandCreated = 'HandCreated',
+  HandInsured = 'HandInsured',
+  HandStandOff = 'HandStandOff',
+  PlayerHandInfo = 'PlayerHandInfo',
+  DealerHandInfo = 'DealerHandInfo',
+  HandDoubleDown = 'HandDoubleDown',
+  BJFinalized = 'BjFinalized',
+  BJSettled = 'BjSettled',
 
-  Historical = "Historical",
-  Process = "Process",
-  ReelSpinSettled = "ReelSpinSettled",
-  GameCreated = "GameCreated",
+  Historical = 'Historical',
+  Process = 'Process',
+  ReelSpinSettled = 'ReelSpinSettled',
+  GameCreated = 'GameCreated',
 }
 
 export type GameHubEvent<T> = {
@@ -93,10 +93,10 @@ export interface CoinFlipSettledEvent {
 }
 
 export enum GAMES {
-  RPS = "rps",
-  DICE = "dice",
-  RANGE = "range",
-  ROULETTE = "roulette",
+  RPS = 'rps',
+  DICE = 'dice',
+  RANGE = 'range',
+  ROULETTE = 'roulette',
 }
 
 export type UnitySendMessage = (
@@ -106,9 +106,9 @@ export type UnitySendMessage = (
 ) => void;
 
 export enum PUBLIC_MULTIPLAYER_GAME_EVENTS {
-  moon_game_events = "moon_game_events",
-  wheel_game_events = "wheel_game_events",
-  horse_race_game_events = "horse_race_game_events",
+  moon_game_events = 'moon_game_events',
+  wheel_game_events = 'wheel_game_events',
+  horse_race_game_events = 'horse_race_game_events',
 }
 
 // V2 GAMEHUB
@@ -121,18 +121,18 @@ export type Item<T> = {
 export type EventContext<T, K> = { context: Item<T>[]; program: Item<K>[] };
 
 export enum DecoderType {
-  Context = "context",
-  Moon = "moon",
-  Dice = "dice",
-  Keno = "keno",
-  Limbo = "limbo",
-  Range = "range",
-  Wheel = "wheel",
-  Plinko = "plinko",
-  CoinFlip = "coin-flip",
-  Roulette = "roulette",
-  HorseRace = "horse-race",
-  RockPaperScissors = "rock-paper-scissors",
+  Context = 'context',
+  Moon = 'moon',
+  Dice = 'dice',
+  Keno = 'keno',
+  Limbo = 'limbo',
+  Range = 'range',
+  Wheel = 'wheel',
+  Plinko = 'plinko',
+  CoinFlip = 'coin-flip',
+  Roulette = 'roulette',
+  HorseRace = 'horse-race',
+  RockPaperScissors = 'rock-paper-scissors',
 }
 
 export type EventMap = {
@@ -168,7 +168,7 @@ interface GetGameHubEventParams {
   account: string;
 }
 
-const BUNDLER_WS_URL = "wss://game-hub-production-ssmnd.ondigitalocean.app/rpc";
+const BUNDLER_WS_URL = 'wss://game-hub-production-ssmnd.ondigitalocean.app/rpc';
 
 // const BUNDLER_WS_URL = "ws://localhost:3002" || "";
 
@@ -186,8 +186,8 @@ export const getGameHubEvent = <T>({
 
       if (data?.id) {
         const _ack = {
-          jsonrpc: "2.0",
-          method: "acknowledge",
+          jsonrpc: '2.0',
+          method: 'acknowledge',
           id: data?.id,
           params: {
             id: data?.id,
@@ -205,7 +205,7 @@ export const getGameHubEvent = <T>({
     };
 
     ws.onerror = () => {
-      reject("Error on receiving event");
+      reject('Error on receiving event');
     };
   });
 };
@@ -224,8 +224,8 @@ export const getGameHubEventV2 = <T, K>({
 
       if (data?.id) {
         const _ack = {
-          jsonrpc: "2.0",
-          method: "acknowledge",
+          jsonrpc: '2.0',
+          method: 'acknowledge',
           id: data.id,
           params: {
             id: data?.id,
@@ -245,7 +245,7 @@ export const getGameHubEventV2 = <T, K>({
     };
 
     ws.onerror = () => {
-      reject("Error on receiving event");
+      reject('Error on receiving event');
     };
   });
 };
@@ -268,30 +268,13 @@ interface PrepareGameTransactionResult {
 export const prepareGameTransaction = (
   params: PrepareGameTransactionParams
 ): PrepareGameTransactionResult => {
-  const {
-    lastPrice,
-    wager,
-    selectedCurrency,
-    stopGain = 0,
-    stopLoss = 0,
-  } = params;
+  const { lastPrice, wager, selectedCurrency, stopGain = 0, stopLoss = 0 } = params;
 
-  const wagerInGameCurrency = toDecimals(
-    (wager / lastPrice).toString(),
-    6
-  ).toString();
+  const wagerInGameCurrency = toDecimals((wager / lastPrice).toString(), 6).toString();
 
-  const stopGainInGameCurrency = toDecimals(
-    (stopGain / lastPrice).toString(),
-    6
-  ).toString();
+  const stopGainInGameCurrency = toDecimals((stopGain / lastPrice).toString(), 6).toString();
 
-  const stopLossInGameCurrency = toDecimals(
-    (stopLoss / lastPrice).toString(),
-    6
-  ).toString();
-
-  console.log(wagerInGameCurrency, "wager in currency");
+  const stopLossInGameCurrency = toDecimals((stopLoss / lastPrice).toString(), 6).toString();
 
   const decimal = 18;
 
@@ -301,7 +284,7 @@ export const prepareGameTransaction = (
 
   const stopLossInWei = parseUnits(stopLossInGameCurrency, decimal);
 
-  const tokenAddress = "0x031C21aC79baac1E6AD074ea63ED9e9a318cab26";
+  const tokenAddress = '0x031C21aC79baac1E6AD074ea63ED9e9a318cab26';
 
   return {
     wagerInWei,

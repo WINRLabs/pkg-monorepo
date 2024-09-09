@@ -23,6 +23,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
@@ -36,6 +37,8 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
+
+const log = debug('worker:HorseRaceWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -112,7 +115,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
-  console.log('gameEvent', gameEvent);
+  log('gameEvent', gameEvent);
 
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
@@ -212,14 +215,14 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
       if (!handledAllowance) return;
     }
 
-    console.log('submit');
+    log('submit');
     try {
       await sendTx.mutateAsync({
         encodedTxData: getEncodedClaimTxData(),
@@ -237,7 +240,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
@@ -246,7 +249,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
   useEffect(() => {
     if (!gameEvent) return;
 
-    console.log('gameEvent:', gameEvent);
+    log('gameEvent:', gameEvent);
 
     const currentTime = new Date().getTime() / 1000;
 

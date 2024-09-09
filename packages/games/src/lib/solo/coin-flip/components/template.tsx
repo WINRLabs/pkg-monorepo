@@ -15,6 +15,9 @@ import { CoinFlip, CoinFlipFormFields, CoinFlipGameResult } from '..';
 import { CoinSide, MIN_BET_COUNT, WIN_MULTIPLIER } from '../constants';
 import { BetController } from './bet-controller';
 import { CoinFlipGameProps } from './game';
+import debug from 'debug';
+
+const log = debug('worker:CoinFlipTemplate');
 
 type TemplateOptions = {
   scene?: {
@@ -101,7 +104,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
 
   const processStrategy = (result: CoinFlipGameResult[]) => {
     const payout = result[0]?.payoutInUsd || 0;
-    console.log(result, 'result');
+    log(result, 'result');
     const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;

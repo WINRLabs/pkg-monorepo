@@ -21,6 +21,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
@@ -34,6 +35,8 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from '../utils';
+
+const log = debug('worker:RouletteWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -184,7 +187,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -201,7 +204,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
 
@@ -235,7 +238,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
 
       if (!currentStepResult) return;
 
-      console.log('step', rouletteResult?.program?.[0]?.data);
+      log('step', rouletteResult?.program?.[0]?.data);
 
       const isWon = currentStepResult.win;
 

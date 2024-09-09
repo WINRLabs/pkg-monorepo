@@ -34,6 +34,9 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { prepareGameTransaction } from '../utils';
+import debug from 'debug';
+
+const log = debug('worker:VideoPokerWeb3');
 
 interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
@@ -153,11 +156,11 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const handleStartGame = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    console.log('SUBMITTING!');
+    log('SUBMITTING!');
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -174,18 +177,18 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
   };
 
   const handleFinishGame = async () => {
-    console.log('FINISHING!');
+    log('FINISHING!');
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -202,7 +205,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
@@ -237,7 +240,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     if (gameEvent?.program[0]?.type == 'Game') {
       const data = gameEvent.program[0].data;
 
-      console.log('event');
+      log('event');
 
       setSettledCards({
         cards: data.game.cards,

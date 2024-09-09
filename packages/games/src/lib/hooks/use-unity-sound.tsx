@@ -18,8 +18,6 @@ export const useEqualizeUnitySound = ({
 
   React.useEffect(() => {
     if (!sendMessage) {
-      console.log('cant do');
-
       return;
     } else {
       sendMessage('WebGLHandler', 'ReceiveMessage', `SetMusic|${unityVolume}`);

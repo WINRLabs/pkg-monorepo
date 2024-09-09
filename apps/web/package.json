@@ -14,6 +14,7 @@
     "@winrlabs/ui": "workspace:*",
     "@winrlabs/web3": "workspace:*",
     "@winrlabs/web3-games": "workspace:*",
+    "debug": "^4.3.7",
     "json-rpc-2.0": "^1.7.0",
     "next": "^14.0.4",
     "react": "^18.2.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.4",
+    "@types/debug": "^4.1.12",
     "@types/eslint": "^8.56.1",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",

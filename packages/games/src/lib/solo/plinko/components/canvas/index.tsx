@@ -106,7 +106,6 @@ export const Canvas: React.FC<CanvasProps> = ({
           processStrategy(plinkoGameResults);
           timeoutRef.current = setTimeout(() => onSubmitGameForm(form.getValues()), 200);
         } else {
-          console.log('auto bet finished!');
           onAutoBetModeChange(false);
         }
       }
@@ -175,7 +174,6 @@ export const Canvas: React.FC<CanvasProps> = ({
       });
     }
 
-    console.log('animaton completed!');
     onAnimationCompleted(lastBets);
     updateGameStatus('ENDED');
 

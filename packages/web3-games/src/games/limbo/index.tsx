@@ -36,6 +36,9 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from '../utils';
+import debug from 'debug';
+
+const log = debug('worker:LimboWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -187,7 +190,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -204,7 +207,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
 

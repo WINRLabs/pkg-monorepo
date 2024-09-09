@@ -1,6 +1,7 @@
 'use client';
 
 import * as Progress from '@radix-ui/react-progress';
+import debug from 'debug';
 import React from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import { useDebounce } from 'use-debounce';
@@ -21,6 +22,8 @@ import {
 } from '../constants';
 import { HOLDEM_POKER_GAME_STATUS, HoldemPokerGameProps } from '../types';
 import { WagerBetController } from './bet-controller';
+
+const log = debug('worker:HoldemPokerScene');
 
 type HoldemPokerSceneProps = HoldemPokerGameProps & {
   buildedGameUrl: string;
@@ -85,8 +88,6 @@ export const HoldemPokerScene = ({
   }, [loadingProgression]);
 
   React.useEffect(() => {
-    console.log(unityEvent, 'unity event');
-
     if (unityEvent.name === UnityDealEvent) {
       handleDealEvent();
     }
@@ -102,7 +103,6 @@ export const HoldemPokerScene = ({
     }
 
     // if (unityEvent.name === UnityPlayerHandWin) {
-    //   console.log(activeGameData.payoutAmount, 'PAYOUT');
 
     //   sendMessage(
     //     'WebGLHandler',
@@ -118,7 +118,7 @@ export const HoldemPokerScene = ({
         `HP_SetWinResult|${toDecimals(activeGameData.result, 2)}`
       );
 
-      console.log(activeGameData.payoutAmount, 'PAYOUT');
+      log(activeGameData.payoutAmount, 'PAYOUT');
 
       sendMessage(
         'WebGLHandler',
@@ -139,7 +139,7 @@ export const HoldemPokerScene = ({
         const param = JSON.parse(unityEvent.strParam);
         handleUnityChipEvent(param);
       } catch (error) {
-        console.log('HOLDEM POKER HANDLE CHIP EVENT ERROR', error);
+        log('HOLDEM POKER HANDLE CHIP EVENT ERROR', error);
       }
     }
   }, [unityEvent]);
@@ -156,7 +156,7 @@ export const HoldemPokerScene = ({
     try {
       await handleDeal();
     } catch {
-      console.log('DEAL ERROR template!');
+      log('DEAL ERROR template!');
       sendMessage(
         'WebGLHandler',
         'ReceiveMessage',
@@ -187,18 +187,18 @@ export const HoldemPokerScene = ({
   };
 
   React.useEffect(() => {
-    console.log(isInitialDataFetched, activeGameData, isUnityLoaded, 'effect');
+    log(isInitialDataFetched, activeGameData, isUnityLoaded, 'effect');
 
     if (isInitialDataFetched && activeGameData?.cards?.length && isUnityLoaded) {
       const { cards, aaBonusChipAmount, anteChipAmount, initialWager } = activeGameData;
 
       if (initialWager) setWager(initialWager);
 
-      console.log(cards, 'cards');
+      log(cards, 'cards');
 
       setTimeout(
         () => {
-          console.log(' sending data to unity ', activeGameData);
+          log(' sending data to unity ', activeGameData);
 
           sendMessage(
             'WebGLHandler',

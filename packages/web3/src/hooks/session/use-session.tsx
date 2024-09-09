@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import debug from 'debug';
 import superjson from 'superjson';
 import { Address, Hex, WalletClient } from 'viem';
 import { useWalletClient } from 'wagmi';
@@ -6,6 +7,8 @@ import { useWalletClient } from 'wagmi';
 import { MutationHook } from '../../utils/types';
 import { BundlerClientNotFoundError } from '../transaction/error';
 import { useBundlerClient, WinrBundlerClient } from '../use-bundler-client';
+
+const log = debug('worker:UseSession');
 
 export type SupportedHours = 1 | 4 | 8 | 12 | 24;
 
@@ -52,15 +55,15 @@ export const useCreateSession: MutationHook<CreateSessionRequest, { permit: Hex;
         owner: request.signerAddress,
       });
 
-      console.log(typedMessage, 'typed message');
+      log(typedMessage, 'typed message');
 
       const parsedMessage = superjson.parse<Hex>(typedMessage);
 
-      console.log(parsedMessage, 'parsed message');
+      log(parsedMessage, 'parsed message');
 
       const userPermission = await walletClient.signTypedData(parsedMessage as any);
 
-      console.log(userPermission, 'user permission');
+      log(userPermission, 'user permission');
 
       const userKeys = await client.request('permit', {
         owner: request.signerAddress,

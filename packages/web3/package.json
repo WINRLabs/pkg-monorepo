@@ -46,9 +46,10 @@
     "@web3auth/wallet-services-plugin": "^8.4.0",
     "@web3auth/web3auth-wagmi-connector": "^6.0.0",
     "@winrlabs/api": "workspace:*",
+    "debug": "^4.3.7",
     "json-rpc-2.0": "^1.7.0",
-    "uuid": "^10.0.0",
     "superjson": "^2.2.1",
+    "uuid": "^10.0.0",
     "viem": "2.x",
     "wagmi": "2.10.2",
     "zustand": "^4.4.1"

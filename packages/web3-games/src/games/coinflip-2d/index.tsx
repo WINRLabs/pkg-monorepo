@@ -35,6 +35,9 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from '../utils';
+import debug from 'debug';
+
+const log = debug('worker:CoinFlipWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -185,7 +188,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -203,7 +206,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       setIsLoading(false); // Set loading state to false
       // props.onError && props.onError(e);
@@ -218,12 +221,12 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   React.useEffect(() => {
     const finalResult = gameEvent;
 
-    console.log(finalResult?.logic, eventLogic);
+    log(finalResult?.logic, eventLogic);
     if (
       finalResult?.logic == eventLogic &&
       finalResult?.program[0]?.type == GAME_HUB_EVENT_TYPES.Settled
     ) {
-      console.log(eventLogic, 'curr event log');
+      log(eventLogic, 'curr event log');
 
       setCoinFlipResult(finalResult);
       updateGame({

@@ -14,7 +14,6 @@ import {
   controllerAbi,
   useApiOptions,
   useCurrentAccount,
-  useHandleTx,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -23,6 +22,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex } from 'viem';
 
@@ -36,6 +36,8 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
+
+const log = debug('worker:CrashWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -208,7 +210,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -220,7 +222,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         target: controllerAddress,
       });
     } catch (error) {
-      console.log('handleClaimTx error', error);
+      log('handleClaimTx error', error);
     }
 
     try {
@@ -234,7 +236,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       });
       setIsGamblerParticipant(true);
     } catch (e: any) {
-      console.log('handleTx error', e);
+      log('handleTx error', e);
       refetchPlayerGameStatus();
       setIsGamblerParticipant(false);
       // props.onError && props.onError(e);

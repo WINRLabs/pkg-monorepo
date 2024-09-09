@@ -14,6 +14,9 @@ import { MIN_BET_COUNT } from '../constants';
 import { PlinkoFormFields, PlinkoGameResult } from '../types';
 import { BetController } from './bet-controller';
 import { PlinkoGameProps } from './game';
+import debug from 'debug';
+
+const log = debug('worker:PlinkoTemplate');
 
 export type PlinkoTemplateOptions = {
   scene?: {
@@ -103,7 +106,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
 
   const processStrategy = (result: PlinkoGameResult[]) => {
     const payout = result[0]?.payoutInUsd || 0;
-    console.log(result, 'result');
+    log(result, 'result');
     const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;

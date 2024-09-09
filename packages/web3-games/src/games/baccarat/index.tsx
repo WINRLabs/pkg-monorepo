@@ -21,7 +21,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
@@ -29,6 +29,9 @@ import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hook
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { BaccaratSettledEvent, GAME_HUB_EVENT_TYPES, prepareGameTransaction } from '../utils';
+import debug from 'debug';
+
+const log = debug('worker:BaccaratWeb3');
 
 interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
@@ -167,7 +170,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -184,7 +187,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
 

@@ -20,8 +20,6 @@ export const RefundModal = ({
 }: Web3GamesRefundModalProps) => {
   const { modal, openModal } = useWeb3GamesModalsStore();
 
-  console.log(isRefundable, 'is Refundable in modal');
-
   return (
     <Dialog open={modal === 'refund'}>
       <DialogContent

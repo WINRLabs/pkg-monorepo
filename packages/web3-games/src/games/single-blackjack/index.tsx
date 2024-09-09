@@ -49,6 +49,9 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
+import debug from 'debug';
+
+const log = debug('worker:SingleBlackjackWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -291,7 +294,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -308,7 +311,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -326,7 +329,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
@@ -342,7 +345,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
     }
     setIsLoading(false); // Set loading state to false
   };
@@ -359,7 +362,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -370,7 +373,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -387,7 +390,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -398,7 +401,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -412,7 +415,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
     }
     setIsLoading(false); // Set loading state to false
   };
@@ -440,7 +443,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
 
     if (!activeHandIndex) return;
 
-    console.log(gameDataRead.data, 'initial');
+    log(gameDataRead.data, 'initial');
 
     setActiveGameData({
       activeHandIndex: status === BlackjackGameStatus.FINISHED ? 0 : Number(activeHandIndex),
@@ -575,35 +578,35 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
             playerCardsEvent.cards.amountCards == 2 &&
             playerCardsEvent.cards.totalCount == 21
           ) {
-            console.log('edge case');
+            log('edge case');
             setInitialDataFetched(true);
             handleFirstBlackjackDistribution(gameEvent);
             setTimeout(() => {
               setInitialDataFetched(false);
             }, 1000);
           } else {
-            console.log('game finished');
+            log('game finished');
             handleGameFinalizeEvent(gameEvent);
           }
         }
 
-        console.log(activeMove, 'ACTIVE MOVE!');
-        console.log(playerCardsEvent);
+        log(activeMove, 'ACTIVE MOVE!');
+        log(playerCardsEvent);
         // handle events by active move
         if (activeMove == 'Created' && playerCardsEvent.cards.totalCount !== 21) {
-          console.log('created event');
+          log('created event');
 
           setTimeout(() => {
             gameDataRead.refetch();
           }, 200);
         } else if (activeMove == 'HitCard') {
-          console.log('player hit move!');
+          log('player hit move!');
           handlePlayerEvent(gameEvent);
         } else if (activeMove == 'DoubleDown') {
-          console.log('player double move!');
+          log('player double move!');
           handlePlayerEvent(gameEvent);
         } else if (activeMove == 'Split') {
-          console.log('player split move!');
+          log('player split move!');
           const playerCardsEvent = gameEvent.program[2]?.data as BlackjackPlayerCardsEvent;
           const playerHandEvent = gameEvent.program[3]?.data as BlackjackPlayerHandEvent;
           const splittedPlayerCardsEvent = gameEvent.program[4]?.data as BlackjackPlayerCardsEvent;
@@ -623,7 +626,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         break;
       }
       case BJ_EVENT_TYPES.StandOff: {
-        console.log('player stand move!');
+        log('player stand move!');
         setActiveMove('StandOff');
         handlePlayerStandEvent(gameEvent);
         break;
@@ -711,16 +714,16 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     let prevHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] =
       defaultActiveGameHands.firstHand;
 
-    console.log('interested hand id:', handId);
+    log('interested hand id:', handId);
 
-    console.log(activeGameHands, 'inner active game hands');
+    log(activeGameHands, 'inner active game hands');
 
     if (activeGameHands.firstHand.handId === handId) prevHand = activeGameHands.firstHand;
 
     if (activeGameHands.splittedFirstHand.handId === handId)
       prevHand = activeGameHands.splittedFirstHand;
 
-    console.log(prevHand, 'previous hand', activeGameHands);
+    log(prevHand, 'previous hand', activeGameHands);
 
     const newHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] = {
       cards: {
@@ -741,7 +744,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       handId,
     };
 
-    console.log(newHand, 'newHandObject with new fields');
+    log(newHand, 'newHandObject with new fields');
 
     // set new hand data
     if (activeGameHands.firstHand.handId === handId)
@@ -811,16 +814,16 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     let prevHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] =
       defaultActiveGameHands.firstHand;
 
-    console.log('interested hand id:', handId);
+    log('interested hand id:', handId);
 
-    console.log(activeGameHands, 'inner active game hands');
+    log(activeGameHands, 'inner active game hands');
 
     if (activeGameHands.firstHand.handId === handId) prevHand = activeGameHands.firstHand;
 
     if (activeGameHands.splittedFirstHand.handId === handId)
       prevHand = activeGameHands.splittedFirstHand;
 
-    console.log(prevHand, 'previous hand', activeGameHands);
+    log(prevHand, 'previous hand', activeGameHands);
 
     const newHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] = {
       cards: {
@@ -841,7 +844,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       handId,
     };
 
-    console.log(newHand, 'newHandObject with new fields');
+    log(newHand, 'newHandObject with new fields');
 
     // set new hand data
     if (activeGameHands.firstHand.handId === handId)
@@ -951,7 +954,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
   }, [activeGameHands, formValues.wager]);
 
   const onGameCompleted = () => {
-    console.log('on game completed');
+    log('on game completed');
     props.onGameCompleted && props.onGameCompleted(activeGameData.payout || 0);
     refetchHistory();
     refetchPlayerGameStatus();
@@ -964,7 +967,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
   };
 
   React.useEffect(() => {
-    console.log(activeGameData, 'activeGameData', activeGameHands, 'activegaMEhaNDS');
+    log(activeGameData, 'activeGameData', activeGameHands, 'activegaMEhaNDS');
   }, [activeGameData, activeGameHands]);
 
   return (

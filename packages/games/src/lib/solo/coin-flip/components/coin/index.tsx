@@ -92,7 +92,6 @@ export const Coin: React.FC<CoinProps> = ({
             if (betCount >= 0 && newBetCount != 0) {
               onSubmitGameForm(form.getValues());
             } else {
-              console.log('auto bet finished!');
               onAutoBetModeChange(false);
             }
           }

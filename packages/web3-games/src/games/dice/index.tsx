@@ -23,6 +23,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
@@ -36,6 +37,8 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from '../utils';
+
+const log = debug('worker:DiceWeb3');
 
 type TemplateOptions = {};
 
@@ -190,7 +193,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -207,7 +210,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       updateGameStatus('ENDED');
       // props.onError && props.onError(e);
@@ -222,12 +225,12 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   React.useEffect(() => {
     const finalResult = gameEvent;
 
-    console.log(eventLogic, 'eventlog', finalResult?.logic);
+    log(eventLogic, 'eventlog', finalResult?.logic);
     if (
       finalResult?.logic == eventLogic &&
       finalResult?.program[0]?.type === GAME_HUB_EVENT_TYPES.Settled
     ) {
-      console.log('settled result');
+      log('settled result');
       setDiceResult(finalResult);
       updateGame({
         wager: formValues.wager || 0,

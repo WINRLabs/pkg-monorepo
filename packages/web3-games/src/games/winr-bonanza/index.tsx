@@ -19,6 +19,7 @@ import {
   winrBonanzaAbi,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
 import { useReadContract } from 'wagmi';
@@ -28,6 +29,8 @@ import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hook
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
+
+const log = debug('worker:WinrBonanzaWeb3');
 
 interface TemplateWithWeb3Props extends BaseGameProps {
   buildedGameUrl: string;
@@ -162,20 +165,20 @@ export default function WinrBonanzaTemplateWithWeb3({
   });
 
   const handleBet = async (errorCount = 0) => {
-    console.log('spin button called!');
+    log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    if (!allowance.hasAllowance) {
-      const handledAllowance = await allowance.handleAllowance({
-        errorCb: (e: any) => {
-          console.log('error', e);
-        },
-      });
+    // if (!allowance.hasAllowance) {
+    //   const handledAllowance = await allowance.handleAllowance({
+    //     errorCb: (e: any) => {
+    //       log('error', e);
+    //     },
+    //   });
 
-      if (!handledAllowance) return;
-    }
+    //   if (!handledAllowance) return;
+    // }
 
-    console.log('allowance available');
+    log('allowance available');
 
     // await handleTx.mutateAsync();
 
@@ -202,12 +205,12 @@ export default function WinrBonanzaTemplateWithWeb3({
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
       if (!handledAllowance) return;
     }
-    console.log('buy feature');
+    log('buy feature');
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterable) await playerReIterate();
@@ -228,13 +231,13 @@ export default function WinrBonanzaTemplateWithWeb3({
     // if (!allowance.hasAllowance) {
     //   const handledAllowance = await allowance.handleAllowance({
     //     errorCb: (e: any) => {
-    //       console.log("error", e);
+    //   log("error", e);
     //     },
     //   });
     //   if (!handledAllowance) return;
     // }
 
-    console.log('handleFreeSpintx called');
+    log('handleFreeSpintx called');
 
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
@@ -271,7 +274,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   }, [gameDataRead.data]);
 
   React.useEffect(() => {
-    console.log(gameEvent, 'GAME EVENT!!');
+    log(gameEvent, 'GAME EVENT!!');
 
     if (gameEvent?.program[0]?.type == 'Game' && gameEvent?.program[0].data?.state == 2) {
       const data = gameEvent.program[0].data;

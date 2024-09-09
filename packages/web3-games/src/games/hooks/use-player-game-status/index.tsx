@@ -9,12 +9,15 @@ import {
 import { GameType, useWeb3GamesModalsStore } from '@winrlabs/games';
 import { controllerAbi, rankMiddlewareAbi, useApiOptions, useCurrentAccount } from '@winrlabs/web3';
 import dayjs from 'dayjs';
+import debug from 'debug';
 import React from 'react';
 import { Address } from 'viem';
 import { Config, useReadContract } from 'wagmi';
 
 import { useContractConfigContext } from '../use-contract-config';
 import { Badge } from '../use-get-badges';
+
+const log = debug('UsePlayerGameStatus');
 
 interface IUsePlayerStatusParams {
   gameAddress: Address;
@@ -135,7 +138,7 @@ export const usePlayerGameStatus = ({
     if (!lastSeen || !refundCooldown) return false;
 
     const passedTime = getPassedTime(lastSeen);
-    console.log(sessionStatus, 'session status');
+    log(sessionStatus, 'session status');
     return passedTime > refundCooldown && sessionStatus === SessionStatus.Wait;
   }, [lastSeen, refundCooldown, sessionStatus, sessionRead.dataUpdatedAt]);
 
@@ -207,11 +210,11 @@ export const usePlayerGameStatus = ({
   };
 
   React.useEffect(() => {
-    console.log(playerLevelStatusRead.data, 'data');
+    log(playerLevelStatusRead.data, 'data');
   }, [playerLevelStatusRead.dataUpdatedAt]);
 
   React.useEffect(() => {
-    console.log('isReIterable', isReIterable, 'isRefundable', isRefundable);
+    log('isReIterable', isReIterable, 'isRefundable', isRefundable);
   }, [isReIterable, isRefundable]);
 
   return {

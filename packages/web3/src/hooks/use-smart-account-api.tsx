@@ -1,12 +1,14 @@
 'use client';
 
+import debug from 'debug';
 import { JSONRPCClient } from 'json-rpc-2.0';
 import React from 'react';
 import { Config, useAccount, usePublicClient, useWalletClient } from 'wagmi';
 
-import { SmartWalletConnectorWagmiType } from '../config/smart-wallet-connectors';
 import { PaymasterAPI, PaymasterParams, SimpleAccountAPI, UserOperation } from '../smart-wallet';
 import { useBundlerClient } from './use-bundler-client';
+
+const log = debug('worker:UseSmartAccountApi');
 
 export class Paymaster implements PaymasterAPI {
   client: JSONRPCClient;
@@ -33,7 +35,7 @@ export class Paymaster implements PaymasterAPI {
         paymasterPostOpGasLimit: BigInt(0),
       };
     } catch (err) {
-      console.log('PAYMASTER ERROR', err);
+      log('PAYMASTER ERROR', err);
 
       return null as unknown as PaymasterParams;
     }
@@ -86,7 +88,7 @@ export const SmartAccountApiProvider: React.FC<{
           // perUserOp: 100000
         },
       });
-      console.log('CREATE SMART ACCOUNT API', _accountApi);
+      log('CREATE SMART ACCOUNT API', _accountApi);
 
       setAccountApi(_accountApi);
     };

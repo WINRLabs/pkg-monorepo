@@ -13,9 +13,6 @@ export default function CoinFlipPage() {
         }}
         minWager={0.01}
         maxWager={2000}
-        onPlayerStatusUpdate={(d) => {
-          console.log(d, 'DATA DATA DATA');
-        }}
       />
       <LiveResults />
       <Web3GamesModals />

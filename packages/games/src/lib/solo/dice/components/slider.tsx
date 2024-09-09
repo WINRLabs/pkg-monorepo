@@ -99,7 +99,6 @@ export const Slider = ({ isLoading, disabled, track }: SliderProps) => {
                 <SliderPrimitive.Thumb
                   onFocus={() => {
                     if (gameStatus == 'ENDED') {
-                      console.log('focus');
                       updateCurrentAnimationCount(0);
                       updateDiceGameResults([]);
                     }

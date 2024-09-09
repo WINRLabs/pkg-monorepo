@@ -49,6 +49,9 @@ import {
   BlackjackSettledEvent,
   BlackjackStandOffEvent,
 } from './types';
+import debug from 'debug';
+
+const log = debug('worker:BlackjackWeb3');
 
 type TemplateOptions = {
   scene?: {
@@ -194,12 +197,12 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     const amountHands = betAmounts.length;
 
     for (let i = 0; i < 3; i++) {
-      console.log(betAmounts[i], 'betamountsi');
+      log(betAmounts[i], 'betamounts');
 
       if (!betAmounts[i]) betAmounts.push(0);
     }
 
-    console.log(betAmounts, 'betamountys', amountHands);
+    log(betAmounts, 'betamounts', amountHands);
     const encodedGameData = encodeAbiParameters(
       [
         { name: 'wager', type: 'uint128' },
@@ -337,7 +340,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -356,7 +359,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
       updateBalances();
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
@@ -375,7 +378,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
         target: controllerAddress,
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -390,7 +393,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
         target: controllerAddress,
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
     }
     setIsLoading(false); // Set loading state to false
   };
@@ -408,7 +411,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       });
       updateBalances();
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -419,7 +422,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -438,7 +441,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
       updateBalances();
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
     setIsLoading(false); // Set loading state to false
@@ -449,7 +452,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -464,7 +467,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       });
       updateBalances();
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
     }
     setIsLoading(false); // Set loading state to false
   };
@@ -492,7 +495,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
     if (!activeHandIndex) return;
 
-    console.log(gameDataRead.data, 'initial');
+    log(gameDataRead.data, 'initial');
 
     setActiveGameData({
       activeHandIndex: status === BlackjackGameStatus.FINISHED ? 0 : Number(activeHandIndex),
@@ -628,32 +631,32 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
             playerCardsEvent.cards.totalCount == 21 &&
             activeMove == 'Created'
           ) {
-            console.log('edge case');
+            log('edge case');
             setInitialDataFetched(true);
             handleFirstBlackjackDistribution(gameEvent);
             setTimeout(() => {
               setInitialDataFetched(false);
             }, 1000);
           } else {
-            console.log('game finished');
+            log('game finished');
             handleGameFinalizeEvent(gameEvent);
           }
         }
 
-        console.log(activeMove, 'ACTIVE MOVE!');
+        log(activeMove, 'ACTIVE MOVE!');
         // handle events by active move
         if (activeMove == 'Created' && playerCardsEvent.cards.totalCount !== 21) {
           setTimeout(() => {
             gameDataRead.refetch();
           }, 200);
         } else if (activeMove == 'HitCard') {
-          console.log('player hit move!');
+          log('player hit move!');
           handlePlayerEvent(gameEvent);
         } else if (activeMove == 'DoubleDown') {
-          console.log('player double move!');
+          log('player double move!');
           handlePlayerEvent(gameEvent);
         } else if (activeMove == 'Split') {
-          console.log('player split move!');
+          log('player split move!');
           const playerCardsEvent = gameEvent.program[2]?.data as BlackjackPlayerCardsEvent;
           const playerHandEvent = gameEvent.program[3]?.data as BlackjackPlayerHandEvent;
           const splittedPlayerCardsEvent = gameEvent.program[4]?.data as BlackjackPlayerCardsEvent;
@@ -673,7 +676,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
         break;
       }
       case BJ_EVENT_TYPES.StandOff: {
-        console.log('player stand move!');
+        log('player stand move!');
         setActiveMove('StandOff');
         handlePlayerStandEvent(gameEvent);
         break;
@@ -761,9 +764,9 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     let prevHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] =
       defaultActiveGameHands.firstHand;
 
-    console.log('interested hand id:', handId);
+    log('interested hand id:', handId);
 
-    console.log(activeGameHands, 'inner active game hands');
+    log(activeGameHands, 'inner active game hands');
 
     if (activeGameHands.firstHand.handId === handId) prevHand = activeGameHands.firstHand;
 
@@ -780,7 +783,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     if (activeGameHands.splittedThirdHand.handId === handId)
       prevHand = activeGameHands.splittedThirdHand;
 
-    console.log(prevHand, 'previous hand', activeGameHands);
+    log(prevHand, 'previous hand', activeGameHands);
 
     const newHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] = {
       cards: {
@@ -801,7 +804,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       handId,
     };
 
-    console.log(newHand, 'newHandObject with new fields');
+    log(newHand, 'newHandObject with new fields');
 
     // set new hand data
     if (activeGameHands.firstHand.handId === handId)
@@ -935,9 +938,9 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     let prevHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] =
       defaultActiveGameHands.firstHand;
 
-    console.log('interested hand id:', handId);
+    log('interested hand id:', handId);
 
-    console.log(activeGameHands, 'inner active game hands');
+    log(activeGameHands, 'inner active game hands');
 
     if (activeGameHands.firstHand.handId === handId) prevHand = activeGameHands.firstHand;
 
@@ -954,7 +957,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     if (activeGameHands.splittedThirdHand.handId === handId)
       prevHand = activeGameHands.splittedThirdHand;
 
-    console.log(prevHand, 'previous hand', activeGameHands);
+    log(prevHand, 'previous hand', activeGameHands);
 
     const newHand: ActiveGameHands['firstHand' | 'secondHand' | 'thirdHand'] = {
       cards: {
@@ -975,7 +978,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       handId,
     };
 
-    console.log(newHand, 'newHandObject with new fields');
+    log(newHand, 'newHandObject with new fields');
 
     // set new hand data
     if (activeGameHands.firstHand.handId === handId)

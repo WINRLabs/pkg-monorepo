@@ -81,8 +81,6 @@ export const RouletteScene: React.FC<{
 
   React.useEffect(() => {
     if (rouletteResult && rouletteResult.length) {
-      console.log('animation started');
-
       const turn = async (i = 0) => {
         closeWinAnimation();
         const order = i + 1;
@@ -90,8 +88,6 @@ export const RouletteScene: React.FC<{
         const idxValue = rouletteWheelNumbers.findIndex(
           (d) => d.number === rouletteResult[i]?.outcome
         );
-
-        console.log(idxValue, 'idxValue');
 
         setDegree(idxValue * reference + 2);
 
@@ -131,7 +127,6 @@ export const RouletteScene: React.FC<{
             if (betCount >= 0 && newBetCount != 0) {
               onSubmitGameForm(form.getValues());
             } else {
-              console.log('auto bet finished!');
               onAutoBetModeChange(false);
             }
           }
@@ -161,8 +156,6 @@ export const RouletteScene: React.FC<{
   } => {
     let totalPayout = 0;
     rouletteResult.forEach((v) => (totalPayout += v.payoutInUsd));
-
-    console.log(totalPayout, 'totalpay', totalWager, 'totalw', totalPayout / totalWager);
     return {
       multiplier: totalPayout / totalWager,
       payout: totalPayout,

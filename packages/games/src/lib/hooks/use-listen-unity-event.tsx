@@ -1,48 +1,3 @@
-/* "use client";
-
-import React from "react";
-
-declare global {
-  interface Window {
-    GetMessageFromUnity: (name: string, eventData: string) => void;
-  }
-}
-
-interface UnityEventData {
-  name: string;
-  strParam: string;
-}
-
-const unityEventDefaultValue: UnityEventData = {
-  name: "",
-  strParam: "",
-};
-
-export const useListenUnityEvent = () => {
-  const [unityEvent, setUnityEvent] = React.useState<UnityEventData>(
-    unityEventDefaultValue,
-  );
-
-  React.useEffect(() => {
-    if (window) {
-      window.GetMessageFromUnity = (name: string, strParam: string) => {
-        const obj: UnityEventData = {
-          name,
-          strParam,
-        };
-
-        console.log("Unity Event", obj);
-
-        setUnityEvent(obj);
-      };
-    }
-  }, []);
-
-  return {
-    unityEvent,
-  };
-}; */
-
 'use client';
 
 declare global {
@@ -51,6 +6,7 @@ declare global {
   }
 }
 
+import debug from 'debug';
 import { useCallback, useEffect, useState } from 'react';
 
 // Assuming UnityEventData is properly defined elsewhere
@@ -64,6 +20,8 @@ const unityEventDefaultValue: UnityEventData = {
   strParam: '',
 };
 
+const log = debug('worker:UseListenUnityEvent');
+
 export const useListenUnityEvent = () => {
   const [unityEvent, setUnityEvent] = useState<UnityEventData>(unityEventDefaultValue);
 
@@ -75,7 +33,7 @@ export const useListenUnityEvent = () => {
     };
 
     setTimeout(() => {
-      console.log('Unity Event', obj);
+      log('Unity Event', obj);
 
       setUnityEvent(obj);
     }, 10);

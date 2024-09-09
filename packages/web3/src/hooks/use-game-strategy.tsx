@@ -58,17 +58,12 @@ export const GameStrategyProvider: React.FC<{
   const createStrategy = async () => {
     if (!walletClient.data || !publicClient) return;
 
-    const name = uuidv4();
-    console.log(name, 'name');
-
     // create clients as typeof viem
     const _walletClient = createWalletClient({
       chain: walletClient.data.chain,
       account: walletClient.data.account,
       transport: http(walletClient.data.transport.url),
     });
-
-    console.log(_walletClient, 'wall client');
 
     const _publicClient = createPublicClient({
       chain: publicClient.chain,
@@ -79,7 +74,6 @@ export const GameStrategyProvider: React.FC<{
     let currentStrategyId = 0;
     const signer = getViemAcc();
 
-    console.log(signer, 'signer');
     const manager: Strategy.Manager = Strategy.create({
       contract: {
         store: strategyStoreAddress,
@@ -88,20 +82,16 @@ export const GameStrategyProvider: React.FC<{
         signer,
       },
     });
-    console.log(manager, 'manager');
 
     const list = await manager.getList();
     currentStrategyCount = list.length;
     currentStrategyId = currentStrategyCount;
-    console.log(list, 'list');
-    console.log(currentStrategyCount, 'curr str count');
   };
 
   const getViemAcc = (): Account => {
     if (!walletClient.data) return {} as Account;
 
     const signer = walletClient.data;
-    console.log(signer, 'signerrr');
 
     return {
       address: signer.account.address as `0x${string}`,

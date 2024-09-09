@@ -1,11 +1,14 @@
 import { useCurrentAccount } from '@winrlabs/web3';
 import dayjs from 'dayjs';
+import debug from 'debug';
 import React from 'react';
 import { io, Socket } from 'socket.io-client';
 import SuperJSON from 'superjson';
 
 import { DecodedEvent, Event } from '../../utils';
 import { useGameSocketContext } from '../use-game-socket';
+
+const log = debug('worker:UseListenGameEvent');
 
 export const useListenGameEvent = () => {
   const [gameEvent, setGameEvent] = React.useState<DecodedEvent<any, any> | null>(null);
@@ -23,11 +26,11 @@ export const useListenGameEvent = () => {
     socket.connect();
 
     socket.on('connect', () => {
-      console.log('socket connected!', socket);
+      log('socket connected!', socket);
     });
 
     socket.on('disconnect', () => {
-      console.log('socket disconnected');
+      log('socket disconnected');
     });
 
     return () => {
@@ -41,7 +44,7 @@ export const useListenGameEvent = () => {
 
   React.useEffect(() => {
     if (!address || !bundlerWsUrl || !network) return;
-    console.log(network, bundlerWsUrl, 'bundler ws url');
+    log(network, bundlerWsUrl, 'bundler ws url');
     setSocket(
       io(bundlerWsUrl, {
         extraHeaders: {
@@ -67,7 +70,7 @@ export const useListenGameEvent = () => {
 
     const context = _e.context as DecodedEvent<any, any>;
 
-    console.log(context, 'CONTEXT!', dayjs(new Date()).unix());
+    log(context, 'CONTEXT!', dayjs(new Date()).unix());
 
     setGameEvent(context);
   };

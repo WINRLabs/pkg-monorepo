@@ -19,6 +19,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React from 'react';
 import { useDebounce } from 'use-debounce';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
@@ -42,6 +43,8 @@ import {
   HoldemPokerSideBetSettledEvent,
 } from './types';
 import { checkPairOfAcesOrBetter } from './utils';
+
+const log = debug('worker:HoldemPokerWeb3');
 
 interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
@@ -189,7 +192,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -206,7 +209,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       // props.onError && props.onError(e);
     }
@@ -216,7 +219,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -233,7 +236,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
     }
   };
@@ -242,7 +245,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
         errorCb: (e: any) => {
-          console.log('error', e);
+          log('error', e);
         },
       });
 
@@ -256,7 +259,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
     }
   };
 
@@ -277,7 +280,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
 
   React.useEffect(() => {
     if (!gameDataRead.data) return;
-    console.log(gameDataRead.data, 'initial');
+    log(gameDataRead.data, 'initial');
     if (
       gameDataRead.data.state == HoldemPokerContractStatus.NONE ||
       gameDataRead.data.state == HoldemPokerContractStatus.RESOLVED

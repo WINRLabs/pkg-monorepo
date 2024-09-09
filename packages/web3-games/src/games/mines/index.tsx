@@ -26,6 +26,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useEffect, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
 import { useReadContract } from 'wagmi';
@@ -35,6 +36,8 @@ import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hook
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
+
+const log = debug('worker:MinesWeb3');
 
 enum Status {
   None = 0, // No game
@@ -176,7 +179,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       lastPrice: priceFeed[selectedTokenAddress.priceKey],
     });
 
-    console.log(values.selectedCells, 'selectedCells');
+    log(values.selectedCells, 'selectedCells');
 
     const encodedFirstRevealGameData = encodeAbiParameters(
       [
@@ -213,7 +216,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   };
 
   const handleReveal = async (values: MinesFormField, revealCells: boolean[]) => {
-    console.log(revealCells, 'revealcells');
+    log(revealCells, 'revealcells');
 
     const encodedRevealGameData = encodeAbiParameters(
       [
@@ -269,19 +272,19 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     if (selectedTokenAddress.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     setIsWaitingResponse(true);
-    console.log(values, 'form values');
+    log(values, 'form values');
 
     try {
       if (!allowance.hasAllowance) {
         const handledAllowance = await allowance.handleAllowance({
           errorCb: (e: any) => {
-            console.log('error', e);
+            log('error', e);
           },
         });
 
         if (!handledAllowance) return;
       }
-      console.log('submit Type:', submitType);
+      log('submit Type:', submitType);
       if (isPlayerHaltedRef.current) await playerLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
@@ -313,7 +316,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         });
       }
     } catch (e: any) {
-      console.log('error', e);
+      log('error', e);
       refetchPlayerGameStatus();
       setIsWaitingResponse(false);
       // props.onError && props.onError(e);
@@ -357,7 +360,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           board: newBoard,
         });
 
-        console.log('Congrats! You win!!!');
+        log('Congrats! You win!!!');
       }
       setIsWaitingResponse(false);
     } else {
@@ -381,7 +384,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           board: newBoard,
         });
 
-        console.log('OOPS You hit a mine');
+        log('OOPS You hit a mine');
       } else {
         const newBoard = gameData.revealedCells.map((cell: boolean) => {
           return {
@@ -401,9 +404,9 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     }
   }, [gameEvent]);
 
-  // console.log("gameEvent:", gameEvent);
-  // console.log("getPlayerStatus:", data);
-  // console.log(
+  // log("gameEvent:", gameEvent);
+  // log("getPlayerStatus:", data);
+  // log(
   //   "isCashout:",
   //   submitType === MINES_SUBMIT_TYPE.REVEAL_AND_CASHOUT ? true : false
   // );

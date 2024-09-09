@@ -7,6 +7,9 @@ import { Address, Hex } from 'viem';
 import { Config, useAccount } from 'wagmi';
 
 import { UserOperation } from '../smart-wallet';
+import debug from 'debug';
+
+const log = debug('worker:UseBundlerClient');
 
 const BundlerClientContext = createContext<UseBundlerClient>({
   client: undefined,
@@ -124,13 +127,13 @@ export const fetchBundlerClient = async ({
             return client?.receive(jsonRPCResponse);
           });
         } else if (jsonRPCRequest.id !== undefined) {
-          console.log('Error fetching JSON-RPC response', response.statusText);
+          log('Error fetching JSON-RPC response', response.statusText);
 
           return Promise.reject(new Error(response.statusText));
         }
       })
       .catch((e) => {
-        console.log('Error fetching JSON-RPC response', e);
+        log('Error fetching JSON-RPC response', e);
         throw e;
       })
   );
@@ -172,7 +175,7 @@ export const BundlerClientProvider: React.FC<{
   });
 
   React.useEffect(() => {
-    console.log(client, 'client');
+    log(client, 'client');
   }, [client]);
 
   return (

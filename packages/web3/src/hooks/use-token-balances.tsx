@@ -1,3 +1,4 @@
+import debug from 'debug';
 import { useEffect, useMemo } from 'react';
 import { Address, formatUnits } from 'viem';
 import { useReadContracts } from 'wagmi';
@@ -7,6 +8,8 @@ import { BalanceMap, useBalanceStore } from '../providers/balance';
 import { useTokenStore } from '../providers/token';
 import { toDecimals } from '../utils/number';
 import { useNativeTokenBalance } from './use-native-token-balance';
+
+const log = debug('worker:UseTokenBalances');
 
 export const WRAPPED_WINR_BANKROLL = '0x0000000000000000000000000000000000000006';
 
@@ -83,7 +86,7 @@ export const useTokenBalances = ({
       let balance = Number(formatUnits(value.result as bigint, token.decimals));
 
       if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) {
-        console.log(
+        log(
           value.result,
           balance,
           'wrapped <- balance -> native',

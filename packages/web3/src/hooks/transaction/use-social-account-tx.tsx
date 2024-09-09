@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import debug from 'debug';
 import { Hex } from 'viem';
 
 import { MutationHook } from '../../utils/types';
@@ -13,6 +14,8 @@ import {
   NoSignatureFound,
 } from './error';
 import { CreateUserOpRequest, SocialAccountTxRequest } from './types';
+
+const log = debug('worker:UseSocialAccount');
 
 export const createUserOperation = async (request: CreateUserOpRequest) => {
   const { target, encodedData, accountApi, value } = request;
@@ -86,14 +89,14 @@ export const useSocialAccountTx: MutationHook<
         if (status !== 'success') {
           throw new Error(status);
         } else {
-          console.log(accountApi?.cachedNonce, 'cached nonce');
+          log(accountApi?.cachedNonce, 'cached nonce');
           accountApi?.cachedNonce && accountApi.increaseNonce();
-          console.log(accountApi?.cachedNonce, 'cached nonce updated');
+          log(accountApi?.cachedNonce, 'cached nonce updated');
         }
 
         return { status, hash };
       } catch (e: any) {
-        console.log('request error', e);
+        log('request error', e);
 
         throw new BundlerRequestError(e.message);
       }

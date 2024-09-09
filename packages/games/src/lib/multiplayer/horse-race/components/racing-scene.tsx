@@ -61,8 +61,6 @@ export const RacingScene = ({ onComplete, buildedGameUrl, loaderImg }: Props) =>
   };
 
   React.useEffect(() => {
-    console.log(status, 'GameStatus', HorseRaceStatus[status]);
-
     if (isLoaded && status === HorseRaceStatus.Race) {
       startRace();
     }
@@ -75,8 +73,6 @@ export const RacingScene = ({ onComplete, buildedGameUrl, loaderImg }: Props) =>
   React.useEffect(() => {
     if (unityEvent.name === UnityFinalizedEvent) {
       onComplete && onComplete();
-
-      console.log('finish line!!');
 
       setTimeout(() => {
         resetSelectedHorse();

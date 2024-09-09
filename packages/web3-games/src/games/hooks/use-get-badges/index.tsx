@@ -1,5 +1,8 @@
 import { useBadgeControllerAwardBadge } from '@winrlabs/api';
 import { useCurrentAccount } from '@winrlabs/web3';
+import debug from 'debug';
+
+const log = debug('worker:UseGetBadges');
 
 export enum Badge {
   LuckyWinner = 'LuckyWinner',
@@ -49,7 +52,7 @@ export const useGetBadges = ({ onPlayerStatusUpdate }: IUseGetBadgesParams) => {
   }) => {
     const multiplier = totalPayout / totalWager;
     const totalProfit = totalPayout - totalWager;
-    console.log(multiplier, totalProfit, totalWager, totalPayout);
+    log(multiplier, totalProfit, totalWager, totalPayout);
     const awardBadges = [];
 
     if (totalWager >= 1000) {

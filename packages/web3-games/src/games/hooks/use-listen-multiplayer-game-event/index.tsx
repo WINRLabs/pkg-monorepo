@@ -15,6 +15,9 @@ import {
 } from '../../multiplayer/type';
 import { GAME_HUB_GAMES } from '../../utils';
 import { useGameSocketContext } from '../use-game-socket';
+import debug from 'debug';
+
+const log = debug('worker:UseListenMpGameEvent');
 
 interface MultiplayerGameState {
   joiningStart: number;
@@ -75,11 +78,11 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     socket.connect();
 
     socket.on('connect', () => {
-      console.log('[MULTIPLAYER] socket connected!');
+      log('[MULTIPLAYER] socket connected!');
     });
 
     socket.on('disconnect', (er) => {
-      console.log('[MULTIPLAYER] socket disconnected');
+      log('[MULTIPLAYER] socket disconnected');
     });
 
     return () => {
@@ -96,7 +99,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     // socket.on("connect_info", onConnectEvent);
 
     socket.onAny((e) => {
-      // console.log("MULTIPLAYER ANY EVENT", e);
+      // log("MULTIPLAYER ANY EVENT", e);
     });
 
     return () => {
@@ -109,7 +112,7 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     const _e = SuperJSON.parse(e) as MultiplayerGameMessage & MultiplayerUpdateMessage;
     const isGameActive = _e?.is_active;
 
-    console.log('onGameEvent', _e);
+    log('onGameEvent', _e);
 
     if (isGameActive) {
       setGameState((prev) => ({

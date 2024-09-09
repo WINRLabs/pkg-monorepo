@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import debug from 'debug';
 import {
   Abi,
   Address,
@@ -14,12 +15,14 @@ import { Config, useSwitchChain } from 'wagmi';
 import { WriteContractVariables } from 'wagmi/query';
 
 import { SimpleAccountAPI } from '../smart-wallet';
-import { useBundlerClient, WinrBundlerClient } from './use-bundler-client';
-import { useSmartAccountApi } from './use-smart-account-api';
-import { useCurrentAccount } from './use-current-address';
-import { useCreateSession, useSessionStore } from './session';
 import { ErrorCode, mmAuthSessionErr, mmAuthSignErrors } from '../utils/error-codes';
+import { useCreateSession, useSessionStore } from './session';
+import { useBundlerClient, WinrBundlerClient } from './use-bundler-client';
+import { useCurrentAccount } from './use-current-address';
+import { useSmartAccountApi } from './use-smart-account-api';
 import { delay } from './use-token-allowance';
+
+const log = debug('worker:UseHandleTxUncached');
 
 export interface UseHandleTxUncachedOptions {
   successMessage?: string;
@@ -212,9 +215,9 @@ export const useHandleTxUncached = <
       accountApi && (await accountApi.refreshNonce());
       throw new Error(status);
     } else {
-      console.log(accountApi?.cachedNonce, 'cached nonce');
+      log(accountApi?.cachedNonce, 'cached nonce');
       accountApi?.cachedNonce && accountApi.increaseNonce();
-      console.log(accountApi?.cachedNonce, 'cached nonce updated');
+      log(accountApi?.cachedNonce, 'cached nonce updated');
     }
 
     return { status, hash };

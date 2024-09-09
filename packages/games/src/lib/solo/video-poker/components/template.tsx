@@ -96,8 +96,6 @@ const VideoPokerTemplate = ({
     });
 
     if (status === VideoPokerStatus.Dealt) {
-      console.log('values', values.cardsToSend);
-
       await handleFinishGame(values);
     } else {
       await handleStartGame(values);

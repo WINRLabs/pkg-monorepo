@@ -133,7 +133,7 @@ class WheelRotate {
 
       this.sound.volume = volume / 100;
 
-      this.sound.play().catch(() => console.log('click to sound on!'));
+      this.sound.play();
     }
   }
 
