@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 10.0.14
+
+### Patch Changes
+
+- fdf8bd2: debug
+- Updated dependencies [fdf8bd2]
+  - @winrlabs/games@2.17.13
+  - @winrlabs/web3@0.11.8
+  - @winrlabs/web3-games@10.0.14
+
 ## 10.0.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.8
+
+### Patch Changes
+
+- fdf8bd2: debug
+
 ## 0.11.7
 
 ### Patch Changes
