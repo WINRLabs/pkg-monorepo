@@ -132,7 +132,7 @@ export const Dot = ({ className, selected = false }: { className?: string; selec
   return (
     <div
       className={cn(
-        'wr-absolute md:wr-size-6 wr-size-3 wr-shrink-0 wr-rounded-full wr-border-2 wr-border-[#EDEDF1] wr-bg-dice wr-transition-all sm:wr-h-[23px] sm:wr-w-[23px]',
+        'wr-absolute md:wr-size-6 wr-size-3 wr-shrink-0 wr-rounded-full wr-border-2 wr-border-[#EDEDF1] wr-bg-dice wr-transition-all md:wr-h-[23px] md:wr-w-[23px]',
         className,
         { 'wr-border-[#41414C] wr-bg-dice-selected': selected }
       )}
