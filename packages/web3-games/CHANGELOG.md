@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 10.0.17
+
+### Patch Changes
+
+- f85144b: mines auto bet
+- Updated dependencies [f85144b]
+  - @winrlabs/games@3.0.2
+  - @winrlabs/web3@0.11.9
+  - @winrlabs/web3-games@10.0.17
+
 ## 10.0.16
 
 ### Patch Changes

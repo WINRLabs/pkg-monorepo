@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.9
+
+### Patch Changes
+
+- f85144b: mines auto bet
+
 ## 0.11.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.2
+
+### Patch Changes
+
+- f85144b: mines auto bet
+
 ## 3.0.1
 
 ### Patch Changes
