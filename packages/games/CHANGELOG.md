@@ -1,5 +1,14 @@
 # @winrlabs/games
 
+## 2.17.11
+
+### Patch Changes
+
+- bcba371: mines hideWager and hideInfo
+- 68515bb: add global bt controller indicator
+- 894bbe5: custom plinko props
+- 811dd88: max payout obj customize
+
 ## 2.17.10
 
 ### Patch Changes
