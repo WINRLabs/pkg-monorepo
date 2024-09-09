@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.0
+
+### Major Changes
+
+- 1ee41ee: fix roll mobile width issue
+
 ## 2.17.13
 
 ### Patch Changes
