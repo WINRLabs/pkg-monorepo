@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 2.17.12
+
+### Patch Changes
+
+- 93ef4a4: custom img support for mines cell
+
 ## 2.17.11
 
 ### Patch Changes

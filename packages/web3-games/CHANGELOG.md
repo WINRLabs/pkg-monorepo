@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 10.0.13
+
+### Patch Changes
+
+- Updated dependencies [93ef4a4]
+  - @winrlabs/games@2.17.12
+  - @winrlabs/web3-games@10.0.13
+
 ## 10.0.12
 
 ### Patch Changes
