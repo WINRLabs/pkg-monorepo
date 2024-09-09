@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 10.0.16
+
+### Patch Changes
+
+- 0d064f2: auto bomb
+- Updated dependencies [0d064f2]
+  - @winrlabs/web3-games@10.0.16
+  - @winrlabs/games@3.0.1
+
 ## 10.0.15
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.1
+
+### Patch Changes
+
+- 0d064f2: auto bomb
+
 ## 3.0.0
 
 ### Major Changes
