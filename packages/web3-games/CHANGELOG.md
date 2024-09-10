@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.0
+
+### Major Changes
+
+- 7bc4866: fix roulette live stats wager isseu
+
+### Patch Changes
+
+- Updated dependencies [7bc4866]
+  - @winrlabs/web3-games@11.0.0
+
 ## 10.0.17
 
 ### Patch Changes
