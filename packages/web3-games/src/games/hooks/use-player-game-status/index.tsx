@@ -7,17 +7,47 @@ import {
   useRefundControllerReIterate,
 } from '@winrlabs/api';
 import { GameType, useWeb3GamesModalsStore } from '@winrlabs/games';
-import { controllerAbi, rankMiddlewareAbi, useApiOptions, useCurrentAccount } from '@winrlabs/web3';
+import {
+  controllerAbi,
+  rankMiddlewareAbi,
+  useApiOptions,
+  useBundlerClient,
+  useCurrentAccount,
+} from '@winrlabs/web3';
 import dayjs from 'dayjs';
 import debug from 'debug';
 import React from 'react';
 import { Address } from 'viem';
 import { Config, useReadContract } from 'wagmi';
 
+import { GameTypesEnvironmentStore } from '../../../type';
 import { useContractConfigContext } from '../use-contract-config';
 import { Badge } from '../use-get-badges';
 
 const log = debug('UsePlayerGameStatus');
+
+const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> = {
+  [GameType.BACCARAT]: GameTypesEnvironmentStore.baccarat,
+  [GameType.BLACKJACK]: GameTypesEnvironmentStore.blackjackprocessorsecond,
+  [GameType.COINFLIP]: GameTypesEnvironmentStore.coinflip,
+  [GameType.DICE]: GameTypesEnvironmentStore.dice,
+  [GameType.HOLDEM_POKER]: GameTypesEnvironmentStore.baccarat,
+  [GameType.HORSE_RACE]: GameTypesEnvironmentStore.horserace,
+  [GameType.KENO]: GameTypesEnvironmentStore.keno,
+  [GameType.LIMBO]: GameTypesEnvironmentStore.limbo,
+  [GameType.LOTTERY]: GameTypesEnvironmentStore.lottery,
+  [GameType.MINES]: GameTypesEnvironmentStore.mines,
+  [GameType.MOON]: GameTypesEnvironmentStore.moon,
+  [GameType.ONE_HAND_BLACKJACK]: GameTypesEnvironmentStore.singleblackjackprocessorsecond,
+  [GameType.PLINKO]: GameTypesEnvironmentStore.plinko,
+  [GameType.RANGE]: GameTypesEnvironmentStore.range,
+  [GameType.ROULETTE]: GameTypesEnvironmentStore.roulette,
+  [GameType.RPS]: GameTypesEnvironmentStore.rockpaperscissor,
+  [GameType.SLOT]: GameTypesEnvironmentStore.winrbonanza,
+  [GameType.VIDEO_POKER]: GameTypesEnvironmentStore.videopoker,
+  [GameType.WHEEL]: GameTypesEnvironmentStore.wheel,
+  [GameType.WINR_BONANZA]: GameTypesEnvironmentStore.winrbonanza,
+};
 
 interface IUsePlayerStatusParams {
   gameAddress: Address;
@@ -150,9 +180,8 @@ export const usePlayerGameStatus = ({
   }, [sessionRead.dataUpdatedAt, lastSeen, sessionStatus, isRefundable]);
 
   // Mutations
+  const { client } = useBundlerClient();
   const playerLevelUp = useRankControllerTakeLevelupSnapshot({});
-  const playerRefund = useRefundControllerRefundGame({});
-  const playerReIterate = useRefundControllerReIterate({});
 
   const handlePlayerLevelUp = async () => {
     const mutation = (await playerLevelUp.mutateAsync({
@@ -171,38 +200,39 @@ export const usePlayerGameStatus = ({
   };
 
   const handlePlayerRefund = async () => {
-    const refund = await playerRefund.mutateAsync({
-      body: {
-        game: gameType,
-        player: currentAccount.address || '0x',
-      },
-      baseUrl: baseUrl,
+    if (!client) return;
+
+    const refund = await client.request('refund', {
+      game: gameTypeEnvironmentStoreMap[gameType],
+      player: currentAccount.address!,
     });
 
     sessionRead.refetch();
 
-    if (refund.success) closeModal();
+    if (refund.status == 'success') closeModal();
   };
 
-  const handlePlayerReIterate = async () =>
-    await playerReIterate.mutateAsync({
-      body: {
-        game: gameType,
-        player: currentAccount.address || '0x',
-      },
-      baseUrl: baseUrl,
+  const handlePlayerReIterate = async () => {
+    if (!client) return;
+
+    await client.request('reIterate', {
+      game: gameTypeEnvironmentStoreMap[gameType],
+      player: currentAccount.address!,
     });
+  };
 
   React.useEffect(() => {
+    if (!client || !currentAccount.address) return;
+
     if (isRefundable)
       openModal('refund', {
         refund: {
-          isRefunding: playerRefund.isPending,
-          isRefundable: isRefundable,
+          isRefunding: false,
+          isRefundable,
           playerRefund: handlePlayerRefund,
         },
       });
-  }, [isRefundable]);
+  }, [isRefundable, client, currentAccount.address]);
 
   const handleRefetchPlayerGameStatus = () => {
     playerLevelStatusRead.refetch();

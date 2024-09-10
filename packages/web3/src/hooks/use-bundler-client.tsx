@@ -77,6 +77,14 @@ export type BundlerMethods = {
   'permitTypedMessage'(params: { owner: Address }): {
     typedMessage: Hex;
   };
+
+  'reIterate'(params: { game: string; player: Address }): {
+    status: string;
+  };
+
+  'refund'(params: { game: string; player: Address }): {
+    status: string;
+  };
 };
 
 export enum BundlerNetwork {
