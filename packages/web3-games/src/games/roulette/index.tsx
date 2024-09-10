@@ -224,8 +224,13 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     ) {
       setRouletteResult(finalResult);
 
+      const wager = formValues.wager;
+      const selectedNumbers = formValues.selectedNumbers;
+
+      const totalWager = selectedNumbers.reduce((acc, cur) => acc + cur, 0) * wager;
+
       updateGame({
-        wager: formValues.wager || 0,
+        wager: totalWager || 0,
       });
     }
   }, [gameEvent]);
