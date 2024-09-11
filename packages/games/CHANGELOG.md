@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.4
+
+### Patch Changes
+
+- 3fa5410: custom token prefix
+
 ## 3.0.3
 
 ### Patch Changes
