@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.1
+
+### Patch Changes
+
+- fd0a286: winr bonanza fix
+- Updated dependencies [fd0a286]
+  - @winrlabs/games@3.0.3
+  - @winrlabs/web3@0.11.10
+  - @winrlabs/web3-games@11.0.1
+
 ## 11.0.0
 
 ### Major Changes

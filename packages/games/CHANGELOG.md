@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.3
+
+### Patch Changes
+
+- fd0a286: winr bonanza fix
+
 ## 3.0.2
 
 ### Patch Changes

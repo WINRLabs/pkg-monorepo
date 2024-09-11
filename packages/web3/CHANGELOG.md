@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.10
+
+### Patch Changes
+
+- fd0a286: winr bonanza fix
+
 ## 0.11.9
 
 ### Patch Changes
