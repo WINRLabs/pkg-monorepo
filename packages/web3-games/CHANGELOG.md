@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.3
+
+### Patch Changes
+
+- c4eada6: error code handling
+- Updated dependencies [c4eada6]
+  - @winrlabs/games@3.0.5
+  - @winrlabs/web3@0.11.11
+  - @winrlabs/web3-games@11.0.3
+
 ## 11.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.11
+
+### Patch Changes
+
+- c4eada6: error code handling
+
 ## 0.11.10
 
 ### Patch Changes
