@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.4
+
+### Patch Changes
+
+- 7917860: bonanza olympus fixes
+- Updated dependencies [7917860]
+  - @winrlabs/games@3.0.6
+  - @winrlabs/web3@0.11.12
+  - @winrlabs/web3-games@11.0.4
+
 ## 11.0.3
 
 ### Patch Changes

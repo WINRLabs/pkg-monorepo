@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.12
+
+### Patch Changes
+
+- 7917860: bonanza olympus fixes
+
 ## 0.11.11
 
 ### Patch Changes

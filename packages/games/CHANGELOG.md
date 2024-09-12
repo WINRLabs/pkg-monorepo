@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.6
+
+### Patch Changes
+
+- 7917860: bonanza olympus fixes
+
 ## 3.0.5
 
 ### Patch Changes
