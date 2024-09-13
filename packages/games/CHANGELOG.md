@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.8
+
+### Patch Changes
+
+- 2c266d1: add tokenPrefix option to wheel
+
 ## 3.0.7
 
 ### Patch Changes
