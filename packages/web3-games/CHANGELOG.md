@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.7
+
+### Patch Changes
+
+- b33b5c1: update bundler network type to support more networks
+- Updated dependencies [b33b5c1]
+  - @winrlabs/web3@0.11.14
+  - @winrlabs/games@3.0.9
+  - @winrlabs/web3-games@11.0.7
+
 ## 11.0.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.9
+
+### Patch Changes
+
+- b33b5c1: update bundler network type to support more networks
+
 ## 3.0.8
 
 ### Patch Changes

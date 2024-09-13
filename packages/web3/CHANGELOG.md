@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.14
+
+### Patch Changes
+
+- b33b5c1: update bundler network type to support more networks
+
 ## 0.11.13
 
 ### Patch Changes
