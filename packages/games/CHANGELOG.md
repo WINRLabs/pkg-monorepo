@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.7
+
+### Patch Changes
+
+- 78a9199: refund fix
+
 ## 3.0.6
 
 ### Patch Changes

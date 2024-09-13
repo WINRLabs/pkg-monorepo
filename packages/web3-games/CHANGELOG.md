@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.5
+
+### Patch Changes
+
+- 78a9199: refund fix
+- Updated dependencies [78a9199]
+  - @winrlabs/games@3.0.7
+  - @winrlabs/web3@0.11.13
+  - @winrlabs/web3-games@11.0.5
+
 ## 11.0.4
 
 ### Patch Changes
