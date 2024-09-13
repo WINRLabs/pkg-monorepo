@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.15
+
+### Patch Changes
+
+- c444144: winr of olympus
+
 ## 0.11.14
 
 ### Patch Changes
