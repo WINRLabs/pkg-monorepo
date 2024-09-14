@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.9
+
+### Patch Changes
+
+- a2e5dc6: dice new reiteration logic
+- Updated dependencies [a2e5dc6]
+  - @winrlabs/games@3.0.11
+  - @winrlabs/web3@0.11.16
+  - @winrlabs/web3-games@11.0.9
+
 ## 11.0.8
 
 ### Patch Changes

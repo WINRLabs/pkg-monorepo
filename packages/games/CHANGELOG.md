@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.11
+
+### Patch Changes
+
+- a2e5dc6: dice new reiteration logic
+
 ## 3.0.10
 
 ### Patch Changes

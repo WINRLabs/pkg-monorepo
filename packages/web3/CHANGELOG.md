@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.16
+
+### Patch Changes
+
+- a2e5dc6: dice new reiteration logic
+
 ## 0.11.15
 
 ### Patch Changes
