@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.17
+
+### Patch Changes
+
+- 0f2e148: reiterate logic
+
 ## 0.11.16
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.10
+
+### Patch Changes
+
+- 0f2e148: reiterate logic
+- Updated dependencies [0f2e148]
+  - @winrlabs/games@3.0.12
+  - @winrlabs/web3@0.11.17
+  - @winrlabs/web3-games@11.0.10
+
 ## 11.0.9
 
 ### Patch Changes

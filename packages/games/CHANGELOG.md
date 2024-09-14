@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.12
+
+### Patch Changes
+
+- 0f2e148: reiterate logic
+
 ## 3.0.11
 
 ### Patch Changes
