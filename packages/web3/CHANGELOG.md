@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.18
+
+### Patch Changes
+
+- 79a8f62: new retry mechanism with reiterate
+
 ## 0.11.17
 
 ### Patch Changes

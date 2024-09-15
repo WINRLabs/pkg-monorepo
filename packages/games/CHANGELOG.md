@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.13
+
+### Patch Changes
+
+- 79a8f62: new retry mechanism with reiterate
+
 ## 3.0.12
 
 ### Patch Changes

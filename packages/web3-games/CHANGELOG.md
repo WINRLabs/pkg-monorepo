@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.11
+
+### Patch Changes
+
+- 79a8f62: new retry mechanism with reiterate
+- Updated dependencies [79a8f62]
+  - @winrlabs/games@3.0.13
+  - @winrlabs/web3@0.11.18
+  - @winrlabs/web3-games@11.0.11
+
 ## 11.0.10
 
 ### Patch Changes
