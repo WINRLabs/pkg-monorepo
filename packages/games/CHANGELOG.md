@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.14
+
+### Patch Changes
+
+- 1c40ae7: y
+
 ## 3.0.13
 
 ### Patch Changes

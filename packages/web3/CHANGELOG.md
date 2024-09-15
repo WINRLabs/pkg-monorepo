@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.19
+
+### Patch Changes
+
+- 1c40ae7: y
+
 ## 0.11.18
 
 ### Patch Changes
