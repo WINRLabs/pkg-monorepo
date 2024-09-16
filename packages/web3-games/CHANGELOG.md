@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.20
+
+### Patch Changes
+
+- ff637d7: winAnimationToken prefix
+- Updated dependencies [ff637d7]
+  - @winrlabs/web3-games@11.0.20
+  - @winrlabs/games@3.0.22
+
 ## 11.0.19
 
 ### Patch Changes

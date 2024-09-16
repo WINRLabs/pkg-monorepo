@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.22
+
+### Patch Changes
+
+- ff637d7: winAnimationToken prefix
+
 ## 3.0.21
 
 ### Patch Changes
