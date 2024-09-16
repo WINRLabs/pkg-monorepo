@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.15
+
+### Patch Changes
+
+- cba69c2: new retry mechanism
+
 ## 3.0.14
 
 ### Patch Changes

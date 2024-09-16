@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.20
+
+### Patch Changes
+
+- cba69c2: new retry mechanism
+
 ## 0.11.19
 
 ### Patch Changes

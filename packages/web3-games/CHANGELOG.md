@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.13
+
+### Patch Changes
+
+- cba69c2: new retry mechanism
+- Updated dependencies [cba69c2]
+  - @winrlabs/games@3.0.15
+  - @winrlabs/web3@0.11.20
+  - @winrlabs/web3-games@11.0.13
+
 ## 11.0.12
 
 ### Patch Changes
