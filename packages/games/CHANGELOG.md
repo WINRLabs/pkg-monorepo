@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.17
+
+### Patch Changes
+
+- f828a77: wheel customize
+
 ## 3.0.16
 
 ### Patch Changes
