@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.19
+
+### Patch Changes
+
+- 4801f34: game provider dictionary set, refactor
+
 ## 3.0.18
 
 ### Patch Changes

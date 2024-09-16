@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.17
+
+### Patch Changes
+
+- 4801f34: game provider dictionary set, refactor
+- Updated dependencies [4801f34]
+  - @winrlabs/web3-games@11.0.17
+  - @winrlabs/games@3.0.19
+
 ## 11.0.16
 
 ### Patch Changes
