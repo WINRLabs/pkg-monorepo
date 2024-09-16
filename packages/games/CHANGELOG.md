@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.20
+
+### Patch Changes
+
+- d639a1a: new dict items
+
 ## 3.0.19
 
 ### Patch Changes
