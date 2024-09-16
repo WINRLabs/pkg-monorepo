@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.14
+
+### Patch Changes
+
+- 52a6978: add forceRefund option
+- Updated dependencies [52a6978]
+  - @winrlabs/web3-games@11.0.14
+  - @winrlabs/games@3.0.16
+
 ## 11.0.13
 
 ### Patch Changes

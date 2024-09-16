@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.16
+
+### Patch Changes
+
+- 52a6978: add forceRefund option
+
 ## 3.0.15
 
 ### Patch Changes
