@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.21
+
+### Patch Changes
+
+- 8d0b9de: hideTabs option for mines
+
 ## 3.0.20
 
 ### Patch Changes
