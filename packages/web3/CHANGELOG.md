@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.21
+
+### Patch Changes
+
+- b01c363: fix
+
 ## 0.11.20
 
 ### Patch Changes

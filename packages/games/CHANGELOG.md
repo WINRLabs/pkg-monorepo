@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.18
+
+### Patch Changes
+
+- b01c363: fix
+
 ## 3.0.17
 
 ### Patch Changes
