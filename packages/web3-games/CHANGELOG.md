@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.22
+
+### Patch Changes
+
+- 6bcb8cb: slots payout fixes
+- Updated dependencies [6bcb8cb]
+  - @winrlabs/games@3.0.24
+  - @winrlabs/web3@0.11.22
+  - @winrlabs/web3-games@11.0.22
+
 ## 11.0.21
 
 ### Patch Changes

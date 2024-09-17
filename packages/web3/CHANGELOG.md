@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.22
+
+### Patch Changes
+
+- 6bcb8cb: slots payout fixes
+
 ## 0.11.21
 
 ### Patch Changes

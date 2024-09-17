@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.24
+
+### Patch Changes
+
+- 6bcb8cb: slots payout fixes
+
 ## 3.0.23
 
 ### Patch Changes
