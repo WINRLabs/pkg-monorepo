@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.23
+
+### Patch Changes
+
+- e12b3e5: fix win token animation token prefix
+
 ## 3.0.22
 
 ### Patch Changes
