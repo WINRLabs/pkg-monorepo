@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.25
+
+### Patch Changes
+
+- 32b5bd3: retry logic fixes
+
 ## 3.0.24
 
 ### Patch Changes

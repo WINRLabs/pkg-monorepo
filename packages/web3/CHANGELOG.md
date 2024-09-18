@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.23
+
+### Patch Changes
+
+- 32b5bd3: retry logic fixes
+
 ## 0.11.22
 
 ### Patch Changes
