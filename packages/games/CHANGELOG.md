@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.29
+
+### Patch Changes
+
+- b693102: mines fix
+
 ## 3.0.28
 
 ### Patch Changes
