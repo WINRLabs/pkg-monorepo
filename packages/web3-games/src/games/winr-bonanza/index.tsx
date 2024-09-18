@@ -199,7 +199,7 @@ export default function WinrBonanzaTemplateWithWeb3({
         iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet), 2000);
     } catch (e: any) {
       if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet, e), 500);
+        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet, e), 750);
       throw new Error(e);
     }
   };

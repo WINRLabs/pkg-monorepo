@@ -210,7 +210,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       if (isMountedRef.current) iterationTimeoutRef.current = setTimeout(() => handleFail(v), 2000);
     } catch (e: any) {
       if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(v, e), 500);
+        iterationTimeoutRef.current = setTimeout(() => handleFail(v, e), 750);
     }
   };
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { WagerFormField } from '../../../../common/controller';
-import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
 import { CDN_URL } from '../../../../constants';
 import { useGameOptions } from '../../../../game-provider';

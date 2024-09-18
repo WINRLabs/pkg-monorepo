@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.26
+
+### Patch Changes
+
+- be8f0d7: nonce fixe
+
 ## 3.0.25
 
 ### Patch Changes

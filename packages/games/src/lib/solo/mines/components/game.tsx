@@ -10,7 +10,6 @@ import {
   MinesGameResult,
   MinesGameResultOnComplete,
 } from '../types';
-import { initialBoard } from '../constants';
 
 export type MinesGameProps = React.ComponentProps<'div'> & {
   gameResults: MinesGameResult[];
@@ -67,7 +66,7 @@ export const MinesGame = ({
 
   React.useEffect(() => {
     isAutoBetModeRef.current = isAutoBetMode;
-    if (!isAutoBetMode) {
+    if (!isAutoBetMode && gameStatus !== MINES_GAME_STATUS.IDLE) {
       clearTimeout(timeoutRef.current);
       setTimeout(() => {
         updateMinesGameState({

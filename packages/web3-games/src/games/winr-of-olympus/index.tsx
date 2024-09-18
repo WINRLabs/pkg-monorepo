@@ -197,10 +197,10 @@ export default function WinrOfOlympusGame({
       });
 
       if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleFreeSpin), 2000);
+        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet), 2000);
     } catch (e: any) {
       if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleFreeSpin, e), 500);
+        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet, e), 500);
       throw new Error(e);
     }
   };

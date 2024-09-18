@@ -87,6 +87,7 @@ export const useSocialAccountTx: MutationHook<
         });
 
         if (status !== 'success') {
+          accountApi?.refreshNonce && accountApi?.refreshNonce();
           throw new Error(status);
         } else {
           log(accountApi?.cachedNonce, 'cached nonce');
