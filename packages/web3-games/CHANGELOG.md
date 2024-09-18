@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.29
+
+### Patch Changes
+
+- 8e11e59: add cooldownDelay option for whell
+- Updated dependencies [8e11e59]
+- Updated dependencies [990c5d5]
+  - @winrlabs/web3-games@11.0.29
+  - @winrlabs/games@3.0.31
+
 ## 11.0.28
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.31
+
+### Patch Changes
+
+- 990c5d5: add controllerrHeader for mines and wheel
+
 ## 3.0.30
 
 ### Patch Changes
