@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.26
+
+### Patch Changes
+
+- 842f4a0: retry logic fixes
+- Updated dependencies [842f4a0]
+  - @winrlabs/games@3.0.28
+  - @winrlabs/web3@0.11.25
+  - @winrlabs/web3-games@11.0.26
+
 ## 11.0.25
 
 ### Patch Changes
