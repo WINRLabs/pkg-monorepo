@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.30
+
+### Patch Changes
+
+- 7ef682d: fixes
+
 ## 3.0.29
 
 ### Patch Changes
