@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.27
+
+### Patch Changes
+
+- 65b3403: fix mines button dissapeaing
+
 ## 3.0.26
 
 ### Patch Changes
