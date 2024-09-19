@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.30
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+- Updated dependencies [99e0199]
+  - @winrlabs/web3@0.11.27
+  - @winrlabs/games@3.0.32
+  - @winrlabs/web3-games@11.0.30
+
 ## 11.0.29
 
 ### Patch Changes

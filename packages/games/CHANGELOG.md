@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.32
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+
 ## 3.0.31
 
 ### Patch Changes

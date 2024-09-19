@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.27
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+
 ## 0.11.26
 
 ### Patch Changes
