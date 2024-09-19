@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.35
+
+### Patch Changes
+
+- 13259e9: up
+- Updated dependencies [13259e9]
+  - @winrlabs/web3@0.11.31
+  - @winrlabs/games@3.0.37
+  - @winrlabs/web3-games@11.0.35
+
 ## 11.0.34
 
 ### Patch Changes
