@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.28
+
+### Patch Changes
+
+- 237a429: add retry count
+
 ## 0.11.27
 
 ### Patch Changes

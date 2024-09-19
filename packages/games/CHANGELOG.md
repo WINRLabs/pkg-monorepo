@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.33
+
+### Patch Changes
+
+- 237a429: add retry count
+
 ## 3.0.32
 
 ### Patch Changes

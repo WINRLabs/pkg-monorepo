@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.31
+
+### Patch Changes
+
+- 237a429: add retry count
+- Updated dependencies [237a429]
+  - @winrlabs/games@3.0.33
+  - @winrlabs/web3@0.11.28
+  - @winrlabs/web3-games@11.0.31
+
 ## 11.0.30
 
 ### Patch Changes
