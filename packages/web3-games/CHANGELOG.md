@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.32
+
+### Patch Changes
+
+- 54a49e1: optional auto bet feature for plinko
+- Updated dependencies [54a49e1]
+  - @winrlabs/web3-games@11.0.32
+  - @winrlabs/games@3.0.34
+
 ## 11.0.31
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.34
+
+### Patch Changes
+
+- 54a49e1: optional auto bet feature for plinko
+
 ## 3.0.33
 
 ### Patch Changes
