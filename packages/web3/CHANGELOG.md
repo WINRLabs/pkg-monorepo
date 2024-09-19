@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.32
+
+### Patch Changes
+
+- d98a518: up
+
 ## 0.11.31
 
 ### Patch Changes
