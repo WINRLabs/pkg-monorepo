@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.35
+
+### Patch Changes
+
+- 20053b1: up
+
 ## 0.11.34
 
 ### Patch Changes
