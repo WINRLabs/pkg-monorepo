@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.42
+
+### Patch Changes
+
+- 648932a: up
+
 ## 3.0.41
 
 ### Patch Changes
