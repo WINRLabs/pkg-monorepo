@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.38
+
+### Patch Changes
+
+- a75bb42: winr of olympus
+
 ## 0.11.37
 
 ### Patch Changes

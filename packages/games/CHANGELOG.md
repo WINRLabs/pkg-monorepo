@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.44
+
+### Patch Changes
+
+- a75bb42: winr of olympus
+
 ## 3.0.43
 
 ### Patch Changes
