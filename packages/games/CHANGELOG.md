@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.45
+
+### Patch Changes
+
+- c20baa5: winr of olympus
+
 ## 3.0.44
 
 ### Patch Changes

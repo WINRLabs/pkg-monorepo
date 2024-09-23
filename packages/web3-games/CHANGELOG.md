@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.43
+
+### Patch Changes
+
+- c20baa5: winr of olympus
+- Updated dependencies [c20baa5]
+  - @winrlabs/games@3.0.45
+  - @winrlabs/web3@0.11.39
+  - @winrlabs/web3-games@11.0.43
+
 ## 11.0.42
 
 ### Patch Changes
