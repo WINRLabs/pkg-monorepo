@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.48
+
+### Patch Changes
+
+- 153c865: olympus typo fixes
+
 ## 3.0.47
 
 ### Patch Changes
