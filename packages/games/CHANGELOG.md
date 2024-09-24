@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.49
+
+### Patch Changes
+
+- 405a12f: add custom row multipliers option to plinko
+
 ## 3.0.48
 
 ### Patch Changes
