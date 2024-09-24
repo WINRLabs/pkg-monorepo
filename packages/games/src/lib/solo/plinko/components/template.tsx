@@ -28,6 +28,13 @@ export type PlinkoTemplateOptions = {
   disableStrategy?: boolean;
   hideTotalWagerInfo?: boolean;
 
+  /**
+   * Row multipliers shown at the buckets.
+   */
+  rowMultipliers?: {
+    [key: number]: number[];
+  };
+
   maxPayout?: {
     label?: string;
     icon?: string;
@@ -168,15 +175,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={props.onLogin}
-            hideWager={options.hideWager}
-            disableAuto={options.disableAuto}
-            disableStrategy={options.disableStrategy}
-            hideTotalWagerInfo={options.hideTotalWagerInfo}
-            maxPayout={options.maxPayout}
-            controllerHeader={options.controllerHeader}
-            hideTabs={options.hideTabs}
-            tokenPrefix={options.tokenPrefix}
-            showBetCount={options.showBetCount}
+            {...props.options}
           />
           <SceneContainer
             className={cn(

@@ -13,6 +13,7 @@ import {
   PlinkoGameResult,
   PlinkoLastBet,
   PlinkoResultActions,
+  PlinkoTemplateOptions,
   usePlinkoGameStore,
 } from '../..';
 import { rowMultipliers } from '../../constants';
@@ -50,6 +51,7 @@ export interface CanvasProps {
   processStrategy: (result: PlinkoGameResult[]) => void;
   onSubmitGameForm: (data: PlinkoFormFields) => void;
   isAutoBetMode: boolean;
+  options: PlinkoTemplateOptions;
 }
 
 export const Canvas: React.FC<CanvasProps> = ({
@@ -60,6 +62,7 @@ export const Canvas: React.FC<CanvasProps> = ({
   processStrategy,
   onSubmitGameForm,
   isAutoBetMode,
+  options,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const isAutoBetModeRef = React.useRef<boolean>();
@@ -87,7 +90,10 @@ export const Canvas: React.FC<CanvasProps> = ({
     if (_ps > 12) return 12;
     else return _ps;
   }, [form]);
-  const multipliers = rowMultipliers[plinkoSize] as number[];
+  const multipliers =
+    options?.rowMultipliers && options.rowMultipliers[plinkoSize]
+      ? options.rowMultipliers[plinkoSize]
+      : (rowMultipliers[plinkoSize] as number[]);
   const [paths, setPaths] = useState<number[][]>([]);
 
   useEffect(() => {

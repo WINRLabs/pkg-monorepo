@@ -33,6 +33,7 @@ export const ManualController: React.FC<Props> = ({
   maxPayout: maxPayoutOptions,
   tokenPrefix,
   showBetCount,
+  rowMultipliers: customRowMultipliers,
 }) => {
   const { dictionary } = useGameOptions();
   const form = useFormContext() as PlinkoForm;
@@ -42,9 +43,8 @@ export const ManualController: React.FC<Props> = ({
   const wager = form.watch('wager');
 
   const maxPayout = React.useMemo(() => {
-    const maxMultiplier = isNaN(rowMultipliers?.[rowSize]?.[0] as number)
-      ? 0
-      : (rowMultipliers?.[rowSize]?.[0] as number);
+    const multipliers = customRowMultipliers?.[rowSize] || rowMultipliers[rowSize];
+    const maxMultiplier = isNaN(multipliers?.[0] as number) ? 0 : (multipliers?.[0] as number);
 
     return toDecimals(wager * maxMultiplier, 2);
   }, [wager, rowSize]);
