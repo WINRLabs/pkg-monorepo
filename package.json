@@ -9,7 +9,8 @@
     "clean": "turbo clean",
     "format": "turbo format",
     "publish-packages": "turbo run build && changeset version && changeset publish",
-    "dev-only-packages": "turbo dev --filter=./packages/*"
+    "dev-only-packages": "turbo dev --filter=./packages/*",
+    "build-only-packages": "turbo build --filter=./packages/*"
   },
   "devDependencies": {
     "@winrlabs/eslint-config": "workspace:*",
