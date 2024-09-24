@@ -6,9 +6,11 @@ import React from 'react';
 import { Unity } from 'react-unity-webgl';
 
 import { UnityGameContainer } from '../../../common/containers';
+import { UnityFullscreenButton } from '../../../common/controller';
 import { useGameOptions } from '../../../game-provider';
 import useMediaQuery from '../../../hooks/use-media-query';
 import { wait } from '../../../utils/promise';
+import { cn } from '../../../utils/style';
 import { toDecimals, toFormatted } from '../../../utils/web3';
 import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods } from '../core/types';
 import { useUnityBonanza } from './hooks/use-bonanza-unity';
@@ -104,6 +106,7 @@ export const WinrBonanzaTemplate = ({
   const [isInAutoPlay, setIsInAutoPlay] = React.useState(false);
   const [initialBuyEvent, setInitialBuyEvent] = React.useState<any>(undefined);
   const [wonFreeSpins, setWonFreeSpins] = React.useState(false);
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
   const percentageRef = React.useRef(0);
 
   const [currentAction, setCurrentAction] = React.useState<
@@ -605,8 +608,20 @@ export const WinrBonanzaTemplate = ({
   }, [isInAutoPlay]);
 
   return (
-    <UnityGameContainer className="wr-flex wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 max-lg:wr-flex-col-reverse lg:wr-h-[672px]">
-      <div className="wr-w-full max-lg:wr-border-b  max-lg:wr-border-zinc-800">
+    <UnityGameContainer
+      className={cn(
+        'wr-flex wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 max-lg:wr-flex-col-reverse lg:wr-h-[672px]',
+        {
+          'wr-fixed wr-z-[60] wr-w-[100dvw] lg:wr-h-[100dvh] wr-bg-black wr-top-0 wr-left-0':
+            isFullscreen,
+        }
+      )}
+    >
+      <div
+        className={cn('wr-w-full max-lg:wr-border-b max-lg:wr-border-zinc-800', {
+          'wr-flex wr-justify-center wr-items-center': isFullscreen,
+        })}
+      >
         {percentageRef.current !== 100 && (
           <div className="wr-absolute wr-left-0 wr-top-0 wr-z-[5] wr-flex wr-h-full wr-w-full wr-flex-col wr-items-center wr-justify-center wr-gap-4">
             <img
@@ -649,7 +664,18 @@ export const WinrBonanzaTemplate = ({
         <Unity
           unityProvider={unityProvider}
           devicePixelRatio={2}
-          className="wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[575px] lg:wr-rounded-md"
+          className={cn(
+            'wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[575px] lg:wr-rounded-md',
+            {
+              'wr-w-auto wr-h-auto wr-max-w-full wr-max-h-full wr-aspect-[1140/670]': isFullscreen,
+            }
+          )}
+        />
+
+        <UnityFullscreenButton
+          isFullscreen={isFullscreen}
+          onChange={setIsFullscreen}
+          className="wr-absolute wr-right-2 wr-top-2"
         />
       </div>
     </UnityGameContainer>
