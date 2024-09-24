@@ -11,8 +11,6 @@ cd my-turborepo
 pnpm build
 ```
 
-test-commit
-
 ### Develop
 
 To develop all apps and packages, run the following command:
