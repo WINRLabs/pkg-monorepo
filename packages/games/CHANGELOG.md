@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.46
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+
 ## 3.0.45
 
 ### Patch Changes

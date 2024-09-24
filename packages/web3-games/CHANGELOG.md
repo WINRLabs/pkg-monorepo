@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.44
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+- Updated dependencies [7da9cc6]
+  - @winrlabs/web3-games@11.0.44
+  - @winrlabs/games@3.0.46
+  - @winrlabs/web3@0.11.40
+
 ## 11.0.43
 
 ### Patch Changes

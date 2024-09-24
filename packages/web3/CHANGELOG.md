@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.40
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+
 ## 0.11.39
 
 ### Patch Changes
