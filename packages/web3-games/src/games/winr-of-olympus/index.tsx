@@ -81,6 +81,8 @@ export default function WinrOfOlympusGame({
 
   const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
+  const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
+  const [previousMultiplier, setPreviousMultiplier] = React.useState<number>(0);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -306,7 +308,10 @@ export default function WinrOfOlympusGame({
     const gameData = gameDataRead.data as any;
 
     if (gameData) {
+      log(gameDataRead.data?.bufferedFreeSpinWinnings, 'bufferedFreeSpinWinnings');
       setPreviousFreeSpinCount(gameData.freeSpinCount);
+      setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
+      setPreviousMultiplier(gameData?.multiplier || 0);
     }
   }, [gameDataRead.data]);
 
@@ -381,6 +386,8 @@ export default function WinrOfOlympusGame({
         freeSpin={handleFreeSpin}
         gameEvent={settledResult as ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
+        previousFreeSpinWinnings={previousFreeSpinWinnings}
+        previousMultiplier={previousMultiplier}
         selectedToken={selectedToken}
         onAutoBetModeChange={onAutoBetModeChange}
       />

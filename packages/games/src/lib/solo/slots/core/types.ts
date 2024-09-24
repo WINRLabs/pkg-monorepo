@@ -28,6 +28,7 @@ export enum Slots_Unity_Methods {
 
 export enum WinrOfOlympus_Unity_Methods {
   ZEUS_ANIMATION_PLAY = 'G_ZeusAnimationPlay',
+  SET_MULTIPLIER = 'M3_SetMultiplier',
 }
 
 export interface ReelSpinSettled {

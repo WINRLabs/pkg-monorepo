@@ -25,6 +25,7 @@ interface TemplateProps {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   previousFreeSpinCount: number;
+  previousFreeSpinWinnings: number;
   gameEvent: ReelSpinSettled;
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
@@ -59,6 +60,7 @@ export const WinrBonanzaTemplate = ({
 
   gameEvent,
   previousFreeSpinCount,
+  previousFreeSpinWinnings,
   buildedGameUrl,
   buildedGameUrlMobile,
 }: TemplateProps) => {
@@ -451,7 +453,12 @@ export const WinrBonanzaTemplate = ({
         window.GetMessageFromUnity = handleMessageFromUnity;
       }
 
-      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetBetValue|${_betAmount}`);
+      if (previousFreeSpinCount > 0)
+        sendMessage(
+          'WebGLHandler',
+          'ReceiveMessage',
+          `M3_SetBetValue|${Math.round(_betAmount / 0.1) * 0.1}`
+        );
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
@@ -564,6 +571,13 @@ export const WinrBonanzaTemplate = ({
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetFreeSpinCount|${freeSpins}`);
     }
   }, [previousFreeSpinCount]);
+
+  React.useEffect(() => {
+    if (previousFreeSpinWinnings > 0 && isLoaded) {
+      setCurrentPayoutAmount(previousFreeSpinWinnings);
+      handleUpdateWinText(previousFreeSpinWinnings.toString());
+    }
+  }, [previousFreeSpinWinnings, isLoaded]);
 
   React.useEffect(() => {
     if (!sendMessage) return;

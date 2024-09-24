@@ -26,6 +26,8 @@ interface TemplateProps {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   previousFreeSpinCount: number;
+  previousFreeSpinWinnings: number;
+  previousMultiplier: number;
   gameEvent: ReelSpinSettled;
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
@@ -61,6 +63,8 @@ export const WinrOfOlympusTemplate = ({
 
   gameEvent,
   previousFreeSpinCount,
+  previousFreeSpinWinnings,
+  previousMultiplier,
   buildedGameUrl,
   buildedGameUrlMobile,
   selectedToken,
@@ -80,6 +84,7 @@ export const WinrOfOlympusTemplate = ({
     handleExitFreespin,
     handleFreespinAmount,
     hideFreeSpinText,
+    handleUpdateMultiplier,
     handleSpinStatus,
   } = useUnityWinrOfOlympus({ buildedGameUrl, buildedGameUrlMobile });
 
@@ -451,7 +456,12 @@ export const WinrOfOlympusTemplate = ({
         window.GetMessageFromUnity = handleMessageFromUnity;
       }
 
-      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetBetValue|${_betAmount}`);
+      if (previousFreeSpinCount > 0)
+        sendMessage(
+          'WebGLHandler',
+          'ReceiveMessage',
+          `M3_SetBetValue|${Math.round(_betAmount / 0.1) * 0.1}`
+        );
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
@@ -570,6 +580,19 @@ export const WinrOfOlympusTemplate = ({
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetFreeSpinCount|${freeSpins}`);
     }
   }, [previousFreeSpinCount]);
+
+  React.useEffect(() => {
+    if (previousFreeSpinWinnings > 0 && isLoaded) {
+      setCurrentPayoutAmount(previousFreeSpinWinnings);
+      handleUpdateWinText(previousFreeSpinWinnings.toString());
+    }
+  }, [previousFreeSpinWinnings, isLoaded]);
+
+  React.useEffect(() => {
+    if (previousMultiplier > 0 && isLoaded) {
+      handleUpdateMultiplier(previousMultiplier.toString());
+    }
+  }, [previousMultiplier, isLoaded]);
 
   React.useEffect(() => {
     if (!sendMessage) return;

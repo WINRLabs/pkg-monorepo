@@ -81,6 +81,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
+  const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -306,6 +307,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
     if (gameData) {
       setPreviousFreeSpinCount(gameData.freeSpinCount);
+      setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
     }
   }, [gameDataRead.data]);
 
@@ -378,6 +380,7 @@ export default function WinrBonanzaTemplateWithWeb3({
         freeSpin={handleFreeSpin}
         gameEvent={settledResult as ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
+        previousFreeSpinWinnings={previousFreeSpinWinnings}
         onAutoBetModeChange={onAutoBetModeChange}
       />
       {!hideBetHistory && (
