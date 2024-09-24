@@ -119,7 +119,7 @@ const gameMap: Record<
     icon: <IconSweetBonanza className="wr-h-4 wr-w-4" />,
   },
   [GameType.WINR_OLYMPUS]: {
-    title: 'WINR Of Olympus',
+    title: 'WINR of Olympus',
     icon: <IconWinrOfOlympus className="wr-h-4 wr-w-4 wr-text-white" />,
   },
 };

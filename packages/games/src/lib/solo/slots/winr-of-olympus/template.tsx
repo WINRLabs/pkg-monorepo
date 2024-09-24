@@ -672,7 +672,7 @@ export const WinrOfOlympusTemplate = ({
               }}
               className="wr-z-50 wr-text-2xl wr-font-bold wr-text-white"
             >
-              WINR Of Olympus
+              WINR of Olympus
             </span>
           </div>
         )}
