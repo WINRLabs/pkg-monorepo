@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.41
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+
 ## 0.11.40
 
 ### Patch Changes

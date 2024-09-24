@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.47
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+
 ## 3.0.46
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 11.0.45
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+- Updated dependencies [87a28d1]
+- Updated dependencies [87a28d1]
+  - @winrlabs/web3-games@11.0.45
+  - @winrlabs/games@3.0.47
+  - @winrlabs/web3@0.11.41
+
 ## 11.0.44
 
 ### Patch Changes
