@@ -21,7 +21,7 @@ import { Badge } from '../use-get-badges';
 
 const log = debug('UsePlayerGameStatus');
 
-const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> = {
+const gameTypeEnvironmentStoreMap: Record<GameType | 'princess_winr', GameTypesEnvironmentStore> = {
   [GameType.BACCARAT]: GameTypesEnvironmentStore.baccarat,
   [GameType.BLACKJACK]: GameTypesEnvironmentStore.blackjackrouter,
   [GameType.COINFLIP]: GameTypesEnvironmentStore.coinflip,
@@ -43,11 +43,12 @@ const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> =
   [GameType.WHEEL]: GameTypesEnvironmentStore.wheel,
   [GameType.WINR_BONANZA]: GameTypesEnvironmentStore.winrbonanza,
   [GameType.WINR_OLYMPUS]: GameTypesEnvironmentStore.gateofolympos,
+  princess_winr: GameTypesEnvironmentStore.princesswinr,
 };
 
 interface IUsePlayerStatusParams {
   gameAddress: Address;
-  gameType: GameType;
+  gameType: GameType | 'princess_winr';
   wagmiConfig: Config;
   onPlayerStatusUpdate?: (d: {
     type: 'levelUp' | 'badgeUp';

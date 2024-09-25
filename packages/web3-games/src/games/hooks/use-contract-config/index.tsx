@@ -31,6 +31,7 @@ export interface GameAddresses {
   singleBlackjackReader: `0x${string}`;
   holdemPoker: `0x${string}`;
   winrOfOlympus: `0x${string}`;
+  princessWinr: `0x${string}`;
 }
 
 interface ContractConfigContext extends ContractConfig {
@@ -61,6 +62,7 @@ const ContractConfigContext = React.createContext<ContractConfigContext>({
     singleBlackjackReader: '0x',
     holdemPoker: '0x',
     winrOfOlympus: '0x',
+    princessWinr: '0x',
   },
   controllerAddress: '0x',
   cashierAddress: '0x',

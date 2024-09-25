@@ -4,6 +4,7 @@ export { default as erc20Abi } from './erc20';
 export { default as errorFactoryAbi } from './errors-factory';
 export { default as holdemPokerAbi } from './holdem-poker';
 export { default as minesAbi } from './mines';
+export { default as princessWinrAbi } from './princess-winr';
 export { default as rankMiddlewareAbi } from './rank-middleware';
 export { default as strategyStoreAbi } from './strategy-store';
 export { default as videoPokerAbi } from './video-poker';
