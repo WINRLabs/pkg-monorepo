@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.51
+
+### Patch Changes
+
+- 2a2f5e3: hide max payout option for wheel
+
 ## 3.0.50
 
 ### Patch Changes
