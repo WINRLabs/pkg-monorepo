@@ -8,12 +8,14 @@ export interface WheelTheme {
   tokenPrefix?: string;
   cursorBackground?: string;
   controllerHeader?: React.ReactNode;
+  hideMaxPayout?: boolean;
 }
 
 const defaultTheme: Partial<WheelTheme> = {
   wheelBackground: `${CDN_URL}/wheel/circle.svg`,
   cursorBackground: `${CDN_URL}/wheel/cursor-wheel.svg`,
   hideWager: false,
+  hideMaxPayout: false,
   tokenPrefix: '$',
   controllerHeader: null,
 };

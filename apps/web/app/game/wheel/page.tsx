@@ -13,6 +13,7 @@ export default function WheelPage() {
             // wheelBackground: '#000',
             // hideWager: true,
             // controllerHeader: <div>D</div>,
+            // hideMaxPayout: true,
           }
         }
       />

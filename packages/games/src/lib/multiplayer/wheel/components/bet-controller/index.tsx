@@ -46,7 +46,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
   ]);
 
   const { dictionary } = useGameOptions();
-  const { hideWager, tokenPrefix, controllerHeader } = useWheelTheme();
+  const { hideWager, tokenPrefix, controllerHeader, hideMaxPayout } = useWheelTheme();
 
   const form = useFormContext() as WheelForm;
 
@@ -165,23 +165,24 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
             )}
           />
         </div>
-
-        <div className="wr-mb-6 lg:!wr-block wr-hidden">
-          <div>
-            <FormLabel>{dictionary.maxPayout}</FormLabel>
-            <div
-              className={cn(
-                'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]'
-              )}
-            >
-              <WagerCurrencyIcon />
-              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
-                {tokenPrefix}
-                {toFormatted(maxPayout, 2)}
-              </span>
+        {!hideMaxPayout && (
+          <div className="wr-mb-6 lg:!wr-block wr-hidden">
+            <div>
+              <FormLabel>{dictionary.maxPayout}</FormLabel>
+              <div
+                className={cn(
+                  'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]'
+                )}
+              >
+                <WagerCurrencyIcon />
+                <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                  {tokenPrefix}
+                  {toFormatted(maxPayout, 2)}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <PreBetButton onLogin={onLogin}>
           <Button
             type="submit"
