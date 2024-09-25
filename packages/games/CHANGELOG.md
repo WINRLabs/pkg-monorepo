@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.50
+
+### Patch Changes
+
+- ac7231b: support forr hideMaxPayout
+
 ## 3.0.49
 
 ### Patch Changes
