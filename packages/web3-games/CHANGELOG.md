@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.50
+
+### Patch Changes
+
+- 465e580: princess winr
+- Updated dependencies [465e580]
+- Updated dependencies [465e580]
+  - @winrlabs/web3-games@11.0.50
+  - @winrlabs/games@3.0.52
+  - @winrlabs/web3@0.11.42
+
 ## 11.0.49
 
 ### Patch Changes

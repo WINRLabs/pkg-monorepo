@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.42
+
+### Patch Changes
+
+- 465e580: princess winr
+
 ## 0.11.41
 
 ### Patch Changes

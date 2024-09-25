@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.52
+
+### Patch Changes
+
+- 465e580: princess winr
+- 465e580: olympus typo fixes
+
 ## 3.0.51
 
 ### Patch Changes
