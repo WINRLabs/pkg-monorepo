@@ -10,6 +10,7 @@ export default function PlinkoPage() {
           scene: {
             backgroundImage: 'url(/plinko.png)',
           },
+          // hideMaxPayout: true,
           // hideWager: true,
           // disableStrategy: true,
           // maxPayout: {

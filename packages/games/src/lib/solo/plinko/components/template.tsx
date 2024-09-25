@@ -27,6 +27,7 @@ export type PlinkoTemplateOptions = {
   disableAuto?: boolean;
   disableStrategy?: boolean;
   hideTotalWagerInfo?: boolean;
+  hideMaxPayout?: boolean;
 
   /**
    * Row multipliers shown at the buckets.

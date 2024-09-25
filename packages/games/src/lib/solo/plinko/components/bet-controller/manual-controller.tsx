@@ -33,6 +33,7 @@ export const ManualController: React.FC<Props> = ({
   maxPayout: maxPayoutOptions,
   tokenPrefix,
   showBetCount,
+  hideMaxPayout,
   rowMultipliers: customRowMultipliers,
 }) => {
   const { dictionary } = useGameOptions();
@@ -60,29 +61,35 @@ export const ManualController: React.FC<Props> = ({
       <PlinkoRowFormField minValue={6} maxValue={12} />
       {showBetCount && <PlinkoBetCountField minValue={1} maxValue={10} />}
 
-      <div className="wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden">
-        <div>
-          <FormLabel>{dictionary.maxPayout}</FormLabel>
-          <div
-            className={cn(
-              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
-            )}
-          >
-            {maxPayoutOptions?.icon ? (
-              <img
-                src={maxPayoutOptions.icon}
-                alt={dictionary.maxPayout}
-                className="wr-mr-1 wr-h-5 wr-w-5"
-              />
-            ) : (
-              <WagerCurrencyIcon />
-            )}
-            <span className={cn('wr-font-semibold wr-text-zinc-100')}>
-              {typeof tokenPrefix !== 'undefined' ? tokenPrefix : '$'}
-              {toFormatted(maxPayout, 2)}
-            </span>
+      <div
+        className={cn('wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden', {
+          'wr-hidden wr-mb-0': hideMaxPayout && hideTotalWagerInfo,
+        })}
+      >
+        {!hideMaxPayout && (
+          <div>
+            <FormLabel>{dictionary.maxPayout}</FormLabel>
+            <div
+              className={cn(
+                'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
+              )}
+            >
+              {maxPayoutOptions?.icon ? (
+                <img
+                  src={maxPayoutOptions.icon}
+                  alt={dictionary.maxPayout}
+                  className="wr-mr-1 wr-h-5 wr-w-5"
+                />
+              ) : (
+                <WagerCurrencyIcon />
+              )}
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                {typeof tokenPrefix !== 'undefined' ? tokenPrefix : '$'}
+                {toFormatted(maxPayout, 2)}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
         {!hideTotalWagerInfo && (
           <div>
             <FormLabel>Total Wager</FormLabel>
