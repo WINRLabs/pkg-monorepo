@@ -44,6 +44,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
+  forceNoRetry?: boolean;
 
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: PlinkoGameResult[]) => void;
@@ -201,7 +202,8 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
 
-      if (isMountedRef.current) {
+      if (isMountedRef.current && !props.forceNoRetry) {
+        // TODO: wtf
         const t = setTimeout(() => handleFail(v), 2000);
         iterationTimeoutRef.current.push(t);
       }
