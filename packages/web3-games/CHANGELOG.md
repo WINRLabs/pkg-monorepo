@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.52
+
+### Patch Changes
+
+- e51fccc: z
+- Updated dependencies [e51fccc]
+  - @winrlabs/web3-games@11.0.52
+  - @winrlabs/web3@0.11.43
+
 ## 11.0.51
 
 ### Patch Changes
