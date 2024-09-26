@@ -221,7 +221,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     log('error', e, e?.code);
     refetchPlayerGameStatus();
 
-    if (e?.code == ErrorCode.DailyLimitExceeded && errCount == 0) {
+    if (e?.code == ErrorCode.DailyLimitExceeded && errCount == 1) {
       // TOOD: allowed errors????
       props.onError && props.onError(e);
       iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
