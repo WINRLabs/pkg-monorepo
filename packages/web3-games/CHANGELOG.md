@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.53
+
+### Patch Changes
+
+- e82eccd: z
+- e82eccd: hot fix
+- Updated dependencies [e82eccd]
+- Updated dependencies [e82eccd]
+  - @winrlabs/web3-games@11.0.53
+  - @winrlabs/web3@0.11.44
+
 ## 11.0.52
 
 ### Patch Changes
