@@ -45,6 +45,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   maxWager?: number;
   hideBetHistory?: boolean;
   forceNoRetry?: boolean;
+  divideWagerByBetCount?: boolean;
 
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: PlinkoGameResult[]) => void;
@@ -122,8 +123,9 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
   }, [plinkoResult]);
 
   const getEncodedTxData = (v: PlinkoFormFields) => {
+    const _wager = props.divideWagerByBetCount ? v.wager / v.betCount : v.wager;
     const { wagerInWei, stopGainInWei, stopLossInWei } = prepareGameTransaction({
-      wager: v.wager,
+      wager: _wager,
       stopGain: v.stopGain,
       stopLoss: v.stopLoss,
       selectedCurrency: selectedToken,
