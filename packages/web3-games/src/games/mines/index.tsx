@@ -58,6 +58,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  onTransactionStatusUpdate?: (type: 'awaiting' | 'received') => void;
   theme?: MinesTheme;
 }
 
@@ -282,7 +283,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
   const onGameSubmit = async (values: MinesFormField, errorCount = 0) => {
     if (selectedTokenAddress.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
-
+    props.onTransactionStatusUpdate && props.onTransactionStatusUpdate('awaiting');
     setIsWaitingResponse(true);
     log(values, 'form values');
 
@@ -385,6 +386,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
 
     // clearIterationTimeout
     clearTimeout(iterationTimeoutRef.current);
+    props.onTransactionStatusUpdate && props.onTransactionStatusUpdate('received');
 
     if (gameData.status === Status.Final) {
       const hasMine = gameData.mines?.some((cell: boolean) => cell === true);
@@ -456,7 +458,6 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
           gameStatus: MINES_GAME_STATUS.IN_PROGRESS,
           board: newBoard,
         });
-
         setIsWaitingResponse(false);
       }
     }
