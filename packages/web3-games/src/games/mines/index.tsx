@@ -354,6 +354,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         checkIsGameIterableAfterTx();
         return;
       }
+
+      if (e?.code == ErrorCode.DailyLimitExceeded && errorCount == 0) {
+        props.onError && props.onError(e);
+        return;
+      }
+
       if (
         (e?.code == ErrorCode.InvalidInputRpcError || e?.code == ErrorCode.FailedOp) &&
         errorCount < 3

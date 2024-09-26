@@ -18,6 +18,7 @@ export enum ErrorCode {
   HttpRequest,
   RpcRequest,
   WebSocketRequest,
+  DailyLimitExceeded,
 
   // Generic errors
   CannotBeZero = 100,
