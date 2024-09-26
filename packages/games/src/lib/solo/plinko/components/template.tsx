@@ -27,6 +27,14 @@ export type PlinkoTemplateOptions = {
   disableAuto?: boolean;
   disableStrategy?: boolean;
   hideTotalWagerInfo?: boolean;
+  hideMaxPayout?: boolean;
+
+  /**
+   * Row multipliers shown at the buckets.
+   */
+  rowMultipliers?: {
+    [key: number]: number[];
+  };
 
   maxPayout?: {
     label?: string;
@@ -40,6 +48,8 @@ export type PlinkoTemplateOptions = {
    * @default '$'
    */
   tokenPrefix?: string;
+
+  showBetCount?: boolean;
 };
 
 type TemplateProps = PlinkoGameProps & {
@@ -48,6 +58,7 @@ type TemplateProps = PlinkoGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: PlinkoFormFields) => void;
   onFormChange?: (fields: PlinkoFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onLogin?: () => void;
 };
 
@@ -67,7 +78,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
       .max(props?.maxWager || 2000, {
         message: `Maximum wager is $${props?.maxWager}`,
       }),
-    betCount: z.number().min(MIN_BET_COUNT, { message: 'Minimum bet count is 0' }),
+    betCount: z.number().min(MIN_BET_COUNT, { message: `Minimum bet count is ${MIN_BET_COUNT}` }),
     stopGain: z.number(),
     stopLoss: z.number(),
     increaseOnWin: z.number(),
@@ -82,7 +93,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
     mode: 'onSubmit',
     defaultValues: {
       wager: 1,
-      betCount: 0,
+      betCount: MIN_BET_COUNT,
       stopGain: 0,
       stopLoss: 0,
       increaseOnWin: 0,
@@ -151,9 +162,13 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
     }
   };
 
+  React.useEffect(() => {
+    props.onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}
@@ -161,14 +176,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={props.onLogin}
-            hideWager={props.options.hideWager}
-            disableAuto={props.options.disableAuto}
-            disableStrategy={props.options.disableStrategy}
-            hideTotalWagerInfo={props.options.hideTotalWagerInfo}
-            maxPayout={props.options.maxPayout}
-            controllerHeader={props.options.controllerHeader}
-            hideTabs={props.options.hideTabs}
-            tokenPrefix={props.options.tokenPrefix}
+            {...props.options}
           />
           <SceneContainer
             className={cn(

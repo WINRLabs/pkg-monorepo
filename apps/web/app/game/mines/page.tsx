@@ -9,11 +9,10 @@ const MinesPage = () => {
       <MinesGame
         maxWager={100}
         minWager={0.01}
-        theme={
-          {
-            // tokenPrefix: '',
-          }
-        }
+        theme={{
+          // tokenPrefix: '',
+          controllerHeader: <div>Custom Header</div>,
+        }}
       />
       <Web3GamesModals />
     </>

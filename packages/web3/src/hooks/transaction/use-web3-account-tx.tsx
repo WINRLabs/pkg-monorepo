@@ -24,7 +24,7 @@ export const useWeb3AccountTx: MutationHook<Web3AccountTxRequest, { status: stri
       customBundlerClient,
       target = '0x0',
       encodedTxData = '0x0',
-      value = 0,
+      value,
       enforceSign = false,
     }) => {
       const client = customBundlerClient || defaultClient;
@@ -59,7 +59,7 @@ export const useWeb3AccountTx: MutationHook<Web3AccountTxRequest, { status: stri
             call: {
               dest: target as Address,
               data: encodedTxData,
-              value: Number(value),
+              value: value ? ((value.toString() + 'n') as any) : '0n',
             },
             owner: userAddress!,
             part: _part,

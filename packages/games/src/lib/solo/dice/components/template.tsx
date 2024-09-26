@@ -31,6 +31,7 @@ type TemplateProps = RangeGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: DiceFormFields) => void;
   onFormChange: (fields: DiceFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (e: any) => void;
   onLogin?: () => void;
 };
@@ -152,9 +153,13 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     }
   };
 
+  React.useEffect(() => {
+    props.onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}

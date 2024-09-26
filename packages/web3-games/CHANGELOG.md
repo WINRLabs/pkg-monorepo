@@ -1,5 +1,263 @@
 # @winrlabs/web3-games
 
+## 11.0.51
+
+### Patch Changes
+
+- 69e7b51: forceNoRetry option for plinko
+- Updated dependencies [69e7b51]
+  - @winrlabs/web3-games@11.0.51
+
+## 11.0.50
+
+### Patch Changes
+
+- 465e580: princess winr
+- Updated dependencies [465e580]
+- Updated dependencies [465e580]
+  - @winrlabs/web3-games@11.0.50
+  - @winrlabs/games@3.0.52
+  - @winrlabs/web3@0.11.42
+
+## 11.0.49
+
+### Patch Changes
+
+- Updated dependencies [2a2f5e3]
+  - @winrlabs/games@3.0.51
+  - @winrlabs/web3-games@11.0.49
+
+## 11.0.48
+
+### Patch Changes
+
+- Updated dependencies [ac7231b]
+  - @winrlabs/games@3.0.50
+  - @winrlabs/web3-games@11.0.48
+
+## 11.0.47
+
+### Patch Changes
+
+- Updated dependencies [405a12f]
+  - @winrlabs/games@3.0.49
+  - @winrlabs/web3-games@11.0.47
+
+## 11.0.46
+
+### Patch Changes
+
+- Updated dependencies [153c865]
+  - @winrlabs/games@3.0.48
+  - @winrlabs/web3-games@11.0.46
+
+## 11.0.45
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+- Updated dependencies [87a28d1]
+- Updated dependencies [87a28d1]
+  - @winrlabs/web3-games@11.0.45
+  - @winrlabs/games@3.0.47
+  - @winrlabs/web3@0.11.41
+
+## 11.0.44
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+- Updated dependencies [7da9cc6]
+  - @winrlabs/web3-games@11.0.44
+  - @winrlabs/games@3.0.46
+  - @winrlabs/web3@0.11.40
+
+## 11.0.43
+
+### Patch Changes
+
+- c20baa5: winr of olympus
+- Updated dependencies [c20baa5]
+  - @winrlabs/games@3.0.45
+  - @winrlabs/web3@0.11.39
+  - @winrlabs/web3-games@11.0.43
+
+## 11.0.42
+
+### Patch Changes
+
+- a75bb42: winr of olympus
+- Updated dependencies [a75bb42]
+  - @winrlabs/games@3.0.44
+  - @winrlabs/web3@0.11.38
+  - @winrlabs/web3-games@11.0.42
+
+## 11.0.41
+
+### Patch Changes
+
+- 337ca6d: up
+- Updated dependencies [337ca6d]
+  - @winrlabs/web3@0.11.37
+  - @winrlabs/games@3.0.43
+  - @winrlabs/web3-games@11.0.41
+
+## 11.0.40
+
+### Patch Changes
+
+- 648932a: up
+- Updated dependencies [648932a]
+  - @winrlabs/web3@0.11.36
+  - @winrlabs/games@3.0.42
+  - @winrlabs/web3-games@11.0.40
+
+## 11.0.39
+
+### Patch Changes
+
+- 20053b1: up
+- Updated dependencies [20053b1]
+  - @winrlabs/web3@0.11.35
+  - @winrlabs/games@3.0.41
+  - @winrlabs/web3-games@11.0.39
+
+## 11.0.38
+
+### Patch Changes
+
+- 4f9775e: up
+- Updated dependencies [4f9775e]
+  - @winrlabs/web3@0.11.34
+  - @winrlabs/games@3.0.40
+  - @winrlabs/web3-games@11.0.38
+
+## 11.0.37
+
+### Patch Changes
+
+- 4862a96: up
+- Updated dependencies [4862a96]
+  - @winrlabs/web3@0.11.33
+  - @winrlabs/games@3.0.39
+  - @winrlabs/web3-games@11.0.37
+
+## 11.0.36
+
+### Patch Changes
+
+- d98a518: up
+- Updated dependencies [d98a518]
+  - @winrlabs/web3@0.11.32
+  - @winrlabs/games@3.0.38
+  - @winrlabs/web3-games@11.0.36
+
+## 11.0.35
+
+### Patch Changes
+
+- 13259e9: up
+- Updated dependencies [13259e9]
+  - @winrlabs/web3@0.11.31
+  - @winrlabs/games@3.0.37
+  - @winrlabs/web3-games@11.0.35
+
+## 11.0.34
+
+### Patch Changes
+
+- 3a53c05: up
+- Updated dependencies [3a53c05]
+  - @winrlabs/web3@0.11.30
+  - @winrlabs/games@3.0.36
+  - @winrlabs/web3-games@11.0.34
+
+## 11.0.33
+
+### Patch Changes
+
+- e1d0dbe: up
+- Updated dependencies [e1d0dbe]
+  - @winrlabs/web3@0.11.29
+  - @winrlabs/games@3.0.35
+  - @winrlabs/web3-games@11.0.33
+
+## 11.0.32
+
+### Patch Changes
+
+- 54a49e1: optional auto bet feature for plinko
+- Updated dependencies [54a49e1]
+  - @winrlabs/web3-games@11.0.32
+  - @winrlabs/games@3.0.34
+
+## 11.0.31
+
+### Patch Changes
+
+- 237a429: add retry count
+- Updated dependencies [237a429]
+  - @winrlabs/games@3.0.33
+  - @winrlabs/web3@0.11.28
+  - @winrlabs/web3-games@11.0.31
+
+## 11.0.30
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+- Updated dependencies [99e0199]
+  - @winrlabs/web3@0.11.27
+  - @winrlabs/games@3.0.32
+  - @winrlabs/web3-games@11.0.30
+
+## 11.0.29
+
+### Patch Changes
+
+- 8e11e59: add cooldownDelay option for whell
+- Updated dependencies [8e11e59]
+- Updated dependencies [990c5d5]
+  - @winrlabs/web3-games@11.0.29
+  - @winrlabs/games@3.0.31
+
+## 11.0.28
+
+### Patch Changes
+
+- 7ef682d: fixes
+- Updated dependencies [7ef682d]
+  - @winrlabs/games@3.0.30
+  - @winrlabs/web3@0.11.26
+  - @winrlabs/web3-games@11.0.28
+
+## 11.0.27
+
+### Patch Changes
+
+- Updated dependencies [b693102]
+  - @winrlabs/games@3.0.29
+  - @winrlabs/web3-games@11.0.27
+
+## 11.0.26
+
+### Patch Changes
+
+- 842f4a0: retry logic fixes
+- Updated dependencies [842f4a0]
+  - @winrlabs/games@3.0.28
+  - @winrlabs/web3@0.11.25
+  - @winrlabs/web3-games@11.0.26
+
+## 11.0.25
+
+### Patch Changes
+
+- Updated dependencies [65b3403]
+  - @winrlabs/games@3.0.27
+  - @winrlabs/web3-games@11.0.25
+
 ## 11.0.24
 
 ### Patch Changes

@@ -47,6 +47,7 @@ export const gameAddresses = {
   singleBlackjackReader: process.env.NEXT_PUBLIC_SINGLE_BLACKJACK_READER_ADDRESS as Address,
   holdemPoker: process.env.NEXT_PUBLIC_HOLDEM_POKER_ADDRESS as Address,
   winrOfOlympus: process.env.NEXT_PUBLIC_WINR_OF_OLYMPUS_ADDRESS as Address,
+  princessWinr: process.env.NEXT_PUBLIC_PRINCESS_WINR_ADDRESS as Address,
 };
 
 export function Providers(props: { children: ReactNode }) {
@@ -103,6 +104,7 @@ export function Providers(props: { children: ReactNode }) {
                 dictionary: {
                   submitBtn: 'Submit',
                   maxPayout: 'Max Reward',
+                  betCount: 'Bet Count',
                 },
                 winAnimationTokenPrefix: '',
                 forceRefund: true,

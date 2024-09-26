@@ -71,7 +71,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const gameEvent = useListenGameEvent();
 
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);
 
   const { selectedToken } = useTokenStore((s) => ({
@@ -81,6 +81,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
   const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
+  const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -168,7 +169,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-  const handleBet = async () => {
+  const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -195,11 +196,15 @@ export default function WinrBonanzaTemplateWithWeb3({
         method: 'sendGameOperation',
       });
 
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet), 2000);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(handleBet), 2000);
+        iterationTimeoutRef.current.push(t);
+      }
     } catch (e: any) {
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleBet, e), 750);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(handleBet, errCount + 1, e), 750);
+        iterationTimeoutRef.current.push(t);
+      }
       throw new Error(e);
     }
   };
@@ -230,7 +235,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     }
   };
 
-  const handleFreeSpin = async () => {
+  const handleFreeSpin = async (errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     // if (!allowance.hasAllowance) {
     //   const handledAllowance = await allowance.handleAllowance({
@@ -252,18 +257,27 @@ export default function WinrBonanzaTemplateWithWeb3({
         method: 'sendGameOperation',
       });
 
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleFreeSpin), 2000);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(handleFreeSpin), 2000);
+        iterationTimeoutRef.current.push(t);
+      }
     } catch (e: any) {
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(handleFreeSpin, e), 500);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(handleFreeSpin, errCount + 1, e), 750);
+        iterationTimeoutRef.current.push(t);
+      }
       throw new Error(e);
     }
   };
 
-  const handleFail = async (submit: () => void, e?: any) => {
+  const handleFail = async (submit: (e?: number) => void, errCount = 0, e?: any) => {
     log('error', e, e?.code);
     refetchPlayerGameStatus();
+
+    if (errCount > 3) {
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      return;
+    }
 
     if (e?.code == ErrorCode.UserRejectedRequest) return;
 
@@ -273,8 +287,8 @@ export default function WinrBonanzaTemplateWithWeb3({
       return;
     }
 
-    log('RETRY GAME CALLED AFTER 500MS');
-    submit();
+    log('RETRY GAME CALLED AFTER 750MS');
+    submit(errCount);
   };
 
   const gameDataRead = useReadContract({
@@ -293,6 +307,7 @@ export default function WinrBonanzaTemplateWithWeb3({
 
     if (gameData) {
       setPreviousFreeSpinCount(gameData.freeSpinCount);
+      setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
     }
   }, [gameDataRead.data]);
 
@@ -304,7 +319,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       const betAmount =
         Number(formatUnits(data.wager, selectedToken.decimals)) * priceFeed[selectedToken.priceKey];
       // clearIterationTimeout
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
       setSettledResult({
         betAmount: betAmount,
         scatterCount: data.result.scatter,
@@ -343,11 +358,13 @@ export default function WinrBonanzaTemplateWithWeb3({
     });
   };
 
+  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+
   React.useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
     };
   }, []);
 
@@ -363,6 +380,8 @@ export default function WinrBonanzaTemplateWithWeb3({
         freeSpin={handleFreeSpin}
         gameEvent={settledResult as ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
+        previousFreeSpinWinnings={previousFreeSpinWinnings}
+        onAutoBetModeChange={onAutoBetModeChange}
       />
       {!hideBetHistory && (
         <BetHistoryTemplate

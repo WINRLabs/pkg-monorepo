@@ -25,6 +25,7 @@ type TemplateProps = LimboGameProps & {
   maxWager?: number;
   onSubmitGameForm: (props: LimboFormField) => void;
   onFormChange?: (fields: LimboFormField) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onLogin?: () => void;
 };
 
@@ -128,9 +129,13 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
     }
   };
 
+  React.useEffect(() => {
+    props.onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             maxWager={props?.maxWager || 2000}

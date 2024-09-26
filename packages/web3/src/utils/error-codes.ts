@@ -234,4 +234,5 @@ export const mmAuthSignErrors = [
   'Account has been destroyed',
   'Session is destroyed. Please create new',
   'Session could not find for owner',
+  'Signature could not verify',
 ];

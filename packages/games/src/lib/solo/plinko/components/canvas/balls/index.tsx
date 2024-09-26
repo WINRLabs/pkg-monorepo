@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-import { useGameSkip } from '../../../../../game-provider';
 import { cn } from '../../../../../utils/style';
 import styles from './balls.module.css';
 

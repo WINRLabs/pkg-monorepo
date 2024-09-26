@@ -367,7 +367,8 @@ export type LeaderboardLuckyWinnerObject = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OF_OLYMPUS';
 };
 
 export type LeaderboardBigWinsObject = {
@@ -460,14 +461,6 @@ export type ReferralRewardEntity = {
    */
   id: string;
   createdAt: number;
-  bankroll: string;
-  client: string;
-  code: string;
-  owner: string;
-  reward: number;
-  rewardInDollar: number;
-  volume: number;
-  tokenAddress: string;
 };
 
 export type ReferralClaimEntity = {
@@ -476,17 +469,6 @@ export type ReferralClaimEntity = {
    */
   id: string;
   createdAt: number;
-  bankroll: string;
-  token: string;
-  recipient: string;
-  /**
-   * @default 0
-   */
-  payin: number;
-  /**
-   * @default 0
-   */
-  payout: number;
 };
 
 export type CodesVolumeAndReward = {

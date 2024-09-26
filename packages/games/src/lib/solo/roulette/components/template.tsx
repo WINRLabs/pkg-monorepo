@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import debug from 'debug';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -24,7 +25,6 @@ import {
 } from '../constants';
 import { RouletteFormFields, RouletteGameProps, RouletteGameResult } from '../types';
 import { MobileController } from './mobile-controller';
-import debug from 'debug';
 
 const log = debug('worker:RouletteTemplate');
 
@@ -33,6 +33,7 @@ type TemplateProps = RouletteGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: RouletteFormFields) => void;
   onFormChange?: (fields: RouletteFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (e: any) => void;
   onLogin?: () => void;
 };
@@ -42,6 +43,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   minWager,
   maxWager,
   onSubmitGameForm,
+  onAutoBetModeChange,
   onFormChange,
   onAnimationCompleted,
   onAnimationSkipped,
@@ -242,9 +244,13 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     }
   };
 
+  React.useEffect(() => {
+    onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(prepareSubmit)}>
+      <form onSubmit={form.handleSubmit((v) => prepareSubmit(v))}>
         <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
           <Roulette.BetController
             isPrepared={isPrepared}

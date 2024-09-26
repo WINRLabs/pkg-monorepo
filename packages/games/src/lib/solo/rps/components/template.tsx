@@ -27,6 +27,7 @@ type TemplateProps = RpsGameProps & {
   maxWager?: number;
   onSubmitGameForm: (data: RpsFormFields) => void;
   onFormChange?: (fields: RpsFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   onError?: (e: any) => void;
   onLogin?: () => void;
@@ -130,9 +131,13 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
     }
   };
 
+  React.useEffect(() => {
+    props.onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             maxWager={props?.maxWager || 2000}

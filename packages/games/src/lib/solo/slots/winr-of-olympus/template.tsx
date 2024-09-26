@@ -7,16 +7,13 @@ import React from 'react';
 import { Unity } from 'react-unity-webgl';
 
 import { UnityGameContainer } from '../../../common/containers';
-import { CDN_URL } from '../../../constants';
+import { UnityFullscreenButton } from '../../../common/controller';
 import { useGameOptions } from '../../../game-provider';
+import useMediaQuery from '../../../hooks/use-media-query';
 import { wait } from '../../../utils/promise';
+import { cn } from '../../../utils/style';
 import { toDecimals, toFormatted } from '../../../utils/web3';
-import {
-  ReelSpinSettled,
-  Slots_Unity_Events,
-  Slots_Unity_Methods,
-  WinrOfOlympus_Unity_Methods,
-} from '../core/types';
+import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods } from '../core/types';
 import { useUnityWinrOfOlympus } from './hooks/use-winr-of-olympus-unity';
 import { useWinrOfOlympusGameStore } from './store';
 import { WinrOfOlympusFormFields } from './types';
@@ -28,8 +25,11 @@ interface TemplateProps {
   freeSpin: () => Promise<void>;
   onError?: (e: any) => void;
   onFormChange: (fields: WinrOfOlympusFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   previousFreeSpinCount: number;
+  previousFreeSpinWinnings: number;
+  previousMultiplier: number;
   gameEvent: ReelSpinSettled;
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
@@ -61,9 +61,12 @@ export const WinrOfOlympusTemplate = ({
   freeSpin,
   onError,
   onFormChange,
+  onAutoBetModeChange,
 
   gameEvent,
   previousFreeSpinCount,
+  previousFreeSpinWinnings,
+  previousMultiplier,
   buildedGameUrl,
   buildedGameUrlMobile,
   selectedToken,
@@ -83,6 +86,7 @@ export const WinrOfOlympusTemplate = ({
     handleExitFreespin,
     handleFreespinAmount,
     hideFreeSpinText,
+    handleUpdateMultiplier,
     handleSpinStatus,
   } = useUnityWinrOfOlympus({ buildedGameUrl, buildedGameUrlMobile });
 
@@ -102,11 +106,13 @@ export const WinrOfOlympusTemplate = ({
   } = useWinrOfOlympusGameStore();
 
   const { account } = useGameOptions();
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const [currentTumbleAmount, setCurrentTumbleAmount] = React.useState(0);
   const [isInAutoPlay, setIsInAutoPlay] = React.useState(false);
   const [initialBuyEvent, setInitialBuyEvent] = React.useState<any>(undefined);
   const [wonFreeSpins, setWonFreeSpins] = React.useState(false);
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
   const percentageRef = React.useRef(0);
 
   const [currentAction, setCurrentAction] = React.useState<
@@ -453,7 +459,12 @@ export const WinrOfOlympusTemplate = ({
         window.GetMessageFromUnity = handleMessageFromUnity;
       }
 
-      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetBetValue|${_betAmount}`);
+      if (previousFreeSpinCount > 0)
+        sendMessage(
+          'WebGLHandler',
+          'ReceiveMessage',
+          `M3_SetBetValue|${Math.round(_betAmount / 0.1) * 0.1}`
+        );
 
       sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
 
@@ -510,19 +521,19 @@ export const WinrOfOlympusTemplate = ({
       setFreeSpins(gameEvent.freeSpinsLeft);
     }
 
-    if (gameEvent?.grid) {
-      const multipliers = [];
-      gameEvent?.grid.forEach((arr) => {
-        arr.forEach((n) => n >= 1000 && multipliers.push(n));
-      });
+    // if (gameEvent?.grid) {
+    //   const multipliers = [];
+    //   gameEvent?.grid.forEach((arr) => {
+    //     arr.forEach((n) => n >= 1000 && multipliers.push(n));
+    //   });
 
-      if (multipliers.length)
-        sendMessage(
-          'WebGLHandler',
-          'ReceiveMessage',
-          WinrOfOlympus_Unity_Methods.ZEUS_ANIMATION_PLAY
-        );
-    }
+    //   if (multipliers.length)
+    //     sendMessage(
+    //       'WebGLHandler',
+    //       'ReceiveMessage',
+    //       WinrOfOlympus_Unity_Methods.ZEUS_ANIMATION_PLAY
+    //     );
+    // }
   }, [gameEvent]);
 
   React.useEffect(() => {
@@ -574,6 +585,19 @@ export const WinrOfOlympusTemplate = ({
   }, [previousFreeSpinCount]);
 
   React.useEffect(() => {
+    if (previousFreeSpinWinnings > 0 && isLoaded) {
+      setCurrentPayoutAmount(previousFreeSpinWinnings);
+      handleUpdateWinText(previousFreeSpinWinnings.toString());
+    }
+  }, [previousFreeSpinWinnings, isLoaded]);
+
+  React.useEffect(() => {
+    if (previousMultiplier > 0 && isLoaded) {
+      handleUpdateMultiplier(previousMultiplier.toString());
+    }
+  }, [previousMultiplier, isLoaded]);
+
+  React.useEffect(() => {
     if (!sendMessage) return;
 
     handleSetBalance(toFormatted(currentBalanceInDollar, 2));
@@ -594,13 +618,29 @@ export const WinrOfOlympusTemplate = ({
     onFormChange(formFields);
   }, [formFields]);
 
+  React.useEffect(() => {
+    onAutoBetModeChange?.(isInAutoPlay);
+  }, [isInAutoPlay]);
+
   return (
-    <UnityGameContainer className="wr-flex wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 max-lg:wr-flex-col-reverse lg:wr-h-[672px]">
-      <div className="wr-w-full max-lg:wr-border-b  max-lg:wr-border-zinc-800">
+    <UnityGameContainer
+      className={cn(
+        'wr-flex wr-overflow-hidden wr-rounded-xl wr-border wr-border-zinc-800 max-lg:wr-flex-col-reverse lg:wr-h-[672px]',
+        {
+          'wr-fixed wr-z-[60] wr-w-[100dvw] lg:wr-h-[100dvh] wr-bg-black wr-top-0 wr-left-0':
+            isFullscreen,
+        }
+      )}
+    >
+      <div
+        className={cn('wr-w-full max-lg:wr-border-b max-lg:wr-border-zinc-800', {
+          'wr-flex wr-justify-center wr-items-center': isFullscreen,
+        })}
+      >
         {percentageRef.current !== 100 && (
           <div className="wr-absolute wr-left-0 wr-top-0 wr-z-[5] wr-flex wr-h-full wr-w-full wr-flex-col wr-items-center wr-justify-center wr-gap-4">
             <img
-              src={`${CDN_URL}/winr-of-olympus/loader.jpg`}
+              src={`${buildedGameUrl + '/loader.jpg'}`}
               className="wr-absolute wr-left-0 wr-top-0 wr-z-[5] wr-h-full wr-w-full wr-rounded-md wr-object-cover"
             />
             <span
@@ -619,7 +659,7 @@ export const WinrOfOlympusTemplate = ({
               value={percentageRef.current}
             >
               <Progress.Indicator
-                className="wr-h-full wr-w-full wr-bg-gradient-to-t wr-from-unity-coinflip-purple-700 wr-to-unity-coinflip-purple-400"
+                className="wr-h-full wr-w-full wr-bg-gradient-to-l wr-from-cyan-400 wr-to-cyan-700"
                 style={{
                   transform: `translateX(-${100 - percentageRef.current}%)`,
                   transition: 'transform 660ms cubic-bezier(0.65, 0, 0.35, 1)',
@@ -632,14 +672,25 @@ export const WinrOfOlympusTemplate = ({
               }}
               className="wr-z-50 wr-text-2xl wr-font-bold wr-text-white"
             >
-              WINR Of Olympus
+              WINR of Olympus
             </span>
           </div>
         )}
         <Unity
           unityProvider={unityProvider}
           devicePixelRatio={2}
-          className="wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[575px] lg:wr-rounded-md"
+          className={cn(
+            'wr-h-full wr-w-full wr-rounded-t-md wr-bg-zinc-900 max-md:wr-h-[575px] lg:wr-rounded-md',
+            {
+              'wr-w-auto wr-h-auto wr-max-w-full wr-max-h-full wr-aspect-[1140/670]': isFullscreen,
+            }
+          )}
+        />
+
+        <UnityFullscreenButton
+          isFullscreen={isFullscreen}
+          onChange={setIsFullscreen}
+          className="wr-absolute wr-right-2 wr-top-2"
         />
       </div>
     </UnityGameContainer>

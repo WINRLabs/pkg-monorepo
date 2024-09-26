@@ -418,7 +418,7 @@ export const UnityFullscreenButton: React.FC<{
       onClick={() => onChange(!isFullscreen)}
       variant="secondary"
       type="button"
-      className={cn('wr-h-9 wr-w-9 wr-p-0 max-lg:wr-hidden', className && className)}
+      className={cn('wr-h-9 wr-w-9 wr-p-0 max-md:wr-hidden', className && className)}
     >
       <img src={`${CDN_URL}/icons/icon-fullscreen.svg`} width={24} height={24} />
     </Button>

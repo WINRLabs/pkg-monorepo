@@ -12,6 +12,30 @@ const log = debug('worker:UseSession');
 
 export type SupportedHours = 1 | 4 | 8 | 12 | 24;
 
+type PermitMessage = {
+  domain: {
+    chainId: number;
+    verifyingContract: Address;
+    name: string;
+    version: string;
+  };
+  types: {
+    Permit: [
+      { name: 'authorizedAddress'; type: 'address' },
+      { name: 'verifyingContract'; type: 'address' },
+      { name: 'nonce'; type: 'uint256' },
+      { name: 'until'; type: 'uint256' },
+    ];
+  };
+  primaryType: 'Permit';
+  message: {
+    verifyingContract: Address;
+    authorizedAddress: Address;
+    nonce: bigint;
+    until: bigint;
+  };
+};
+
 const getHoursInMs = (hours: SupportedHours) => hours * 60 * 60 * 1000;
 
 export interface CreateSessionRequest {
@@ -57,11 +81,26 @@ export const useCreateSession: MutationHook<CreateSessionRequest, { permit: Hex;
 
       log(typedMessage, 'typed message');
 
-      const parsedMessage = superjson.parse<Hex>(typedMessage);
+      const parsedMessage = superjson.parse<PermitMessage>(typedMessage);
+
+      if (
+        !parsedMessage.message ||
+        !parsedMessage.domain ||
+        !parsedMessage.types ||
+        !parsedMessage.message.authorizedAddress
+      ) {
+        throw new Error('Invalid message');
+      }
 
       log(parsedMessage, 'parsed message');
 
-      const userPermission = await walletClient.signTypedData(parsedMessage as any);
+      const userPermission = await walletClient.signTypedData({
+        account: request.signerAddress,
+        types: parsedMessage.types,
+        primaryType: parsedMessage.primaryType,
+        message: parsedMessage.message,
+        domain: parsedMessage.domain,
+      });
 
       log(userPermission, 'user permission');
 

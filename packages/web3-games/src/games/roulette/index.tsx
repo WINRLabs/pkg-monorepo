@@ -100,7 +100,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
   const { priceFeed } = usePriceFeed();
 
   const [rouletteResult, setRouletteResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
@@ -181,7 +181,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const onGameSubmit = async (v: RouletteFormFields) => {
+  const onGameSubmit = async (v: RouletteFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
@@ -203,18 +203,28 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
 
-      if (isMountedRef.current) iterationTimeoutRef.current = setTimeout(() => handleFail(v), 2000);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(v), 2000);
+        iterationTimeoutRef.current.push(t);
+      }
     } catch (e: any) {
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(v, e), 750);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
+        iterationTimeoutRef.current.push(t);
+      }
     }
   };
 
-  const retryGame = async (v: RouletteFormFields) => onGameSubmit(v);
+  const retryGame = async (v: RouletteFormFields, errCount = 0) => onGameSubmit(v, errCount);
 
-  const handleFail = async (v: RouletteFormFields, e?: any) => {
+  const handleFail = async (v: RouletteFormFields, errCount = 0, e?: any) => {
     log('error', e, e?.code);
     refetchPlayerGameStatus();
+
+    if (errCount > 3) {
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      return;
+    }
 
     if (e?.code == ErrorCode.UserRejectedRequest) return;
 
@@ -224,8 +234,8 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
       return;
     }
 
-    log('RETRY GAME CALLED AFTER 500MS');
-    retryGame(v);
+    log('RETRY GAME CALLED AFTER 750MS');
+    retryGame(v, errCount);
   };
 
   React.useEffect(() => {
@@ -237,7 +247,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     ) {
       setRouletteResult(finalResult);
       // clearIterationTimeout
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
 
       const wager = formValues.wager;
       const selectedNumbers = formValues.selectedNumbers;
@@ -306,11 +316,13 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     handleGetBadges({ totalWager, totalPayout });
   };
 
+  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+
   React.useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
 
       clearLiveResults();
     };
@@ -326,6 +338,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
         onFormChange={setFormValues}
         onAnimationStep={onAnimationStep}
         onAnimationSkipped={onAnimationSkipped}
+        onAutoBetModeChange={onAutoBetModeChange}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

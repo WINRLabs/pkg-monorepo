@@ -101,6 +101,8 @@ const MinesBetController: React.FC<MinesBetControllerProps> = (props) => {
             props.onModeChange(v as (typeof MINES_MODES)[keyof typeof MINES_MODES]);
           }}
         >
+          {props.theme?.controllerHeader}
+
           {!props.theme?.hideTabs && (
             <Tabs.List className="wr-flex wr-w-full wr-justify-between wr-items-center wr-gap-2 wr-font-semibold wr-mb-3">
               <Tabs.Trigger

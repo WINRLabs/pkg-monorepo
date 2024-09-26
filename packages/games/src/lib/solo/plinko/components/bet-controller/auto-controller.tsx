@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -37,6 +38,10 @@ export const AutoController = ({
 }: AutoControllerProps) => {
   const form = useFormContext() as PlinkoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+
+  useEffect(() => {
+    form.setValue('betCount', 0);
+  }, []);
 
   return (
     <div className="wr-flex wr-flex-col">

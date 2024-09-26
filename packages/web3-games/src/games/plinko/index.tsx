@@ -11,7 +11,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
   ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
@@ -45,6 +44,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
+  forceNoRetry?: boolean;
 
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: PlinkoGameResult[]) => void;
@@ -68,7 +68,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     });
 
   const [formValues, setFormValues] = useState<PlinkoFormFields>({
-    betCount: 0,
+    betCount: 1,
     stopGain: 0,
     stopLoss: 0,
     increaseOnLoss: 0,
@@ -94,7 +94,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
 
   const [plinkoResult, setPlinkoResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent<number[]>>>();
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
@@ -147,7 +147,13 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
         { name: 'count', type: 'uint8' },
         { name: 'data', type: 'bytes' },
       ],
-      [wagerInWei, stopGainInWei as bigint, stopLossInWei as bigint, 1, encodedChoice]
+      [
+        wagerInWei,
+        stopGainInWei as bigint,
+        stopLossInWei as bigint,
+        formValues.betCount || 1,
+        encodedChoice,
+      ]
     );
 
     return encodeFunctionData({
@@ -174,7 +180,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const onGameSubmit = async (v: PlinkoFormFields) => {
+  const onGameSubmit = async (v: PlinkoFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
@@ -196,18 +202,29 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
 
-      if (isMountedRef.current) iterationTimeoutRef.current = setTimeout(() => handleFail(v), 2000);
+      if (isMountedRef.current && !props.forceNoRetry) {
+        // TODO: wtf
+        const t = setTimeout(() => handleFail(v), 2000);
+        iterationTimeoutRef.current.push(t);
+      }
     } catch (e: any) {
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(v, e), 750);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
+        iterationTimeoutRef.current.push(t);
+      }
     }
   };
 
-  const retryGame = async (v: PlinkoFormFields) => onGameSubmit(v);
+  const retryGame = async (v: PlinkoFormFields, errCount = 0) => onGameSubmit(v, errCount);
 
-  const handleFail = async (v: PlinkoFormFields, e?: any) => {
+  const handleFail = async (v: PlinkoFormFields, errCount = 0, e?: any) => {
     log('error', e, e?.code);
     refetchPlayerGameStatus();
+
+    if (errCount > 3) {
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      return;
+    }
 
     if (e?.code == ErrorCode.UserRejectedRequest) return;
 
@@ -217,8 +234,8 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
       return;
     }
 
-    log('RETRY GAME CALLED AFTER 500MS');
-    retryGame(v);
+    log('RETRY GAME CALLED AFTER 750MS');
+    retryGame(v, errCount);
   };
 
   React.useEffect(() => {
@@ -231,7 +248,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
       setPlinkoResult(finalResult);
 
       // clearIterationTimeout
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
 
       updateGame({
         wager: formValues.wager || 0,
@@ -280,11 +297,13 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     [plinkoResult]
   );
 
+  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+
   React.useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
 
       clearLiveResults();
     };
@@ -299,6 +318,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
         onAnimationCompleted={onGameCompleted}
         onFormChange={setFormValues}
         onAnimationStep={onAnimationStep}
+        onAutoBetModeChange={onAutoBetModeChange}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

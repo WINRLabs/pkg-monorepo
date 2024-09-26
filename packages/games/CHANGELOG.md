@@ -1,5 +1,163 @@
 # @winrlabs/games
 
+## 3.0.52
+
+### Patch Changes
+
+- 465e580: princess winr
+- 465e580: olympus typo fixes
+
+## 3.0.51
+
+### Patch Changes
+
+- 2a2f5e3: hide max payout option for wheel
+
+## 3.0.50
+
+### Patch Changes
+
+- ac7231b: support forr hideMaxPayout
+
+## 3.0.49
+
+### Patch Changes
+
+- 405a12f: add custom row multipliers option to plinko
+
+## 3.0.48
+
+### Patch Changes
+
+- 153c865: olympus typo fixes
+
+## 3.0.47
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+
+## 3.0.46
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+
+## 3.0.45
+
+### Patch Changes
+
+- c20baa5: winr of olympus
+
+## 3.0.44
+
+### Patch Changes
+
+- a75bb42: winr of olympus
+
+## 3.0.43
+
+### Patch Changes
+
+- 337ca6d: up
+
+## 3.0.42
+
+### Patch Changes
+
+- 648932a: up
+
+## 3.0.41
+
+### Patch Changes
+
+- 20053b1: up
+
+## 3.0.40
+
+### Patch Changes
+
+- 4f9775e: up
+
+## 3.0.39
+
+### Patch Changes
+
+- 4862a96: up
+
+## 3.0.38
+
+### Patch Changes
+
+- d98a518: up
+
+## 3.0.37
+
+### Patch Changes
+
+- 13259e9: up
+
+## 3.0.36
+
+### Patch Changes
+
+- 3a53c05: up
+
+## 3.0.35
+
+### Patch Changes
+
+- e1d0dbe: up
+
+## 3.0.34
+
+### Patch Changes
+
+- 54a49e1: optional auto bet feature for plinko
+
+## 3.0.33
+
+### Patch Changes
+
+- 237a429: add retry count
+
+## 3.0.32
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+
+## 3.0.31
+
+### Patch Changes
+
+- 990c5d5: add controllerrHeader for mines and wheel
+
+## 3.0.30
+
+### Patch Changes
+
+- 7ef682d: fixes
+
+## 3.0.29
+
+### Patch Changes
+
+- b693102: mines fix
+
+## 3.0.28
+
+### Patch Changes
+
+- 842f4a0: retry logic fixes
+
+## 3.0.27
+
+### Patch Changes
+
+- 65b3403: fix mines button dissapeaing
+
 ## 3.0.26
 
 ### Patch Changes

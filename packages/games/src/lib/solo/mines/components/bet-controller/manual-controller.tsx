@@ -31,9 +31,10 @@ export const ManualController: React.FC<Props> = ({
   currentMultiplier,
 }) => {
   const form = useFormContext() as MinesForm;
-  const { gameStatus, updateMinesGameState } = useMinesGameStateStore([
+  const { gameStatus, updateMinesGameState, board } = useMinesGameStateStore([
     'gameStatus',
     'updateMinesGameState',
+    'board',
   ]);
   const { account } = useGameOptions();
 
@@ -55,6 +56,10 @@ export const ManualController: React.FC<Props> = ({
 
     return toDecimals(wager * largestMultiplier, 2);
   }, [wager, numMines]);
+
+  const hasSomeMinesRevealed = React.useMemo(() => {
+    return board.some((cell: any) => cell.isSelected && cell.isRevealed);
+  }, [board]);
 
   return (
     <div className="wr-flex wr-flex-col">
@@ -216,7 +221,7 @@ export const ManualController: React.FC<Props> = ({
               >
                 Reveal
               </Button> */}
-            {gameStatus == MINES_GAME_STATUS.IN_PROGRESS && (
+            {gameStatus == MINES_GAME_STATUS.IN_PROGRESS && hasSomeMinesRevealed && (
               <Button
                 type="submit"
                 variant={'success'}

@@ -14,6 +14,7 @@ import {
   NoSignatureFound,
 } from './error';
 import { CreateUserOpRequest, SocialAccountTxRequest } from './types';
+import { ErrorCode } from '../../utils/error-codes';
 
 const log = debug('worker:UseSocialAccount');
 
@@ -87,7 +88,6 @@ export const useSocialAccountTx: MutationHook<
         });
 
         if (status !== 'success') {
-          accountApi?.refreshNonce && accountApi?.refreshNonce();
           throw new Error(status);
         } else {
           log(accountApi?.cachedNonce, 'cached nonce');
@@ -98,6 +98,12 @@ export const useSocialAccountTx: MutationHook<
         return { status, hash };
       } catch (e: any) {
         log('request error', e);
+
+        if (e?.code == ErrorCode.InvalidNonce || e?.code == ErrorCode.FailedOp) {
+          console.log(accountApi?.cachedNonce);
+          accountApi?.refreshNonce && (await accountApi?.refreshNonce());
+          console.log(accountApi?.cachedNonce);
+        }
 
         throw new BundlerRequestError(e.message, e.code);
       }

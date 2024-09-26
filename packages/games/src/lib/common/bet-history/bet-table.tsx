@@ -22,6 +22,7 @@ import {
   IconSweetBonanza,
   IconVideoPoker,
   IconWheel,
+  IconWinrOfOlympus,
   LinkIcon,
 } from '../../svgs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table';
@@ -116,6 +117,10 @@ const gameMap: Record<
   [GameType.WINR_BONANZA]: {
     title: 'WINR Bonanza',
     icon: <IconSweetBonanza className="wr-h-4 wr-w-4" />,
+  },
+  [GameType.WINR_OLYMPUS]: {
+    title: 'WINR of Olympus',
+    icon: <IconWinrOfOlympus className="wr-h-4 wr-w-4 wr-text-white" />,
   },
 };
 

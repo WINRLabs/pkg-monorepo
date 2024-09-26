@@ -32,6 +32,7 @@ type TemplateProps = BaccaratGameProps & {
 
   onSubmitGameForm: (data: BaccaratFormFields) => void;
   onFormChange?: (fields: BaccaratFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   onError?: (e: any) => void;
   onLogin?: () => void;
@@ -45,6 +46,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   baccaratSettledResults,
 
   onAnimationCompleted = () => {},
+  onAutoBetModeChange,
   onSubmitGameForm,
   onFormChange,
   onError,
@@ -280,6 +282,10 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
       return;
     }
   };
+
+  React.useEffect(() => {
+    onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
 
   return (
     <Form {...form}>

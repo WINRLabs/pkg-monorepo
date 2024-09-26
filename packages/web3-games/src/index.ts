@@ -14,6 +14,7 @@ export { default as LimboGame } from './games/limbo';
 export { default as MinesGame } from './games/mines';
 export { default as PlinkoGame } from './games/plinko';
 export { default as Plinko3DGame } from './games/plinko-3d';
+export { default as PrincessWinrGame } from './games/princess-winr';
 export { default as RollGame } from './games/roll';
 export { default as RouletteGame } from './games/roulette';
 export { default as RpsGame } from './games/rps';

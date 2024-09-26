@@ -23,7 +23,7 @@ export const BetCount = ({ className, hasError, containerClassName, ...rest }: P
       >
         <NumberInput.Input
           className={cn(
-            'wr-rounded-none wr-border-none wr-bg-transparent wr-px-0 wr-py-2 wr-text-base wr-font-semibold wr-leading-5 wr-text-white wr-outline-none focus-visible:wr-ring-0 focus-visible:wr-ring-transparent focus-visible:wr-ring-offset-0',
+            'wr-rounded-none wr-border-none wr-bg-transparent wr-py-0 wr-px-0 md:wr-py-2 wr-text-base wr-font-semibold wr-leading-5 wr-text-white wr-outline-none focus-visible:wr-ring-0 focus-visible:wr-ring-transparent focus-visible:wr-ring-offset-0',
             className
           )}
         />

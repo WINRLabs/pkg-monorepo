@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import debug from 'debug';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -15,7 +16,6 @@ import { CoinFlip, CoinFlipFormFields, CoinFlipGameResult } from '..';
 import { CoinSide, MIN_BET_COUNT, WIN_MULTIPLIER } from '../constants';
 import { BetController } from './bet-controller';
 import { CoinFlipGameProps } from './game';
-import debug from 'debug';
 
 const log = debug('worker:CoinFlipTemplate');
 
@@ -32,6 +32,7 @@ type TemplateProps = CoinFlipGameProps & {
   isGettingResult?: boolean;
   onSubmitGameForm: (data: CoinFlipFormFields) => void;
   onFormChange?: (fields: CoinFlipFormFields) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   onError?: (error: any) => void;
   onLogin?: () => void;
@@ -136,9 +137,13 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
     }
   };
 
+  React.useEffect(() => {
+    props.onAutoBetModeChange?.(isAutoBetMode);
+  }, [isAutoBetMode]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(props.onSubmitGameForm)}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}

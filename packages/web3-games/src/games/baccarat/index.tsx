@@ -82,7 +82,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
   const [baccaratResults, setBaccaratResults] = useState<BaccaratGameResult | null>(null);
   const [baccaratSettledResult, setBaccaratSettledResult] =
     React.useState<BaccaratGameSettledResult | null>(null);
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);
 
   const currentAccount = useCurrentAccount();
@@ -164,7 +164,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const onGameSubmit = async (v: BaccaratFormFields, errorCount = 0) => {
+  const onGameSubmit = async (v: BaccaratFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
     if (!allowance.hasAllowance) {
@@ -185,18 +185,28 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
         target: controllerAddress,
       });
-      if (isMountedRef.current) iterationTimeoutRef.current = setTimeout(() => handleFail(v), 2000);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(v), 2000);
+        iterationTimeoutRef.current.push(t);
+      }
     } catch (e: any) {
-      if (isMountedRef.current)
-        iterationTimeoutRef.current = setTimeout(() => handleFail(v, e), 750);
+      if (isMountedRef.current) {
+        const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
+        iterationTimeoutRef.current.push(t);
+      }
     }
   };
 
-  const retryGame = async (v: BaccaratFormFields) => onGameSubmit(v);
+  const retryGame = async (v: BaccaratFormFields, errCount = 0) => onGameSubmit(v, errCount);
 
-  const handleFail = async (v: BaccaratFormFields, e?: any) => {
+  const handleFail = async (v: BaccaratFormFields, errCount = 0, e?: any) => {
     log('error', e, e?.code);
     refetchPlayerGameStatus();
+
+    if (errCount > 3) {
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      return;
+    }
 
     if (e?.code == ErrorCode.UserRejectedRequest) return;
 
@@ -206,8 +216,8 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
       return;
     }
 
-    log('RETRY GAME CALLED AFTER 500MS');
-    retryGame(v);
+    log('RETRY GAME CALLED AFTER 750MS');
+    retryGame(v, errCount);
   };
 
   React.useEffect(() => {
@@ -223,7 +233,8 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
       });
 
       // clearIterationTimeout
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+
       const { wager, tieWager, playerWager, bankerWager } = formValues;
       const totalWager = wager * (tieWager + playerWager + bankerWager);
 
@@ -254,11 +265,13 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     });
   };
 
+  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+
   React.useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
-      clearTimeout(iterationTimeoutRef.current);
+      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
     };
   }, []);
 
@@ -271,6 +284,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
         baccaratSettledResults={baccaratSettledResult}
         onAnimationCompleted={onGameCompleted}
         onFormChange={setFormValues}
+        onAutoBetModeChange={onAutoBetModeChange}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

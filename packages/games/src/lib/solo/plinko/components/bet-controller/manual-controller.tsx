@@ -32,6 +32,9 @@ export const ManualController: React.FC<Props> = ({
   hideTotalWagerInfo,
   maxPayout: maxPayoutOptions,
   tokenPrefix,
+  showBetCount,
+  hideMaxPayout,
+  rowMultipliers: customRowMultipliers,
 }) => {
   const { dictionary } = useGameOptions();
   const form = useFormContext() as PlinkoForm;
@@ -41,41 +44,52 @@ export const ManualController: React.FC<Props> = ({
   const wager = form.watch('wager');
 
   const maxPayout = React.useMemo(() => {
-    const maxMultiplier = isNaN(rowMultipliers?.[rowSize]?.[0] as number)
-      ? 0
-      : (rowMultipliers?.[rowSize]?.[0] as number);
+    const multipliers = customRowMultipliers?.[rowSize] || rowMultipliers[rowSize];
+    const maxMultiplier = isNaN(multipliers?.[0] as number) ? 0 : (multipliers?.[0] as number);
 
     return toDecimals(wager * maxMultiplier, 2);
   }, [wager, rowSize]);
+
+  React.useEffect(() => {
+    form.setValue('betCount', 1);
+  }, []);
 
   return (
     <>
       {!hideWager && <WagerFormField minWager={minWager} maxWager={maxWager} />}
 
       <PlinkoRowFormField minValue={6} maxValue={12} />
-      <div className="wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden">
-        <div>
-          <FormLabel>{dictionary.maxPayout}</FormLabel>
-          <div
-            className={cn(
-              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
-            )}
-          >
-            {maxPayoutOptions?.icon ? (
-              <img
-                src={maxPayoutOptions.icon}
-                alt={dictionary.maxPayout}
-                className="wr-mr-1 wr-h-5 wr-w-5"
-              />
-            ) : (
-              <WagerCurrencyIcon />
-            )}
-            <span className={cn('wr-font-semibold wr-text-zinc-100')}>
-              {typeof tokenPrefix !== 'undefined' ? tokenPrefix : '$'}
-              {toFormatted(maxPayout, 2)}
-            </span>
+      {showBetCount && <PlinkoBetCountField minValue={1} maxValue={10} />}
+
+      <div
+        className={cn('wr-mb-6 wr-grid-cols-2 wr-gap-2 lg:!wr-grid wr-hidden', {
+          'wr-hidden wr-mb-0': hideMaxPayout && hideTotalWagerInfo,
+        })}
+      >
+        {!hideMaxPayout && (
+          <div>
+            <FormLabel>{dictionary.maxPayout}</FormLabel>
+            <div
+              className={cn(
+                'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
+              )}
+            >
+              {maxPayoutOptions?.icon ? (
+                <img
+                  src={maxPayoutOptions.icon}
+                  alt={dictionary.maxPayout}
+                  className="wr-mr-1 wr-h-5 wr-w-5"
+                />
+              ) : (
+                <WagerCurrencyIcon />
+              )}
+              <span className={cn('wr-font-semibold wr-text-zinc-100')}>
+                {typeof tokenPrefix !== 'undefined' ? tokenPrefix : '$'}
+                {toFormatted(maxPayout, 2)}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
         {!hideTotalWagerInfo && (
           <div>
             <FormLabel>Total Wager</FormLabel>
@@ -102,6 +116,51 @@ export const ManualController: React.FC<Props> = ({
         </Button>
       </PreBetButton>
     </>
+  );
+};
+
+export const PlinkoBetCountField: React.FC<{
+  isDisabled?: boolean;
+  minValue?: number;
+  maxValue?: number;
+  className?: string;
+}> = ({ isDisabled, minValue, maxValue, className }) => {
+  const form = useFormContext();
+  const { dictionary } = useGameOptions();
+
+  return (
+    <FormField
+      control={form.control}
+      name="betCount"
+      render={({ field }) => (
+        <FormItem className={cn('wr-mb-3 lg:wr-mb-6', className)}>
+          <FormLabel className="wr-leading-4 lg:wr-leading-6 wr-mb-3 lg:wr-mb-[6px]">
+            {dictionary.betCount}
+          </FormLabel>
+
+          <FormControl>
+            <div>
+              <PlinkoRowInput
+                isDisabled={isDisabled}
+                minValue={minValue}
+                maxValue={maxValue}
+                {...field}
+              />
+              <PlinkoRowSlider
+                disabled={isDisabled}
+                minValue={minValue}
+                maxValue={maxValue}
+                onValueChange={(e: any) => {
+                  form.setValue('betCount', e[0], { shouldValidate: true });
+                }}
+                {...field}
+              />
+            </div>
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 };
 
@@ -205,7 +264,11 @@ const PlinkoRowSlider = ({ ...props }) => {
       value={[props.value]}
       max={props.maxValue}
       onValueChange={(e) => {
-        form.setValue('plinkoSize', e[0], { shouldValidate: true });
+        if (props.onValueChange) {
+          props.onValueChange(e);
+        } else {
+          form.setValue('plinkoSize', e[0], { shouldValidate: true });
+        }
       }}
     >
       <Slider.Track className="wr-relative wr-h-[6px] wr-w-full wr-grow wr-cursor-pointer wr-overflow-hidden wr-rounded-full wr-rounded-tl-md wr-rounded-tr-md wr-bg-zinc-600">

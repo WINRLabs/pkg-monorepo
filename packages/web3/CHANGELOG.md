@@ -1,5 +1,114 @@
 # @winrlabs/web3
 
+## 0.11.42
+
+### Patch Changes
+
+- 465e580: princess winr
+
+## 0.11.41
+
+### Patch Changes
+
+- 87a28d1: slot games fixes
+- 87a28d1: slot games fullscreen feature
+
+## 0.11.40
+
+### Patch Changes
+
+- 7da9cc6: slot games fixes
+
+## 0.11.39
+
+### Patch Changes
+
+- c20baa5: winr of olympus
+
+## 0.11.38
+
+### Patch Changes
+
+- a75bb42: winr of olympus
+
+## 0.11.37
+
+### Patch Changes
+
+- 337ca6d: up
+
+## 0.11.36
+
+### Patch Changes
+
+- 648932a: up
+
+## 0.11.35
+
+### Patch Changes
+
+- 20053b1: up
+
+## 0.11.34
+
+### Patch Changes
+
+- 4f9775e: up
+
+## 0.11.33
+
+### Patch Changes
+
+- 4862a96: up
+
+## 0.11.32
+
+### Patch Changes
+
+- d98a518: up
+
+## 0.11.31
+
+### Patch Changes
+
+- 13259e9: up
+
+## 0.11.30
+
+### Patch Changes
+
+- 3a53c05: up
+
+## 0.11.29
+
+### Patch Changes
+
+- e1d0dbe: up
+
+## 0.11.28
+
+### Patch Changes
+
+- 237a429: add retry count
+
+## 0.11.27
+
+### Patch Changes
+
+- 99e0199: Store session in localstorage
+
+## 0.11.26
+
+### Patch Changes
+
+- 7ef682d: fixes
+
+## 0.11.25
+
+### Patch Changes
+
+- 842f4a0: retry logic fixes
+
 ## 0.11.24
 
 ### Patch Changes

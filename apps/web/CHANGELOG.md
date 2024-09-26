@@ -1,5 +1,259 @@
 # web
 
+## 1.0.212
+
+### Patch Changes
+
+- Updated dependencies [69e7b51]
+  - @winrlabs/web3-games@11.0.51
+
+## 1.0.211
+
+### Patch Changes
+
+- Updated dependencies [465e580]
+- Updated dependencies [465e580]
+  - @winrlabs/web3-games@11.0.50
+  - @winrlabs/games@3.0.52
+  - @winrlabs/web3@0.11.42
+  - @winrlabs/ui@10.0.42
+
+## 1.0.210
+
+### Patch Changes
+
+- Updated dependencies [2a2f5e3]
+  - @winrlabs/games@3.0.51
+  - @winrlabs/web3-games@11.0.49
+
+## 1.0.209
+
+### Patch Changes
+
+- Updated dependencies [ac7231b]
+  - @winrlabs/games@3.0.50
+  - @winrlabs/web3-games@11.0.48
+
+## 1.0.208
+
+### Patch Changes
+
+- Updated dependencies [405a12f]
+  - @winrlabs/games@3.0.49
+  - @winrlabs/web3-games@11.0.47
+
+## 1.0.207
+
+### Patch Changes
+
+- Updated dependencies [153c865]
+  - @winrlabs/games@3.0.48
+  - @winrlabs/web3-games@11.0.46
+
+## 1.0.206
+
+### Patch Changes
+
+- Updated dependencies [87a28d1]
+- Updated dependencies [87a28d1]
+  - @winrlabs/web3-games@11.0.45
+  - @winrlabs/games@3.0.47
+  - @winrlabs/web3@0.11.41
+  - @winrlabs/ui@10.0.41
+
+## 1.0.205
+
+### Patch Changes
+
+- Updated dependencies [7da9cc6]
+  - @winrlabs/web3-games@11.0.44
+  - @winrlabs/games@3.0.46
+  - @winrlabs/web3@0.11.40
+  - @winrlabs/ui@10.0.40
+
+## 1.0.204
+
+### Patch Changes
+
+- Updated dependencies [c20baa5]
+  - @winrlabs/games@3.0.45
+  - @winrlabs/web3@0.11.39
+  - @winrlabs/web3-games@11.0.43
+  - @winrlabs/ui@10.0.39
+
+## 1.0.203
+
+### Patch Changes
+
+- Updated dependencies [a75bb42]
+  - @winrlabs/games@3.0.44
+  - @winrlabs/web3@0.11.38
+  - @winrlabs/web3-games@11.0.42
+  - @winrlabs/ui@10.0.38
+
+## 1.0.202
+
+### Patch Changes
+
+- Updated dependencies [337ca6d]
+  - @winrlabs/web3@0.11.37
+  - @winrlabs/games@3.0.43
+  - @winrlabs/web3-games@11.0.41
+  - @winrlabs/ui@10.0.37
+
+## 1.0.201
+
+### Patch Changes
+
+- Updated dependencies [648932a]
+  - @winrlabs/web3@0.11.36
+  - @winrlabs/games@3.0.42
+  - @winrlabs/web3-games@11.0.40
+  - @winrlabs/ui@10.0.36
+
+## 1.0.200
+
+### Patch Changes
+
+- Updated dependencies [20053b1]
+  - @winrlabs/web3@0.11.35
+  - @winrlabs/games@3.0.41
+  - @winrlabs/web3-games@11.0.39
+  - @winrlabs/ui@10.0.35
+
+## 1.0.199
+
+### Patch Changes
+
+- Updated dependencies [4f9775e]
+  - @winrlabs/web3@0.11.34
+  - @winrlabs/games@3.0.40
+  - @winrlabs/web3-games@11.0.38
+  - @winrlabs/ui@10.0.34
+
+## 1.0.198
+
+### Patch Changes
+
+- Updated dependencies [4862a96]
+  - @winrlabs/web3@0.11.33
+  - @winrlabs/games@3.0.39
+  - @winrlabs/web3-games@11.0.37
+  - @winrlabs/ui@10.0.33
+
+## 1.0.197
+
+### Patch Changes
+
+- Updated dependencies [d98a518]
+  - @winrlabs/web3@0.11.32
+  - @winrlabs/games@3.0.38
+  - @winrlabs/web3-games@11.0.36
+  - @winrlabs/ui@10.0.32
+
+## 1.0.196
+
+### Patch Changes
+
+- Updated dependencies [13259e9]
+  - @winrlabs/web3@0.11.31
+  - @winrlabs/games@3.0.37
+  - @winrlabs/web3-games@11.0.35
+  - @winrlabs/ui@10.0.31
+
+## 1.0.195
+
+### Patch Changes
+
+- Updated dependencies [3a53c05]
+  - @winrlabs/web3@0.11.30
+  - @winrlabs/games@3.0.36
+  - @winrlabs/web3-games@11.0.34
+  - @winrlabs/ui@10.0.30
+
+## 1.0.194
+
+### Patch Changes
+
+- Updated dependencies [e1d0dbe]
+  - @winrlabs/web3@0.11.29
+  - @winrlabs/games@3.0.35
+  - @winrlabs/web3-games@11.0.33
+  - @winrlabs/ui@10.0.29
+
+## 1.0.193
+
+### Patch Changes
+
+- Updated dependencies [54a49e1]
+  - @winrlabs/web3-games@11.0.32
+  - @winrlabs/games@3.0.34
+
+## 1.0.192
+
+### Patch Changes
+
+- Updated dependencies [237a429]
+  - @winrlabs/games@3.0.33
+  - @winrlabs/web3@0.11.28
+  - @winrlabs/web3-games@11.0.31
+  - @winrlabs/ui@10.0.28
+
+## 1.0.191
+
+### Patch Changes
+
+- Updated dependencies [99e0199]
+  - @winrlabs/web3@0.11.27
+  - @winrlabs/games@3.0.32
+  - @winrlabs/web3-games@11.0.30
+  - @winrlabs/ui@10.0.27
+
+## 1.0.190
+
+### Patch Changes
+
+- Updated dependencies [8e11e59]
+- Updated dependencies [990c5d5]
+  - @winrlabs/web3-games@11.0.29
+  - @winrlabs/games@3.0.31
+
+## 1.0.189
+
+### Patch Changes
+
+- Updated dependencies [7ef682d]
+  - @winrlabs/games@3.0.30
+  - @winrlabs/web3@0.11.26
+  - @winrlabs/web3-games@11.0.28
+  - @winrlabs/ui@10.0.26
+
+## 1.0.188
+
+### Patch Changes
+
+- Updated dependencies [b693102]
+  - @winrlabs/games@3.0.29
+  - @winrlabs/web3-games@11.0.27
+
+## 1.0.187
+
+### Patch Changes
+
+- Updated dependencies [842f4a0]
+  - @winrlabs/games@3.0.28
+  - @winrlabs/web3@0.11.25
+  - @winrlabs/web3-games@11.0.26
+  - @winrlabs/ui@10.0.25
+
+## 1.0.186
+
+### Patch Changes
+
+- Updated dependencies [65b3403]
+  - @winrlabs/games@3.0.27
+  - @winrlabs/web3-games@11.0.25
+
 ## 1.0.185
 
 ### Patch Changes

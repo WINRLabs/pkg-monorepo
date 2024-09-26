@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { useUnityContext } from 'react-unity-webgl';
 
 import { useEqualizeUnitySound } from '../../../../hooks/use-unity-sound';
-import { Slots_Unity_Methods } from '../../core/types';
+import { Slots_Unity_Methods, WinrOfOlympus_Unity_Methods } from '../../core/types';
 import { useWinrOfOlympusGameStore } from '../store';
 
 interface UseUnityWinrOfOlympusParams {
@@ -124,6 +124,19 @@ export const useUnityWinrOfOlympus = ({
     [sendMessage]
   );
 
+  const handleUpdateMultiplier = React.useCallback(
+    (multiplier: string) => {
+      if (!sendMessage) return;
+
+      sendMessage(
+        'WebGLHandler',
+        'ReceiveMessage',
+        `${WinrOfOlympus_Unity_Methods.SET_MULTIPLIER}|${multiplier}`
+      );
+    },
+    [sendMessage]
+  );
+
   const handleFreespinAmount = React.useCallback(
     (amount: number) => {
       if (!sendMessage) return;
@@ -193,6 +206,7 @@ export const useUnityWinrOfOlympus = ({
     handleExitFreespin,
     handleSpinStatus,
     handleFreespinAmount,
+    handleUpdateMultiplier,
     hideFreeSpinText,
     addEventListener,
     removeEventListener,

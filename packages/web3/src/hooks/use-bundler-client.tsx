@@ -75,7 +75,7 @@ export type BundlerMethods = {
   };
 
   'permitTypedMessage'(params: { owner: Address }): {
-    typedMessage: Hex;
+    typedMessage: string;
   };
 
   'reIterate'(params: { game: string; player: Address }): {

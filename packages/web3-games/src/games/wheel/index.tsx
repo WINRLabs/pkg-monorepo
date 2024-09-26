@@ -54,6 +54,10 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
+  /**
+   * @default 0
+   */
+  cooldownTimeDelay?: number;
 
   onAnimationCompleted?: (result: CoinFlipGameResult[]) => void;
   onPlayerStatusUpdate?: (d: {
@@ -293,7 +297,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       status,
       joiningFinish,
       joiningStart,
-      cooldownFinish: cooldownFinish,
+      cooldownFinish: cooldownFinish + (props.cooldownTimeDelay || 0),
       winnerColor: result as unknown as WheelColor,
       winnerAngle: Number(angle) / 100000 / ANGLE_SCALE,
     });

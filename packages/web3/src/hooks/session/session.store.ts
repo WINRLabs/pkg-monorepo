@@ -19,7 +19,6 @@ export const useSessionStore = create<SessionState>()(
     }),
     {
       name: 'session-store',
-      partialize: (state) => ({ part: state.part }),
     }
   )
 );

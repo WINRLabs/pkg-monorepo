@@ -26,6 +26,7 @@ export interface GameDictionary {
   maxPayout?: string;
   betToStart?: string;
   betToStartDescription?: string;
+  betCount?: string;
 }
 
 interface GameContextProps {
@@ -76,6 +77,7 @@ const defaultDictionary: GameDictionary = {
   maxPayout: 'Max Payout',
   betToStart: 'Bet to Start',
   betToStartDescription: 'The game will start after someone places a bet',
+  betCount: 'Bet Count',
 };
 
 const GameContext = createContext<

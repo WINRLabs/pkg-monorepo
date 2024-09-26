@@ -24,4 +24,5 @@ export enum GameTypesEnvironmentStore {
   rockpaperscissor = 'rockpaperscissor',
   singleblackjackrouter = 'singleblackjackrouter',
   gateofolympos = 'gateofolympos',
+  princesswinr = 'princesswinr',
 }
