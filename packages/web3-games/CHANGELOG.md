@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 11.0.51
+
+### Patch Changes
+
+- 69e7b51: forceNoRetry option for plinko
+- Updated dependencies [69e7b51]
+  - @winrlabs/web3-games@11.0.51
+
 ## 11.0.50
 
 ### Patch Changes
