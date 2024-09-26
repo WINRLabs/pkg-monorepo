@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.43
+
+### Patch Changes
+
+- e51fccc: z
+
 ## 0.11.42
 
 ### Patch Changes
