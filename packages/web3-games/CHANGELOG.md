@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 11.0.54
+
+### Patch Changes
+
+- df02d0d: update
+- Updated dependencies [df02d0d]
+  - @winrlabs/web3-games@11.0.54
+
 ## 11.0.53
 
 ### Patch Changes
