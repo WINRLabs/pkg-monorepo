@@ -41,7 +41,9 @@ export type GameResultDto = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   /**
    * @default 0
    */
@@ -150,7 +152,9 @@ export type LiveWinsDto = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   player: string;
   username: string | null;
   id: string;
@@ -182,7 +186,9 @@ export type BigWinsDto = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   player: string;
   username: string | null;
   id: string;
@@ -214,7 +220,9 @@ export type LuckyWinsDto = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   player: string;
   username: string | null;
   id: string;
@@ -368,7 +376,8 @@ export type LeaderboardLuckyWinnerObject = {
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
     | 'ONE_HAND_BLACKJACK'
-    | 'WINR_OF_OLYMPUS';
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
 };
 
 export type LeaderboardBigWinsObject = {
@@ -396,7 +405,9 @@ export type LeaderboardBigWinsObject = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   level: number;
 };
 
@@ -455,20 +466,31 @@ export type PoolOutput = {
   amount: VaultAmountOutput;
 };
 
-export type ReferralRewardEntity = {
-  /**
-   * UUIDv4
-   */
-  id: string;
-  createdAt: number;
+export type ReferralRewardResponse = {
+  createdAt: string;
+  bankroll: string;
+  client: string;
+  code: string;
+  owner: string;
+  reward: number;
+  rewardInDollar: number;
+  volume: number;
+  tokenAddress: string;
 };
 
-export type ReferralClaimEntity = {
-  /**
-   * UUIDv4
-   */
-  id: string;
+export type ReferralClaimResponse = {
   createdAt: number;
+  bankroll: string;
+  token: string;
+  recipient: string;
+  /**
+   * @default 0
+   */
+  payin: number;
+  /**
+   * @default 0
+   */
+  payout: number;
 };
 
 export type CodesVolumeAndReward = {

@@ -57,7 +57,7 @@ export default function PrincessWinrGame({
   const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.princessWinr,
-      gameType: 'princess_winr',
+      gameType: GameType.WINR_PRINCESS,
       wagmiConfig,
       onPlayerStatusUpdate,
     });
@@ -340,7 +340,7 @@ export default function PrincessWinrGame({
 
   const { betHistory, isHistoryLoading, mapHistoryTokens, setHistoryFilter, refetchHistory } =
     useBetHistory({
-      gameType: GameType.WINR_OLYMPUS,
+      gameType: GameType.WINR_PRINCESS,
       options: {
         enabled: !hideBetHistory,
       },

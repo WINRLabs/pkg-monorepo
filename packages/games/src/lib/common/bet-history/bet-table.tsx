@@ -23,6 +23,7 @@ import {
   IconVideoPoker,
   IconWheel,
   IconWinrOfOlympus,
+  IconWinrPrincess,
   LinkIcon,
 } from '../../svgs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table';
@@ -122,6 +123,10 @@ const gameMap: Record<
     title: 'WINR of Olympus',
     icon: <IconWinrOfOlympus className="wr-h-4 wr-w-4 wr-text-white" />,
   },
+  [GameType.WINR_PRINCESS]: {
+    title: 'WINR Princess',
+    icon: <IconWinrPrincess className="wr-h-4 wr-w-4 wr-text-white" />,
+  },
 };
 
 const BetTable = ({
@@ -203,8 +208,8 @@ const BetTable = ({
                     </TableCell>
                     <TableCell className="wr-text-center lg:wr-text-left wr-table-cell">
                       <div className="wr-flex wr-items-center wr-gap-2 md:wr-justify-normal wr-justify-center">
-                        {gameMap[bet.game].icon}
-                        {gameMap[bet.game].title}
+                        {gameMap[bet.game]?.icon}
+                        {gameMap[bet.game]?.title}
                       </div>
                     </TableCell>
                     <TableCell className="wr-text-center lg:wr-text-left">

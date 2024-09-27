@@ -111,7 +111,9 @@ export type GameControllerBetHistoryQueryParams = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   player?: string;
   /**
    * @minimum 1
@@ -425,7 +427,9 @@ export type GameControllerGetMultiplayerGameHistoryQueryParams = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
 };
 
 export type GameControllerGetMultiplayerGameHistoryError = Fetcher.ErrorWrapper<undefined>;
@@ -836,7 +840,9 @@ export type GameControllerGetWagerInfoQueryParams = {
     | 'BLACKJACK'
     | 'HOLDEM_POKER'
     | 'WINR_BONANZA'
-    | 'ONE_HAND_BLACKJACK';
+    | 'ONE_HAND_BLACKJACK'
+    | 'WINR_OLYMPUS'
+    | 'WINR_PRINCESS';
   bankroll: string;
 };
 
@@ -1583,7 +1589,7 @@ export type ReferralControllerGetReferralHistoryByPlayerQueryParams = {
 export type ReferralControllerGetReferralHistoryByPlayerError = Fetcher.ErrorWrapper<undefined>;
 
 export type ReferralControllerGetReferralHistoryByPlayerResponse = Schemas.PaginatedResonse & {
-  data?: Schemas.ReferralRewardEntity[];
+  data?: Schemas.ReferralRewardResponse[];
 };
 
 export type ReferralControllerGetReferralHistoryByPlayerVariables = {
@@ -1660,7 +1666,7 @@ export type ReferralControllerRewardsDistributionHistoryQueryParams = {
 export type ReferralControllerRewardsDistributionHistoryError = Fetcher.ErrorWrapper<undefined>;
 
 export type ReferralControllerRewardsDistributionHistoryResponse = Schemas.PaginatedResonse & {
-  data?: Schemas.ReferralClaimEntity[];
+  data?: Schemas.ReferralClaimResponse[];
 };
 
 export type ReferralControllerRewardsDistributionHistoryVariables = {

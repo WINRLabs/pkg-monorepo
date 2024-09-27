@@ -87,6 +87,7 @@ export { default as IconWallet } from './IconWallet';
 export { default as IconWarning } from './IconWarning';
 export { default as IconWheel } from './IconWheel';
 export { default as IconWinrOfOlympus } from './IconWinrOfOlympus';
+export { default as IconWinrPrincess } from './IconWinrPrincess';
 export { default as InstagramLogo } from './InstagramLogo';
 export { default as JbPokerLogo } from './JbPokerLogo';
 export { default as KenoIcon } from './KenoIcon';
