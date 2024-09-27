@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.45
+
+### Patch Changes
+
+- Updated dependencies [2a73e03]
+  - @winrlabs/api@1.4.2
+
 ## 0.11.44
 
 ### Patch Changes

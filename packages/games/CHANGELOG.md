@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.53
+
+### Patch Changes
+
+- 2a73e03: winr princess history
+
 ## 3.0.52
 
 ### Patch Changes

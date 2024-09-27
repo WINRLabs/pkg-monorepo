@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.4.2
+
+### Patch Changes
+
+- 2a73e03: winr princess history
+
 ## 1.4.1
 
 ### Patch Changes

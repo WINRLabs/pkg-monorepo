@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.55
+
+### Patch Changes
+
+- 2a73e03: winr princess history
+- Updated dependencies [2a73e03]
+  - @winrlabs/web3-games@11.0.55
+  - @winrlabs/games@3.0.53
+  - @winrlabs/api@1.4.2
+  - @winrlabs/web3@0.11.45
+
 ## 11.0.54
 
 ### Patch Changes
