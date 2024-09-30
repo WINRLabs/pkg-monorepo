@@ -170,7 +170,9 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
             onLogin={props.onLogin}
           />
           <SceneContainer
-            className={cn('wr-h-[640px]  max-md:wr-h-auto max-md:wr-pt-[130px] lg:wr-py-12')}
+            className={cn(
+              'wr-h-[640px] wr-bg-zinc-900 wr-bg-opacity-70 wr-border-none max-md:wr-h-auto max-md:wr-pt-[130px] lg:wr-py-12'
+            )}
           >
             <Dice.Game
               {...props}
