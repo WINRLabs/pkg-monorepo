@@ -42,6 +42,8 @@ export type PlinkoTemplateOptions = {
   };
 
   controllerHeader?: React.ReactNode;
+  controllerFooter?: React.ReactNode;
+
   hideTabs?: boolean;
 
   /**

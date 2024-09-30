@@ -25,7 +25,7 @@ export const BetController: React.FC<Props> = (props) => {
   return (
     <BetControllerContainer className="wr-z-30">
       <div className="wr-max-lg:flex wr-max-lg:flex-col">
-        {props.controllerHeader}
+        {props?.controllerHeader}
         {!props.hideTabs ? (
           <Tabs.Root
             defaultValue="manual"
@@ -70,6 +70,7 @@ export const BetController: React.FC<Props> = (props) => {
       </div>
       <footer className="wr-flex wr-items-center wr-justify-between lg:wr-mt-4">
         <AudioController />
+        {props.controllerFooter}
       </footer>
     </BetControllerContainer>
   );

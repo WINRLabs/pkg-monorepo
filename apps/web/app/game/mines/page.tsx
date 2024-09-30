@@ -12,6 +12,7 @@ const MinesPage = () => {
         theme={{
           // tokenPrefix: '',
           controllerHeader: <div>Custom Header</div>,
+          // controllerFooter: <div>Custom Footer</div>,
         }}
       />
       <Web3GamesModals />

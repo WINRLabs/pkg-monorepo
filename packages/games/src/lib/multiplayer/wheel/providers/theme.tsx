@@ -9,6 +9,7 @@ export interface WheelTheme {
   cursorBackground?: string;
   controllerHeader?: React.ReactNode;
   hideMaxPayout?: boolean;
+  controllerFooter?: React.ReactNode;
 }
 
 const defaultTheme: Partial<WheelTheme> = {
@@ -18,6 +19,7 @@ const defaultTheme: Partial<WheelTheme> = {
   hideMaxPayout: false,
   tokenPrefix: '$',
   controllerHeader: null,
+  controllerFooter: null,
 };
 
 const WheelThemeContext = createContext<Partial<WheelTheme>>(defaultTheme);

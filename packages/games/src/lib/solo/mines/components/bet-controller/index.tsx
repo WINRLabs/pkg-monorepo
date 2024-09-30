@@ -138,6 +138,7 @@ const MinesBetController: React.FC<MinesBetControllerProps> = (props) => {
       </div>
       <footer className="wr-flex wr-items-center wr-justify-between lg:wr-mt-4">
         <AudioController />
+        {props.theme?.controllerFooter}
       </footer>
     </BetControllerContainer>
   );

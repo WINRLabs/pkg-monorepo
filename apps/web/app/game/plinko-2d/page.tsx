@@ -10,6 +10,7 @@ export default function PlinkoPage() {
           scene: {
             backgroundImage: 'url(/plinko.png)',
           },
+          controllerFooter: <div>Custom Footer</div>,
           // hideMaxPayout: true,
           // hideWager: true,
           // disableStrategy: true,

@@ -10,6 +10,7 @@ export interface MinesTheme {
   tokenPrefix?: string;
   hideTabs?: boolean;
   controllerHeader?: React.ReactNode;
+  controllerFooter?: React.ReactNode;
 }
 
 const defaultTheme: Partial<MinesTheme> = {
@@ -19,6 +20,7 @@ const defaultTheme: Partial<MinesTheme> = {
   tokenPrefix: '$',
   hideTabs: false,
   controllerHeader: null,
+  controllerFooter: null,
 };
 
 const MinesThemeContext = createContext<Partial<MinesTheme>>(defaultTheme);

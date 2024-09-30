@@ -46,7 +46,8 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
   ]);
 
   const { dictionary } = useGameOptions();
-  const { hideWager, tokenPrefix, controllerHeader, hideMaxPayout } = useWheelTheme();
+  const { hideWager, tokenPrefix, controllerHeader, hideMaxPayout, controllerFooter } =
+    useWheelTheme();
 
   const form = useFormContext() as WheelForm;
 
@@ -211,6 +212,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
       </div>
       <footer className="wr-flex wr-items-center wr-justify-between">
         <AudioController />
+        {controllerFooter}
       </footer>
     </BetControllerContainer>
   );
