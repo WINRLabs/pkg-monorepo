@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.54
+
+### Patch Changes
+
+- 8462216: dice bg update
+
 ## 3.0.53
 
 ### Patch Changes
