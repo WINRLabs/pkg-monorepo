@@ -27,6 +27,7 @@ export interface GameDictionary {
   betToStart?: string;
   betToStartDescription?: string;
   betCount?: string;
+  gems?: string;
 }
 
 interface GameContextProps {
