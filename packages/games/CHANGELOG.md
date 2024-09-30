@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.55
+
+### Patch Changes
+
+- 7cd93a2: controller footer option for wheel, mines and plinko
+- 61fd454: add gems to dictionary
+
 ## 3.0.54
 
 ### Patch Changes

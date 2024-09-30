@@ -1,5 +1,14 @@
 # web
 
+## 1.0.218
+
+### Patch Changes
+
+- Updated dependencies [7cd93a2]
+- Updated dependencies [61fd454]
+  - @winrlabs/games@3.0.55
+  - @winrlabs/web3-games@11.0.57
+
 ## 1.0.217
 
 ### Patch Changes
