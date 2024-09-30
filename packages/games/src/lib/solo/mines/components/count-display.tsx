@@ -1,11 +1,13 @@
 import { useFormContext } from 'react-hook-form';
 
 import { CDN_URL } from '../../../constants';
+import { useGameOptions } from '../../../game-provider';
 import { useMinesTheme } from '../provider/theme';
 
 const MinesCountDisplay: React.FC = () => {
   const form = useFormContext();
   const theme = useMinesTheme();
+  const { dictionary } = useGameOptions();
 
   const minesCount = form.watch('minesCount');
 
@@ -30,7 +32,7 @@ const MinesCountDisplay: React.FC = () => {
         />
       </div>
       <div className="wr-relative wr-flex wr-h-[100px] wr-flex-col wr-items-start wr-justify-between wr-rounded-lg wr-border wr-border-zinc-800 wr-p-3 wr-overflow-hidden">
-        <p className="wr-text-lg wr-font-semibold wr-text-white wr-z-10">GEMS</p>
+        <p className="wr-text-lg wr-font-semibold wr-text-white wr-z-10">{dictionary.gems}</p>
         <div className="wr-flex wr-h-9 wr-w-9 wr-items-center wr-justify-center wr-rounded-[8px] wr-bg-green-500 wr-text-zinc-100 wr-z-10">
           <span className="wr-text-base wr-font-semibold">{25 - minesCount}</span>
         </div>
