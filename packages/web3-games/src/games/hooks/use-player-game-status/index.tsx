@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import debug from 'debug';
 import React from 'react';
 import { Address } from 'viem';
-import { Config, useReadContract } from 'wagmi';
+import { Config, useReadContracts } from 'wagmi';
 
 import { GameTypesEnvironmentStore } from '../../../type';
 import { useContractConfigContext } from '../use-contract-config';
@@ -82,84 +82,78 @@ export const usePlayerGameStatus = ({
 
   const { baseUrl } = useApiOptions();
 
-  // Reads
-  const playerLevelStatusRead = useReadContract({
+  const {
+    data: gameStatus,
+    dataUpdatedAt,
+    refetch,
+  } = useReadContracts({
+    contracts: [
+      {
+        abi: rankMiddlewareAbi,
+        address: rankMiddlewareAddress,
+        functionName: 'getPlayerStatus',
+        args: [currentAccount.address || '0x'],
+      },
+      {
+        abi: controllerAbi,
+        address: controllerAddress,
+        functionName: 'getSessionByClient',
+        args: [gameAddress, currentAccount.address || '0x'],
+      },
+      {
+        abi: controllerAbi,
+        address: controllerAddress,
+        functionName: 'refundCooldown',
+        args: [],
+      },
+      {
+        abi: controllerAbi,
+        address: controllerAddress,
+        functionName: 'reIterationCooldown',
+        args: [],
+      },
+    ],
     config: wagmiConfig,
-    abi: rankMiddlewareAbi,
-    address: rankMiddlewareAddress,
-    account: currentAccount.address,
-    functionName: 'getPlayerStatus',
-    args: [currentAccount.address || '0x'],
+    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    batchSize: 0,
+    allowFailure: false,
     query: {
       enabled: !!currentAccount.address,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
-    },
-  });
-
-  const sessionRead = useReadContract({
-    config: wagmiConfig,
-    abi: controllerAbi,
-    address: controllerAddress,
-    functionName: 'getSessionByClient',
-    args: [gameAddress, currentAccount.address || '0x'],
-    query: {
-      enabled: !!currentAccount.address && !!gameAddress,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  });
-
-  const refundCooldownRead = useReadContract({
-    config: wagmiConfig,
-    abi: controllerAbi,
-    address: controllerAddress,
-    functionName: 'refundCooldown',
-    args: [],
-    query: {
-      enabled: !!currentAccount.address,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  });
-
-  const reIterationCooldownRead = useReadContract({
-    config: wagmiConfig,
-    abi: controllerAbi,
-    address: controllerAddress,
-    functionName: 'reIterationCooldown',
-    args: [],
-    query: {
-      enabled: !!currentAccount.address,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: false,
+      select: (data) => {
+        return {
+          playerLevelStatusRead: data[0],
+          sessionRead: data[1],
+          refundCooldownRead: data[2],
+          reIterationCooldownRead: data[3],
+        };
+      },
     },
   });
 
   React.useEffect(() => {
-    if (!sessionRead.data || !refundCooldownRead.data || !reIterationCooldownRead.data) return;
+    if (
+      !gameStatus?.sessionRead ||
+      !gameStatus.refundCooldownRead ||
+      !gameStatus.reIterationCooldownRead
+    )
+      return;
 
-    setSessionStatus(Number(sessionRead.data?.[1].status));
-    setLastSeen(Number(sessionRead.data?.[1].detail?.lastSeen || 0));
-    setRefundCooldown(Number(refundCooldownRead.data));
-    setReIterateCooldown(Number(reIterationCooldownRead.data));
-  }, [
-    sessionRead.dataUpdatedAt,
-    refundCooldownRead.dataUpdatedAt,
-    reIterationCooldownRead.dataUpdatedAt,
-  ]);
+    setSessionStatus(Number(gameStatus.sessionRead?.[1].status));
+    setLastSeen(Number(gameStatus.sessionRead?.[1].detail?.lastSeen || 0));
+    setRefundCooldown(Number(gameStatus.refundCooldownRead));
+    setReIterateCooldown(Number(gameStatus.reIterationCooldownRead));
+  }, [dataUpdatedAt]);
 
   // Handlers
   const getPassedTime = (lastSeen: EpochTimeStamp) => dayjs(new Date()).unix() - lastSeen;
 
   // Checks
   const isHalted = React.useMemo(
-    () => (playerLevelStatusRead.data && playerLevelStatusRead.data.halted) ?? false,
-    [playerLevelStatusRead.dataUpdatedAt]
+    () => (gameStatus?.playerLevelStatusRead && gameStatus.playerLevelStatusRead.halted) ?? false,
+    [dataUpdatedAt]
   );
 
   const isRefundable = React.useMemo(() => {
@@ -168,14 +162,14 @@ export const usePlayerGameStatus = ({
     const passedTime = getPassedTime(lastSeen);
     log(sessionStatus, 'session status');
     return passedTime > refundCooldown && sessionStatus === SessionStatus.Wait;
-  }, [lastSeen, refundCooldown, sessionStatus, sessionRead.dataUpdatedAt]);
+  }, [lastSeen, refundCooldown, sessionStatus, dataUpdatedAt]);
 
   const isReIterable = React.useMemo(() => {
     if (!lastSeen) return false;
 
     const passedTime = getPassedTime(lastSeen);
     return !isRefundable && passedTime > reIterateCooldown && sessionStatus === SessionStatus.Wait;
-  }, [sessionRead.dataUpdatedAt, lastSeen, sessionStatus, isRefundable]);
+  }, [dataUpdatedAt, lastSeen, sessionStatus, isRefundable]);
 
   // Mutations
   const { client } = useBundlerClient();
@@ -192,7 +186,7 @@ export const usePlayerGameStatus = ({
     if (mutation?.success && onPlayerStatusUpdate)
       onPlayerStatusUpdate({
         type: 'levelUp',
-        level: (playerLevelStatusRead.data?.level || 0) + 1,
+        level: (gameStatus?.playerLevelStatusRead?.level || 0) + 1,
         awardBadges: undefined,
       });
   };
@@ -205,7 +199,7 @@ export const usePlayerGameStatus = ({
       player: currentAccount.address!,
     });
 
-    sessionRead.refetch();
+    refetch();
 
     if (refund.status == 'success') closeModal();
   };
@@ -237,13 +231,12 @@ export const usePlayerGameStatus = ({
   }, [isRefundable, client, currentAccount.address]);
 
   const handleRefetchPlayerGameStatus = () => {
-    playerLevelStatusRead.refetch();
-    sessionRead.refetch();
+    refetch();
   };
 
   React.useEffect(() => {
-    log(playerLevelStatusRead.data, 'data');
-  }, [playerLevelStatusRead.dataUpdatedAt]);
+    log(gameStatus?.playerLevelStatusRead, 'data');
+  }, [dataUpdatedAt]);
 
   React.useEffect(() => {
     log('isReIterable', isReIterable, 'isRefundable', isRefundable);

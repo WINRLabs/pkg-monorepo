@@ -63,6 +63,9 @@ export const useTokenBalances = ({
 
   const result = useReadContracts({
     contracts: contractsToRead,
+    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    batchSize: 0,
+    allowFailure: false,
     query: {
       enabled: !!contractsToRead || !!account,
     },
@@ -75,19 +78,17 @@ export const useTokenBalances = ({
     if (!result || !result.data) return;
 
     Object.entries(result.data).forEach(([key, value]) => {
-      if (value.error) return;
-
       const tokenAddress = targetBalanceToRead[Number(key)];
 
       const token = tokens.find((t) => t.address == tokenAddress);
 
       if (!token) return;
 
-      let balance = Number(formatUnits(value.result as bigint, token.decimals));
+      let balance = Number(formatUnits(value as bigint, token.decimals));
 
       if (token.bankrollIndex == WRAPPED_WINR_BANKROLL) {
         log(
-          value.result,
+          value,
           balance,
           'wrapped <- balance -> native',
           nativeWinr.balance,
