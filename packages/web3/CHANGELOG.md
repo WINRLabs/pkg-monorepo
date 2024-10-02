@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.46
+
+### Patch Changes
+
+- b97c803: Update refetch intervals
+
 ## 0.11.45
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.58
+
+### Patch Changes
+
+- b97c803: Update refetch intervals
+- Updated dependencies [b97c803]
+  - @winrlabs/web3@0.11.46
+  - @winrlabs/games@3.0.56
+  - @winrlabs/web3-games@11.0.58
+
 ## 11.0.57
 
 ### Patch Changes

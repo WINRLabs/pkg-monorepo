@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.56
+
+### Patch Changes
+
+- b97c803: Update refetch intervals
+
 ## 3.0.55
 
 ### Patch Changes
