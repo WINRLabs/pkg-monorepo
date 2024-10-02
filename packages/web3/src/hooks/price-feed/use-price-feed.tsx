@@ -16,7 +16,7 @@ export const usePriceFeed = () => {
   const { data, dataUpdatedAt } = useCurrencyControllerGetLastPriceFeed(
     {},
     {
-      refetchInterval: 5000,
+      refetchInterval: 10_000,
       refetchOnWindowFocus: false,
       retry: false,
     }

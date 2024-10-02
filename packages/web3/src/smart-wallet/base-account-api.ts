@@ -58,7 +58,7 @@ export abstract class BaseAccountAPI {
     maxFeePerGas: 0n,
     maxPriorityFeePerGas: 0n,
   };
-  private feeDataPollingInterval: number = 10 * 1000;
+  private feeDataPollingInterval: number = 30 * 1000;
   private isPhantom = true;
   // entryPoint connected to "zero" address. allowed to make static calls (e.g. to getSenderAddress)
   //   private readonly entryPointView: IEntryPoint
