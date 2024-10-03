@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.58
+
+### Patch Changes
+
+- 4f180b1: single wheel
+
 ## 3.0.57
 
 ### Patch Changes

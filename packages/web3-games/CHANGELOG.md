@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.60
+
+### Patch Changes
+
+- 4f180b1: single wheel
+- Updated dependencies [4f180b1]
+  - @winrlabs/web3-games@11.0.60
+  - @winrlabs/games@3.0.58
+
 ## 11.0.59
 
 ### Patch Changes
