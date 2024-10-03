@@ -3,23 +3,27 @@ import { defineChain } from 'viem';
 import { http, createConfig, Config } from 'wagmi';
 import { coinbaseWallet, injected, metaMask } from 'wagmi/connectors';
 
-export const winrChain = defineChain({
-  id: 64165,
-  name: 'Sonic Testnet',
-  testnet: true,
-  nativeCurrency: { name: 'Sonic', symbol: 'S', decimals: 18 },
+const winrChain = defineChain({
+  id: 777777,
+  name: 'WINR Chain',
+  network: 'winr',
+  nativeCurrency: { name: 'WINR', symbol: 'WINR', decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://rpc.testnet.soniclabs.com'],
+      http: ['https://rpc-winr-mainnet-0.t.conduit.xyz'],
     },
     public: {
-      http: ['https://rpc.testnet.soniclabs.com'],
+      http: ['https://rpc-winr-mainnet-0.t.conduit.xyz'],
     },
   },
   blockExplorers: {
+    etherscan: {
+      name: 'WINRscan',
+      url: 'https://explorerl2new-winr-mainnet-0.t.conduit.xyz',
+    },
     default: {
-      name: 'Sonic Explorer',
-      url: 'https://public-sonic.fantom.network',
+      name: 'WINRscan',
+      url: 'https://explorerl2new-winr-mainnet-0.t.conduit.xyz',
     },
   },
 });

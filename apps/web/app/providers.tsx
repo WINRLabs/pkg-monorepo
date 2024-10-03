@@ -13,7 +13,7 @@ import { config } from './wagmi';
 
 const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL || '';
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || '';
-const network = 'SONIC';
+const network = BundlerNetwork.WINR;
 
 export const entryPointAddress = process.env.NEXT_PUBLIC_ENTRYPOINT_ADDRESS as Address;
 export const factoryAddress = process.env.NEXT_PUBLIC_FACTORY_ADDRESS as Address;
@@ -48,7 +48,6 @@ export const gameAddresses = {
   holdemPoker: process.env.NEXT_PUBLIC_HOLDEM_POKER_ADDRESS as Address,
   winrOfOlympus: process.env.NEXT_PUBLIC_WINR_OF_OLYMPUS_ADDRESS as Address,
   princessWinr: process.env.NEXT_PUBLIC_PRINCESS_WINR_ADDRESS as Address,
-  singleWheel: process.env.NEXT_PUBLIC_SINGLE_WHEEL_ADDRESS as Address,
 };
 
 export function Providers(props: { children: ReactNode }) {
@@ -72,33 +71,80 @@ export function Providers(props: { children: ReactNode }) {
             network,
             entryPointAddress,
             factoryAddress,
-            paymasterAddress: '0xAC0C412F56cd00ea21D96eB6768675B430A50FE8',
+            paymasterAddress: '0x37C6F569A0d68C8381Eb501b79F501aDc132c144',
           }}
           tokens={[
             {
-              address: '0x4Cc7b0ddCD0597496E57C5325cf4c73dBA30cdc9',
+              address: '0x59edbB343991D30f77dcdBad94003777e9B09BA9',
+              bankrollIndex: '0x0000000000000000000000000000000000000001',
+              displayDecimals: 2,
+              decimals: 6,
+              icon: '/tokens/usdc.png',
+              symbol: 'USDC',
+              playable: true,
+              priceKey: 'usdc',
+            },
+            {
+              address: '0x0381132632E9E27A8f37F1bc56bd5a62d21a382B',
               bankrollIndex: '0x0000000000000000000000000000000000000002',
               displayDecimals: 2,
-              decimals: 18,
-              icon: '/tokens/gold-coin.svg',
-              symbol: 'TOKEN',
+              decimals: 6,
+              icon: '/tokens/usdt.png',
+              symbol: 'USDT',
               playable: true,
-              pairToken: 'TOKEN-LP',
-              priceKey: 'usdc',
+              priceKey: 'usdt',
+            },
+            {
+              address: '0x44BD533C211C78e01f0F738826e8b18Bb9b936f5',
+              bankrollIndex: '0x0000000000000000000000000000000000000003',
+              displayDecimals: 6,
+              decimals: 8,
+              icon: '/tokens/wbtc.png',
+              symbol: 'BTC',
+              playable: true,
+              priceKey: 'btc',
+            },
+            {
+              address: '0xE60256921AE414D7B35d6e881e47931f45E027cf',
+              bankrollIndex: '0x0000000000000000000000000000000000000004',
+              displayDecimals: 6,
+              decimals: 18,
+              icon: '/tokens/weth.png',
+              symbol: 'ETH',
+              playable: true,
+              priceKey: 'weth',
+            },
+            {
+              address: '0xBF6FA9d2BF9f681E7b6521b49Cf8ecCF9ad8d31d',
+              bankrollIndex: '0x0000000000000000000000000000000000000006',
+              displayDecimals: 2,
+              decimals: 18,
+              icon: '/tokens/winr.png',
+              symbol: 'WINR',
+              playable: true,
+              priceKey: 'winr',
+            },
+            {
+              address: '0x372B5997502E668B8804D11d1569eB28F51a7e4e',
+              bankrollIndex: '0x0000000000000000000000000000000000000007',
+              displayDecimals: 2,
+              decimals: 18,
+              icon: '/tokens/usdt.png',
+              symbol: 'MCK',
+              playable: true,
+              priceKey: 'usdt',
             },
           ]}
           selectedToken={{
-            address: '0x4Cc7b0ddCD0597496E57C5325cf4c73dBA30cdc9',
-            bankrollIndex: '0x0000000000000000000000000000000000000002',
+            address: '0x372B5997502E668B8804D11d1569eB28F51a7e4e',
+            bankrollIndex: '0x0000000000000000000000000000000000000007',
             displayDecimals: 2,
             decimals: 18,
-            icon: '/tokens/gold-coin.svg',
-            symbol: 'TOKEN',
+            icon: '/tokens/usdt.png',
+            symbol: 'MCK',
             playable: true,
-            pairToken: 'TOKEN-LP',
-            priceKey: 'usdc',
+            priceKey: 'usdt',
           }}
-          globalChainId={64165}
         >
           <AppUiProviders wagmiConfig={config}>
             <WinrLabsWeb3GamesProvider
