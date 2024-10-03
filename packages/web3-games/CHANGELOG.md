@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.59
+
+### Patch Changes
+
+- 45c178e: Reduce number of calls with multicall
+- Updated dependencies [45c178e]
+  - @winrlabs/web3-games@11.0.59
+  - @winrlabs/web3@0.11.47
+  - @winrlabs/games@3.0.57
+
 ## 11.0.58
 
 ### Patch Changes

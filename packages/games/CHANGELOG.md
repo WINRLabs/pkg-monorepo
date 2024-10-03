@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.57
+
+### Patch Changes
+
+- 45c178e: Reduce number of calls with multicall
+
 ## 3.0.56
 
 ### Patch Changes

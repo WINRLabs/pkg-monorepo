@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.47
+
+### Patch Changes
+
+- 45c178e: Reduce number of calls with multicall
+
 ## 0.11.46
 
 ### Patch Changes
