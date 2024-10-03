@@ -28,6 +28,7 @@ interface WheelGameState {
   isGamblerParticipant: boolean;
   showResult: boolean;
   allParticipantCount: () => number;
+  submitDisabled: boolean;
 }
 
 interface WheelGameStateActions {
@@ -39,6 +40,7 @@ interface WheelGameStateActions {
   setIsGamblerParticipant: (isGamblerParticipant: boolean) => void;
   setShowResult: (showResult: boolean) => void;
   resetState: () => void;
+  setSubmitDisabled: (submitDisabled: boolean) => void;
 }
 
 const defaultWheelParticipant: MultiplierArray = {
@@ -60,6 +62,8 @@ export const wheelGameStore = create<WheelGameStore>()((set, get) => ({
   status: MultiplayerGameStatus.None,
   isGamblerParticipant: false,
   showResult: false,
+  submitDisabled: false,
+  setSubmitDisabled: (submitDisabled: boolean) => set(() => ({ submitDisabled })),
   setShowResult: (showResult: boolean) => set(() => ({ showResult })),
   setIsGamblerParticipant: (isGamblerParticipant: boolean) => set(() => ({ isGamblerParticipant })),
   isParticipantsOpen: false,

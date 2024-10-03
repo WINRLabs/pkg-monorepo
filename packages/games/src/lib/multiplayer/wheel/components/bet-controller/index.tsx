@@ -36,6 +36,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
     resetWheelParticipant,
     isGamblerParticipant,
     setIsGamblerParticipant,
+    submitDisabled,
   } = useWheelGameStore([
     'cooldownFinish',
     'status',
@@ -43,6 +44,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
     'resetWheelParticipant',
     'isGamblerParticipant',
     'setIsGamblerParticipant',
+    'submitDisabled',
   ]);
 
   const { dictionary } = useGameOptions();
@@ -199,7 +201,8 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
               (timeLeft > 0 && status === MultiplayerGameStatus.Wait && isGamblerParticipant) ||
               isGamblerParticipant ||
               (timeLeft > 0 && status === MultiplayerGameStatus.Finish) ||
-              chosenColor === WheelColor.IDLE
+              chosenColor === WheelColor.IDLE ||
+              submitDisabled
             }
           >
             {timeLeft >= 0 && status === MultiplayerGameStatus.Finish

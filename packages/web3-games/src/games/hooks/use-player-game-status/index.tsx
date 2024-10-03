@@ -44,6 +44,7 @@ const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> =
   [GameType.WINR_BONANZA]: GameTypesEnvironmentStore.winrbonanza,
   [GameType.WINR_OLYMPUS]: GameTypesEnvironmentStore.gateofolympos,
   [GameType.WINR_PRINCESS]: GameTypesEnvironmentStore.princesswinr,
+  [GameType.SINGLE_WHEEL]: GameTypesEnvironmentStore.singlewheel,
 };
 
 interface IUsePlayerStatusParams {
@@ -76,6 +77,7 @@ export const usePlayerGameStatus = ({
   const [refundCooldown, setRefundCooldown] = React.useState<number>(0);
   const [reIterateCooldown, setReIterateCooldown] = React.useState<number>(0);
 
+  log('user session', sessionStatus);
   const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
@@ -215,7 +217,6 @@ export const usePlayerGameStatus = ({
 
   React.useEffect(() => {
     if (!client || !currentAccount.address) return;
-
     if (isRefundable)
       if (forceRefund) {
         handlePlayerRefund();

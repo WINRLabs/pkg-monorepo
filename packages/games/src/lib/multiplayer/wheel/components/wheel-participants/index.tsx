@@ -3,14 +3,19 @@
 import { AlignLeft } from '../../../../svgs';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
+import { useWheelTheme } from '../../providers/theme';
 import { useWheelGameStore } from '../../store';
 import WheelParticipantDetail from '../wheel-participant-detail';
 
 const WheelParticipants = () => {
+  const { hideParticipants } = useWheelTheme();
+
   const { isParticipantsOpen, setIsParticipantsOpen } = useWheelGameStore([
     'isParticipantsOpen',
     'setIsParticipantsOpen',
   ]);
+
+  if (hideParticipants) return null;
 
   return (
     <div className="wr-relative wr-h-[640px] wr-w-full lg:!wr-block wr-hidden">

@@ -10,6 +10,7 @@ export interface WheelTheme {
   controllerHeader?: React.ReactNode;
   hideMaxPayout?: boolean;
   controllerFooter?: React.ReactNode;
+  hideParticipants?: boolean;
 }
 
 const defaultTheme: Partial<WheelTheme> = {
@@ -20,6 +21,7 @@ const defaultTheme: Partial<WheelTheme> = {
   tokenPrefix: '$',
   controllerHeader: null,
   controllerFooter: null,
+  hideParticipants: false,
 };
 
 const WheelThemeContext = createContext<Partial<WheelTheme>>(defaultTheme);
