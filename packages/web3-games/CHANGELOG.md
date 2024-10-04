@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.61
+
+### Patch Changes
+
+- 868d155: unity streamable assets
+- Updated dependencies [868d155]
+  - @winrlabs/games@3.0.59
+  - @winrlabs/web3-games@11.0.61
+
 ## 11.0.60
 
 ### Patch Changes

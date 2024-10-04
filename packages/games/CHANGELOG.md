@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.59
+
+### Patch Changes
+
+- 868d155: unity streamable assets
+
 ## 3.0.58
 
 ### Patch Changes

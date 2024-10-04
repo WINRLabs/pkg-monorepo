@@ -2,7 +2,7 @@
   "name": "@winrlabs/games",
   "description": "Games",
   "license": "MIT",
-  "version": "3.0.58",
+  "version": "3.0.59",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
