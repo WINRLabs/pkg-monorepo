@@ -16,7 +16,7 @@ export const SceneContainer: React.FC<Props> = ({ children, className, ...props 
     <section
       id="animationScene"
       className={cn(
-        'wr-relative wr-flex wr-w-full wr-flex-col wr-items-center wr-justify-between wr-rounded-lg wr-border wr-border-zinc-800 wr-bg-cover wr-bg-no-repeat wr-p-3.5 lg:wr-px-16 lg:wr-pb-12 lg:wr-pt-[14px]',
+        'wr-relative wr-flex wr-w-full wr-flex-col wr-items-center wr-justify-between wr-rounded-lg wr-bg-cover wr-bg-no-repeat wr-p-3.5 lg:wr-px-16 lg:wr-pb-12 lg:wr-pt-[14px] wr-bg-onyx-700',
         className
       )}
       {...props}
@@ -36,7 +36,7 @@ export const BetControllerContainer: React.FC<Props> = ({ children, className })
   return (
     <section
       className={cn(
-        'wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-zinc-900 wr-bg-opacity-70 wr-px-4 wr-py-3 lg:wr-py-3 lg:wr-w-[340px]',
+        'wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-onyx-700 wr-px-4 wr-py-3 lg:wr-py-3 lg:wr-w-[340px]',
         className
       )}
       data-bet-controller

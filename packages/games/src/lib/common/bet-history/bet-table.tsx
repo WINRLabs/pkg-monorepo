@@ -127,6 +127,10 @@ const gameMap: Record<
     title: 'WINR Princess',
     icon: <IconWinrPrincess className="wr-h-4 wr-w-4 wr-text-white" />,
   },
+  [GameType.SINGLE_WHEEL]: {
+    title: 'Wheel',
+    icon: <IconWheel className="wr-h-4 wr-w-4" />,
+  },
 };
 
 const BetTable = ({
@@ -160,7 +164,7 @@ const BetTable = ({
     <>
       <AnimatePresence>
         <Table className="max-lg:wr-max-w-full max-md:wr-overflow-scroll max-md:wr-scrollbar-none wr-overflow-y-hidden wr-border-separate wr-border-spacing-x-0 wr-border-spacing-y-[6px]">
-          <TableHeader className="wr-bg-zinc-900 wr-bg-opacity-70 wr-relative wr-z-10">
+          <TableHeader className="wr-bg-onyx-700 wr-relative wr-z-10">
             <TableRow>
               <TableHead className="wr-pl-4 wr-rounded-[9px_0_0_9px] wr-w-[50px] lg:wr-w-[200px] wr-text-left">
                 {isMobile ? 'TX' : 'Transaction'}
@@ -188,7 +192,7 @@ const BetTable = ({
               items.map((bet, i) => {
                 return (
                   <TableRow
-                    className={`wr-border-black wr-bg-zinc-900 wr-bg-opacity-70 wr-transition-transform wr-duration-500 wr-ease-out ${
+                    className={`wr-border-black wr-bg-onyx-700 wr-transition-transform wr-duration-500 wr-ease-out ${
                       isAnimating ? 'wr-animate-slide-down-first' : ''
                     }`}
                     key={i}

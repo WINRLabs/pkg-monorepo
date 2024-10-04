@@ -23,7 +23,7 @@ export const Controller: React.FC<RangeControllerProps> = ({ winMultiplier, disa
   const { gameStatus } = useDiceGameStore(['gameStatus']);
 
   return (
-    <div className="wr-relative wr-flex wr-gap-2 wr-bg-neutral-900 wr-rounded-lg wr-py-3.5 wr-px-[18px] wr-w-full">
+    <div className="wr-relative wr-flex wr-gap-2 wr-bg-onyx-400 wr-rounded-lg wr-py-3.5 wr-px-[18px] wr-w-full">
       <FormItem className="!wr-mb-0 wr-flex-1">
         <FormControl>
           <NumberInput.Root
