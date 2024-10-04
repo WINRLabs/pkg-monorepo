@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.62
+
+### Patch Changes
+
+- 12777cd: gamecontainer color update
+- Updated dependencies [12777cd]
+  - @winrlabs/games@3.0.60
+  - @winrlabs/web3-games@11.0.62
+
 ## 11.0.61
 
 ### Patch Changes
