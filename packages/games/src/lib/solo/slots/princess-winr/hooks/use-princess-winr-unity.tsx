@@ -66,6 +66,7 @@ export const useUnityPrincessWinr = ({
     dataUrl: `${buildedGameUrl}/PrincessWinr.data.unityweb`,
     frameworkUrl: `${buildedGameUrl}/PrincessWinr.framework.js.unityweb`,
     codeUrl: `${buildedGameUrl}/PrincessWinr.wasm.unityweb`,
+    streamingAssetsUrl: `${buildedGameUrl}/StreamingAssets`,
   });
 
   useEqualizeUnitySound({

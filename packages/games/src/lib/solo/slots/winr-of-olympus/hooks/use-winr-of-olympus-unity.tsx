@@ -66,6 +66,7 @@ export const useUnityWinrOfOlympus = ({
     dataUrl: `${buildedGameUrl}/WinrOfOlympus.data.unityweb`,
     frameworkUrl: `${buildedGameUrl}/WinrOfOlympus.framework.js.unityweb`,
     codeUrl: `${buildedGameUrl}/WinrOfOlympus.wasm.unityweb`,
+    streamingAssetsUrl: `${buildedGameUrl}/StreamingAssets`,
   });
 
   useEqualizeUnitySound({

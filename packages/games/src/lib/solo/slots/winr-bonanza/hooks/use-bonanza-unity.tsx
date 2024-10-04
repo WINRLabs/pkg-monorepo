@@ -66,6 +66,7 @@ export const useUnityBonanza = ({
     dataUrl: `${buildedGameUrl}/WinrBonanza.data.unityweb`,
     frameworkUrl: `${buildedGameUrl}/WinrBonanza.framework.js.unityweb`,
     codeUrl: `${buildedGameUrl}/WinrBonanza.wasm.unityweb`,
+    streamingAssetsUrl: `${buildedGameUrl}/StreamingAssets`,
   });
 
   useEqualizeUnitySound({
