@@ -45,6 +45,7 @@ export { default as IconChevronLeft } from './IconChevronLeft';
 export { default as IconChevronUp } from './IconChevronUp';
 export { default as IconClose } from './IconClose';
 export { default as IconCloseCircle } from './IconCloseCircle';
+export { default as IconCoin } from './IconCoin';
 export { default as IconCoinFlip } from './IconCoinFlip';
 export { default as IconCopy } from './IconCopy';
 export { default as IconCrash } from './IconCrash';

@@ -13,7 +13,7 @@ const ResultBox: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, c
   return (
     <div
       className={cn(
-        'wr-flex wr-h-10 lg:!wr-h-20 wr-items-center wr-justify-between lg:wr-flex-col wr-flex-row lg:!wr-justify-center wr-rounded-lg wr-border wr-border-zinc-800 wr-text-md wr-font-bold wr-leading-[18px] max-md:wr-text-center max-md:wr-text-xs lg:wr-px-0 wr-px-4',
+        'wr-flex wr-h-10 lg:!wr-h-20 wr-items-center wr-justify-between lg:wr-flex-col wr-flex-row lg:!wr-justify-center wr-rounded-lg wr-bg-onyx-400 wr-text-md wr-font-bold wr-leading-[18px] max-md:wr-text-center max-md:wr-text-xs lg:wr-px-0 wr-px-4',
         className
       )}
     >
