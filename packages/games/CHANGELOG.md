@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.61
+
+### Patch Changes
+
+- 1347bf7: color update
+- 1347bf7: gamecontainer color update
+
 ## 3.0.60
 
 ### Patch Changes
