@@ -14,6 +14,7 @@ import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { ALL_RPS_CHOICES, rpsChoiceMap } from '../../constant';
 import useRpsGameStore from '../../store';
 import { RockPaperScissors, RPSForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface BetControllerProps {
   minWager: number;
@@ -118,7 +119,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isSubmitting || form.formState.isLoading ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

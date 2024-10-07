@@ -15,6 +15,7 @@ import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { PlinkoForm } from '../../types';
 import { PlinkoRowFormField } from './manual-controller';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   isGettingResults?: boolean;
@@ -107,7 +108,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-gap-1.5 wr-items-center">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

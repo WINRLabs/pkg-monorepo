@@ -19,6 +19,7 @@ import { KenoForm } from '../../types';
 import useKenoGameStore from '../../store';
 import { kenoMultipliers } from '../../constants';
 import { IconMagicStick, IconTrash } from '../../../../svgs';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   minWager: number;
@@ -158,7 +159,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-gap-1.5 wr-items-center">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

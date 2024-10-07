@@ -15,6 +15,7 @@ import { NumberInput } from '../../../../ui/number-input';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { LimboForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface Props {
   minWager: number;
@@ -130,7 +131,7 @@ export const ManualController: React.FC<Props> = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isLoading || form.formState.isSubmitting ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

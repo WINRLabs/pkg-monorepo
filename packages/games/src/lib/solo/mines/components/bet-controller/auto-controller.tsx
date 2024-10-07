@@ -23,6 +23,7 @@ import { initialBoard } from '../../constants';
 import useMinesGameStateStore from '../../store';
 import { MINES_GAME_STATUS, MINES_SUBMIT_TYPE, MinesForm, MinesFormField } from '../../types';
 import MinesCountButton from '../count-button';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   isGettingResults?: boolean;
@@ -190,7 +191,13 @@ export const AutoController = ({
             }
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-items-center wr-gap-1.5">
+              Stop Autobet <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

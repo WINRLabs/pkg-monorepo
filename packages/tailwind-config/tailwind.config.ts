@@ -450,6 +450,23 @@ const config: Omit<Config, 'content'> = {
           '0%': { transform: 'translateX(0)', opacity: '1' },
           '100%': { transform: 'translateX(-50%)', opacity: '0' },
         },
+        'speedy-bounce': {
+          '10%': {
+            transform: 'translateY(-90%)',
+          },
+          '30%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-60%)',
+          },
+          '70%': {
+            transform: 'translateY(0)',
+          },
+          '90%': {
+            transform: 'translateY(-30%)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -471,6 +488,7 @@ const config: Omit<Config, 'content'> = {
         'slide-down-last': 'slide-down-last .5s ease-out',
         'fade-in': 'fade-in .5s ease-out forwards',
         'fade-out': 'fade-out .5s ease-out forwards',
+        'speedy-bounce': 'speedy-bounce 1.1s ease-out infinite',
       },
       fontSize: {
         small: '13px',

@@ -17,6 +17,7 @@ import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { CoinFlipForm } from '../../types';
 import { CoinFlipController } from './controller';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -91,7 +92,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-gap-1.5 wr-items-center">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

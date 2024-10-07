@@ -15,6 +15,7 @@ import { cn } from '../../../../utils/style';
 import { toFormatted } from '../../../../utils/web3';
 import { BaccaratForm } from '../../types';
 import Control from '../control';
+import { BetLoader } from './bet-loader';
 
 interface Props {
   totalWager: number;
@@ -107,7 +108,11 @@ export const ManualController: React.FC<Props> = ({
               }
             )}
           >
-            Deal
+            {form.formState.isLoading || form.formState.isSubmitting || isDisabled ? (
+              <BetLoader />
+            ) : (
+              'Deal'
+            )}
           </Button>
         </PreBetButton>
       </div>

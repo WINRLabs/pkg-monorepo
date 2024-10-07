@@ -18,6 +18,7 @@ import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { BaccaratForm } from '../../types';
 import Control from '../control';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   totalWager: number;
@@ -124,7 +125,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-gap-1.5 wr-items-center">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

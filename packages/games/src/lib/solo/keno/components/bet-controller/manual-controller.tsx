@@ -12,6 +12,7 @@ import { toFormatted } from '../../../../utils/web3';
 import { kenoMultipliers } from '../../constants';
 import useKenoGameStore from '../../store';
 import { KenoForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 type Props = {
   minWager: number;
@@ -131,7 +132,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isLoading || form.formState.isSubmitting ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

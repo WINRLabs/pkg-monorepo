@@ -12,6 +12,7 @@ import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { RollForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface Props {
   minWager: number;
@@ -73,7 +74,7 @@ export const ManualController: React.FC<Props> = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isSubmitting || form.formState.isLoading ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

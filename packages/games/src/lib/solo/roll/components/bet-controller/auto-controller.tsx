@@ -16,6 +16,7 @@ import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { RollForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -88,7 +89,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-items-center wr-gap-1.5">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

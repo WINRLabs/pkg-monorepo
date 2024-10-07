@@ -17,6 +17,7 @@ import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { rowMultipliers } from '../../constants';
 import { PlinkoForm } from '../../types';
 import { PlinkoTemplateOptions } from '../template';
+import { BetLoader } from './bet-loader';
 
 interface Props extends Omit<PlinkoTemplateOptions, 'scene'> {
   minWager: number;
@@ -112,7 +113,11 @@ export const ManualController: React.FC<Props> = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          {dictionary.submitBtn}
+          {form.formState.isLoading || form.formState.isSubmitting ? (
+            <BetLoader />
+          ) : (
+            dictionary.submitBtn
+          )}
         </Button>
       </PreBetButton>
     </>

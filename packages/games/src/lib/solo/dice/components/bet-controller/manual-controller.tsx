@@ -12,6 +12,8 @@ import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { DiceForm } from '../../types';
+import { IconDice } from '../../../../svgs';
+import { BetLoader } from './bet-loader';
 
 interface ManualControllerProps {
   winMultiplier: number;
@@ -71,7 +73,7 @@ export const ManualController = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isLoading || form.formState.isSubmitting ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

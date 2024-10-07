@@ -97,8 +97,11 @@ const LiveResultsTemplate = () => {
                   </svg>
                 </motion.div>
 
-                <motion.span className="mt-0 wr-flex wr-gap-2 wr-items-center" layoutId="title">
-                  <IconStats />
+                <motion.span
+                  className="mt-0 wr-flex wr-gap-2 wr-items-center wr-text-md wr-font-semibold"
+                  layoutId="title"
+                >
+                  <IconStats className="h-5 w-5" />
                   Live Stats
                 </motion.span>
                 <motion.div className="div">

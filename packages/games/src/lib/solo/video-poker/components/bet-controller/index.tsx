@@ -15,6 +15,7 @@ import { cn } from '../../../../utils/style';
 import { toFormatted } from '../../../../utils/web3';
 import useVideoPokerGameStore, { VideoPokerStatus } from '../../store';
 import { VideoPokerForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface Props {
   minWager: number;
@@ -72,15 +73,20 @@ export const VideoPokerBetController: React.FC<Props> = ({
           <Button
             type="submit"
             variant={'success'}
-            className="wr-w-full wr-uppercase"
+            className={cn(
+              'wr-w-full wr-uppercase wr-flex wr-gap-1 wr-items-center wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none',
+              {
+                'wr-cursor-default wr-pointer-events-none':
+                  !form.formState.isValid ||
+                  form.formState.isSubmitting ||
+                  form.formState.isLoading,
+              }
+            )}
             size={'xl'}
             onClick={() => clickEffect.play()}
-            isLoading={form.formState.isSubmitting || form.formState.isLoading}
-            disabled={
-              !form.formState.isValid || form.formState.isSubmitting || form.formState.isLoading
-            }
           >
             {status === VideoPokerStatus.Dealt ? 'Finish game' : 'Start game'}
+            {(form.formState.isSubmitting || form.formState.isLoading) && <BetLoader />}
           </Button>
         </PreBetButton>
       </div>

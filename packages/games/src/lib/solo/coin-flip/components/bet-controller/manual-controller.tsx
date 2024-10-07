@@ -11,6 +11,7 @@ import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { CoinFlipForm } from '../../types';
 import { CoinFlipController } from './controller';
+import { BetLoader } from './bet-loader';
 
 interface ManualControllerProps {
   winMultiplier: number;
@@ -71,7 +72,7 @@ export const ManualController = ({
           size={'xl'}
           onClick={() => clickEffect.play()}
         >
-          Bet
+          {form.formState.isLoading || form.formState.isSubmitting ? <BetLoader /> : 'Bet'}
         </Button>
       </PreBetButton>
     </>

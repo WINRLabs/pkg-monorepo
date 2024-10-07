@@ -19,6 +19,7 @@ import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { NUMBER_INDEX_COUNT } from '../../constants';
 import { RouletteForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   isPrepared: boolean;
@@ -160,7 +161,13 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-items-center wr-gap-1.5">
+              Stop Autobet <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

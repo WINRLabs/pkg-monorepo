@@ -17,6 +17,7 @@ import { cn } from '../../../../utils/style';
 import { ALL_RPS_CHOICES } from '../../constant';
 import { RPSForm } from '../../types';
 import { RPSChoiceRadio } from './manual-controller';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -129,7 +130,14 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-items-center wr-gap-1.5">
+              Stop Autobet
+              <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>

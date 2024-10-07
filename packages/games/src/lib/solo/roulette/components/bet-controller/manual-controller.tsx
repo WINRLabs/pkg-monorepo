@@ -13,6 +13,7 @@ import { cn } from '../../../../utils/style';
 import { NUMBER_INDEX_COUNT } from '../../constants';
 import useRouletteGameStore from '../../store';
 import { RouletteForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface Props {
   isPrepared: boolean;
@@ -131,7 +132,11 @@ export const ManualController: React.FC<Props> = ({
               }
             )}
           >
-            Bet
+            {form.formState.isSubmitting || form.formState.isLoading || isPrepared ? (
+              <BetLoader />
+            ) : (
+              'Bet'
+            )}
           </Button>
         </PreBetButton>
       </div>

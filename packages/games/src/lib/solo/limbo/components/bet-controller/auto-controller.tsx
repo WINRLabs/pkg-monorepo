@@ -16,6 +16,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../
 import { NumberInput } from '../../../../ui/number-input';
 import { cn } from '../../../../utils/style';
 import { LimboForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -144,7 +145,13 @@ export const AutoController = ({
             onAutoBetModeChange(!isAutoBetMode);
           }}
         >
-          {isAutoBetMode ? 'Stop Autobet' : 'Start Autobet'}
+          {isAutoBetMode ? (
+            <div className="wr-flex wr-gap-1.5 wr-items-center">
+              Stop Autobet <BetLoader />
+            </div>
+          ) : (
+            'Start Autobet'
+          )}
         </Button>
       </PreBetButton>
     </div>
