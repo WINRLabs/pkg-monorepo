@@ -41,7 +41,7 @@ export const VideoPokerResults = () => {
   }, [gameResult]);
 
   return (
-    <section className="wr-w-full max-lg:wr-absolute max-lg:wr-bottom-0 max-lg:wr-left-0 max-lg:wr-bg-black max-lg:wr-z-20 max-lg:wr-p-4 max-lg:wr-py-2 max-lg:wr-border-zinc-800 ">
+    <section className="wr-w-full max-lg:wr-absolute max-lg:wr-bottom-0 max-lg:wr-left-0 max-lg:wr-bg-onyx-700 max-lg:wr-z-20 max-lg:wr-p-4 max-lg:wr-py-2 max-lg:wr-border-zinc-800 ">
       <div className="wr-w-full wr-transition-all wr-duration-500">
         <ResultBox
           className={cn('wr-mb-3', {

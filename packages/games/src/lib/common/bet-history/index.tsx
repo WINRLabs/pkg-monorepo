@@ -1,7 +1,7 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import React, { useEffect, useState } from 'react';
 
-import { Document, IconCoin, Person } from '../../svgs';
+import { Document, IconCoin, IconStars, Person } from '../../svgs';
 import { AnimatedTabContent } from '../animated-tab-content';
 import BetTable from './bet-table';
 
@@ -64,13 +64,28 @@ export const BetHistoryTemplate = ({
               className="wr-flex wr-items-center wr-gap-1.5 wr-pl-0 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
               value="bets"
             >
-              <Document className="wr-h-5 wr-w-5" /> All Bets
+              <Document className="wr-h-5 wr-w-5" /> All{' '}
+              <span className="wr-hidden md:wr-block">Bets</span>
             </Tabs.Trigger>
             <Tabs.Trigger
               className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
               value="player"
             >
-              <Person className="wr-size-5" /> My Bets
+              <Person className="wr-size-5" /> My <span className="wr-hidden">Bets</span>
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              value="high"
+            >
+              <Person className="wr-size-5" /> High{' '}
+              <span className="wr-hidden md:wr-block">Rollers</span>
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              value="lucky"
+            >
+              <IconStars className="wr-size-5" /> Lucky{' '}
+              <span className="wr-hidden md:wr-block">Winners</span>
             </Tabs.Trigger>
           </Tabs.List>
         </div>
