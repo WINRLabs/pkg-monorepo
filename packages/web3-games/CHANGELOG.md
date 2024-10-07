@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.63
+
+### Patch Changes
+
+- 1347bf7: color update
+- 1347bf7: gamecontainer color update
+- Updated dependencies [1347bf7]
+- Updated dependencies [1347bf7]
+  - @winrlabs/games@3.0.61
+  - @winrlabs/web3-games@11.0.63
+
 ## 11.0.62
 
 ### Patch Changes
