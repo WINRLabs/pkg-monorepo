@@ -144,7 +144,7 @@ const KenoTemplate = ({ ...props }: TemplateProps) => {
               onAutoBetModeChange={setIsAutoBetMode}
               onLogin={props.onLogin}
             />
-            <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0">
+            <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0 max-md:wr-bg-transparent">
               <Keno.Scene
                 {...props}
                 processStrategy={processStrategy}

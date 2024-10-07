@@ -227,7 +227,7 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
                 onModeChange={setMode}
                 onGameSubmit={props.onSubmitGameForm}
               />
-              <SceneContainer className="lg:wr-h-[740px] lg:wr-py-10 max-lg:!wr-border-0 max-lg:!wr-p-0">
+              <SceneContainer className="lg:wr-h-[740px] lg:wr-py-10 max-lg:!wr-border-0 max-lg:!wr-p-0 max-md:wr-bg-transparent">
                 <Mines.Scene
                   currentMultiplier={currentMultiplier}
                   isLoading={props.isLoading}
