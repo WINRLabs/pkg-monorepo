@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 3.0.62
+
+### Patch Changes
+
+- 9670803: color update
+- 9670803: mobile fixes
+- 9670803: gamecontainer color update
+
 ## 3.0.61
 
 ### Patch Changes

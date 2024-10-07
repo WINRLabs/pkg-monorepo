@@ -1,5 +1,12 @@
 # @winrlabs/tailwind-config
 
+## 1.3.6
+
+### Patch Changes
+
+- 9670803: color update
+- 9670803: gamecontainer color update
+
 ## 1.3.5
 
 ### Patch Changes
