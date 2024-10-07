@@ -1,5 +1,11 @@
 # @winrlabs/tailwind-config
 
+## 1.3.7
+
+### Patch Changes
+
+- f068a13: bet button loaders
+
 ## 1.3.6
 
 ### Patch Changes
