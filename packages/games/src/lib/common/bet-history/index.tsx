@@ -71,7 +71,8 @@ export const BetHistoryTemplate = ({
               className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
               value="player"
             >
-              <Person className="wr-size-5" /> My <span className="wr-hidden">Bets</span>
+              <Person className="wr-size-5" /> My{' '}
+              <span className="wr-hidden md:wr-block">Bets</span>
             </Tabs.Trigger>
             <Tabs.Trigger
               className="wr-flex wr-items-center wr-gap-1.5 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
