@@ -1,5 +1,18 @@
 # @winrlabs/web3-games
 
+## 11.0.67
+
+### Patch Changes
+
+- d9de4ae: typo fixes
+- d9de4ae: minor update
+- d9de4ae: bet button loaders
+- Updated dependencies [d9de4ae]
+- Updated dependencies [d9de4ae]
+- Updated dependencies [d9de4ae]
+  - @winrlabs/games@3.0.65
+  - @winrlabs/web3-games@11.0.67
+
 ## 11.0.66
 
 ### Patch Changes
