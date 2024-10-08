@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.63
+
+### Patch Changes
+
+- f068a13: bet button loaders
+
 ## 3.0.62
 
 ### Patch Changes

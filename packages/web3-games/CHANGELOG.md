@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.65
+
+### Patch Changes
+
+- f068a13: bet button loaders
+- Updated dependencies [f068a13]
+  - @winrlabs/games@3.0.63
+  - @winrlabs/web3-games@11.0.65
+
 ## 11.0.64
 
 ### Patch Changes
