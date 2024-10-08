@@ -14,6 +14,6 @@ export const towerMultipliers: TowerMultipliers = {
   10: [0, 0, 0, 1.3, 2, 4, 7, 25, 100, 500, 1000],
 };
 
-export const initialTowerCells = Array(40)
+export const initialTowerCells = Array(24)
   .fill(1)
   .map((x, y) => x + y);

@@ -181,7 +181,7 @@ export const TowerScene: React.FC<TowerSceneProps> = ({
               name="selections"
               render={({ field }) => {
                 return (
-                  <FormItem className="wr-grid wr-h-full wr-w-full wr-grid-cols-5 wr-grid-rows-5 wr-items-center wr-justify-center lg:!wr-gap-2 wr-gap-1 max-lg:!wr-mb-3">
+                  <FormItem className="wr-grid wr-h-full wr-w-full wr-max-w-[585px] wr-mx-auto wr-grid-cols-3 wr-grid-rows-8 wr-items-center wr-justify-center lg:!wr-gap-2 wr-gap-1 max-lg:!wr-mb-3">
                     {initialTowerCells.map((cell, idx) => {
                       return (
                         <FormItem key={idx} className="wr-mb-0 wr-w-full ">
@@ -208,7 +208,7 @@ export const TowerScene: React.FC<TowerSceneProps> = ({
                                   form.setValue('selections', field.value.concat(cell));
                                 }
                               }}
-                              className="wr-h-[34px] wr-w-full wr-rounded-lg wr-bg-tower-cell-bg wr-bg-[size:200%]  wr-bg-no-repeat wr-transition-all wr-duration-300 hover:wr-scale-105 sm:wr-h-[70px]"
+                              className="wr-h-[34px] wr-w-full wr-rounded-lg wr-bg-keno-cell-bg wr-bg-[size:200%]  wr-bg-no-repeat wr-transition-all wr-duration-300 hover:wr-scale-105 sm:wr-h-[60px]"
                               style={{
                                 backgroundPosition: field.value.includes(cell) ? '100% 90%' : 'top',
                               }}
