@@ -33,9 +33,7 @@ export const Controller: React.FC<RangeControllerProps> = ({ winMultiplier, disa
           >
             <FormLabel className="wr-text-zinc-400 wr-font-normal">Multiplier</FormLabel>
             <NumberInput.Container
-              className={cn(
-                'wr-rounded-md wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-py-[10px] wr-relative'
-              )}
+              className={cn('wr-rounded-md wr-border-none wr-bg-zinc-950 wr-py-[10px] wr-relative')}
             >
               <NumberInput.Input
                 decimalScale={2}
@@ -83,7 +81,7 @@ export const Controller: React.FC<RangeControllerProps> = ({ winMultiplier, disa
                 </FormLabel>
                 <NumberInput.Container
                   className={cn(
-                    'wr-rounded-md wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-py-[10px] wr-relative'
+                    'wr-rounded-md wr-border-none wr-bg-zinc-950 wr-py-[10px] wr-relative'
                   )}
                 >
                   <NumberInput.Input
@@ -160,9 +158,7 @@ export const Controller: React.FC<RangeControllerProps> = ({ winMultiplier, disa
               >
                 <FormLabel className="wr-text-zinc-400 wr-font-normal">Win Chance</FormLabel>
                 <NumberInput.Container
-                  className={cn(
-                    'wr-rounded-md wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-py-[10px] '
-                  )}
+                  className={cn('wr-rounded-md wr-border-none wr-bg-zinc-950 wr-py-[10px] ')}
                 >
                   <NumberInput.Input
                     decimalScale={2}
