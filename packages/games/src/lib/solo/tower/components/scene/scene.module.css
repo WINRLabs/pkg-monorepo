@@ -1,0 +1,9 @@
+.wr-keno-flip-animation {
+  transition: transform 0.8s;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+.wr-rotateY-180 {
+  transform: rotateY(180deg);
+}
