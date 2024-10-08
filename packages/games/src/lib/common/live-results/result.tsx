@@ -17,7 +17,7 @@ const Result = () => {
   return (
     <>
       <CardContent>
-        <div className="wr-rounded-md wr-border wr-border-zinc-800 wr-p-[14px] wr-font-semibold">
+        <div className="wr-rounded-md wr-bg-onyx-400 wr-p-[14px] wr-font-semibold">
           <div
             className={cn('wr-grid wr-grid-cols-2', {
               'wr-grid-cols-1': isMultiplayer,

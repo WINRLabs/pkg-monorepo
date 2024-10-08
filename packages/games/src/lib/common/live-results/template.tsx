@@ -81,7 +81,7 @@ const LiveResultsTemplate = () => {
             className={cn('wr-fixed wr-bottom-[10px] wr-z-50 wr-right-[10px]')}
             ref={dragRef}
           >
-            <Card className="wr-live-stats  wr-overflow-hidden wr-rounded-md wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-transition-all wr-duration-300 wr-ease-in">
+            <Card className="wr-live-stats wr-border-none wr-overflow-hidden wr-rounded-md wr-bg-onyx-700 wr-transition-all wr-duration-300 wr-ease-in">
               <CardHeader className="wr-flex wr-flex-row wr-items-center wr-justify-between wr-space-y-0 wr-text-xl wr-font-bold">
                 <motion.div layoutId="svg-live-stats" className="handle">
                   <svg
