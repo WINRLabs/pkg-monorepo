@@ -22,13 +22,13 @@ type TemplateOptions = {
 };
 
 type TemplateProps = TowerGameProps & {
-  options: TemplateOptions;
-  minWager?: number;
-  maxWager?: number;
-  onSubmitGameForm: (data: TowerFormField) => void;
-  onFormChange?: (fields: TowerFormField) => void;
-  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
-  onLogin?: () => void;
+  // options: TemplateOptions;
+  // minWager?: number;
+  // maxWager?: number;
+  // onSubmitGameForm: (data: TowerFormField) => void;
+  // onFormChange?: (fields: TowerFormField) => void;
+  // onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
+  // onLogin?: () => void;
 };
 
 const TowerTemplate = ({ ...props }: TemplateProps) => {
@@ -39,11 +39,11 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
   const formSchema = z.object({
     wager: z
       .number()
-      .min(props?.minWager || 1, {
-        message: `Minimum wager is $${props?.minWager}`,
+      .min(1, {
+        message: `Minimum wager is $1`,
       })
-      .max(props?.maxWager || 2000, {
-        message: `Maximum wager is $${props?.maxWager}`,
+      .max(2000, {
+        message: `Maximum wager is $2000`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     selections: z.array(z.number()),
@@ -70,15 +70,15 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
     },
   });
 
-  React.useEffect(() => {
-    const cb = (formFields: any) => {
-      props?.onFormChange && props.onFormChange(formFields);
-    };
+  // React.useEffect(() => {
+  //   const cb = (formFields: any) => {
+  //     props?.onFormChange && props.onFormChange(formFields);
+  //   };
 
-    const subscription = form.watch(cb);
+  //   const subscription = form.watch(cb);
 
-    return () => subscription.unsubscribe();
-  }, [form.watch]);
+  //   return () => subscription.unsubscribe();
+  // }, [form.watch]);
 
   // strategy
   const wager = form.watch('wager');
@@ -96,59 +96,59 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
     isAutoBetMode,
   });
 
-  const processStrategy = (result: TowerGameResult[]) => {
-    const payout = result[0]?.settled.payoutsInUsd || 0;
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
-    const newWager = Number(p.wager) / 1e8;
-    const currentBalance = balanceAsDollar - wager + payout;
+  // const processStrategy = (result: TowerGameResult[]) => {
+  //   const payout = result[0]?.settled.payoutsInUsd || 0;
+  //   const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+  //   const newWager = Number(p.wager) / 1e8;
+  //   const currentBalance = balanceAsDollar - wager + payout;
 
-    if (currentBalance < wager) {
-      setIsAutoBetMode(false);
-      props?.onError &&
-        props.onError(`Oops, you are out of funds. \n Deposit more funds to continue playing.`);
-      return;
-    }
+  //   if (currentBalance < wager) {
+  //     setIsAutoBetMode(false);
+  //     props?.onError &&
+  //       props.onError(`Oops, you are out of funds. \n Deposit more funds to continue playing.`);
+  //     return;
+  //   }
 
-    if (newWager < (props.minWager || 0)) {
-      form.setValue('wager', props.minWager || 0);
-      return;
-    }
+  //   if (newWager < (props.minWager || 0)) {
+  //     form.setValue('wager', props.minWager || 0);
+  //     return;
+  //   }
 
-    if (newWager > (props.maxWager || 0)) {
-      form.setValue('wager', props.maxWager || 0);
-      return;
-    }
+  //   if (newWager > (props.maxWager || 0)) {
+  //     form.setValue('wager', props.maxWager || 0);
+  //     return;
+  //   }
 
-    if (p.action && !p.action.isStop()) {
-      form.setValue('wager', newWager);
-    }
+  //   if (p.action && !p.action.isStop()) {
+  //     form.setValue('wager', newWager);
+  //   }
 
-    if (p.action && p.action.isStop()) {
-      setIsAutoBetMode(false);
-      return;
-    }
-  };
+  //   if (p.action && p.action.isStop()) {
+  //     setIsAutoBetMode(false);
+  //     return;
+  //   }
+  // };
 
-  React.useEffect(() => {
-    props.onAutoBetModeChange?.(isAutoBetMode);
-  }, [isAutoBetMode]);
+  // React.useEffect(() => {
+  //   props.onAutoBetModeChange?.(isAutoBetMode);
+  // }, [isAutoBetMode]);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
+      <form onSubmit={form.handleSubmit((v) => console.log(v))}>
         <GameContainer>
           <Tower.Game {...props}>
             <Tower.Controller
-              maxWager={props?.maxWager || 2000}
-              minWager={props?.minWager || 1}
+              maxWager={2000}
+              minWager={1}
               isAutoBetMode={isAutoBetMode}
               onAutoBetModeChange={setIsAutoBetMode}
-              onLogin={props.onLogin}
             />
             <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0 max-md:wr-bg-transparent">
               <Tower.Scene
                 {...props}
-                processStrategy={processStrategy}
+                onSubmitGameForm={() => {}}
+                processStrategy={() => {}}
                 isAutoBetMode={isAutoBetMode}
                 onAutoBetModeChange={setIsAutoBetMode}
               />
