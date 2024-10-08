@@ -1,5 +1,12 @@
 # @winrlabs/tailwind-config
 
+## 1.3.9
+
+### Patch Changes
+
+- d9de4ae: typo fixes
+- d9de4ae: bet button loaders
+
 ## 1.3.8
 
 ### Patch Changes
