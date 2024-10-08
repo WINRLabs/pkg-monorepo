@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.64
+
+### Patch Changes
+
+- 9c76f6d: typo fixes
+- 9c76f6d: bet button loaders
+
 ## 3.0.63
 
 ### Patch Changes
