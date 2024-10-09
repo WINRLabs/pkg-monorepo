@@ -5,6 +5,7 @@ import {
   DiceFormFields,
   DiceGameResult,
   DiceTemplate,
+  DiceTemplateOptions,
   GameType,
   toDecimals,
   useDiceGameStore,
@@ -12,7 +13,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
   ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
@@ -41,10 +41,8 @@ import {
 
 const log = debug('worker:DiceWeb3');
 
-type TemplateOptions = {};
-
 interface TemplateWithWeb3Props extends BaseGameProps {
-  options: TemplateOptions;
+  options: DiceTemplateOptions;
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
@@ -325,6 +323,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         onAnimationStep={onAnimationStep}
         onFormChange={setFormValues}
         onAutoBetModeChange={onAutoBetModeChange}
+        options={props.options}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

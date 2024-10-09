@@ -14,19 +14,12 @@ import { parseToBigInt } from '../../../utils/number';
 import { toDecimals } from '../../../utils/web3';
 import { LUCK_MULTIPLIER, MAX_VALUE, MIN_BET_COUNT, MIN_VALUE } from '../constant';
 import { Dice } from '../index';
-import { DiceFormFields, DiceGameResult } from '../types';
+import { DiceFormFields, DiceGameResult, DiceTemplateOptions } from '../types';
 import { BetController } from './bet-controller';
 import { RangeGameProps } from './game';
-import { SliderTrackOptions } from './slider';
-
-type TemplateOptions = {
-  slider?: {
-    track?: SliderTrackOptions;
-  };
-};
 
 type TemplateProps = RangeGameProps & {
-  options: TemplateOptions;
+  options: DiceTemplateOptions;
   minWager?: number;
   maxWager?: number;
   onSubmitGameForm: (data: DiceFormFields) => void;
@@ -36,7 +29,7 @@ type TemplateProps = RangeGameProps & {
   onLogin?: () => void;
 };
 
-const defaultOptions: TemplateOptions = {
+const defaultOptions: DiceTemplateOptions = {
   slider: {
     track: {
       color: '#DC2626',
