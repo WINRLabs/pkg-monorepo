@@ -37,6 +37,7 @@ const gameMap: Record<
   {
     title: string;
     icon: React.ReactNode;
+    smTitle?: string;
   }
 > = {
   [GameType.BACCARAT]: {
@@ -117,14 +118,17 @@ const gameMap: Record<
   },
   [GameType.WINR_BONANZA]: {
     title: 'WINR Bonanza',
+    smTitle: 'Bonanza',
     icon: <IconSweetBonanza className="wr-h-4 wr-w-4" />,
   },
   [GameType.WINR_OLYMPUS]: {
     title: 'WINR of Olympus',
+    smTitle: 'Olympus',
     icon: <IconWinrOfOlympus className="wr-h-4 wr-w-4 wr-text-white" />,
   },
   [GameType.WINR_PRINCESS]: {
     title: 'WINR Princess',
+    smTitle: 'Princess',
     icon: <IconWinrPrincess className="wr-h-4 wr-w-4 wr-text-white" />,
   },
   [GameType.SINGLE_WHEEL]: {
@@ -151,7 +155,7 @@ const BetTable = ({
   const updateItems = (newItems: GameControllerGlobalBetHistoryResponse) => {
     if (!newItems) return;
 
-    const updatedItems = [...newItems.slice(0, 10)];
+    const updatedItems = [...newItems.slice(0, 11)];
     setIsAnimating(true);
     setItems(updatedItems);
 
@@ -163,7 +167,7 @@ const BetTable = ({
   return (
     <>
       <AnimatePresence>
-        <Table className="max-lg:wr-max-w-full max-md:wr-overflow-scroll max-md:wr-scrollbar-none wr-overflow-y-hidden wr-border-separate wr-border-spacing-x-0 wr-border-spacing-y-[6px]">
+        <Table className="max-lg:wr-max-w-full max-md:wr-overflow-scroll max-md:wr-scrollbar-none wr-overflow-y-hidden wr-border-separate wr-border-spacing-x-0 wr-border-spacing-y-[6px] after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:z-0 after:h-[30%] after:w-full after:bg-gradient-to-b after:from-[rgba(26,29,41,0)_0%] after:to-[rgba(9,9,9,1)_75%]">
           <TableHeader className="wr-bg-onyx-700 wr-relative wr-z-10">
             <TableRow>
               <TableHead className="wr-pl-4 wr-rounded-[9px_0_0_9px] wr-w-[50px] lg:wr-w-[200px] wr-text-left">
@@ -213,7 +217,9 @@ const BetTable = ({
                     <TableCell className="wr-text-center lg:wr-text-left wr-table-cell">
                       <div className="wr-flex wr-items-center wr-gap-2 md:wr-justify-normal wr-justify-center">
                         {gameMap[bet.game]?.icon}
-                        {gameMap[bet.game]?.title}
+                        {isMobile && gameMap[bet.game].smTitle
+                          ? gameMap[bet.game].smTitle
+                          : gameMap[bet.game]?.title}
                       </div>
                     </TableCell>
                     <TableCell className="wr-text-center lg:wr-text-left">
