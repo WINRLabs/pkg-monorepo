@@ -16,7 +16,6 @@ import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect
 import { IconMagicStick, IconTrash } from '../../../../svgs';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { towerMultipliers } from '../../constants';
 import useTowerGameStore from '../../store';
 import { TowerForm } from '../../types';
 import { BetLoader } from './bet-loader';
@@ -40,18 +39,11 @@ export const AutoController = ({
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
-  const wager = form.watch('wager');
-  const selections = form.watch('selections');
-
   const { updateTowerGameResults } = useTowerGameStore([
     'gameStatus',
     'updateTowerGameResults',
     'towerGameResults',
   ]);
-
-  const currentMultipliers = towerMultipliers[selections.length] || [];
-  const maxMultiplier = Math.max(...currentMultipliers);
-  const maxPayout = wager * maxMultiplier;
 
   const clearBetHandler = () => {
     digitalClickEffect.play();
@@ -147,10 +139,7 @@ export const AutoController = ({
             'wr-w-full wr-uppercase wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none wr-mb-3 lg:wr-mb-0 wr-order-1 lg:wr-order-none',
             {
               'wr-cursor-default wr-pointer-events-none':
-                !form.formState.isValid ||
-                form.formState.isSubmitting ||
-                form.formState.isLoading ||
-                maxPayout == 0,
+                !form.formState.isValid || form.formState.isSubmitting || form.formState.isLoading,
             }
           )}
           size={'xl'}

@@ -1,7 +1,5 @@
 import { UseFormReturn } from 'react-hook-form';
 
-export type TowerMultipliers = Record<number, number[]>;
-
 export interface TowerFormField {
   wager: number;
   betCount: number;

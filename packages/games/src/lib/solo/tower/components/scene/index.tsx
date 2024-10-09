@@ -7,10 +7,10 @@ import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect
 import { useWinAnimation } from '../../../../hooks/use-win-animation';
 import { FormControl, FormField, FormItem } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
-import { Tower } from '../..';
 import { initialTowerCells } from '../../constants';
 import useTowerGameStore from '../../store';
 import { TowerForm, TowerFormField, TowerGameResult } from '../../types';
+import TowerGame from '../tower-game';
 import styles from './scene.module.css';
 
 export type TowerSceneProps = {
@@ -171,7 +171,8 @@ export const TowerScene: React.FC<TowerSceneProps> = ({
 
   return (
     <>
-      <FormField
+      <div className="lg:wr-mb-3"></div>
+      {/* <FormField
         name="selections"
         control={form.control}
         render={({ field }) => (
@@ -231,7 +232,9 @@ export const TowerScene: React.FC<TowerSceneProps> = ({
             />
           </FormItem>
         )}
-      />
+      /> */}
+
+      <TowerGame />
     </>
   );
 };

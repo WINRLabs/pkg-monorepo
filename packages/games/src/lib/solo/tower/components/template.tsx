@@ -8,11 +8,8 @@ import z from 'zod';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { WinAnimation } from '../../../common/win-animation';
 import { useGameOptions } from '../../../game-provider';
-import { useStrategist } from '../../../hooks/use-strategist';
 import { Form } from '../../../ui/form';
-import { parseToBigInt } from '../../../utils/number';
 import { Tower } from '..';
-import { TowerFormField, TowerGameResult } from '../types';
 import { TowerGameProps } from './game';
 
 type TemplateOptions = {
@@ -69,69 +66,6 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
       selections: [],
     },
   });
-
-  // React.useEffect(() => {
-  //   const cb = (formFields: any) => {
-  //     props?.onFormChange && props.onFormChange(formFields);
-  //   };
-
-  //   const subscription = form.watch(cb);
-
-  //   return () => subscription.unsubscribe();
-  // }, [form.watch]);
-
-  // strategy
-  const wager = form.watch('wager');
-  const increasePercentageOnWin = form.watch('increaseOnWin');
-  const increasePercentageOnLoss = form.watch('increaseOnLoss');
-  const stopProfit = form.watch('stopGain');
-  const stopLoss = form.watch('stopLoss');
-
-  const strategist = useStrategist({
-    wager,
-    increasePercentageOnLoss,
-    increasePercentageOnWin,
-    stopLoss,
-    stopProfit,
-    isAutoBetMode,
-  });
-
-  // const processStrategy = (result: TowerGameResult[]) => {
-  //   const payout = result[0]?.settled.payoutsInUsd || 0;
-  //   const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
-  //   const newWager = Number(p.wager) / 1e8;
-  //   const currentBalance = balanceAsDollar - wager + payout;
-
-  //   if (currentBalance < wager) {
-  //     setIsAutoBetMode(false);
-  //     props?.onError &&
-  //       props.onError(`Oops, you are out of funds. \n Deposit more funds to continue playing.`);
-  //     return;
-  //   }
-
-  //   if (newWager < (props.minWager || 0)) {
-  //     form.setValue('wager', props.minWager || 0);
-  //     return;
-  //   }
-
-  //   if (newWager > (props.maxWager || 0)) {
-  //     form.setValue('wager', props.maxWager || 0);
-  //     return;
-  //   }
-
-  //   if (p.action && !p.action.isStop()) {
-  //     form.setValue('wager', newWager);
-  //   }
-
-  //   if (p.action && p.action.isStop()) {
-  //     setIsAutoBetMode(false);
-  //     return;
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   props.onAutoBetModeChange?.(isAutoBetMode);
-  // }, [isAutoBetMode]);
 
   return (
     <Form {...form}>
