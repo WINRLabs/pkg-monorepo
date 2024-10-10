@@ -7,6 +7,7 @@ export interface ContractConfig {
   cashierAddress: `0x${string}`;
   uiOperatorAddress: `0x${string}`;
   rankMiddlewareAddress: `0x${string}`;
+  multiCallAddress: `0x${string}`;
 }
 
 export interface GameAddresses {
@@ -70,6 +71,7 @@ const ContractConfigContext = React.createContext<ContractConfigContext>({
   cashierAddress: '0x',
   uiOperatorAddress: '0x',
   rankMiddlewareAddress: '0x',
+  multiCallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
 });
 
 export const useContractConfigContext = () => {
