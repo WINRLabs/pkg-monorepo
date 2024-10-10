@@ -104,11 +104,6 @@ export type ChartObject = {
   y?: number | null;
 };
 
-export type TransactionResponse = {
-  success: boolean;
-  message: string;
-};
-
 export type AssignUsernameInput = {
   username: string;
   walletAddress: string;
@@ -608,57 +603,32 @@ export type BadgeResponse = {
     | 'LuckyRoller';
 };
 
-export type NewPlayers = {
-  count: number;
+export type WinrRaceUserInfo = {
+  level: number | null;
+  username: string;
+  address: string;
+  rank: number;
+  inList: boolean;
+  potentialReward: number;
+  hasClaimed: boolean;
 };
 
-export type TopPlayersByVolume = {
+export type WinrRaceSummary = {
+  level: number | null;
+  username: string;
+  address: string;
   rank: number;
   reward: number;
-  username: string;
-  address: string;
+  volume: number;
 };
 
-export type TopPlayersByBet = {
-  rank: number;
-  reward: number;
-  username: string;
-  address: string;
+export type WinrRaceResults = {
+  userInfo: WinrRaceUserInfo;
+  summary: WinrRaceSummary[];
 };
 
-export type HighRollerPlayers = {
-  rank: number;
-  reward: number;
-  username: string;
-  address: string;
-};
-
-export type BadLuckPlayers = {
-  rank: number;
-  reward: number;
-  username: string;
-  address: string;
-};
-
-export type LotteryWinners = {
-  username: string;
-  address: string;
-};
-
-export type PlayerEpochStats = {
-  loss: string;
-  profit: string;
-  volume: string;
-};
-
-export type RewardSummary = {
-  newPlayers: NewPlayers;
-  topPlayersByVolume: TopPlayersByVolume[];
-  topPlayersByBet: TopPlayersByBet[];
-  highRollerPlayers: HighRollerPlayers[];
-  badLuckPlayers: BadLuckPlayers[];
-  lotteryWinners: LotteryWinners[];
-  playerEpochStat: PlayerEpochStats;
+export type PlayerVolumeResponse = {
+  volume: number;
 };
 
 export type SummaryResponse = {

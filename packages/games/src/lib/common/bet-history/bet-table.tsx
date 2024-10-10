@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 
-import { GameType, profileLevels } from '../../constants';
+import { CDN_URL, GameType, wagerLevels } from '../../constants';
 import useMediaQuery from '../../hooks/use-media-query';
 import {
   IconBaccarat,
@@ -163,11 +163,10 @@ const BetTable = ({
       setIsAnimating(false);
     }, 500);
   };
-
   return (
     <>
       <AnimatePresence>
-        <Table className="max-lg:wr-max-w-full max-md:wr-overflow-scroll max-md:wr-scrollbar-none wr-overflow-y-hidden wr-border-separate wr-border-spacing-x-0 wr-border-spacing-y-[6px] after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:z-0 after:h-[30%] after:w-full after:bg-gradient-to-b after:from-[rgba(26,29,41,0)_0%] after:to-[rgba(9,9,9,1)_75%]">
+        <Table className="max-lg:wr-max-w-full max-md:wr-overflow-scroll max-md:wr-scrollbar-none wr-overflow-y-hidden wr-border-separate wr-border-spacing-x-0 wr-border-spacing-y-[6px] after:wr-pointer-events-none after:wr-absolute after:wr-bottom-0 after:wr-left-0 after:wr-z-0 after:wr-h-[30%] after:wr-w-full after:wr-bg-gradient-to-b after:wr-from-[rgba(26,29,41,0)_0%] after:wr-to-[#090909_75%]">
           <TableHeader className="wr-bg-onyx-700 wr-relative wr-z-10">
             <TableRow>
               <TableHead className="wr-pl-4 wr-rounded-[9px_0_0_9px] wr-w-[50px] lg:wr-w-[200px] wr-text-left">
@@ -227,9 +226,18 @@ const BetTable = ({
                         href={`/profile/${bet.player}`}
                         style={{
                           // @ts-ignore - BE TYPE MISMATCH
-                          color: profileLevels[bet.level - 1]?.levelColor || 'inherit',
+                          color: wagerLevels[bet.level - 1]?.levelColor || '#fff',
                         }}
+                        className="wr-flex wr-gap-1 wr-items-center"
                       >
+                        {bet.level > 0 && (
+                          <img
+                            src={`${CDN_URL}/icons/level/${wagerLevels[bet.level - 1]?.levelIcon}.svg`}
+                            alt="Justbet WINR Labs"
+                            width={16}
+                            height={16}
+                          />
+                        )}
                         {bet?.username?.length ? bet.username : shorter(bet.player, 2)}
                       </a>
                     </TableCell>
