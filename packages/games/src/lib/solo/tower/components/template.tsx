@@ -7,19 +7,21 @@ import z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { WinAnimation } from '../../../common/win-animation';
-import { useGameOptions } from '../../../game-provider';
 import { Form } from '../../../ui/form';
 import { Tower } from '..';
 import { TowerGameProps } from './game';
 
-type TemplateOptions = {
+export type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    gemImage?: string;
+    bombImage?: string;
+    logo?: string;
   };
 };
 
 type TemplateProps = TowerGameProps & {
-  // options: TemplateOptions;
+  options?: TemplateOptions;
   // minWager?: number;
   // maxWager?: number;
   // onSubmitGameForm: (data: TowerFormField) => void;
@@ -30,8 +32,6 @@ type TemplateProps = TowerGameProps & {
 
 const TowerTemplate = ({ ...props }: TemplateProps) => {
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
-  const { account } = useGameOptions();
-  const balanceAsDollar = account?.balanceAsDollar || 0;
 
   const formSchema = z.object({
     wager: z
@@ -78,13 +78,13 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
               isAutoBetMode={isAutoBetMode}
               onAutoBetModeChange={setIsAutoBetMode}
             />
-            <SceneContainer className="wr-relative md:wr-h-[750px] lg:wr-px-[14px] lg:wr-pb-[14px] max-lg:!wr-border-0 max-lg:!wr-p-0 max-md:wr-bg-transparent">
+            <SceneContainer className="wr-relative md:wr-h-[750px] max-lg:!wr-border-0 !wr-p-0 max-md:wr-bg-transparent">
               <Tower.Scene
                 {...props}
-                onSubmitGameForm={() => {}}
-                processStrategy={() => {}}
-                isAutoBetMode={isAutoBetMode}
-                onAutoBetModeChange={setIsAutoBetMode}
+                // onSubmitGameForm={() => {}}
+                // processStrategy={() => {}}
+                // isAutoBetMode={isAutoBetMode}
+                // onAutoBetModeChange={setIsAutoBetMode}
               />
               <WinAnimation />
             </SceneContainer>

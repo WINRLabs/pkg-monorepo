@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { Plinko3DGame, Web3GamesModals } from "@winrlabs/web3-games";
-import React from "react";
+import { Plinko3DGame, Web3GamesModals } from '@winrlabs/web3-games';
+import React from 'react';
 
 const Plinko3d = () => {
   return (
     <>
       <Plinko3DGame
-        buildedGameUrl={"https://jbassets.fra1.digitaloceanspaces.com"}
+        buildedGameUrl={'https://jbassets.fra1.digitaloceanspaces.com'}
         options={{
           scene: {
-            loader: "/plinko-3d/loader.png",
+            loader: '/plinko-3d/loader.png',
           },
           betController: {
-            logo: "/plinko-3d/plinko.png",
+            logo: '/plinko-3d/plinko.png',
           },
         }}
         minWager={0.1}
