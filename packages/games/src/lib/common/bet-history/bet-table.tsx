@@ -228,7 +228,7 @@ const BetTable = ({
                           // @ts-ignore - BE TYPE MISMATCH
                           color: wagerLevels[bet.level - 1]?.levelColor || '#fff',
                         }}
-                        className="wr-flex wr-gap-1 wr-items-center wr-justify-center"
+                        className="wr-flex wr-gap-1 wr-items-center wr-justify-center md:wr-justify-start"
                       >
                         {bet.level > 0 && (
                           <img
