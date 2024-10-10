@@ -1,5 +1,12 @@
 # @winrlabs/api
 
+## 1.4.4
+
+### Patch Changes
+
+- 83f2cb4: table sse update
+- 83f2cb4: style fix
+
 ## 1.4.3
 
 ### Patch Changes
