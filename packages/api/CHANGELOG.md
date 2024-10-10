@@ -1,5 +1,11 @@
 # @winrlabs/api
 
+## 1.4.3
+
+### Patch Changes
+
+- d32c3fb: table sse update
+
 ## 1.4.2
 
 ### Patch Changes

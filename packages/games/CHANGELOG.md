@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.66
+
+### Patch Changes
+
+- d32c3fb: table sse update
+
 ## 3.0.65
 
 ### Patch Changes
