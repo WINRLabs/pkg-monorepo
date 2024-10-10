@@ -1,5 +1,20 @@
 # @winrlabs/web3-games
 
+## 11.0.70
+
+### Patch Changes
+
+- 44d5bb7: table sse update
+- 44d5bb7: style fix2
+- 44d5bb7: style fix
+- Updated dependencies [44d5bb7]
+- Updated dependencies [44d5bb7]
+- Updated dependencies [44d5bb7]
+  - @winrlabs/web3-games@11.0.70
+  - @winrlabs/games@3.0.68
+  - @winrlabs/api@1.4.5
+  - @winrlabs/web3@0.11.50
+
 ## 11.0.69
 
 ### Patch Changes

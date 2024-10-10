@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 3.0.68
+
+### Patch Changes
+
+- 44d5bb7: table sse update
+- 44d5bb7: style fix2
+- 44d5bb7: style fix
+
 ## 3.0.67
 
 ### Patch Changes
