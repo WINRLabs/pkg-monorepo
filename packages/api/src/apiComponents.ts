@@ -268,59 +268,6 @@ export const useGameControllerGetChart = <TData = GameControllerGetChartResponse
   });
 };
 
-export type GameControllerFreeSpinTrigggerQueryParams = {
-  player: string;
-  token: string;
-};
-
-export type GameControllerFreeSpinTrigggerError = Fetcher.ErrorWrapper<undefined>;
-
-export type GameControllerFreeSpinTrigggerVariables = {
-  queryParams: GameControllerFreeSpinTrigggerQueryParams;
-} & ApiContext['fetcherOptions'];
-
-export const fetchGameControllerFreeSpinTriggger = (
-  variables: GameControllerFreeSpinTrigggerVariables,
-  signal?: AbortSignal
-) =>
-  apiFetch<
-    Schemas.TransactionResponse,
-    GameControllerFreeSpinTrigggerError,
-    undefined,
-    {},
-    GameControllerFreeSpinTrigggerQueryParams,
-    {}
-  >({ url: '/game/free-spin-trigger', method: 'get', ...variables, signal });
-
-export const useGameControllerFreeSpinTriggger = <TData = Schemas.TransactionResponse,>(
-  variables: GameControllerFreeSpinTrigggerVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<
-      Schemas.TransactionResponse,
-      GameControllerFreeSpinTrigggerError,
-      TData
-    >,
-    'queryKey' | 'queryFn' | 'initialData'
-  >
-) => {
-  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<
-    Schemas.TransactionResponse,
-    GameControllerFreeSpinTrigggerError,
-    TData
-  >({
-    queryKey: queryKeyFn({
-      path: '/game/free-spin-trigger',
-      operationId: 'gameControllerFreeSpinTriggger',
-      variables,
-    }),
-    queryFn: ({ signal }) =>
-      fetchGameControllerFreeSpinTriggger({ ...fetcherOptions, ...variables }, signal),
-    ...options,
-    ...queryOptions,
-  });
-};
-
 export type GameControllerAssignUsernameError = Fetcher.ErrorWrapper<undefined>;
 
 export type GameControllerAssignUsernameVariables = {
@@ -528,6 +475,104 @@ export const useGameControllerGetLiveWins = <TData = GameControllerGetLiveWinsRe
     }),
     queryFn: ({ signal }) =>
       fetchGameControllerGetLiveWins({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GameControllerGetLastLuckyWinsError = Fetcher.ErrorWrapper<undefined>;
+
+export type GameControllerGetLastLuckyWinsResponse = Schemas.GameResultDto[];
+
+export type GameControllerGetLastLuckyWinsVariables = ApiContext['fetcherOptions'];
+
+export const fetchGameControllerGetLastLuckyWins = (
+  variables: GameControllerGetLastLuckyWinsVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<
+    GameControllerGetLastLuckyWinsResponse,
+    GameControllerGetLastLuckyWinsError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: '/game/last-lucky-wins', method: 'get', ...variables, signal });
+
+export const useGameControllerGetLastLuckyWins = <TData = GameControllerGetLastLuckyWinsResponse,>(
+  variables: GameControllerGetLastLuckyWinsVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      GameControllerGetLastLuckyWinsResponse,
+      GameControllerGetLastLuckyWinsError,
+      TData
+    >,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<
+    GameControllerGetLastLuckyWinsResponse,
+    GameControllerGetLastLuckyWinsError,
+    TData
+  >({
+    queryKey: queryKeyFn({
+      path: '/game/last-lucky-wins',
+      operationId: 'gameControllerGetLastLuckyWins',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchGameControllerGetLastLuckyWins({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GameControllerGetLastHighRollersError = Fetcher.ErrorWrapper<undefined>;
+
+export type GameControllerGetLastHighRollersResponse = Schemas.GameResultDto[];
+
+export type GameControllerGetLastHighRollersVariables = ApiContext['fetcherOptions'];
+
+export const fetchGameControllerGetLastHighRollers = (
+  variables: GameControllerGetLastHighRollersVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<
+    GameControllerGetLastHighRollersResponse,
+    GameControllerGetLastHighRollersError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: '/game/last-high-rollers', method: 'get', ...variables, signal });
+
+export const useGameControllerGetLastHighRollers = <
+  TData = GameControllerGetLastHighRollersResponse,
+>(
+  variables: GameControllerGetLastHighRollersVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      GameControllerGetLastHighRollersResponse,
+      GameControllerGetLastHighRollersError,
+      TData
+    >,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<
+    GameControllerGetLastHighRollersResponse,
+    GameControllerGetLastHighRollersError,
+    TData
+  >({
+    queryKey: queryKeyFn({
+      path: '/game/last-high-rollers',
+      operationId: 'gameControllerGetLastHighRollers',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchGameControllerGetLastHighRollers({ ...fetcherOptions, ...variables }, signal),
     ...options,
     ...queryOptions,
   });
@@ -917,6 +962,78 @@ export const useGameControllerSseLiveWins = <TData = undefined,>(
     }),
     queryFn: ({ signal }) =>
       fetchGameControllerSseLiveWins({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GameControllerSseHighRollersError = Fetcher.ErrorWrapper<undefined>;
+
+export type GameControllerSseHighRollersVariables = ApiContext['fetcherOptions'];
+
+export const fetchGameControllerSseHighRollers = (
+  variables: GameControllerSseHighRollersVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<undefined, GameControllerSseHighRollersError, undefined, {}, {}, {}>({
+    url: '/game/sse-high-rollers',
+    method: 'get',
+    ...variables,
+    signal,
+  });
+
+export const useGameControllerSseHighRollers = <TData = undefined,>(
+  variables: GameControllerSseHighRollersVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, GameControllerSseHighRollersError, TData>,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<undefined, GameControllerSseHighRollersError, TData>({
+    queryKey: queryKeyFn({
+      path: '/game/sse-high-rollers',
+      operationId: 'gameControllerSseHighRollers',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchGameControllerSseHighRollers({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GameControllerSseLuckyWinsError = Fetcher.ErrorWrapper<undefined>;
+
+export type GameControllerSseLuckyWinsVariables = ApiContext['fetcherOptions'];
+
+export const fetchGameControllerSseLuckyWins = (
+  variables: GameControllerSseLuckyWinsVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<undefined, GameControllerSseLuckyWinsError, undefined, {}, {}, {}>({
+    url: '/game/sse-lucky-wins',
+    method: 'get',
+    ...variables,
+    signal,
+  });
+
+export const useGameControllerSseLuckyWins = <TData = undefined,>(
+  variables: GameControllerSseLuckyWinsVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, GameControllerSseLuckyWinsError, TData>,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<undefined, GameControllerSseLuckyWinsError, TData>({
+    queryKey: queryKeyFn({
+      path: '/game/sse-lucky-wins',
+      operationId: 'gameControllerSseLuckyWins',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchGameControllerSseLuckyWins({ ...fetcherOptions, ...variables }, signal),
     ...options,
     ...queryOptions,
   });
@@ -1867,46 +1984,92 @@ export const useBadgeControllerWeeklyClaimer = (
   });
 };
 
-export type RewardControllerContestQueryParams = {
+export type RewardControllerWinrRaceQueryParams = {
   player?: string;
   epoch?: number;
 };
 
-export type RewardControllerContestError = Fetcher.ErrorWrapper<undefined>;
+export type RewardControllerWinrRaceError = Fetcher.ErrorWrapper<undefined>;
 
-export type RewardControllerContestVariables = {
-  queryParams?: RewardControllerContestQueryParams;
+export type RewardControllerWinrRaceVariables = {
+  queryParams?: RewardControllerWinrRaceQueryParams;
 } & ApiContext['fetcherOptions'];
 
-export const fetchRewardControllerContest = (
-  variables: RewardControllerContestVariables,
+export const fetchRewardControllerWinrRace = (
+  variables: RewardControllerWinrRaceVariables,
   signal?: AbortSignal
 ) =>
   apiFetch<
-    Schemas.RewardSummary,
-    RewardControllerContestError,
+    Schemas.WinrRaceResults,
+    RewardControllerWinrRaceError,
     undefined,
     {},
-    RewardControllerContestQueryParams,
+    RewardControllerWinrRaceQueryParams,
     {}
-  >({ url: '/reward/contest', method: 'get', ...variables, signal });
+  >({ url: '/reward/winr-race', method: 'get', ...variables, signal });
 
-export const useRewardControllerContest = <TData = Schemas.RewardSummary,>(
-  variables: RewardControllerContestVariables,
+export const useRewardControllerWinrRace = <TData = Schemas.WinrRaceResults,>(
+  variables: RewardControllerWinrRaceVariables,
   options?: Omit<
-    reactQuery.UseQueryOptions<Schemas.RewardSummary, RewardControllerContestError, TData>,
+    reactQuery.UseQueryOptions<Schemas.WinrRaceResults, RewardControllerWinrRaceError, TData>,
     'queryKey' | 'queryFn' | 'initialData'
   >
 ) => {
   const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
-  return reactQuery.useQuery<Schemas.RewardSummary, RewardControllerContestError, TData>({
+  return reactQuery.useQuery<Schemas.WinrRaceResults, RewardControllerWinrRaceError, TData>({
     queryKey: queryKeyFn({
-      path: '/reward/contest',
-      operationId: 'rewardControllerContest',
+      path: '/reward/winr-race',
+      operationId: 'rewardControllerWinrRace',
       variables,
     }),
     queryFn: ({ signal }) =>
-      fetchRewardControllerContest({ ...fetcherOptions, ...variables }, signal),
+      fetchRewardControllerWinrRace({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type PlayerControllerContestQueryParams = {
+  player: string;
+  startTime: number;
+  endTime: number;
+};
+
+export type PlayerControllerContestError = Fetcher.ErrorWrapper<undefined>;
+
+export type PlayerControllerContestVariables = {
+  queryParams: PlayerControllerContestQueryParams;
+} & ApiContext['fetcherOptions'];
+
+export const fetchPlayerControllerContest = (
+  variables: PlayerControllerContestVariables,
+  signal?: AbortSignal
+) =>
+  apiFetch<
+    Schemas.PlayerVolumeResponse,
+    PlayerControllerContestError,
+    undefined,
+    {},
+    PlayerControllerContestQueryParams,
+    {}
+  >({ url: '/player/volume', method: 'get', ...variables, signal });
+
+export const usePlayerControllerContest = <TData = Schemas.PlayerVolumeResponse,>(
+  variables: PlayerControllerContestVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<Schemas.PlayerVolumeResponse, PlayerControllerContestError, TData>,
+    'queryKey' | 'queryFn' | 'initialData'
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useApiContext(options);
+  return reactQuery.useQuery<Schemas.PlayerVolumeResponse, PlayerControllerContestError, TData>({
+    queryKey: queryKeyFn({
+      path: '/player/volume',
+      operationId: 'playerControllerContest',
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchPlayerControllerContest({ ...fetcherOptions, ...variables }, signal),
     ...options,
     ...queryOptions,
   });
@@ -2102,11 +2265,6 @@ export type QueryOperation =
       variables: GameControllerGetChartVariables;
     }
   | {
-      path: '/game/free-spin-trigger';
-      operationId: 'gameControllerFreeSpinTriggger';
-      variables: GameControllerFreeSpinTrigggerVariables;
-    }
-  | {
       path: '/game/user-profile';
       operationId: 'gameControllerGetUserProfile';
       variables: GameControllerGetUserProfileVariables;
@@ -2120,6 +2278,16 @@ export type QueryOperation =
       path: '/game/live-wins';
       operationId: 'gameControllerGetLiveWins';
       variables: GameControllerGetLiveWinsVariables;
+    }
+  | {
+      path: '/game/last-lucky-wins';
+      operationId: 'gameControllerGetLastLuckyWins';
+      variables: GameControllerGetLastLuckyWinsVariables;
+    }
+  | {
+      path: '/game/last-high-rollers';
+      operationId: 'gameControllerGetLastHighRollers';
+      variables: GameControllerGetLastHighRollersVariables;
     }
   | {
       path: '/game/live-big-wins';
@@ -2155,6 +2323,16 @@ export type QueryOperation =
       path: '/game/sse-live-wins';
       operationId: 'gameControllerSseLiveWins';
       variables: GameControllerSseLiveWinsVariables;
+    }
+  | {
+      path: '/game/sse-high-rollers';
+      operationId: 'gameControllerSseHighRollers';
+      variables: GameControllerSseHighRollersVariables;
+    }
+  | {
+      path: '/game/sse-lucky-wins';
+      operationId: 'gameControllerSseLuckyWins';
+      variables: GameControllerSseLuckyWinsVariables;
     }
   | {
       path: '/game/sse-global-bet-history';
@@ -2232,9 +2410,14 @@ export type QueryOperation =
       variables: ReferralControllerCodesVolumeAndRewardAmountsVariables;
     }
   | {
-      path: '/reward/contest';
-      operationId: 'rewardControllerContest';
-      variables: RewardControllerContestVariables;
+      path: '/reward/winr-race';
+      operationId: 'rewardControllerWinrRace';
+      variables: RewardControllerWinrRaceVariables;
+    }
+  | {
+      path: '/player/volume';
+      operationId: 'playerControllerContest';
+      variables: PlayerControllerContestVariables;
     }
   | {
       path: '/stake/summary';

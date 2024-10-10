@@ -1,6 +1,6 @@
 'use client';
 
-import { TransactionResponse, useRankControllerTakeLevelupSnapshot } from '@winrlabs/api';
+import { useRankControllerTakeLevelupSnapshot } from '@winrlabs/api';
 import { GameType, useGameOptions, useWeb3GamesModalsStore } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -183,7 +183,7 @@ export const usePlayerGameStatus = ({
         player: currentAccount.address || '0x',
       },
       baseUrl: baseUrl,
-    })) as unknown as TransactionResponse;
+    })) as any;
 
     if (mutation?.success && onPlayerStatusUpdate)
       onPlayerStatusUpdate({

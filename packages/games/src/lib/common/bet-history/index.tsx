@@ -1,9 +1,12 @@
+'use client';
+
 import * as Tabs from '@radix-ui/react-tabs';
 import React, { useEffect, useState } from 'react';
 
 import { Document, IconCoin, IconStars, Person } from '../../svgs';
 import { AnimatedTabContent } from '../animated-tab-content';
 import BetTable from './bet-table';
+import Loading from './loading';
 
 export type BetHistoryCurrencyList = Record<
   string,
@@ -13,7 +16,7 @@ export type BetHistoryCurrencyList = Record<
   }
 >;
 
-export type BetHistoryType = 'bets' | 'player';
+export type BetHistoryType = 'bets' | 'player' | 'high' | 'lucky';
 
 export type BetHistoryFilter = {
   type?: BetHistoryType;
@@ -92,13 +95,19 @@ export const BetHistoryTemplate = ({
         </div>
 
         {loading ? (
-          <p className="wr-font-semibold wr-my-3">Loading...</p>
+          <Loading />
         ) : (
           <>
             <AnimatedTabContent value="bets">
               <BetTable betHistory={betHistory} currencyList={currencyList} />
             </AnimatedTabContent>
             <AnimatedTabContent value="player">
+              <BetTable betHistory={betHistory} currencyList={currencyList} />
+            </AnimatedTabContent>
+            <AnimatedTabContent value="high">
+              <BetTable betHistory={betHistory} currencyList={currencyList} />
+            </AnimatedTabContent>
+            <AnimatedTabContent value="lucky">
               <BetTable betHistory={betHistory} currencyList={currencyList} />
             </AnimatedTabContent>
           </>
