@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.68
+
+### Patch Changes
+
+- d32c3fb: table sse update
+- Updated dependencies [d32c3fb]
+  - @winrlabs/web3-games@11.0.68
+  - @winrlabs/games@3.0.66
+  - @winrlabs/api@1.4.3
+  - @winrlabs/web3@0.11.48
+
 ## 11.0.67
 
 ### Patch Changes
