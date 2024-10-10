@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.51
+
+### Patch Changes
+
+- ff53275: custom multicall
+
 ## 0.11.50
 
 ### Patch Changes
