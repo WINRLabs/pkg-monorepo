@@ -1,13 +1,13 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import debug from 'debug';
 import { JSONRPCClient, TypedJSONRPCClient } from 'json-rpc-2.0';
 import React, { createContext, ReactNode, useContext } from 'react';
 import { Address, Hex } from 'viem';
 import { Config, useAccount } from 'wagmi';
 
 import { UserOperation } from '../smart-wallet';
-import debug from 'debug';
 
 const log = debug('worker:UseBundlerClient');
 

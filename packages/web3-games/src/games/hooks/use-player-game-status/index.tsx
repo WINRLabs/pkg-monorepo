@@ -78,11 +78,12 @@ export const usePlayerGameStatus = ({
   const [reIterateCooldown, setReIterateCooldown] = React.useState<number>(0);
 
   log('user session', sessionStatus);
-  const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
+  const { rankMiddlewareAddress, controllerAddress, multiCallAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
 
   const { baseUrl } = useApiOptions();
+  const { client } = useBundlerClient();
 
   const {
     data: gameStatus,
@@ -116,7 +117,7 @@ export const usePlayerGameStatus = ({
       },
     ],
     config: wagmiConfig,
-    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    multicallAddress: multiCallAddress,
     batchSize: 0,
     allowFailure: false,
     query: {
@@ -174,7 +175,6 @@ export const usePlayerGameStatus = ({
   }, [dataUpdatedAt, lastSeen, sessionStatus, isRefundable]);
 
   // Mutations
-  const { client } = useBundlerClient();
   const playerLevelUp = useRankControllerTakeLevelupSnapshot({});
 
   const handlePlayerLevelUp = async () => {
