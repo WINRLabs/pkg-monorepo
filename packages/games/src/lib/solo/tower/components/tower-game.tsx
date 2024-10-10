@@ -34,8 +34,6 @@ const generateGrid = (): Cell[][] => {
 const TowerGame = ({ ...props }: TowerGameProps) => {
   const options = { ...props.options };
 
-  console.log('options', options);
-
   const [grid, setGrid] = useState<Cell[][]>(generateGrid);
   const [gameOver, setGameOver] = useState(false);
 
@@ -97,7 +95,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
                 <button
                   key={`${rowIndex}-${colIndex}`}
                   className={cn(
-                    'wr-w-44 wr-h-14 wr-rounded-md wr-grid wr-place-items-center wr-text-white wr-font-bold',
+                    'wr-w-44 wr-h-14 wr-rounded-md wr-grid wr-place-items-center wr-text-white wr-font-bold wr-transition-all wr-duration-300',
                     {
                       'wr-bg-blue-500 hover:wr-bg-blue-700':
                         grid[rowIndex]?.[colIndex]?.isClickable,
