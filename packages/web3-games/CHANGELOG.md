@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 11.0.71
+
+### Patch Changes
+
+- ff53275: custom multicall
+- Updated dependencies [ff53275]
+  - @winrlabs/web3-games@11.0.71
+  - @winrlabs/web3@0.11.51
+
 ## 11.0.70
 
 ### Patch Changes
