@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 11.0.72
+
+### Patch Changes
+
+- 9616374: revert multicall
+- Updated dependencies [9616374]
+- Updated dependencies [9616374]
+  - @winrlabs/web3@0.11.52
+  - @winrlabs/web3-games@11.0.72
+
 ## 11.0.71
 
 ### Patch Changes
