@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react';
 
 export interface ApiContextType {
   baseUrl?: string;
+  disablePriceFeed?: boolean;
 }
 
 const ApiContext = createContext<ApiContextType | null>(null);
@@ -17,6 +18,7 @@ export const ApiProvider = ({
     <ApiContext.Provider
       value={{
         baseUrl: config?.baseUrl,
+        disablePriceFeed: config?.disablePriceFeed,
       }}
     >
       {children}
