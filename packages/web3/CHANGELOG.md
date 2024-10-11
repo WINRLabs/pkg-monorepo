@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.53
+
+### Patch Changes
+
+- 95b8a8e: option for disab ling get-last-price
+- 95b8a8e: multicall
+
 ## 0.11.52
 
 ### Patch Changes
