@@ -67,6 +67,7 @@ export function Providers(props: { children: ReactNode }) {
           // apiConfig={{
           //   baseUrl: 'https://abc.com',
           // }}
+          apiConfig={{}}
           smartAccountConfig={{
             bundlerUrl,
             network,

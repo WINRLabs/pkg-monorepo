@@ -3,6 +3,7 @@
 import { useCurrencyControllerGetLastPriceFeed } from '@winrlabs/api';
 import React from 'react';
 
+import { useApiOptions } from '../../providers/api';
 import {
   defaultPriceFeedValues,
   PriceFeedVariable,
@@ -12,6 +13,7 @@ import {
 
 export const usePriceFeed = () => {
   const { priceFeed, updatePriceFeed } = usePriceFeedStore();
+  const { disablePriceFeed } = useApiOptions();
 
   const { data, dataUpdatedAt } = useCurrencyControllerGetLastPriceFeed(
     {},
@@ -19,6 +21,7 @@ export const usePriceFeed = () => {
       refetchInterval: 10_000,
       refetchOnWindowFocus: false,
       retry: false,
+      enabled: !disablePriceFeed,
     }
   );
 
