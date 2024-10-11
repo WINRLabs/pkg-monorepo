@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.52
+
+### Patch Changes
+
+- 9616374: multicall
+- 9616374: revert multicall
+
 ## 0.11.51
 
 ### Patch Changes
