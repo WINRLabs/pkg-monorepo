@@ -3,8 +3,6 @@ import { useEffect, useMemo } from 'react';
 import { Address, formatUnits } from 'viem';
 import { useReadContracts } from 'wagmi';
 
-// TODO: No way to access multiCallAddress from here, must refactor
-import { useContractConfigContext } from '../../../web3-games/src/games/hooks/use-contract-config';
 import { erc20Abi } from '../abis';
 import { BalanceMap, useBalanceStore } from '../providers/balance';
 import { useTokenStore } from '../providers/token';
@@ -47,8 +45,6 @@ export const useTokenBalances = ({
   account: Address;
   balancesToRead?: Address[];
 }) => {
-  const { multiCallAddress } = useContractConfigContext();
-
   const balanceStore = useBalanceStore((state) => ({
     balances: state.balances,
     updateBalances: state.updateBalances,
@@ -67,7 +63,7 @@ export const useTokenBalances = ({
 
   const result = useReadContracts({
     contracts: contractsToRead,
-    multicallAddress: multiCallAddress,
+    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
     batchSize: 0,
     allowFailure: false,
     query: {
