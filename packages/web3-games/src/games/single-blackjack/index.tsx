@@ -25,6 +25,7 @@ import {
   useWrapWinr,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'viem';
 import { useReadContract } from 'wagmi';
@@ -49,7 +50,6 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
-import debug from 'debug';
 
 const log = debug('worker:SingleBlackjackWeb3');
 
@@ -120,7 +120,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<SingleBJDealFormFields>({
-    wager: props.minWager || 1,
+    wager: 1,
   });
   const [activeMove, setActiveMove] = React.useState<
     'Created' | 'HitCard' | 'StandOff' | 'DoubleDown' | 'Split' | 'Insurance'

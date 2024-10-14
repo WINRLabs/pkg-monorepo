@@ -325,7 +325,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   React.useEffect(() => {
     const debouncedCb = debounce((formFields) => {
       onFormChange && onFormChange(formFields);
-    }, 400);
+    }, 0);
 
     const subscription = form.watch(debouncedCb);
 
