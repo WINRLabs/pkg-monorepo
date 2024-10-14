@@ -17,6 +17,14 @@ export type TemplateOptions = {
     gemImage?: string;
     bombImage?: string;
     logo?: string;
+    cell?: string;
+    bombCell?: string;
+    selectedCell?: string;
+    cellBomb?: string;
+    cellCoin?: string;
+    cellHover?: string;
+    hoverRowCell?: string;
+    gameBg?: string;
   };
 };
 
