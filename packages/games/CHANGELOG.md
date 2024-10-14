@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.69
+
+### Patch Changes
+
+- 4e93ced: bet history animation fix
+
 ## 3.0.68
 
 ### Patch Changes
