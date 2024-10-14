@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 3.0.70
+
+### Patch Changes
+
+- 4137733: bet history animation fix
+- 4137733: one hand bj initial value fix
+
 ## 3.0.69
 
 ### Patch Changes

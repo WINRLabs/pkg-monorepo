@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.75
+
+### Patch Changes
+
+- 4137733: bet history animation fix
+- 4137733: one hand bj initial value fix
+- Updated dependencies [4137733]
+- Updated dependencies [4137733]
+  - @winrlabs/web3-games@11.0.75
+  - @winrlabs/games@3.0.70
+
 ## 11.0.74
 
 ### Patch Changes
