@@ -11,7 +11,7 @@ import {
 import { GameType } from '@winrlabs/games';
 import { BetHistoryCurrencyList, BetHistoryFilter } from '@winrlabs/games';
 import { useCurrentAccount, useTokenStore } from '@winrlabs/web3';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface IUseBetHistory {
   gameType: GameType;
@@ -39,6 +39,8 @@ export const useBetHistory = ({ options }: IUseBetHistory) => {
   };
 
   const [globalBets, setGlobalBets] = useState<GameControllerGlobalBetHistoryResponse>([]);
+
+  const sseDataBuffer = useRef<GameControllerGlobalBetHistoryResponse>([]);
 
   const { data: initialDataGlobalBets, isLoading } = useGameControllerGlobalBetHistory(
     {
@@ -94,13 +96,36 @@ export const useBetHistory = ({ options }: IUseBetHistory) => {
 
       const newData = JSON.parse(String(event.data));
 
-      setGlobalBets((prev) => [newData.payload, ...prev].slice(0, 30));
+      sseDataBuffer.current = [newData.payload, ...sseDataBuffer.current].slice(0, 30);
     };
 
     return () => {
       es.close();
     };
   }, [filter.type]);
+
+  useEffect(() => {
+    if (filter.type == 'bets') {
+      const intervalId = setInterval(() => {
+        setGlobalBets((prev) => {
+          const updatedBets = [...sseDataBuffer.current, ...prev].slice(0, 30);
+          sseDataBuffer.current = [];
+
+          return updatedBets;
+        });
+      }, 2000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [filter.type]);
+
+  useEffect(() => {
+    if (filter.type !== 'bets') {
+      setGlobalBets((prev) => [...prev, ...sseDataBuffer.current].slice(0, 30));
+    }
+  }, [sseDataBuffer.current, filter.type]);
 
   const {
     data: myBetsData,
