@@ -51,11 +51,13 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
         message: `Maximum wager is $2000`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
-    selections: z.array(z.number()),
     stopGain: z.number(),
     stopLoss: z.number(),
     increaseOnWin: z.number(),
     increaseOnLoss: z.number(),
+    riskLevel: z.string(),
+    rows: z.number(),
+    numberOfBet: z.number(),
   });
 
   // 1. Define your form.
@@ -71,7 +73,9 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
       stopLoss: 0,
       increaseOnLoss: 0,
       increaseOnWin: 0,
-      selections: [],
+      riskLevel: 'easy',
+      rows: 8,
+      numberOfBet: 1,
     },
   });
 

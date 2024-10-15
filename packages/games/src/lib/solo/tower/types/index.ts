@@ -3,11 +3,13 @@ import { UseFormReturn } from 'react-hook-form';
 export interface TowerFormField {
   wager: number;
   betCount: number;
-  selections: number[];
   stopGain: number;
   stopLoss: number;
   increaseOnWin: number;
   increaseOnLoss: number;
+  riskLevel: 'easy' | 'medium' | 'hard' | 'expert' | 'master';
+  rows: number;
+  numberOfBet: number;
 }
 
 export type TowerForm = UseFormReturn<TowerFormField, any, undefined>;
