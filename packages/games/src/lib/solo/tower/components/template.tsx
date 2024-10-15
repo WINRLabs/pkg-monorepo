@@ -55,7 +55,7 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
     stopLoss: z.number(),
     increaseOnWin: z.number(),
     increaseOnLoss: z.number(),
-    riskLevel: z.string(),
+    riskLevel: z.enum(['easy', 'medium', 'hard', 'expert', 'master']),
     rows: z.number(),
     numberOfBet: z.number(),
   });

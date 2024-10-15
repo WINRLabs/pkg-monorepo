@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { cn } from '../../../utils/style';
 import { TemplateOptions } from './template';
 
 interface Cell {
@@ -15,7 +16,7 @@ export type TowerGameProps = {
 const generateGrid = (): Cell[][] => {
   const grid: Cell[][] = Array.from({ length: 4 }, () =>
     Array.from({ length: 8 }, () => ({
-      isBomb: Math.random() < 0.25, // 25% chance of bomb
+      isBomb: Math.random() < 0.01, // 25% chance of bomb
       isClickable: false,
       isSelected: false,
     }))
@@ -113,7 +114,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
           {grid[0]?.map((_, colIndex) => (
             <div
               key={colIndex}
-              className="wr-grid wr-grid-cols-4 wr-gap-2"
+              className="wr-grid wr-grid-cols-4 wr-gap-2 wr-relative"
               style={{ order: -colIndex }}
             >
               {grid.map((_, rowIndex) => {
@@ -126,18 +127,33 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
                       backgroundImage: getBackgroundImage(rowIndex, colIndex, grid, gameOver),
                       transition: 'background-image 0.3s ease-in-out',
                     }}
-                    className="wr-w-[68px] wr-h-9 wr-grid wr-place-items-center wr-bg-no-repeat wr-bg-center wr-bg-contain wr-text-white wr-font-bold wr-transition-all wr-duration-300"
+                    className="wr-w-[68px] wr-z-10 wr-h-9 wr-grid wr-place-items-center wr-bg-no-repeat wr-bg-center wr-bg-contain wr-text-white wr-font-bold wr-transition-all wr-duration-300 wr-relative"
                     onClick={() => handleClick(rowIndex, colIndex)}
                     disabled={!grid[rowIndex]?.[colIndex]?.isClickable}
-                  />
+                  ></button>
                 );
               })}
+              <div className="wr-absolute wr-inset-0 wr-flex wr-items-center wr-justify-center">
+                <span
+                  className={cn(
+                    'wr-absolute wr-text-sm -wr-top-5 wr-w-14 wr-grid wr-place-items-center wr-h-8 wr-z-20 wr-bg-onyx-800 wr-rounded-full wr-p-1.5',
+                    {
+                      'wr-border-[#FFD000] wr-border-2': grid.some(
+                        (row, rowIndex) =>
+                          row[colIndex]?.isClickable && !grid[rowIndex]?.[colIndex]?.isSelected
+                      ),
+                    }
+                  )}
+                >
+                  15
+                </span>
+              </div>
             </div>
           ))}
         </div>
       </div>
       <button
-        className="wr-mt-4 wr-px-4 wr-py-2 wr-bg-blue-500 wr-text-white wr-font-bold wr-rounded-md hover:wr-bg-blue-700"
+        className="wr-mt-4 wr-w-max wr-z-20 wr-shrink-0 wr-px-4 wr-py-2 wr-bg-blue-500 wr-text-white wr-font-bold wr-rounded-md hover:wr-bg-blue-700"
         onClick={resetGame}
       >
         Reset Game

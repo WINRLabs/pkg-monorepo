@@ -108,21 +108,21 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         render={({ field }) => (
           <FormItem className="wr-mb-3 lg:wr-mb-6">
             <FormLabel>Rows</FormLabel>
-            <FormControl>
-              <div>
-                <Select
-                  value={String(field.value)}
-                  onValueChange={(val) => field.onChange(Number(val))}
-                >
+            <div>
+              <Select
+                value={String(field.value)}
+                onValueChange={(val) => field.onChange(Number(val))}
+              >
+                <FormControl>
                   <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">Rows</SelectTrigger>
-                  <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 hover:wr-bg-zinc-900 wr-transition-all wr-duration-300">
-                    <SelectItem className="wr-flex wr-justify-between " value="5">
-                      5
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </FormControl>
+                </FormControl>
+                <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 hover:wr-bg-zinc-900 wr-transition-all wr-duration-300">
+                  <SelectItem className="wr-flex wr-justify-between " value="5">
+                    5
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </FormItem>
         )}
       />
