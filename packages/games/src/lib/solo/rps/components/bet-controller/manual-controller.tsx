@@ -6,13 +6,13 @@ import { useFormContext } from 'react-hook-form';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { ALL_RPS_CHOICES, rpsChoiceMap } from '../../constant';
-import useRpsGameStore from '../../store';
 import { RockPaperScissors, RPSForm } from '../../types';
 import { BetLoader } from './bet-loader';
 
@@ -50,6 +50,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
   const form = useFormContext() as RPSForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.LIMBO_TICK);
+  const { readyToPlay } = useGame();
 
   const maxPayout = React.useMemo(() => {
     const { wager } = form.getValues();
@@ -118,6 +119,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
           )}
           size={'xl'}
           onClick={() => clickEffect.play()}
+          disabled={!readyToPlay}
         >
           {form.formState.isSubmitting || form.formState.isLoading ? <BetLoader /> : 'Bet'}
         </Button>

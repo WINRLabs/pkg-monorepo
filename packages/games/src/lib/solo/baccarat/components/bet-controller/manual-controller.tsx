@@ -1,13 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 
-import { AudioController } from '../../../../common/audio-controller';
 import { ChipController } from '../../../../common/chip-controller';
 import { Chip } from '../../../../common/chip-controller/types';
-import { BetControllerContainer } from '../../../../common/containers';
-import { BetControllerTitle, WagerFormField } from '../../../../common/controller';
+import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
-import { useGameOptions } from '../../../../game-provider';
+import { useGame, useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormLabel } from '../../../../ui/form';
@@ -43,6 +41,7 @@ export const ManualController: React.FC<Props> = ({
   const { account } = useGameOptions();
   const form = useFormContext() as BaccaratForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const { readyToPlay } = useGame();
 
   const wager = form.watch('wager');
 
@@ -107,6 +106,7 @@ export const ManualController: React.FC<Props> = ({
                   isDisabled,
               }
             )}
+            disabled={!readyToPlay}
           >
             {form.formState.isLoading || form.formState.isSubmitting || isDisabled ? (
               <BetLoader />

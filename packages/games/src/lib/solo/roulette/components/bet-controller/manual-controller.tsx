@@ -6,7 +6,7 @@ import { Chip } from '../../../../common/chip-controller/types';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { CDN_URL } from '../../../../constants';
-import { useGameOptions } from '../../../../game-provider';
+import { useGame, useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
@@ -47,6 +47,7 @@ export const ManualController: React.FC<Props> = ({
   }, [selectedNumbers, wager]);
 
   const { gameStatus } = useRouletteGameStore(['gameStatus']);
+  const { readyToPlay } = useGame();
 
   return (
     <>
@@ -131,6 +132,7 @@ export const ManualController: React.FC<Props> = ({
                   isPrepared,
               }
             )}
+            disabled={!readyToPlay}
           >
             {form.formState.isSubmitting || form.formState.isLoading || isPrepared ? (
               <BetLoader />

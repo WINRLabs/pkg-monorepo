@@ -12,13 +12,14 @@ import {
   WagerFormField,
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
+import { IconMagicStick, IconTrash } from '../../../../svgs';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { KenoForm } from '../../types';
-import useKenoGameStore from '../../store';
 import { kenoMultipliers } from '../../constants';
-import { IconMagicStick, IconTrash } from '../../../../svgs';
+import useKenoGameStore from '../../store';
+import { KenoForm } from '../../types';
 import { BetLoader } from './bet-loader';
 
 interface AutoControllerProps {
@@ -39,6 +40,7 @@ export const AutoController = ({
   const form = useFormContext() as KenoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const { readyToPlay } = useGame();
 
   const wager = form.watch('wager');
   const selections = form.watch('selections');
@@ -158,6 +160,7 @@ export const AutoController = ({
             clickEffect.play();
             onAutoBetModeChange(!isAutoBetMode);
           }}
+          disabled={!readyToPlay}
         >
           {isAutoBetMode ? (
             <div className="wr-flex wr-gap-1.5 wr-items-center">

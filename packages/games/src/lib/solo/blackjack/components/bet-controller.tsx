@@ -3,12 +3,12 @@ import { Chip } from '../../../common/chip-controller/types';
 import { PreBetButton } from '../../../common/pre-bet-button';
 import { WagerCurrencyIcon } from '../../../common/wager';
 import { CDN_URL } from '../../../constants';
+import { useGame, useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { Button } from '../../../ui/button';
 import { NumberInput } from '../../../ui/number-input';
 import { cn } from '../../../utils/style';
 import { BlackjackGameStatus } from '..';
-import { useGameOptions } from '../../../game-provider';
 
 interface BetControllerProps {
   wager: number;
@@ -50,6 +50,7 @@ export const BetController: React.FC<BetControllerProps> = ({
 }) => {
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const { account } = useGameOptions();
+  const { readyToPlay } = useGame();
 
   return (
     <div className="max-md:wr-bg-rotated-bg-blur wr-absolute wr-bottom-0 wr-left-0 wr-z-[5] wr-flex wr-w-full wr-items-end wr-justify-between wr-p-4 max-lg:wr-fixed max-lg:wr-z-10 max-lg:wr-bg-rotated-footer max-lg:wr-p-3 max-lg:wr-pt-0">
@@ -106,7 +107,7 @@ export const BetController: React.FC<BetControllerProps> = ({
               <Button
                 variant="success"
                 size="xl"
-                disabled={isDisabled}
+                disabled={isDisabled || !readyToPlay}
                 className="wr-w-full max-lg:wr-max-w-[75px] wr-uppercase"
                 onClick={() => {
                   clickEffect.play();

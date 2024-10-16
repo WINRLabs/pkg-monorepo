@@ -10,12 +10,13 @@ import {
   WagerFormField,
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { PlinkoForm } from '../../types';
-import { PlinkoRowFormField } from './manual-controller';
 import { BetLoader } from './bet-loader';
+import { PlinkoRowFormField } from './manual-controller';
 
 interface AutoControllerProps {
   isGettingResults?: boolean;
@@ -37,6 +38,7 @@ export const AutoController = ({
   hideWager,
   disableStrategy,
 }: AutoControllerProps) => {
+  const { readyToPlay } = useGame();
   const form = useFormContext() as PlinkoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -107,6 +109,7 @@ export const AutoController = ({
             clickEffect.play();
             onAutoBetModeChange(!isAutoBetMode);
           }}
+          disabled={!readyToPlay}
         >
           {isAutoBetMode ? (
             <div className="wr-flex wr-gap-1.5 wr-items-center">

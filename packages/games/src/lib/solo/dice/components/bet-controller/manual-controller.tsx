@@ -6,13 +6,13 @@ import { useFormContext } from 'react-hook-form';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { DiceForm } from '../../types';
-import { IconDice } from '../../../../svgs';
 import { BetLoader } from './bet-loader';
 
 interface ManualControllerProps {
@@ -28,6 +28,7 @@ export const ManualController = ({
   maxWager,
   onLogin,
 }: ManualControllerProps) => {
+  const { readyToPlay } = useGame();
   const form = useFormContext() as DiceForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -70,6 +71,7 @@ export const ManualController = ({
                 !form.formState.isValid || form.formState.isSubmitting || form.formState.isLoading,
             }
           )}
+          disabled={!readyToPlay}
           size={'xl'}
           onClick={() => clickEffect.play()}
         >

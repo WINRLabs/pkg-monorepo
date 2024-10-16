@@ -5,7 +5,7 @@ import { AudioController } from '../../../common/audio-controller';
 import { BetControllerContainer } from '../../../common/containers';
 import { BetControllerTitle, WagerFormField } from '../../../common/controller';
 import { PreBetButton } from '../../../common/pre-bet-button';
-import { useGameOptions } from '../../../game-provider';
+import { useGame, useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { Button } from '../../../ui/button';
 import { BlackjackGameStatus } from '../../blackjack';
@@ -49,6 +49,7 @@ export const BetController: React.FC<Props> = ({
   onInsure,
   onLogin,
 }) => {
+  const { readyToPlay } = useGame();
   const [showInsuranceBox, setShowInsuranceBox] = React.useState<'show' | 'hide'>('hide');
 
   React.useEffect(() => {
@@ -196,7 +197,8 @@ export const BetController: React.FC<Props> = ({
               status == BlackjackGameStatus.PLAYER_TURN ||
               status == BlackjackGameStatus.DEALER_TURN ||
               status == BlackjackGameStatus.TABLE_DEAL ||
-              isControllerDisabled
+              isControllerDisabled ||
+              !readyToPlay
             }
             size="xl"
             type="submit"

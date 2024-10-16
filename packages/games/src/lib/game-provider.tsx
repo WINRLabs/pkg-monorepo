@@ -67,6 +67,7 @@ interface GameContextProps {
      */
     winAnimationTokenPrefix?: string;
   };
+  readyToPlay: boolean;
 }
 
 interface GameProviderProps extends GameContextProps {
@@ -89,6 +90,7 @@ const GameContext = createContext<
     options: GameContextProps['options'] & {
       dictionary: GameDictionary;
     };
+    readyToPlay: boolean;
   }
 >({
   options: {
@@ -101,11 +103,12 @@ const GameContext = createContext<
     forceRefund: false,
     winAnimationTokenPrefix: '$',
   },
+  readyToPlay: false,
   isAnimationSkipped: false,
   updateSkipAnimation: () => null,
 });
 
-export const GameProvider = ({ children, options }: GameProviderProps) => {
+export const GameProvider = ({ children, options, readyToPlay }: GameProviderProps) => {
   const [isAnimationSkipped, setIsAnimationSkipped] = React.useState<boolean>(false);
 
   return (
@@ -125,6 +128,7 @@ export const GameProvider = ({ children, options }: GameProviderProps) => {
         },
         updateSkipAnimation: setIsAnimationSkipped,
         isAnimationSkipped,
+        readyToPlay,
       }}
     >
       {children}
