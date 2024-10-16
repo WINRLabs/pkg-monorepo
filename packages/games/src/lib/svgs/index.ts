@@ -79,6 +79,7 @@ export { default as IconSmile } from './IconSmile';
 export { default as IconSound } from './IconSound';
 export { default as IconStars } from './IconStars';
 export { default as IconStats } from './IconStats';
+export { default as IconStrategy } from './IconStrategy';
 export { default as IconSweetBonanza } from './IconSweetBonanza';
 export { default as IconSwitchHorizontal } from './IconSwitchHorizontal';
 export { default as IconTap } from './IconTap';

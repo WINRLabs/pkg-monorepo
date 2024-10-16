@@ -11,11 +11,12 @@ import {
   SignableMessage,
   Transport,
 } from 'viem';
-import { useAccount, usePublicClient, useWalletClient } from 'wagmi';
+import { useAccount, usePublicClient, useReadContract, useWalletClient } from 'wagmi';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as Strategy from '../game-strategy';
 import { getWalletClient } from '@wagmi/core';
+import { strategyStoreAbi } from '../abis';
 
 interface UseGameStrategy {
   strategyManager?: any;
@@ -50,6 +51,15 @@ export const GameStrategyProvider: React.FC<{
   const [strategyManager, setStrategyManager] = React.useState<any>();
   const [currentStrategyCount, setCurrentStrategyCount] = React.useState<number>(0);
   const [currentStrategyId, setCurrentStrategyId] = React.useState<UUID | number>(0);
+
+  const { data } = useReadContract({
+    abi: strategyStoreAbi,
+    functionName: 'getItems',
+    address: strategyStoreAddress,
+    args: [0n],
+  });
+
+  console.log(data, 'data');
 
   React.useEffect(() => {
     if (!address || !walletClient || !publicClient) return;
