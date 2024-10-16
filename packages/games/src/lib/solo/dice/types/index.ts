@@ -1,5 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 
+import { SliderTrackOptions } from '../components/slider';
+
 export interface DiceFormFields {
   wager: number;
   betCount: number;
@@ -18,3 +20,12 @@ export interface DiceGameResult {
   payout: number;
   payoutInUsd: number;
 }
+
+export type DiceTemplateOptions = {
+  slider?: {
+    track?: SliderTrackOptions;
+  };
+  scene?: {
+    background?: string;
+  };
+};
