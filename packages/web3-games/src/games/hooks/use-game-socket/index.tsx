@@ -6,10 +6,15 @@ import React from 'react';
 interface GameSocket {
   bundlerWsUrl: string;
   network: BundlerNetwork;
+  connected: boolean;
+  setConnected: (connected: boolean) => void;
 }
+
 const GameSocketContext = React.createContext<GameSocket>({
   bundlerWsUrl: '',
   network: BundlerNetwork.WINR,
+  connected: false,
+  setConnected: () => null,
 });
 
 export const useGameSocketContext = () => {
@@ -20,12 +25,16 @@ export const GameSocketProvider: React.FC<{
   bundlerWsUrl: string;
   network: BundlerNetwork;
   children: React.ReactNode;
-}> = ({ bundlerWsUrl, network, children }) => {
+  connected: boolean;
+  setConnected: (connected: boolean) => void;
+}> = ({ bundlerWsUrl, network, children, connected, setConnected }) => {
   return (
     <GameSocketContext.Provider
       value={{
         bundlerWsUrl,
         network,
+        connected,
+        setConnected,
       }}
     >
       {children}

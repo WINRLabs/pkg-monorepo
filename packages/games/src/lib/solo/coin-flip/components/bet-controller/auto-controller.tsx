@@ -12,12 +12,13 @@ import {
   WagerFormField,
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { CoinFlipForm } from '../../types';
-import { CoinFlipController } from './controller';
 import { BetLoader } from './bet-loader';
+import { CoinFlipController } from './controller';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -36,6 +37,8 @@ export const AutoController = ({
   onAutoBetModeChange,
   onLogin,
 }: AutoControllerProps) => {
+  const { readyToPlay } = useGame();
+
   const form = useFormContext() as CoinFlipForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -91,6 +94,7 @@ export const AutoController = ({
             clickEffect.play();
             onAutoBetModeChange(!isAutoBetMode);
           }}
+          disabled={!readyToPlay}
         >
           {isAutoBetMode ? (
             <div className="wr-flex wr-gap-1.5 wr-items-center">

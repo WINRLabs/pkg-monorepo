@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormLabel } from '../../../../ui/form';
@@ -29,6 +30,7 @@ export const ManualController: React.FC<Props> = ({
 }) => {
   const form = useFormContext() as RollForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const { readyToPlay } = useGame();
 
   const wager = form.watch('wager');
 
@@ -73,6 +75,7 @@ export const ManualController: React.FC<Props> = ({
           )}
           size={'xl'}
           onClick={() => clickEffect.play()}
+          disabled={!readyToPlay}
         >
           {form.formState.isSubmitting || form.formState.isLoading ? <BetLoader /> : 'Bet'}
         </Button>
