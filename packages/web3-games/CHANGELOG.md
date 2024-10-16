@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 11.0.76
+
+### Patch Changes
+
+- df75a82: socket check
+- Updated dependencies [df75a82]
+- Updated dependencies [51b6bce]
+  - @winrlabs/web3-games@11.0.76
+  - @winrlabs/games@3.0.71
+  - @winrlabs/web3@0.11.54
+
 ## 11.0.75
 
 ### Patch Changes
