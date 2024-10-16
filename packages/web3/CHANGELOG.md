@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.54
+
+### Patch Changes
+
+- 51b6bce: dice custom background
+
 ## 0.11.53
 
 ### Patch Changes

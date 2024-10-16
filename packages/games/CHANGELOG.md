@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 3.0.71
+
+### Patch Changes
+
+- df75a82: socket check
+
 ## 3.0.70
 
 ### Patch Changes
