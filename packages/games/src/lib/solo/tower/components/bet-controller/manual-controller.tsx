@@ -7,13 +7,7 @@ import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel } from '../../../../ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../../../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../../../../ui/select';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { TowerForm } from '../../types';
@@ -40,7 +34,6 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
     return toDecimals(wager, 2);
   }, [form.getValues().wager]);
 
-  // console.log(form.getValues().riskLevel);
   return (
     <>
       <WagerFormField minWager={minWager} maxWager={maxWager} isDisabled={isFormInProgress} />
@@ -51,17 +44,10 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         render={({ field }) => (
           <FormItem className="wr-mb-3 lg:wr-mb-6">
             <FormLabel>Risk</FormLabel>
-            <Select
-              {...field}
-              value={form.getValues().riskLevel}
-              onValueChange={(val) => {
-                console.log(val);
-                form.setValue('riskLevel', val as any);
-              }}
-            >
+            <Select {...field} value={field.value} onValueChange={field.onChange}>
               <FormControl>
                 <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
-                  {form.getValues().riskLevel}
+                  {field.value.charAt(0).toUpperCase() + field.value.slice(1) || 'Risk'}
                 </SelectTrigger>
               </FormControl>
 
@@ -108,21 +94,27 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         render={({ field }) => (
           <FormItem className="wr-mb-3 lg:wr-mb-6">
             <FormLabel>Rows</FormLabel>
-            <div>
-              <Select
-                value={String(field.value)}
-                onValueChange={(val) => field.onChange(Number(val))}
-              >
-                <FormControl>
-                  <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">Rows</SelectTrigger>
-                </FormControl>
-                <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 hover:wr-bg-zinc-900 wr-transition-all wr-duration-300">
-                  <SelectItem className="wr-flex wr-justify-between " value="5">
-                    5
+            <Select
+              value={String(field.value)}
+              onValueChange={(val) => field.onChange(Number(val))}
+            >
+              <FormControl>
+                <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
+                  {field.value || 'Rows'}
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 ">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <SelectItem
+                    key={index}
+                    className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300 data-[selected=true]:wr-bg-zinc-700"
+                    value={String(index + 1)}
+                  >
+                    {index + 1}
                   </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                ))}
+              </SelectContent>
+            </Select>
           </FormItem>
         )}
       />
@@ -137,12 +129,18 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
               <div>
                 <Select value={String(field.value)} onValueChange={field.onChange}>
                   <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
-                    Number of Bet
+                    {field.value || 'Number of Bet'}
                   </SelectTrigger>
-                  <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 hover:wr-bg-zinc-900 wr-transition-all wr-duration-300">
-                    <SelectItem className="wr-flex wr-justify-between " value="1">
-                      1
-                    </SelectItem>
+                  <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800">
+                    {Array.from({ length: 10 }).map((_, index) => (
+                      <SelectItem
+                        key={index}
+                        className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
+                        value={String(index + 1)}
+                      >
+                        {index + 1}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

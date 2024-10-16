@@ -20,7 +20,6 @@ const SelectTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'wr-border-input wr-bg-background wr-ring-offset-background wr-placeholder:text-muted-foreground wr-group wr-flex wr-h-10 wr-w-full wr-items-center wr-justify-between wr-rounded-md wr-border wr-px-3 wr-py-2 wr-text-sm  wr-font-semibold wr-text-white disabled:wr-cursor-not-allowed disabled:wr-opacity-50',
-
       className
     )}
     {...props}
@@ -31,7 +30,6 @@ const SelectTrigger = React.forwardRef<
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
-
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectContent = React.forwardRef<
@@ -62,7 +60,6 @@ const SelectContent = React.forwardRef<
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
-
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
 const SelectLabel = React.forwardRef<
@@ -75,7 +72,6 @@ const SelectLabel = React.forwardRef<
     {...props}
   />
 ));
-
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const SelectItem = React.forwardRef<
@@ -90,10 +86,9 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    {children}
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
-
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 const SelectSeparator = React.forwardRef<
@@ -102,11 +97,10 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn('wr-bg-muted -mx-1 wr-my-1 wr-h-px', className)}
+    className={cn('wr-bg-muted -wr-mx-1 wr-my-1 wr-h-px', className)}
     {...props}
   />
 ));
-
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
