@@ -10,14 +10,15 @@ import {
   WagerFormField,
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { ALL_RPS_CHOICES } from '../../constant';
 import { RPSForm } from '../../types';
-import { RPSChoiceRadio } from './manual-controller';
 import { BetLoader } from './bet-loader';
+import { RPSChoiceRadio } from './manual-controller';
 
 interface AutoControllerProps {
   winMultiplier: number;
@@ -39,6 +40,7 @@ export const AutoController = ({
   const form = useFormContext() as RPSForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
+  const { readyToPlay } = useGame();
 
   return (
     <div className="wr-flex wr-flex-col">
@@ -129,6 +131,7 @@ export const AutoController = ({
             clickEffect.play();
             onAutoBetModeChange(!isAutoBetMode);
           }}
+          disabled={!readyToPlay}
         >
           {isAutoBetMode ? (
             <div className="wr-flex wr-items-center wr-gap-1.5">

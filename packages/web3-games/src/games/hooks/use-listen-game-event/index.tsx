@@ -17,9 +17,8 @@ export const useListenGameEvent = () => {
 
   const { address } = useCurrentAccount();
 
-  const { bundlerWsUrl, network } = useGameSocketContext();
+  const { bundlerWsUrl, network, setConnected } = useGameSocketContext();
 
-  // socket connection
   React.useEffect(() => {
     if (!socket) return;
 
@@ -27,10 +26,12 @@ export const useListenGameEvent = () => {
 
     socket.on('connect', () => {
       log('socket connected!', socket);
+      setConnected(true);
     });
 
     socket.on('disconnect', () => {
       log('socket disconnected');
+      setConnected(false);
     });
 
     return () => {

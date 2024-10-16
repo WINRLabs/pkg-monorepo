@@ -10,6 +10,7 @@ import {
   WagerFormField,
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../../ui/form';
@@ -37,6 +38,7 @@ export const AutoController = ({
 }: AutoControllerProps) => {
   const form = useFormContext() as LimboForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const { readyToPlay } = useGame();
 
   return (
     <div className="wr-flex wr-flex-col">
@@ -144,6 +146,7 @@ export const AutoController = ({
             clickEffect.play();
             onAutoBetModeChange(!isAutoBetMode);
           }}
+          disabled={!readyToPlay}
         >
           {isAutoBetMode ? (
             <div className="wr-flex wr-gap-1.5 wr-items-center">

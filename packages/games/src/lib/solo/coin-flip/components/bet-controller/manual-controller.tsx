@@ -4,14 +4,15 @@ import { useFormContext } from 'react-hook-form';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
+import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { CoinFlipForm } from '../../types';
-import { CoinFlipController } from './controller';
 import { BetLoader } from './bet-loader';
+import { CoinFlipController } from './controller';
 
 interface ManualControllerProps {
   winMultiplier: number;
@@ -28,7 +29,7 @@ export const ManualController = ({
 }: ManualControllerProps) => {
   const form = useFormContext() as CoinFlipForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
-
+  const { readyToPlay } = useGame();
   const maxPayout = React.useMemo(() => {
     const { wager } = form.getValues();
 
@@ -71,6 +72,7 @@ export const ManualController = ({
           )}
           size={'xl'}
           onClick={() => clickEffect.play()}
+          disabled={!readyToPlay}
         >
           {form.formState.isLoading || form.formState.isSubmitting ? <BetLoader /> : 'Bet'}
         </Button>

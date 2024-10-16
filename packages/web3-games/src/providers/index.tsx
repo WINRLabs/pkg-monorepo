@@ -6,6 +6,7 @@ import {
   usePriceFeed,
   useTokenStore,
 } from '@winrlabs/web3';
+import { useState } from 'react';
 import { Config } from 'wagmi';
 
 import { GameSocketProvider } from '../games/hooks';
@@ -37,6 +38,7 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
 
   const balance = balances[selectedToken.address] || 0;
   const balanceAsDollar = balance * priceFeed[selectedToken.priceKey];
+  const [connected, setConnected] = useState(false);
 
   return (
     <ContractConfigProvider wagmiConfig={config.wagmiConfig} config={config.contracts}>
@@ -57,8 +59,14 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
             balanceAsDollar,
           },
         }}
+        readyToPlay={connected}
       >
-        <GameSocketProvider network={config.network} bundlerWsUrl={config.bundlerWsUrl}>
+        <GameSocketProvider
+          network={config.network}
+          bundlerWsUrl={config.bundlerWsUrl}
+          connected={connected}
+          setConnected={setConnected}
+        >
           {children}
         </GameSocketProvider>
       </GameProvider>

@@ -7,7 +7,7 @@ import { useDebounce } from 'use-debounce';
 import { WagerFormField } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
-import { useGameOptions } from '../../../../game-provider';
+import { useGame, useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../../ui/form';
@@ -37,6 +37,7 @@ export const ManualController: React.FC<Props> = ({
   hideMaxPayout,
   rowMultipliers: customRowMultipliers,
 }) => {
+  const { readyToPlay } = useGame();
   const { dictionary } = useGameOptions();
   const form = useFormContext() as PlinkoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
@@ -102,6 +103,7 @@ export const ManualController: React.FC<Props> = ({
       <PreBetButton onLogin={onLogin}>
         <Button
           type="submit"
+          disabled={!readyToPlay}
           variant={'success'}
           className={cn(
             'wr-w-full wr-uppercase wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none',
