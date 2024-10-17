@@ -1,11 +1,11 @@
 import { BetController } from './components/bet-controller';
-import { TowerGame } from './components/game';
-import { TowerScene } from './components/scene';
+import { TowerGame as TowerScene } from './components/game';
+import TowerGame from './components/tower-game';
 
 export const Tower = {
   Controller: BetController,
-  Game: TowerGame,
-  Scene: TowerScene,
+  Game: TowerScene,
+  Scene: TowerGame,
 };
 
 export { default as TowerTemplate } from './components/template';

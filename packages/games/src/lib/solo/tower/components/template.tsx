@@ -8,7 +8,7 @@ import z from 'zod';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { WinAnimation } from '../../../common/win-animation';
 import { Form } from '../../../ui/form';
-import { Tower } from '..';
+import { Tower, TowerFormField } from '..';
 import { TowerGameProps } from './game';
 
 export type TemplateOptions = {
@@ -30,12 +30,12 @@ export type TemplateOptions = {
 
 type TemplateProps = TowerGameProps & {
   options?: TemplateOptions;
-  // minWager?: number;
-  // maxWager?: number;
-  // onSubmitGameForm: (data: TowerFormField) => void;
-  // onFormChange?: (fields: TowerFormField) => void;
-  // onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
-  // onLogin?: () => void;
+  minWager?: number;
+  maxWager?: number;
+  onSubmitGameForm: (data: TowerFormField) => void;
+  onFormChange?: (fields: TowerFormField) => void;
+  onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
+  onLogin?: () => void;
 };
 
 const TowerTemplate = ({ ...props }: TemplateProps) => {
@@ -91,13 +91,7 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
               onAutoBetModeChange={setIsAutoBetMode}
             />
             <SceneContainer className="wr-relative md:wr-h-[750px] max-lg:!wr-border-0 !wr-p-0 max-md:wr-bg-transparent">
-              <Tower.Scene
-                {...props}
-                // onSubmitGameForm={() => {}}
-                // processStrategy={() => {}}
-                // isAutoBetMode={isAutoBetMode}
-                // onAutoBetModeChange={setIsAutoBetMode}
-              />
+              <Tower.Scene {...props} />
               <WinAnimation />
             </SceneContainer>
           </Tower.Game>

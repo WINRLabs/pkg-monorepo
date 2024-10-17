@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { cn } from '../../../utils/style';
 import { TemplateOptions } from './template';
@@ -16,7 +16,7 @@ export type TowerGameProps = {
 const generateGrid = (): Cell[][] => {
   const grid: Cell[][] = Array.from({ length: 4 }, () =>
     Array.from({ length: 8 }, () => ({
-      isBomb: Math.random() < 0.01, // 25% chance of bomb
+      isBomb: Math.random() < 0.5, // 25% chance of bomb
       isClickable: false,
       isSelected: false,
     }))
@@ -36,7 +36,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
   const [grid, setGrid] = useState<Cell[][]>(generateGrid);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
-
+  const [autoBetMode, setAutoBetMode] = useState(false);
   const handleClick = (row: number, col: number) => {
     if (!grid[row]?.[col]?.isClickable || gameOver) return;
 
@@ -54,8 +54,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
         return cell;
       })
     );
-
-    if (newGrid[row]?.[col]?.isBomb) {
+    if (newGrid[row]?.[col]?.isBomb && !autoBetMode) {
       // Bomb clicked, game over
       setGameOver(true);
       alert('Game Over! You hit a bomb!');
@@ -67,12 +66,56 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
     } else {
       setGrid(newGrid);
     }
+    setGrid(newGrid);
   };
 
   const resetGame = () => {
     setGrid(generateGrid());
     setGameOver(false);
   };
+
+  const autoBet = () => {
+    const selectedCells = grid.flat().filter((cell) => cell.isSelected);
+
+    // if (selectedCells.length === 8) {
+    //   const bombClicked = selectedCells.some((cell) => cell.isBomb);
+    //   if (bombClicked) {
+    //     setGameOver(true);
+    //     alert('Game Over! You hit a bomb!');
+    //   } else {
+    //     alert('Congratulations! You won!');
+    //   }
+    // }
+
+    if (selectedCells.length === 8) {
+      let playCount = 0;
+      const interval = setInterval(() => {
+        if (playCount >= 3 || gameOver) {
+          clearInterval(interval);
+          return;
+        }
+
+        selectedCells.forEach((cell, index) => {
+          setTimeout(() => {
+            const rowIndex = Math.floor(index / 8);
+            const colIndex = index % 8;
+            handleClick(rowIndex, colIndex);
+          }, index * 1000); // Adjust the delay time as needed
+        });
+
+        playCount++;
+      }, 3000); // Adjust the interval time as needed
+    }
+  };
+
+  useEffect(() => {
+    if (gameOver) {
+      const updatedGrid = grid.map((rowArr) =>
+        rowArr.map((cell) => ({ ...cell, isClickable: false }))
+      );
+      setGrid(updatedGrid);
+    }
+  }, [gameOver]);
 
   const getBackgroundImage = React.useCallback(
     (rowIndex: number, colIndex: number, grid: Cell[][], gameOver: boolean): string => {
@@ -158,6 +201,22 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
       >
         Reset Game
       </button>
+
+      <button
+        onClick={() => setAutoBetMode(!autoBetMode)}
+        className="wr-mt-4 wr-w-max wr-z-20 wr-ml-5 wr-shrink-0 wr-px-4 wr-py-2 wr-bg-blue-500 wr-text-white wr-font-bold wr-rounded-md hover:wr-bg-blue-700"
+      >
+        {autoBetMode ? 'Auto Bet' : 'Manuel Bet'}
+      </button>
+
+      {autoBetMode && (
+        <button
+          onClick={autoBet}
+          className="wr-mt-4 wr-w-max wr-z-20 wr-ml-5 wr-shrink-0 wr-px-4 wr-py-2 wr-bg-blue-500 wr-text-white wr-font-bold wr-rounded-md hover:wr-bg-blue-700"
+        >
+          Play autobet
+        </button>
+      )}
     </div>
   );
 };
