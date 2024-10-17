@@ -44,7 +44,6 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         maxWager={maxWager}
         isDisabled={isFormInProgress}
       />
-
       <RiskController />
       <RowsController />
       <NumberOfCBetController />

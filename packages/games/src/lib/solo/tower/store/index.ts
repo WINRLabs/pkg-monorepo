@@ -7,6 +7,7 @@ interface TowerGameState {
   towerGameResults: TowerGameResult[];
   gameStatus: 'IDLE' | 'PLAYING' | 'ENDED';
   currentAnimationCount: number;
+  gameMode: 'AUTO' | 'MANUAL';
 }
 
 interface TowerGameStateActions {
@@ -14,12 +15,15 @@ interface TowerGameStateActions {
   updateTowerGameResults: (item: TowerGameResult[]) => void;
   updateGameStatus: (status: 'IDLE' | 'PLAYING' | 'ENDED') => void;
   updateCurrentAnimationCount: (count: number) => void;
+  updateGameMode: (mode: 'AUTO' | 'MANUAL') => void;
 }
 
 export type TowerGameStore = TowerGameState & TowerGameStateActions;
 
 export const TowerResultsStore = create<TowerGameStore>()((set) => ({
   towerGameResults: [],
+  gameMode: 'MANUAL',
+  updateGameMode: (mode) => set(() => ({ gameMode: mode })),
   currentAnimationCount: 0,
   updateTowerGameResults: (item) => set(() => ({ towerGameResults: item })),
   clearStore: () =>

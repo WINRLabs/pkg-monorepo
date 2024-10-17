@@ -7,6 +7,7 @@ import { AudioController } from '../../../../common/audio-controller';
 import { BetControllerContainer } from '../../../../common/containers';
 import { BetControllerTitle } from '../../../../common/controller';
 import { cn } from '../../../../utils/style';
+import useTowerGameStore from '../../store';
 import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
 
@@ -19,7 +20,7 @@ export interface Props {
 }
 
 export const BetController: React.FC<Props> = (props) => {
-  const [tab, setTab] = React.useState<string>('manual');
+  const { gameMode, updateGameMode } = useTowerGameStore(['gameMode', 'updateGameMode']);
 
   return (
     <BetControllerContainer>
@@ -31,38 +32,38 @@ export const BetController: React.FC<Props> = (props) => {
 
         <div className="wr-max-lg:flex wr-max-lg:flex-col">
           <Tabs.Root
-            defaultValue="manual"
-            value={tab}
+            defaultValue="MANUAL"
+            value={gameMode}
             onValueChange={(v) => {
               if (!v) return;
-              setTab(v);
+              updateGameMode(v as 'MANUAL' | 'AUTO');
             }}
           >
             <Tabs.List className="wr-flex wr-w-full wr-justify-between wr-items-center wr-gap-2 wr-font-semibold wr-mb-3">
               <Tabs.Trigger
                 className={cn('wr-w-full wr-px-4 wr-py-2 wr-bg-zinc-700 wr-rounded-md', {
-                  'wr-bg-zinc-800 wr-text-grey-500': tab !== 'manual',
+                  'wr-bg-zinc-800 wr-text-grey-500': gameMode !== 'MANUAL',
                   'wr-pointer-events-none wr-bg-zinc-800 wr-text-grey-500': props.isAutoBetMode,
                 })}
-                value="manual"
+                value="MANUAL"
               >
                 Manual
               </Tabs.Trigger>
               <Tabs.Trigger
                 className={cn('wr-w-full wr-px-4 wr-py-2 wr-bg-zinc-700 wr-rounded-md', {
-                  'wr-bg-zinc-800 wr-text-grey-500': tab !== 'auto',
+                  'wr-bg-zinc-800 wr-text-grey-500': gameMode !== 'AUTO',
                   'wr-pointer-events-none wr-bg-zinc-800 wr-text-grey-500': props.isAutoBetMode,
                 })}
-                value="auto"
+                value="AUTO"
               >
                 Auto
               </Tabs.Trigger>
             </Tabs.List>
 
-            <AnimatedTabContent value="manual">
+            <AnimatedTabContent value="MANUAL">
               <ManualController {...props} />
             </AnimatedTabContent>
-            <AnimatedTabContent value="auto">
+            <AnimatedTabContent value="AUTO">
               <AutoController {...props} />
             </AnimatedTabContent>
           </Tabs.Root>
