@@ -19,7 +19,7 @@ import { GameTypesEnvironmentStore } from '../../../type';
 import { useContractConfigContext } from '../use-contract-config';
 import { Badge } from '../use-get-badges';
 
-const log = debug('UsePlayerGameStatus');
+const log = debug('worker:UsePlayerGameStatus');
 
 const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> = {
   [GameType.BACCARAT]: GameTypesEnvironmentStore.baccarat,
@@ -77,7 +77,6 @@ export const usePlayerGameStatus = ({
   const [refundCooldown, setRefundCooldown] = React.useState<number>(0);
   const [reIterateCooldown, setReIterateCooldown] = React.useState<number>(0);
 
-  log('user session', sessionStatus);
   const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
@@ -94,13 +93,13 @@ export const usePlayerGameStatus = ({
         abi: rankMiddlewareAbi,
         address: rankMiddlewareAddress,
         functionName: 'getPlayerStatus',
-        args: [currentAccount.address || '0x'],
+        args: ['0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x'],
       },
       {
         abi: controllerAbi,
         address: controllerAddress,
         functionName: 'getSessionByClient',
-        args: [gameAddress, currentAccount.address || '0x'],
+        args: [gameAddress, '0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x'],
       },
       {
         abi: controllerAbi,
@@ -120,7 +119,7 @@ export const usePlayerGameStatus = ({
     batchSize: 0,
     allowFailure: false,
     query: {
-      enabled: !!currentAccount.address,
+      enabled: !!'0xe2B708357D627b1e3569b25c1559DDC0ec61f247',
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
@@ -180,7 +179,7 @@ export const usePlayerGameStatus = ({
   const handlePlayerLevelUp = async () => {
     const mutation = (await playerLevelUp.mutateAsync({
       body: {
-        player: currentAccount.address || '0x',
+        player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x',
       },
       baseUrl: baseUrl,
     })) as any;
@@ -198,7 +197,7 @@ export const usePlayerGameStatus = ({
 
     const refund = await client.request('refund', {
       game: gameTypeEnvironmentStoreMap[gameType],
-      player: currentAccount.address!,
+      player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247'!,
     });
 
     refetch();
@@ -211,12 +210,12 @@ export const usePlayerGameStatus = ({
 
     await client.request('reIterate', {
       game: gameTypeEnvironmentStoreMap[gameType],
-      player: currentAccount.address!,
+      player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247'!,
     });
   };
 
   React.useEffect(() => {
-    if (!client || !currentAccount.address) return;
+    if (!client || !'0xe2B708357D627b1e3569b25c1559DDC0ec61f247') return;
     if (isRefundable)
       if (forceRefund) {
         handlePlayerRefund();
@@ -229,7 +228,7 @@ export const usePlayerGameStatus = ({
           },
         });
       }
-  }, [isRefundable, client, currentAccount.address]);
+  }, [isRefundable, client, '0xe2B708357D627b1e3569b25c1559DDC0ec61f247']);
 
   const handleRefetchPlayerGameStatus = () => {
     refetch();

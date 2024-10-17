@@ -2,15 +2,16 @@ import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { CDN_URL } from '../constants';
+import useMediaQuery from '../hooks/use-media-query';
 import { Button } from '../ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select';
 import { cn } from '../utils/style';
 import { BetCount } from './bet-count';
 import { BetCountSlider } from './containers';
+import { IncreaseByInput } from './increase-by-input';
 import { StopGainLossInput } from './stop-gain-loss-input';
 import { WagerBalance, WagerCurrency, WagerInput, WagerSetterButtons } from './wager';
-import { IncreaseByInput } from './increase-by-input';
-import useMediaQuery from '../hooks/use-media-query';
 
 interface WagerFormFieldProps {
   customLabel?: string;
@@ -422,5 +423,58 @@ export const UnityFullscreenButton: React.FC<{
     >
       <img src={`${CDN_URL}/icons/icon-fullscreen.svg`} width={24} height={24} />
     </Button>
+  );
+};
+
+export const StrategySelector = ({
+  strategies,
+  selectedStrategy,
+  onChange,
+}: {
+  strategies: string[];
+  selectedStrategy: string;
+  onChange: (strategy: string) => void;
+}) => {
+  return (
+    <>
+      <FormLabel className={cn('wr-leading-4 wr-mb-3 lg:wr-mb-[6px] lg:wr-leading-6')}>
+        Select Strategy
+      </FormLabel>
+      <Select
+        value={selectedStrategy}
+        onValueChange={(val) => {
+          if (!val.length) return;
+          onChange(val);
+        }}
+      >
+        <SelectTrigger className="wr-mb-3 wr-bg-zinc-950 wr-border-none">
+          {selectedStrategy}
+        </SelectTrigger>
+        <SelectContent className="wr-bg-zinc-950 wr-border-none">
+          {strategies.map((strategy) => (
+            <SelectItem value={strategy} key={strategy}>
+              <span className="wr-font-semibold">{strategy}</span>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  );
+};
+
+export const StrategyConditions = ({ conditions }: { conditions: string[] }) => {
+  return (
+    <>
+      <FormLabel className={cn('wr-leading-4 wr-mb-3 lg:wr-mb-[6px] lg:wr-leading-6')}>
+        Conditions
+      </FormLabel>
+      <div className="wr-flex wr-gap-2 wr-items-center wr-justify-start wr-mb-3">
+        {conditions.map((c, idx) => (
+          <Button className="wr-w-full wr-max-w-[75px]" variant="secondary">
+            {idx + 1}
+          </Button>
+        ))}
+      </div>
+    </>
   );
 };
