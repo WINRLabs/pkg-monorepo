@@ -127,7 +127,11 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
         return `url(${options.scene?.bombCell})`;
       } else if (grid[rowIndex]?.[colIndex]?.isBomb && gameOver) {
         return `url(${options.scene?.cellBomb})`;
-      } else if (!grid[rowIndex]?.[colIndex]?.isBomb && gameOver) {
+      } else if (
+        !grid[rowIndex]?.[colIndex]?.isBomb &&
+        gameOver &&
+        !grid[rowIndex]?.[colIndex]?.isSelected
+      ) {
         return `url(${options.scene?.cellCoin})`;
       } else if (grid[rowIndex]?.[colIndex]?.isSelected) {
         return `url(${options.scene?.selectedCell})`;

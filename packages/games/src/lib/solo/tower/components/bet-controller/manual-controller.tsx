@@ -6,12 +6,14 @@ import { PreBetButton } from '../../../../common/pre-bet-button';
 import { TotalWager, WagerCurrencyIcon } from '../../../../common/wager';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
-import { FormControl, FormField, FormItem, FormLabel } from '../../../../ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger } from '../../../../ui/select';
+import { FormLabel } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
 import { toDecimals, toFormatted } from '../../../../utils/web3';
 import { TowerForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import NumberOfCBetController from './number-of-bets-controller';
+import RiskController from './risk-controller';
+import RowsController from './rows-controller';
 
 type Props = {
   minWager: number;
@@ -43,117 +45,9 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         isDisabled={isFormInProgress}
       />
 
-      <FormField
-        control={form.control}
-        name="riskLevel"
-        render={({ field }) => (
-          <FormItem className="wr-mb-3 ">
-            <FormLabel>Risk</FormLabel>
-            <Select {...field} value={field.value} onValueChange={field.onChange}>
-              <FormControl>
-                <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
-                  {field.value.charAt(0).toUpperCase() + field.value.slice(1) || 'Risk'}
-                </SelectTrigger>
-              </FormControl>
-
-              <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800">
-                <SelectItem
-                  className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                  value="easy"
-                >
-                  Easy
-                </SelectItem>
-                <SelectItem
-                  className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                  value="medium"
-                >
-                  Medium
-                </SelectItem>
-                <SelectItem
-                  className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                  value="hard"
-                >
-                  Hard
-                </SelectItem>
-                <SelectItem
-                  className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                  value="expert"
-                >
-                  Expert
-                </SelectItem>
-                <SelectItem
-                  className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                  value="master"
-                >
-                  Master
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="rows"
-        render={({ field }) => (
-          <FormItem className="wr-mb-3 ">
-            <FormLabel>Rows</FormLabel>
-            <Select
-              value={String(field.value)}
-              onValueChange={(val) => field.onChange(Number(val))}
-            >
-              <FormControl>
-                <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
-                  {field.value || 'Rows'}
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800 ">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <SelectItem
-                    key={index}
-                    className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300 data-[selected=true]:wr-bg-zinc-700"
-                    value={String(index + 1)}
-                  >
-                    {index + 1}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="numberOfBet"
-        render={({ field }) => (
-          <FormItem className="wr-mb-3 ">
-            <FormLabel>Number of Bet</FormLabel>
-            <FormControl>
-              <div>
-                <Select value={String(field.value)} onValueChange={field.onChange}>
-                  <SelectTrigger className="wr-bg-zinc-950 wr-border-zinc-800">
-                    {field.value || 'Number of Bet'}
-                  </SelectTrigger>
-                  <SelectContent className="wr-z-[400] wr-bg-zinc-800 wr-border-zinc-800">
-                    {Array.from({ length: 10 }).map((_, index) => (
-                      <SelectItem
-                        key={index}
-                        className="wr-flex wr-justify-between hover:wr-bg-zinc-900 wr-transition-all wr-duration-300"
-                        value={String(index + 1)}
-                      >
-                        {index + 1}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </FormControl>
-          </FormItem>
-        )}
-      />
-
+      <RiskController />
+      <RowsController />
+      <NumberOfCBetController />
       <div className="wr-mb-6 lg:!wr-grid wr-grid-cols-2 wr-gap-2 wr-hidden">
         <div>
           <FormLabel>Max Payout</FormLabel>

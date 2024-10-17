@@ -13,12 +13,12 @@ import {
 } from '../../../../common/controller';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
-import { IconMagicStick, IconTrash } from '../../../../svgs';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import useTowerGameStore from '../../store';
 import { TowerForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import RiskController from './risk-controller';
+import RowsController from './rows-controller';
 
 interface AutoControllerProps {
   minWager: number;
@@ -39,41 +39,6 @@ export const AutoController = ({
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
-  const { updateTowerGameResults } = useTowerGameStore([
-    'gameStatus',
-    'updateTowerGameResults',
-    'towerGameResults',
-  ]);
-
-  const clearBetHandler = () => {
-    digitalClickEffect.play();
-    form.setValue('selections', []);
-    updateTowerGameResults([]);
-  };
-
-  const getRandomNumber = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const autoPickHandler = () => {
-    digitalClickEffect.play();
-    clearBetHandler();
-
-    var randomNumbers: number[] = [];
-
-    for (var i = 0; i < 10; i++) {
-      var randomNumber;
-
-      do {
-        randomNumber = getRandomNumber(1, 40);
-      } while (randomNumbers.includes(randomNumber));
-
-      randomNumbers.push(randomNumber);
-    }
-
-    form.setValue('selections', randomNumbers);
-  };
-
   return (
     <div className="wr-flex wr-flex-col">
       <WagerFormField
@@ -83,30 +48,9 @@ export const AutoController = ({
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
       />
 
-      <div className="wr-mb-3 wr-grid wr-grid-cols-2 wr-gap-2">
-        <Button
-          size={'xl'}
-          variant={'secondary'}
-          type="button"
-          disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
-          onClick={autoPickHandler}
-        >
-          <IconMagicStick className="wr-mr-1 wr-h-5 wr-w-5" />
-          Auto Pick
-        </Button>
-        <Button
-          size={'xl'}
-          variant={'secondary'}
-          type="button"
-          onClick={clearBetHandler}
-          disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
-        >
-          <IconTrash className="wr-mr-1 wr-h-5 wr-w-5" />
-          Clear
-        </Button>
-      </div>
-
       <div className="wr-order-2 lg:wr-order-none wr-flex wr-gap-2 lg:wr-flex-col lg:wr-gap-0">
+        <RiskController />
+        <RowsController />
         <AutoBetCountFormField
           isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         />
