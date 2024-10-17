@@ -36,13 +36,18 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
 
   return (
     <>
-      <WagerFormField minWager={minWager} maxWager={maxWager} isDisabled={isFormInProgress} />
+      <WagerFormField
+        className="lg:wr-mb-3"
+        minWager={minWager}
+        maxWager={maxWager}
+        isDisabled={isFormInProgress}
+      />
 
       <FormField
         control={form.control}
         name="riskLevel"
         render={({ field }) => (
-          <FormItem className="wr-mb-3 lg:wr-mb-6">
+          <FormItem className="wr-mb-3 ">
             <FormLabel>Risk</FormLabel>
             <Select {...field} value={field.value} onValueChange={field.onChange}>
               <FormControl>
@@ -92,7 +97,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         control={form.control}
         name="rows"
         render={({ field }) => (
-          <FormItem className="wr-mb-3 lg:wr-mb-6">
+          <FormItem className="wr-mb-3 ">
             <FormLabel>Rows</FormLabel>
             <Select
               value={String(field.value)}
@@ -123,7 +128,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
         control={form.control}
         name="numberOfBet"
         render={({ field }) => (
-          <FormItem className="wr-mb-3 lg:wr-mb-6">
+          <FormItem className="wr-mb-3 ">
             <FormLabel>Number of Bet</FormLabel>
             <FormControl>
               <div>

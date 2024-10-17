@@ -299,7 +299,7 @@ export const WagerFormField: React.FC<WagerFormFieldProps> = ({
       control={form.control}
       name="wager"
       render={({ field }) => (
-        <FormItem className={cn(className, 'wr-mb-3 lg:wr-mb-6')}>
+        <FormItem className={cn('wr-mb-3 lg:wr-mb-6', className)}>
           <FormLabel className={cn('wr-leading-4 wr-mb-3 lg:wr-mb-[6px] lg:wr-leading-6')}>
             {customLabel ? customLabel : 'Wager'}
             <div>
