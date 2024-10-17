@@ -20,6 +20,7 @@ export { default as RouletteGame } from './games/roulette';
 export { default as RpsGame } from './games/rps';
 export { default as SingleBlackjackGame } from './games/single-blackjack';
 export { default as SingleWheelGame } from './games/single-wheel';
+export { default as TowerGame } from './games/tower';
 export * from './games/utils';
 export { default as VideoPokerGame } from './games/video-poker';
 export { default as WheelGame } from './games/wheel';
