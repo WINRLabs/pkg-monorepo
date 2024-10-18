@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/types",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "dist"
   ],
@@ -19,5 +19,5 @@
   "devDependencies": {
     "typescript": "^5.0.4",
     "@winrlabs/typescript-config": "workspace:*"
-  } 
+  }
 }
