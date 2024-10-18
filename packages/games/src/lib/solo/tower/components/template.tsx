@@ -44,11 +44,11 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
   const formSchema = z.object({
     wager: z
       .number()
-      .min(1, {
-        message: `Minimum wager is $1`,
+      .min(props?.minWager || 1, {
+        message: `Minimum wager is $${props?.minWager || 1}`,
       })
-      .max(2000, {
-        message: `Maximum wager is $2000`,
+      .max(props?.maxWager || 2000, {
+        message: `Maximum wager is $${props?.maxWager || 2000}`,
       }),
     betCount: z.number().min(0, { message: 'Minimum bet count is 0' }),
     stopGain: z.number(),
@@ -85,10 +85,11 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
         <GameContainer>
           <Tower.Game {...props}>
             <Tower.Controller
-              maxWager={2000}
-              minWager={1}
+              maxWager={props?.maxWager || 2000}
+              minWager={props?.minWager || 1}
               isAutoBetMode={isAutoBetMode}
               onAutoBetModeChange={setIsAutoBetMode}
+              onLogin={props.onLogin}
             />
             <SceneContainer className="wr-relative md:wr-h-[750px] max-lg:!wr-border-0 !wr-p-0 max-md:wr-bg-transparent">
               <Tower.Scene {...props} />

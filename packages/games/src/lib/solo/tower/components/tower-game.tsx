@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { cn } from '../../../utils/style';
+import useTowerGameStore from '../store';
 import { TemplateOptions } from './template';
 
 interface Cell {
@@ -37,6 +38,9 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
   const [gameOver, setGameOver] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const [autoBetMode, setAutoBetMode] = useState(false);
+
+  const { gameMode } = useTowerGameStore(['gameMode']);
+
   const handleClick = (row: number, col: number) => {
     if (!grid[row]?.[col]?.isClickable || gameOver) return;
 
@@ -223,6 +227,8 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
           Play autobet
         </button>
       )}
+
+      {gameMode}
     </div>
   );
 };
