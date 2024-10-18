@@ -10,7 +10,12 @@ export type PriceFeedVariable =
   | 'weth'
   | 'sol'
   | 'usdt'
-  | 'mck';
+  | 'mck'
+  | 'boop'
+  | 'spx'
+  | 'brett'
+  | 'mog'
+  | 'toshi';
 
 export type TPriceFeed = Record<PriceFeedVariable, number>;
 
