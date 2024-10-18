@@ -14,24 +14,24 @@ export type TowerGameProps = {
   options?: TemplateOptions;
 };
 
-const generateGrid = (): Cell[][] => {
-  const grid: Cell[][] = Array.from({ length: 4 }, () =>
-    Array.from({ length: 8 }, () => ({
-      isBomb: Math.random() < 0.5, // 25% chance of bomb
-      isClickable: false,
-      isSelected: false,
-    }))
-  );
-
-  for (let i = 0; i < grid.length; i++) {
-    // @ts-ignore-next-line
-    grid[i][0].isClickable = true;
-  }
-
-  return grid;
-};
-
 const TowerGame = ({ ...props }: TowerGameProps) => {
+  const generateGrid = (): Cell[][] => {
+    const grid: Cell[][] = Array.from({ length: 4 }, () =>
+      Array.from({ length: 8 }, () => ({
+        isBomb: Math.random() < 0.5,
+        isClickable: false,
+        isSelected: false,
+      }))
+    );
+
+    for (let i = 0; i < grid.length; i++) {
+      // @ts-ignore-next-line
+      grid[i][0].isClickable = true;
+    }
+
+    return grid;
+  };
+
   const options = { ...props.options };
 
   const [grid, setGrid] = useState<Cell[][]>(generateGrid);

@@ -27,7 +27,6 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
-
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: TowerGameResult[]) => void;
   onAnimationSkipped?: (result: TowerGameResult[]) => void;

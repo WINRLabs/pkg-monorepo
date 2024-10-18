@@ -79,9 +79,19 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
     },
   });
 
+  React.useEffect(() => {
+    const cb = (formFields: any) => {
+      props?.onFormChange && props.onFormChange(formFields);
+    };
+
+    const subscription = form.watch(cb);
+
+    return () => subscription.unsubscribe();
+  }, [form.watch]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((v) => console.log(v))}>
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <Tower.Game {...props}>
             <Tower.Controller
