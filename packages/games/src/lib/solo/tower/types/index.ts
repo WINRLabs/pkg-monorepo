@@ -1,5 +1,11 @@
 import { UseFormReturn } from 'react-hook-form';
 
+export interface Cell {
+  isBomb: boolean;
+  isClickable: boolean;
+  isSelected: boolean;
+}
+
 export interface TowerFormField {
   wager: number;
   betCount: number;
@@ -10,6 +16,7 @@ export interface TowerFormField {
   riskLevel: 'easy' | 'medium' | 'hard' | 'expert' | 'master';
   rows: number;
   numberOfBet: number;
+  cells: Cell[][];
 }
 
 export type TowerForm = UseFormReturn<TowerFormField, any, undefined>;

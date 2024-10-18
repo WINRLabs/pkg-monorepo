@@ -8,7 +8,7 @@ import z from 'zod';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { WinAnimation } from '../../../common/win-animation';
 import { Form } from '../../../ui/form';
-import { Tower, TowerFormField } from '..';
+import { Cell, Tower, TowerFormField } from '..';
 import { TowerGameProps } from './game';
 
 export type TemplateOptions = {
@@ -28,6 +28,12 @@ export type TemplateOptions = {
   };
 };
 
+const CellSchema = z.object({
+  isBomb: z.boolean(),
+  isClickable: z.boolean(),
+  isSelected: z.boolean(),
+});
+
 type TemplateProps = TowerGameProps & {
   options?: TemplateOptions;
   minWager?: number;
@@ -36,6 +42,23 @@ type TemplateProps = TowerGameProps & {
   onFormChange?: (fields: TowerFormField) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onLogin?: () => void;
+};
+
+export const generateGrid = (): Cell[][] => {
+  const grid: Cell[][] = Array.from({ length: 4 }, () =>
+    Array.from({ length: 8 }, () => ({
+      isBomb: Math.random() < 0.5,
+      isClickable: false,
+      isSelected: false,
+    }))
+  );
+
+  for (let i = 0; i < grid.length; i++) {
+    // @ts-ignore-next-line
+    grid[i][0].isClickable = true;
+  }
+
+  return grid;
 };
 
 const TowerTemplate = ({ ...props }: TemplateProps) => {
@@ -58,6 +81,7 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
     riskLevel: z.enum(['easy', 'medium', 'hard', 'expert', 'master']),
     rows: z.number(),
     numberOfBet: z.number(),
+    cells: z.array(z.array(CellSchema)),
   });
 
   // 1. Define your form.
@@ -76,6 +100,7 @@ const TowerTemplate = ({ ...props }: TemplateProps) => {
       riskLevel: 'easy',
       rows: 8,
       numberOfBet: 1,
+      cells: generateGrid(),
     },
   });
 

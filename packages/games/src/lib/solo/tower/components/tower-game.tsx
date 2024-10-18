@@ -1,40 +1,22 @@
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import React, { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { cn } from '../../../utils/style';
 import useTowerGameStore from '../store';
-import { TemplateOptions } from './template';
-
-interface Cell {
-  isBomb: boolean;
-  isClickable: boolean;
-  isSelected: boolean;
-}
+import { Cell, TowerForm } from '../types';
+import { generateGrid, TemplateOptions } from './template';
 
 export type TowerGameProps = {
   options?: TemplateOptions;
 };
 
 const TowerGame = ({ ...props }: TowerGameProps) => {
-  const generateGrid = (): Cell[][] => {
-    const grid: Cell[][] = Array.from({ length: 4 }, () =>
-      Array.from({ length: 8 }, () => ({
-        isBomb: Math.random() < 0.5,
-        isClickable: false,
-        isSelected: false,
-      }))
-    );
-
-    for (let i = 0; i < grid.length; i++) {
-      // @ts-ignore-next-line
-      grid[i][0].isClickable = true;
-    }
-
-    return grid;
-  };
-
   const options = { ...props.options };
 
-  const [grid, setGrid] = useState<Cell[][]>(generateGrid);
+  const form = useFormContext() as TowerForm;
+
+  const [grid, setGrid] = useState<Cell[][]>(form.getValues().cells);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const [autoBetMode, setAutoBetMode] = useState(false);
@@ -121,6 +103,10 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
     }
   }, [gameOver]);
 
+  useEffect(() => {
+    form.setValue('cells', grid);
+  }, [grid]);
+
   const getBackgroundImage = React.useCallback(
     (rowIndex: number, colIndex: number, grid: Cell[][], gameOver: boolean): string => {
       if (
@@ -172,7 +158,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
             >
               {grid.map((_, rowIndex) => {
                 return (
-                  <button
+                  <CheckboxPrimitive.Root
                     onMouseEnter={() => setHoveredCell({ row: rowIndex, col: colIndex })}
                     onMouseLeave={() => setHoveredCell(null)}
                     key={`${rowIndex}-${colIndex}`}
@@ -183,7 +169,7 @@ const TowerGame = ({ ...props }: TowerGameProps) => {
                     className="wr-w-[68px] wr-z-10 wr-h-9 wr-grid wr-place-items-center wr-bg-no-repeat wr-bg-center wr-bg-contain wr-text-white wr-font-bold wr-transition-all wr-duration-300 wr-relative"
                     onClick={() => handleClick(rowIndex, colIndex)}
                     disabled={!grid[rowIndex]?.[colIndex]?.isClickable}
-                  ></button>
+                  />
                 );
               })}
               <div className="wr-absolute wr-inset-0 wr-flex wr-items-center wr-justify-center">
