@@ -9,7 +9,12 @@ export type PriceFeedVariable =
   | 'weth'
   | 'sol'
   | 'usdt'
-  | 'mck';
+  | 'mck'
+  | 'boop'
+  | 'spx'
+  | 'brett'
+  | 'mog'
+  | 'toshi';
 
 export interface Token {
   address: Address;
