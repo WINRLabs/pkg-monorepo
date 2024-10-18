@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.55
+
+### Patch Changes
+
+- c406a31: multicall
+- c406a31: add meme
+
 ## 0.11.54
 
 ### Patch Changes
