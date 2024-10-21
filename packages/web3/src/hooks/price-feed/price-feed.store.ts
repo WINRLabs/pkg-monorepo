@@ -10,7 +10,12 @@ export type PriceFeedVariable =
   | 'weth'
   | 'sol'
   | 'usdt'
-  | 'mck';
+  | 'mck'
+  | 'boop'
+  | 'spx'
+  | 'brett'
+  | 'mog'
+  | 'toshi';
 
 export type TPriceFeed = Record<PriceFeedVariable, number>;
 
@@ -34,6 +39,11 @@ export const defaultPriceFeedValues = {
   sol: 1,
   usdt: 1,
   mck: 1,
+  boop: 1,
+  spx: 1,
+  brett: 1,
+  mog: 1,
+  toshi: 1,
 };
 
 export const usePriceFeedStore = create(

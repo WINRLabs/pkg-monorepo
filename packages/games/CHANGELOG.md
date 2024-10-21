@@ -1,5 +1,20 @@
 # @winrlabs/games
 
+## 3.0.73
+
+### Patch Changes
+
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+  - @winrlabs/types@0.0.3
+
+## 3.0.72
+
+### Patch Changes
+
+- Updated dependencies [c406a31]
+  - @winrlabs/types@0.0.2
+
 ## 3.0.71
 
 ### Patch Changes
