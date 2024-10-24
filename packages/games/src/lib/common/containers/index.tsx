@@ -32,7 +32,7 @@ export const GameContainer: React.FC<Props> = ({ children, className }) => {
   );
 };
 
-export const BetControllerContainer: React.FC<Props> = ({ children, className }) => {
+export const BetControllerContainer: React.FC<Props> = ({ children, className, ...props }) => {
   return (
     <section
       className={cn(
@@ -40,6 +40,7 @@ export const BetControllerContainer: React.FC<Props> = ({ children, className })
         className
       )}
       data-bet-controller
+      {...props}
     >
       {children}
     </section>
