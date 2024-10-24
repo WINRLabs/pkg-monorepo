@@ -43,6 +43,7 @@ const log = debug('worker:CoinFlipWeb3');
 type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    backgroundColor?: string;
   };
 };
 

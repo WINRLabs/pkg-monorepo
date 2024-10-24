@@ -9,6 +9,7 @@ export default function CoinFlipPage() {
         options={{
           scene: {
             backgroundImage: 'url(/coin-flip/coin-flip-bg.png)',
+            backgroundColor: '#20202A',
           },
         }}
         minWager={0.01}

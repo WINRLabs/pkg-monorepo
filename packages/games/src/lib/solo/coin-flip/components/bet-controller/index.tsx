@@ -10,6 +10,7 @@ import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
 
 interface Props {
+  backgroundColor?: string;
   minWager: number;
   maxWager: number;
   winMultiplier: number;
@@ -23,7 +24,10 @@ export const BetController: React.FC<Props> = (props) => {
   const [tab, setTab] = React.useState<string>('manual');
 
   return (
-    <BetControllerContainer className="wr-z-30">
+    <BetControllerContainer
+      className="wr-z-30"
+      style={{ backgroundColor: props?.backgroundColor || '' }}
+    >
       <div className="wr-max-lg:flex wr-max-lg:flex-col">
         <Tabs.Root
           defaultValue="manual"

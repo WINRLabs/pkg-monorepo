@@ -92,9 +92,12 @@ export const UnityGameContainer: React.FC<Props & { id?: string }> = ({
   );
 };
 
-export const UnityBetControllerContainer: React.FC<Props> = ({ children, className }) => {
+export const UnityBetControllerContainer: React.FC<Props> = ({ children, className, ...props }) => {
   return (
-    <section className={cn('wr-absolute wr-left-0 wr-top-0 wr-w-[264px] wr-p-[14px]', className)}>
+    <section
+      className={cn('wr-absolute wr-left-0 wr-top-0 wr-w-[264px] wr-p-[14px]', className)}
+      {...props}
+    >
       {children}
     </section>
   );

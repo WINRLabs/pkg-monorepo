@@ -22,6 +22,7 @@ const log = debug('worker:CoinFlipTemplate');
 type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    backgroundColor?: string;
   };
 };
 
@@ -152,6 +153,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={props.onLogin}
+            backgroundColor={options?.scene?.backgroundColor}
           />
           <SceneContainer
             className={cn(
