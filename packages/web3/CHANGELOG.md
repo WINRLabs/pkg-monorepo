@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.57
+
+### Patch Changes
+
+- a8ca036: multicall
+
 ## 0.11.56
 
 ### Patch Changes
