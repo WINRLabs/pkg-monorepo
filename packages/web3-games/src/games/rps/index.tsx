@@ -91,7 +91,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.rps);
 
   const { eventLogic } = useFastOrVerified();
 

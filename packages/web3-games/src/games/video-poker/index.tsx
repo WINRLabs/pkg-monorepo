@@ -73,7 +73,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     payout: number;
   }>();
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.videoPoker);
   const currentAccount = useCurrentAccount();
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,

@@ -23,9 +23,6 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
     return `${network.toLowerCase()}/${gameAddress}/${address}`;
   }, [network, address, gameAddress]);
 
-  // const namespace =
-  //   'winr/0x4F7f224188D7c36e27B8Fc0a6F4fce3a8FD7494A/0xB769F9037fe072F378EB87F7A75f6B79008D6a05';
-
   React.useEffect(() => {
     if (!socket) return;
 
@@ -41,10 +38,6 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
       setConnected(false);
     });
 
-    socket.on(`${namespace}`, (message) => {
-      console.log('Received welcome message:', message);
-    });
-
     return () => {
       socket.off('connect');
 
@@ -57,8 +50,8 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
   React.useEffect(() => {
     if (!address || !bundlerWsUrl || !network) return;
     log(network, bundlerWsUrl, 'bundler ws url', namespace);
-
     const socketURL = `${bundlerWsUrl}/${namespace}`;
+
     setSocket(
       io(socketURL, {
         path: `/socket.io/`,
@@ -66,6 +59,26 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
       })
     );
   }, [address, bundlerWsUrl, network]);
+
+  React.useEffect(() => {
+    if (!socket || !namespace) return;
+
+    socket.on(`${namespace}`, onListenEvent);
+
+    return () => {
+      socket.off(`${namespace}`, onListenEvent);
+    };
+  }, [socket]);
+
+  const onListenEvent = (e: string) => {
+    const _e = SuperJSON.parse(e) as Event;
+
+    const context = _e.context as DecodedEvent<any, any>;
+
+    log(context, 'CONTEXT!', dayjs(new Date()).unix());
+
+    setGameEvent(context);
+  };
 
   return gameEvent;
 };

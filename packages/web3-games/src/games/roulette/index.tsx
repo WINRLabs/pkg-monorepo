@@ -90,7 +90,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.roulette);
 
   const { eventLogic } = useFastOrVerified();
 
