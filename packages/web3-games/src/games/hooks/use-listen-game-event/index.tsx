@@ -12,21 +12,26 @@ const log = debug('worker:UseListenGameEvent');
 
 export const useListenGameEvent = (gameAddress: `0x${string}`) => {
   const [gameEvent, setGameEvent] = React.useState<DecodedEvent<any, any> | null>(null);
-
-  const [socket, setSocket] = React.useState<Socket | null>(null);
+  const socketRef = React.useRef<Socket | null>(null);
 
   const { address } = useCurrentAccount();
-
   const { bundlerWsUrl, network, setConnected } = useGameSocketContext();
 
   const namespace = React.useMemo(() => {
+    if (!network || !gameAddress || !address) return undefined;
     return `${network.toLowerCase()}/${gameAddress}/${address}`;
   }, [network, address, gameAddress]);
 
   React.useEffect(() => {
-    if (!socket) return;
+    if (!bundlerWsUrl || !namespace || socketRef.current) return;
 
-    socket.connect();
+    const socketURL = `${bundlerWsUrl}/${namespace}`;
+    const socket = io(socketURL, {
+      path: `/socket.io/`,
+      transports: ['websocket', 'webtransport'],
+    });
+
+    socketRef.current = socket;
 
     socket.on('connect', () => {
       log('socket connected!', socket);
@@ -38,47 +43,22 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
       setConnected(false);
     });
 
+    socket.on(namespace, (e: string) => {
+      const parsedEvent = SuperJSON.parse(e) as Event;
+      const context = parsedEvent.context as DecodedEvent<any, any>;
+
+      log(context, 'CONTEXT!', dayjs(new Date()).unix());
+      setGameEvent(context);
+    });
+
     return () => {
       socket.off('connect');
-
       socket.off('disconnect');
-
+      socket.off(namespace);
       socket.disconnect();
+      socketRef.current = null;
     };
-  }, [socket]);
-
-  React.useEffect(() => {
-    if (!address || !bundlerWsUrl || !network) return;
-    log(network, bundlerWsUrl, 'bundler ws url', namespace);
-    const socketURL = `${bundlerWsUrl}/${namespace}`;
-
-    setSocket(
-      io(socketURL, {
-        path: `/socket.io/`,
-        transports: ['websocket', 'webtransport'],
-      })
-    );
-  }, [address, bundlerWsUrl, network]);
-
-  React.useEffect(() => {
-    if (!socket || !namespace) return;
-
-    socket.on(`${namespace}`, onListenEvent);
-
-    return () => {
-      socket.off(`${namespace}`, onListenEvent);
-    };
-  }, [socket]);
-
-  const onListenEvent = (e: string) => {
-    const _e = SuperJSON.parse(e) as Event;
-
-    const context = _e.context as DecodedEvent<any, any>;
-
-    log(context, 'CONTEXT!', dayjs(new Date()).unix());
-
-    setGameEvent(context);
-  };
+  }, [bundlerWsUrl, namespace, setConnected]);
 
   return gameEvent;
 };
