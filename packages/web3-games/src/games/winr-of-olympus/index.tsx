@@ -162,10 +162,15 @@ export default function WinrOfOlympusGame({
 
   const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
+  const hasAllowance = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
+
+  React.useEffect(() => {
+    hasAllowance.current = allowance.hasAllowance || false;
+  }, [allowance.hasAllowance]);
 
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
@@ -175,19 +180,15 @@ export default function WinrOfOlympusGame({
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    // if (!allowance.hasAllowance) {
-    //   const handledAllowance = await allowance.handleAllowance({
-    //     errorCb: (e: any) => {
-    //       log('error', e);
-    //     },
-    //   });
-
-    //   if (!handledAllowance) return;
-    // }
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          log('error', e);
+        },
+      });
+    }
 
     log('allowance available');
-
-    // await handleTx.mutateAsync();
 
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
@@ -214,13 +215,12 @@ export default function WinrOfOlympusGame({
   const handleBuyFreeSpins = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    if (!allowance.hasAllowance) {
-      const handledAllowance = await allowance.handleAllowance({
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
         errorCb: (e: any) => {
           log('error', e);
         },
       });
-      if (!handledAllowance) return;
     }
     log('buy feature');
     try {
@@ -239,14 +239,13 @@ export default function WinrOfOlympusGame({
 
   const handleFreeSpin = async (errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
-    // if (!allowance.hasAllowance) {
-    //   const handledAllowance = await allowance.handleAllowance({
-    //     errorCb: (e: any) => {
-    //   log("error", e);
-    //     },
-    //   });
-    //   if (!handledAllowance) return;
-    // }
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          log('error', e);
+        },
+      });
+    }
 
     log('handleFreeSpintx called');
 
