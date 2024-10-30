@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 4.0.1
+
+### Patch Changes
+
+- 7497929: new socket implementation
+- 7497929: new socket implementation
+
 ## 4.0.0
 
 ### Major Changes
