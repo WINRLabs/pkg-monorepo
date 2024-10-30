@@ -45,7 +45,7 @@ export const ManualController = ({
           <FormLabel>Max Payout</FormLabel>
           <div
             className={cn(
-              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
+              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden max-payout'
             )}
           >
             <WagerCurrencyIcon />
@@ -64,7 +64,7 @@ export const ManualController = ({
           type="submit"
           variant={'success'}
           className={cn(
-            'wr-w-full wr-uppercase wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none',
+            ' wr-w-full wr-uppercase wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none',
             {
               'wr-cursor-default wr-pointer-events-none':
                 !form.formState.isValid || form.formState.isSubmitting || form.formState.isLoading,

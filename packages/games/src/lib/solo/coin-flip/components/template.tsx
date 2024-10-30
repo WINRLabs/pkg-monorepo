@@ -22,7 +22,6 @@ const log = debug('worker:CoinFlipTemplate');
 type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
-    backgroundColor?: string;
   };
 };
 
@@ -34,9 +33,9 @@ type TemplateProps = CoinFlipGameProps & {
   onSubmitGameForm: (data: CoinFlipFormFields) => void;
   onFormChange?: (fields: CoinFlipFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
-
   onError?: (error: any) => void;
   onLogin?: () => void;
+  formClassName?: string;
 };
 
 const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
@@ -144,7 +143,10 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
+      <form
+        onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}
+        className={props.formClassName}
+      >
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}
@@ -153,7 +155,6 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={props.onLogin}
-            backgroundColor={options?.scene?.backgroundColor}
           />
           <SceneContainer
             className={cn(
