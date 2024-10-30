@@ -39,13 +39,14 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex 
 import { BaseGameProps } from '../../type';
 import {
   Badge,
+  SocketMultiplayerGameType,
   useBetHistory,
   useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
-import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
+import { prepareGameTransaction } from '../utils';
 
 const log = debug('worker:WheelWeb3');
 
@@ -124,7 +125,9 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
 
-  const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.wheel);
+  const gameEvent = useListenMultiplayerGameEvent({
+    gameType: SocketMultiplayerGameType.wheel,
+  });
 
   const currentAccount = useCurrentAccount();
   const allTokens = useTokenStore((s) => s.tokens);

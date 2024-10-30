@@ -114,7 +114,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
 
   const { priceFeed } = usePriceFeed();
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.holdemPoker);
 
   const { handleGetBadges } = useGetBadges({
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,

@@ -69,7 +69,7 @@ export default function WinrOfOlympusGame({
     isDoubleChance: false,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.winrOfOlympus);
 
   const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);

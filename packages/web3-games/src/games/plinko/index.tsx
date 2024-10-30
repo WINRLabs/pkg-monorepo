@@ -85,7 +85,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.plinko);
 
   const { eventLogic } = useFastOrVerified();
 

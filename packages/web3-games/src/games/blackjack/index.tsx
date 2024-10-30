@@ -135,7 +135,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
   const balances = useBalanceStore((state) => state.balances);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.blackjack);
 
   const { priceFeed } = usePriceFeed();
 

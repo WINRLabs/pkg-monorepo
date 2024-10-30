@@ -68,7 +68,7 @@ export default function PrincessWinrGame({
     isDoubleChance: false,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.princessWinr);
 
   const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);

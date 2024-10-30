@@ -98,7 +98,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   });
 
   const [isWaitingResponse, setIsWaitingResponse] = React.useState<boolean>(false);
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.mines);
 
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({

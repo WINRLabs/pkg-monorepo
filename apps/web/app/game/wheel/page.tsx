@@ -6,7 +6,7 @@ export default function WheelPage() {
   return (
     <>
       <WheelGame
-        minWager={1}
+        minWager={0.1}
         maxWager={1}
         theme={{
           controllerFooter: <div>Custom Footer</div>,

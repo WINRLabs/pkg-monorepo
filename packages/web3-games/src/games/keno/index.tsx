@@ -91,7 +91,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
 
   const { updateGameStatus } = useKenoGameStore(['updateGameStatus']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.keno);
 
   const { eventLogic } = useFastOrVerified();
 

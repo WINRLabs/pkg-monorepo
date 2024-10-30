@@ -94,7 +94,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
 
   const { updateGameStatus } = useLimboGameStore(['updateGameStatus']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.limbo);
 
   const { eventLogic } = useFastOrVerified();
 

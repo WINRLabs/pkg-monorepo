@@ -69,7 +69,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     isDoubleChance: false,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.winrBonanza);
 
   const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);

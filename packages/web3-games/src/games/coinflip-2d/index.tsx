@@ -96,7 +96,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     wager: props.minWager || 1,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.coinFlip);
 
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
