@@ -24,6 +24,11 @@ export const useListenGameEvent = () => {
 
     socket.connect();
 
+    socket.emit('register', {
+      address,
+      network,
+    });
+
     socket.on('connect', () => {
       log('socket connected!', socket);
       setConnected(true);

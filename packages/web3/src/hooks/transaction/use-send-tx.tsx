@@ -8,6 +8,7 @@ import { useCurrentAccount } from '../use-current-address';
 import { SendTxRequest } from './types';
 import { useSocialAccountTx } from './use-social-account-tx';
 import { useWeb3AccountTx } from './use-web3-account-tx';
+import { useProxyAccountTx } from './use-proxy-tx';
 
 export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex }> = (
   options = {}
@@ -18,9 +19,11 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
 
   const { mutateAsync: sendWeb3AccountTx } = useWeb3AccountTx();
 
+  const { mutateAsync: sendProxyTx } = useProxyAccountTx();
+
   const { switchChainAsync } = useSwitchChain();
 
-  const { globalChainId } = useBundlerClient();
+  const { globalChainId, bundlerVersion } = useBundlerClient<'v1' | 'v2'>();
 
   return useMutation({
     ...options,
@@ -53,14 +56,25 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           throw new SwitchChainError(error as Error);
         }
 
-        return await sendWeb3AccountTx({
-          customAccountApi,
-          customBundlerClient,
-          target,
-          encodedTxData,
-          value,
-          enforceSign,
-        });
+        if (bundlerVersion === 'v2') {
+          return await sendProxyTx({
+            customAccountApi,
+            customBundlerClient,
+            target,
+            encodedTxData,
+            value,
+            enforceSign,
+          });
+        } else {
+          return await sendWeb3AccountTx({
+            customAccountApi,
+            customBundlerClient,
+            target,
+            encodedTxData,
+            value,
+            enforceSign,
+          });
+        }
       }
     },
   });
