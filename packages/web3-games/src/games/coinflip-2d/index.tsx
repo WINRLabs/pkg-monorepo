@@ -323,7 +323,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         onFormChange={setFormValues}
         onAnimationStep={onAnimationStep}
         onAutoBetModeChange={onAutoBetModeChange}
-        formClassName="section-container:wr-bg-red-500"
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

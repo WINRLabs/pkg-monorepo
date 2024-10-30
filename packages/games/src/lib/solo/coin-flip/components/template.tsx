@@ -35,7 +35,6 @@ type TemplateProps = CoinFlipGameProps & {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (error: any) => void;
   onLogin?: () => void;
-  formClassName?: string;
 };
 
 const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
@@ -143,10 +142,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}
-        className={props.formClassName}
-      >
+      <form onSubmit={form.handleSubmit((v) => props.onSubmitGameForm(v))}>
         <GameContainer>
           <BetController
             minWager={props.minWager || 1}
