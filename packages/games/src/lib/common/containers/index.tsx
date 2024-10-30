@@ -32,14 +32,15 @@ export const GameContainer: React.FC<Props> = ({ children, className }) => {
   );
 };
 
-export const BetControllerContainer: React.FC<Props> = ({ children, className }) => {
+export const BetControllerContainer: React.FC<Props> = ({ children, className, ...props }) => {
   return (
     <section
       className={cn(
-        'wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-onyx-700 wr-px-4 wr-py-3 lg:wr-py-3 lg:wr-w-[340px]',
+        'wr-flex wr-flex-shrink-0 wr-flex-col wr-justify-between wr-rounded-lg wr-bg-onyx-700 wr-px-4 wr-py-3 lg:wr-py-3 lg:wr-w-[340px] bet-controller',
         className
       )}
       data-bet-controller
+      {...props}
     >
       {children}
     </section>
@@ -91,9 +92,12 @@ export const UnityGameContainer: React.FC<Props & { id?: string }> = ({
   );
 };
 
-export const UnityBetControllerContainer: React.FC<Props> = ({ children, className }) => {
+export const UnityBetControllerContainer: React.FC<Props> = ({ children, className, ...props }) => {
   return (
-    <section className={cn('wr-absolute wr-left-0 wr-top-0 wr-w-[264px] wr-p-[14px]', className)}>
+    <section
+      className={cn('wr-absolute wr-left-0 wr-top-0 wr-w-[264px] wr-p-[14px]', className)}
+      {...props}
+    >
       {children}
     </section>
   );

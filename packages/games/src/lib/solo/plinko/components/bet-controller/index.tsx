@@ -11,6 +11,7 @@ import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
 
 interface Props extends Omit<PlinkoTemplateOptions, 'scene'> {
+  scene: PlinkoTemplateOptions['scene'];
   minWager: number;
   maxWager: number;
   isGettingResults?: boolean;
@@ -23,7 +24,10 @@ export const BetController: React.FC<Props> = (props) => {
   const [tab, setTab] = React.useState<string>('manual');
 
   return (
-    <BetControllerContainer className="wr-z-30">
+    <BetControllerContainer
+      className="wr-z-30"
+      style={{ backgroundColor: props?.scene?.backgroundColor || '' }}
+    >
       <div className="wr-max-lg:flex wr-max-lg:flex-col">
         {props?.controllerHeader}
         {!props.hideTabs ? (

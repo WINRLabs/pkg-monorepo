@@ -11,6 +11,7 @@ export interface WheelTheme {
   hideMaxPayout?: boolean;
   controllerFooter?: React.ReactNode;
   hideParticipants?: boolean;
+  betControllerBackground?: string;
 }
 
 const defaultTheme: Partial<WheelTheme> = {

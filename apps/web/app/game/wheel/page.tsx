@@ -14,6 +14,7 @@ export default function WheelPage() {
           // hideWager: true,
           // controllerHeader: <div>D</div>,
           // hideMaxPayout: true,
+          betControllerBackground: '#20202A',
         }}
       />
       ;
