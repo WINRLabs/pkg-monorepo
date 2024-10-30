@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 4.0.2
+
+### Patch Changes
+
+- 19c27e9: minor ui update
+- 19c27e9: new socket implementation
+
 ## 4.0.1
 
 ### Patch Changes
