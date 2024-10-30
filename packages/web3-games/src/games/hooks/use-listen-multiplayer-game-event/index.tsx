@@ -1,4 +1,4 @@
-import { useCurrentAccount } from '@winrlabs/web3';
+import { useBundlerClient } from '@winrlabs/web3';
 import React, { useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import SuperJSON from 'superjson';
@@ -13,7 +13,6 @@ import {
   RandomsContext,
   SessionContext,
 } from '../../multiplayer/type';
-import { GAME_HUB_GAMES } from '../../utils';
 import { useGameSocketContext } from '../use-game-socket';
 import debug from 'debug';
 
@@ -35,11 +34,28 @@ interface MultiplayerGameState {
   };
 }
 
-export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
-  const { address } = useCurrentAccount();
-  const [socket, setSocket] = React.useState<Socket | null>(null);
+export enum SocketMultiplayerGameType {
+  horserace = 'horse-race',
+  wheel = 'wheel',
+  moon = 'moon',
+}
+
+interface IUseListenMultiplayerGameEvent {
+  gameType: SocketMultiplayerGameType;
+}
+
+const multiplayerGameStatusMethodMap = {
+  [SocketMultiplayerGameType.moon]: 'horserace',
+  [SocketMultiplayerGameType.wheel]: 'wheel',
+  [SocketMultiplayerGameType.horserace]: 'horserace',
+};
+
+export const useListenMultiplayerGameEvent = ({ gameType }: IUseListenMultiplayerGameEvent) => {
+  const socketRef = React.useRef<Socket | null>(null);
 
   const { bundlerWsUrl, network } = useGameSocketContext();
+
+  const { client } = useBundlerClient();
 
   const [gameState, setGameState] = useState<MultiplayerGameState>({
     joiningStart: 0,
@@ -57,74 +73,47 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
     },
   });
 
-  React.useEffect(() => {
-    if (!bundlerWsUrl) return;
+  const namespace = React.useMemo(() => {
+    if (!network || !gameType) return undefined;
+    return `${network.toLowerCase()}/${gameType}`;
+  }, [network, gameType]);
 
-    setSocket(
-      io(bundlerWsUrl, {
-        autoConnect: false,
-        extraHeaders: {
-          'x-address': address!,
-          'x-multiplayer-game': game,
-          'x-network': network,
-        },
-      })
-    );
-  }, []);
-
-  // socket connection
   React.useEffect(() => {
-    if (!socket) return;
-    socket.connect();
+    if (!bundlerWsUrl || !namespace || socketRef.current) return;
+
+    const socketURL = `${bundlerWsUrl}/${namespace}`;
+    const socket = io(socketURL, {
+      path: `/socket.io/`,
+      transports: ['websocket', 'webtransport'],
+    });
+
+    log(socket, 'socket');
+
+    socketRef.current = socket;
 
     socket.on('connect', () => {
-      log('[MULTIPLAYER] socket connected!');
+      log('[MULTIPLAYER] socket connected!', socket);
     });
 
-    socket.on('disconnect', (er) => {
-      log('[MULTIPLAYER] socket disconnected');
+    socket.on('disconnect', () => {
+      log('[MULTIPLAYER] socket disconnected!');
     });
+
+    socket.on(namespace, onGameEvent);
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
+      socket.off(namespace, onGameEvent);
       socket.disconnect();
+      socketRef.current = null;
     };
-  }, [socket]);
-
-  React.useEffect(() => {
-    if (!socket) return;
-
-    socket.on('message', onGameEvent);
-    // socket.on("connect_info", onConnectEvent);
-
-    socket.onAny((e) => {
-      // log("MULTIPLAYER ANY EVENT", e);
-    });
-
-    return () => {
-      socket.off('message', onGameEvent);
-      // socket.off("connect_info", onConnectEvent);
-    };
-  }, [socket]);
+  }, [bundlerWsUrl, namespace]);
 
   const onGameEvent = (e: string) => {
     const _e = SuperJSON.parse(e) as MultiplayerGameMessage & MultiplayerUpdateMessage;
-    const isGameActive = _e?.is_active;
 
     log('onGameEvent', _e);
-
-    if (isGameActive) {
-      setGameState((prev) => ({
-        ...prev,
-        joiningFinish: _e?.result.joiningFinish,
-        cooldownFinish: _e?.result.cooldownFinish,
-        joiningStart: _e?.result.joiningStart,
-        participants: _e.participants,
-        isGameActive: true,
-      }));
-      return;
-    }
 
     if (!_e?.context) return;
 
@@ -160,6 +149,35 @@ export const useListenMultiplayerGameEvent = (game: GAME_HUB_GAMES) => {
       participants: [],
       angle: gameProgram?.angle || 0,
     }));
+  };
+
+  React.useEffect(() => {
+    getInitialGameState();
+  }, [client, gameType]);
+
+  const getInitialGameState = async () => {
+    if (!client || !gameType) return;
+
+    const gameState = await client.request('multiplayerGameState', {
+      gameName: multiplayerGameStatusMethodMap[gameType] as any,
+    });
+
+    const _e = SuperJSON.parse(gameState) as MultiplayerGameMessage & MultiplayerUpdateMessage;
+    const isGameActive = _e?.isActive;
+
+    log(_e, 'IS ACTIVE GAME CHECK');
+
+    if (isGameActive) {
+      setGameState((prev) => ({
+        ...prev,
+        joiningFinish: _e?.result.joiningFinish,
+        cooldownFinish: _e?.result.cooldownFinish,
+        joiningStart: _e?.result.joiningStart,
+        participants: _e.participants,
+        isGameActive: true,
+      }));
+      return;
+    }
   };
 
   return gameState;

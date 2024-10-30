@@ -85,6 +85,8 @@ export type BundlerMethods = {
   'refund'(params: { game: string; player: Address }): {
     status: string;
   };
+
+  'multiplayerGameState'(params: { gameName: 'horserace' | 'wheel' | 'moon' }): any;
 };
 
 export enum BundlerNetwork {
@@ -183,6 +185,7 @@ export const BundlerClientProvider: React.FC<{
         network,
       }),
     enabled: !!address && !!rpcUrl && !!network,
+    refetchOnWindowFocus: false,
   });
 
   React.useEffect(() => {

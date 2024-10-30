@@ -43,22 +43,24 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
       setConnected(false);
     });
 
-    socket.on(namespace, (e: string) => {
-      const parsedEvent = SuperJSON.parse(e) as Event;
-      const context = parsedEvent.context as DecodedEvent<any, any>;
-
-      log(context, 'CONTEXT!', dayjs(new Date()).unix());
-      setGameEvent(context);
-    });
+    socket.on(namespace, onGameEvent);
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
-      socket.off(namespace);
+      socket.off(namespace, onGameEvent);
       socket.disconnect();
       socketRef.current = null;
     };
   }, [bundlerWsUrl, namespace, setConnected]);
+
+  const onGameEvent = (e: string) => {
+    const parsedEvent = SuperJSON.parse(e) as Event;
+    const context = parsedEvent.context as DecodedEvent<any, any>;
+
+    log(context, 'CONTEXT!', dayjs(new Date()).unix());
+    setGameEvent(context);
+  };
 
   return gameEvent;
 };
