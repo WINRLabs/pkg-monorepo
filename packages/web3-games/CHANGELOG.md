@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 12.0.2
+
+### Patch Changes
+
+- 19c27e9: minor ui update
+- 19c27e9: new socket implementation
+- Updated dependencies [19c27e9]
+- Updated dependencies [19c27e9]
+  - @winrlabs/games@4.0.2
+  - @winrlabs/web3-games@12.0.2
+  - @winrlabs/web3@0.11.59
+
 ## 12.0.1
 
 ### Patch Changes
