@@ -43,6 +43,7 @@ const log = debug('worker:CoinFlipWeb3');
 type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    backgroundColor?: string;
   };
 };
 
@@ -51,7 +52,6 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
-
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: CoinFlipGameResult[]) => void;
   onPlayerStatusUpdate?: (d: {
@@ -59,6 +59,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  betControllerClassName?: string;
 }
 
 export default function CoinFlipGame(props: TemplateWithWeb3Props) {

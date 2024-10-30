@@ -9,6 +9,7 @@ export default function PlinkoPage() {
         options={{
           scene: {
             backgroundImage: 'url(/plinko.png)',
+            backgroundColor: '#20202A',
           },
           controllerFooter: <div>Custom Footer</div>,
           // hideMaxPayout: true,

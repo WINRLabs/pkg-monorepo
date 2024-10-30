@@ -78,7 +78,7 @@ export const AutoController = ({
         />
       </div>
 
-      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0 ">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

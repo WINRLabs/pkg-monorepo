@@ -427,10 +427,12 @@ const config: Omit<Config, 'content'> = {
           '0%': {
             transform: 'translateY(-100%)',
             opacity: '1',
+            'border-bottom-width': '0px !important',
           },
           '100%': {
             transform: 'translateY(0)',
             opacity: '1',
+            'border-bottom-width': '1px !important',
           },
         },
         'slide-down-last': {

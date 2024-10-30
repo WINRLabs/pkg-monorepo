@@ -29,7 +29,7 @@ export const AudioController: React.FC<{
   return (
     <div
       className={cn(
-        'wr-relative wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2 lg:!wr-flex wr-hidden',
+        'wr-relative wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2 lg:!wr-flex wr-hidden audio-loader',
         className
       )}
       ref={ref}
@@ -91,7 +91,7 @@ export const UnityAudioController: React.FC<{
   return (
     <div
       className={cn(
-        'wr-relative wr-flex wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2',
+        'wr-relative wr-flex wr-cursor-pointer wr-items-center wr-justify-center wr-gap-2 audio-controller',
         className
       )}
     >
