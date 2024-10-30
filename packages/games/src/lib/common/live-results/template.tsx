@@ -36,6 +36,7 @@ const LiveResultsTemplate = () => {
         >
           <Button
             size={'lg'}
+            variant="success"
             className="wr-items-center wr-gap-1 wr-rounded-[1000px]"
             type="button"
             onClick={() => setIsHidden(false)}
