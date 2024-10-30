@@ -89,7 +89,7 @@ export default function RollGame(props: TemplateWithWeb3Props) {
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.roll);
 
   const { eventLogic } = useFastOrVerified();
 

@@ -114,7 +114,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     selectedToken: s.selectedToken,
   }));
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.singleBlackjack);
 
   const { priceFeed } = usePriceFeed();
 

@@ -10,19 +10,28 @@ import { useGameSocketContext } from '../use-game-socket';
 
 const log = debug('worker:UseListenGameEvent');
 
-export const useListenGameEvent = () => {
+export const useListenGameEvent = (gameAddress: `0x${string}`) => {
   const [gameEvent, setGameEvent] = React.useState<DecodedEvent<any, any> | null>(null);
-
-  const [socket, setSocket] = React.useState<Socket | null>(null);
+  const socketRef = React.useRef<Socket | null>(null);
 
   const { address } = useCurrentAccount();
-
   const { bundlerWsUrl, network, setConnected } = useGameSocketContext();
 
-  React.useEffect(() => {
-    if (!socket) return;
+  const namespace = React.useMemo(() => {
+    if (!network || !gameAddress || !address) return undefined;
+    return `${network.toLowerCase()}/${gameAddress}/${address}`;
+  }, [network, address, gameAddress]);
 
-    socket.connect();
+  React.useEffect(() => {
+    if (!bundlerWsUrl || !namespace || socketRef.current) return;
+
+    const socketURL = `${bundlerWsUrl}/${namespace}`;
+    const socket = io(socketURL, {
+      path: `/socket.io/`,
+      transports: ['websocket', 'webtransport'],
+    });
+
+    socketRef.current = socket;
 
     socket.emit('register', {
       address,
@@ -39,47 +48,22 @@ export const useListenGameEvent = () => {
       setConnected(false);
     });
 
+    socket.on(namespace, (e: string) => {
+      const parsedEvent = SuperJSON.parse(e) as Event;
+      const context = parsedEvent.context as DecodedEvent<any, any>;
+
+      log(context, 'CONTEXT!', dayjs(new Date()).unix());
+      setGameEvent(context);
+    });
+
     return () => {
       socket.off('connect');
-
       socket.off('disconnect');
-
+      socket.off(namespace);
       socket.disconnect();
+      socketRef.current = null;
     };
-  }, [socket]);
-
-  React.useEffect(() => {
-    if (!address || !bundlerWsUrl || !network) return;
-    log(network, bundlerWsUrl, 'bundler ws url');
-    setSocket(
-      io(bundlerWsUrl, {
-        extraHeaders: {
-          'x-address': address,
-          'x-network': network,
-        },
-      })
-    );
-  }, [address, bundlerWsUrl, network]);
-
-  React.useEffect(() => {
-    if (!socket) return;
-
-    socket.on('message', onListenEvent);
-
-    return () => {
-      socket.off('message', onListenEvent);
-    };
-  }, [socket]);
-
-  const onListenEvent = (e: string) => {
-    const _e = SuperJSON.parse(e) as Event;
-
-    const context = _e.context as DecodedEvent<any, any>;
-
-    log(context, 'CONTEXT!', dayjs(new Date()).unix());
-
-    setGameEvent(context);
-  };
+  }, [bundlerWsUrl, namespace, setConnected]);
 
   return gameEvent;
 };

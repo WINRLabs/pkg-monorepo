@@ -70,7 +70,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     stopLoss: 0,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.baccarat);
 
   const { eventLogic } = useFastOrVerified();
 

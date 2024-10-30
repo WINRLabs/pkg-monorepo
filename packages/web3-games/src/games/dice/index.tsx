@@ -91,7 +91,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     increaseOnWin: 0,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.dice);
 
   const { eventLogic } = useFastOrVerified();
 
