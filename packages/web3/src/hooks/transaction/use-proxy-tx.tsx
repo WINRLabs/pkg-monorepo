@@ -44,14 +44,7 @@ export const useProxyAccountTx: MutationHook<
 
       const password = getHashedPassword(sessionStore.pin);
 
-      let nonce = sessionStore.cachedNonce;
-
-      if (!nonce) {
-        const nonceResponse = await client.request('getNonce', {});
-        sessionStore.setCachedNonce(nonceResponse.nonce);
-
-        nonce = nonceResponse.nonce;
-      }
+      const { nonce } = await client.request('getNonce', {});
 
       const message = await stringifyAndEncrypt(publicKey, {
         call: {
