@@ -86,7 +86,7 @@ export const AutoController = ({
           }}
           variant="secondary"
           size="xl"
-          className="wr-flex wr-w-full wr-items-center wr-gap-1"
+          className="wr-flex wr-w-full wr-items-center wr-gap-1 button"
         >
           <img
             src={`${CDN_URL}/icons/icon-undo.svg`}
@@ -101,7 +101,7 @@ export const AutoController = ({
           type="button"
           variant="secondary"
           size="xl"
-          className="wr-flex wr-w-full wr-items-center wr-gap-1"
+          className="wr-flex wr-w-full wr-items-center wr-gap-1 button"
           disabled={isPrepared || isAutoBetMode}
           onClick={() => {
             digitalClickEffect.play();

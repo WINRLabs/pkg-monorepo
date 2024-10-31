@@ -35,7 +35,7 @@ export default function Control({
         disabled={totalWager === 0 || isDisabled}
         variant={variant === 'overlay' ? 'ghost' : 'secondary'}
         size="xl"
-        className={cn('wr-flex wr-w-full wr-items-center wr-gap-1', {
+        className={cn('wr-flex wr-w-full wr-items-center wr-gap-1 button', {
           'wr-justify-start': variant === 'overlay',
         })}
         onClick={() => {
@@ -56,7 +56,7 @@ export default function Control({
         type="button"
         variant={variant === 'overlay' ? 'ghost' : 'secondary'}
         size="xl"
-        className={cn('wr-flex wr-w-full wr-items-center wr-gap-1', {
+        className={cn('wr-flex wr-w-full wr-items-center wr-gap-1 button', {
           'wr-justify-end': variant === 'overlay',
         })}
         disabled={totalWager === 0 || isDisabled}

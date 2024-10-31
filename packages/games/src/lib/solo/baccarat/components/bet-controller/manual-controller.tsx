@@ -74,7 +74,7 @@ export const ManualController: React.FC<Props> = ({
           <FormLabel>Max Payout</FormLabel>
           <div
             className={cn(
-              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
+              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden max-payout'
             )}
           >
             <WagerCurrencyIcon />

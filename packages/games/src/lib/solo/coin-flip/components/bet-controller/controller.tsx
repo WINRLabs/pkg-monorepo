@@ -3,11 +3,11 @@ import { useFormContext } from 'react-hook-form';
 
 import { CDN_URL } from '../../../../constants';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
-import { FormControl, FormField, FormItem, FormLabel } from '../../../../ui/form';
+import { FormControl, FormField, FormItem } from '../../../../ui/form';
+import { cn } from '../../../../utils/style';
 import { CoinSide } from '../../constants';
 import useCoinFlipGameStore from '../../store';
 import { CoinFlipForm } from '../../types';
-import { cn } from '../../../../utils/style';
 
 export const CoinFlipController = ({ className }: { className?: string }) => {
   const form = useFormContext() as CoinFlipForm;
@@ -20,7 +20,7 @@ export const CoinFlipController = ({ className }: { className?: string }) => {
       control={form.control}
       name="coinSide"
       render={({ field }) => (
-        <FormItem className={cn('wr-h-10 wr-w-full', className)}>
+        <FormItem className={cn('wr-h-10 wr-w-full coin-flip-controller', className)}>
           <FormControl>
             <RadioGroupPrimitive.Root
               onValueChange={(v) => {

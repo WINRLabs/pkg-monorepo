@@ -35,7 +35,7 @@ export const ChipController: React.FC<ChipControllerProps> = ({
   return (
     <div
       className={cn(
-        'wr-relative wr-flex wr-items-end wr-justify-center wr-gap-2 wr-w-full wr-max-w-[100%] lg:wr-max-w-[310px] wr-rounded-md wr-py-1 wr-pl-12 wr-pr-12 wr-bg-zinc-700 wr-mb-3 lg:wr-mb-6',
+        'wr-relative wr-flex wr-items-end wr-justify-center wr-gap-2 wr-w-full wr-max-w-[100%] lg:wr-max-w-[310px] wr-rounded-md wr-py-1 wr-pl-12 wr-pr-12 wr-bg-zinc-700 wr-mb-3 lg:wr-mb-6 button',
         className && className,
         {
           'wr-bg-zinc-800': isDisabled,
@@ -48,7 +48,7 @@ export const ChipController: React.FC<ChipControllerProps> = ({
           scrollHorizontal(-100);
         }}
         disabled={isDisabled}
-        className="wr-absolute wr-left-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
+        className="wr-absolute wr-left-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800 button"
         type="button"
       >
         <img
@@ -84,7 +84,7 @@ export const ChipController: React.FC<ChipControllerProps> = ({
           scrollHorizontal(100);
         }}
         disabled={isDisabled}
-        className="wr-absolute wr-right-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800"
+        className="wr-absolute wr-right-0 wr-top-0 wr-h-full wr-w-12 wr-bg-zinc-700 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800 button"
         type="button"
       >
         <img

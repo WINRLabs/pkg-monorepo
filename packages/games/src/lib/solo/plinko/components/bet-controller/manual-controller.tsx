@@ -73,7 +73,7 @@ export const ManualController: React.FC<Props> = ({
             <FormLabel>{dictionary.maxPayout}</FormLabel>
             <div
               className={cn(
-                'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden'
+                'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] wr-overflow-hidden max-reward'
               )}
             >
               {maxPayoutOptions?.icon ? (
@@ -185,7 +185,7 @@ export const PlinkoRowFormField: React.FC<{
         control={form.control}
         name="plinkoSize"
         render={({ field }) => (
-          <FormItem className={cn('wr-mb-3 lg:wr-mb-6', className)}>
+          <FormItem className={cn('wr-mb-3 lg:wr-mb-6  plinko-input', className)}>
             <FormLabel className="wr-leading-4 lg:wr-leading-6 wr-mb-3 lg:wr-mb-[6px]">
               Plinko Row
             </FormLabel>
