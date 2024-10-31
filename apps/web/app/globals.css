@@ -6,8 +6,14 @@
 .autobet-increase-on-win > div,
 .autobet-increase-on-loss > div,
 .audio-loader > button,
-.wager-input > fieldset button {
+.wager-input > fieldset button,
+.mines-count button,
+.coin-flip-controller > div,
+.button {
   background-color: #373745;
+}
+.coin-flip-controller > div {
+  border-radius: 10px;
 }
 
 .submit-button {
@@ -20,7 +26,11 @@
 .wager-input > fieldset > div:first-of-type,
 .autobet-stop-gain > fieldset div:first-of-type,
 .autobet-stop-loss > fieldset div:first-of-type,
-.autobet-form-field fieldset div:first-of-type {
+.autobet-form-field fieldset div:first-of-type,
+.plinko-input fieldset div:first-of-type,
+.max-reward,
+.mines-count div:first-of-type,
+.multiplier-input {
   background-color: transparent;
   border: 1px solid #37373a;
   border-radius: 10px;

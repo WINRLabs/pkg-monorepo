@@ -94,10 +94,10 @@ export const ManualController: React.FC<Props> = ({
                 <NumberInput.Root
                   {...field}
                   errorClassName="wr-hidden lg:wr-block"
-                  className="wr-relative wr-flex wr-items-center wr-gap-2"
+                  className="wr-relative wr-flex wr-items-center wr-gap-2 mines-count"
                   isDisabled={gameStatus !== MINES_GAME_STATUS.IDLE}
                 >
-                  <NumberInput.Container className="wr-bg-zinc-950">
+                  <NumberInput.Container className="wr-bg-zinc-950 ">
                     <img
                       alt="mine_icon"
                       width={17}
@@ -153,7 +153,7 @@ export const ManualController: React.FC<Props> = ({
               <FormLabel>Max Payout</FormLabel>
               <div
                 className={cn(
-                  'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]'
+                  'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] max-payout'
                 )}
               >
                 <WagerCurrencyIcon />
