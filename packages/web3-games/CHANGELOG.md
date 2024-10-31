@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 12.0.5
+
+### Patch Changes
+
+- 4ca549e: update transaction method
+- Updated dependencies [4ca549e]
+- Updated dependencies [21606a5]
+  - @winrlabs/web3@0.11.62
+  - @winrlabs/games@5.0.0
+  - @winrlabs/web3-games@12.0.5
+
 ## 12.0.4
 
 ### Patch Changes
