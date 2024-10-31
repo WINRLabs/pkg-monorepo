@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.62
+
+### Patch Changes
+
+- 4ca549e: update transaction method
+
 ## 0.11.61
 
 ### Patch Changes
