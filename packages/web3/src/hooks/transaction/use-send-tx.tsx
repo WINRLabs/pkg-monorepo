@@ -50,7 +50,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           value,
         });
       } else {
-        try {
+           try {
           await switchChainAsync({ chainId: networkId! });
         } catch (error) {
           throw new SwitchChainError(error as Error);

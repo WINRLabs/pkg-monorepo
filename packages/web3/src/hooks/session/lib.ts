@@ -2,6 +2,30 @@ import { Buffer } from 'buffer';
 import { parse, stringify } from 'superjson';
 import { Hex, keccak256 } from 'viem';
 
+export enum HubErrorCode {
+  UnverifiedSignature,
+  KeyPairInitializationFailed,
+  InvalidSimpleAccountNonce,
+  InvalidAccess,
+  Invalid,
+  Timeout,
+  InvalidTime,
+  AllowCheckFailed,
+}
+
+export const HubErrorName = Object.keys(HubErrorCode);
+
+export const HubErrorMessage = {
+  [HubErrorCode.UnverifiedSignature]: 'Signature could not verify',
+  [HubErrorCode.KeyPairInitializationFailed]: 'KeyPair could not be initialized',
+  [HubErrorCode.InvalidSimpleAccountNonce]: 'Invalid simple account nonce',
+  [HubErrorCode.InvalidAccess]: 'Invalid access',
+  [HubErrorCode.Invalid]: 'Invalid',
+  [HubErrorCode.Timeout]: 'Timeout',
+  [HubErrorCode.InvalidTime]: 'Until cannot be early than now',
+  [HubErrorCode.AllowCheckFailed]: 'Allow check is failed',
+};
+
 export async function keyToHex(key: CryptoKey): Promise<string> {
   const keyString = JSON.stringify({
     key: await crypto.subtle.exportKey('jwk', key),

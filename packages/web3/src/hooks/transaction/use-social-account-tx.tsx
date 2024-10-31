@@ -100,9 +100,7 @@ export const useSocialAccountTx: MutationHook<
         log('request error', e);
 
         if (e?.code == ErrorCode.InvalidNonce || e?.code == ErrorCode.FailedOp) {
-          console.log(accountApi?.cachedNonce);
           accountApi?.refreshNonce && (await accountApi?.refreshNonce());
-          console.log(accountApi?.cachedNonce);
         }
 
         throw new BundlerRequestError(e.message, e.code);

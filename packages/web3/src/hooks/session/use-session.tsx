@@ -184,6 +184,8 @@ export const useCreateSessionV2: MutationHook<
 
       const nonceResponse = await client.request('getNonce', {});
 
+      sessionStore.setCachedNonce(nonceResponse.nonce);
+
       const _message = await stringifyAndEncrypt(sessionPublicKey, {
         password: pin,
         nonce: nonceResponse.nonce,

@@ -11,6 +11,8 @@ interface SessionState {
   setPin: (pin: string) => void;
   publicKey: string;
   setPublicKey: (publicKey: string) => void;
+  cachedNonce: number;
+  setCachedNonce: (cachedNonce: number) => void;
 }
 
 export const useSessionStore = create<SessionState>()(
@@ -24,6 +26,8 @@ export const useSessionStore = create<SessionState>()(
       setPin: (pin: string) => set({ pin }),
       publicKey: '',
       setPublicKey: (publicKey: string) => set({ publicKey }),
+      cachedNonce: 0,
+      setCachedNonce: (cachedNonce: number) => set({ cachedNonce }),
     }),
     {
       name: 'session-store',

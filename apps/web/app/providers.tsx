@@ -69,7 +69,7 @@ export function Providers(props: { children: ReactNode }) {
           // apiConfig={{
           //   baseUrl: 'https://abc.com',
           // }}
-
+          globalChainId={66666666}
           apiConfig={{}}
           smartAccountConfig={{
             bundlerUrl,

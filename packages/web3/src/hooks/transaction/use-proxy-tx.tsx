@@ -3,7 +3,12 @@ import { Hex } from 'viem';
 
 import { MutationHook } from '../../utils/types';
 import { useSessionStore } from '../session';
-import { getHashedPassword, stringifyAndEncrypt } from '../session/lib';
+import {
+  getHashedPassword,
+  HubErrorCode,
+  HubErrorMessage,
+  stringifyAndEncrypt,
+} from '../session/lib';
 import { useBundlerClient } from '../use-bundler-client';
 import { BundlerClientNotFoundError } from './error';
 import { Web3AccountTxRequest } from './types';
@@ -39,7 +44,14 @@ export const useProxyAccountTx: MutationHook<
 
       const password = getHashedPassword(sessionStore.pin);
 
-      const { nonce } = await client.request('getNonce', {});
+      let nonce = sessionStore.cachedNonce;
+
+      if (!nonce) {
+        const nonceResponse = await client.request('getNonce', {});
+        sessionStore.setCachedNonce(nonceResponse.nonce);
+
+        nonce = nonceResponse.nonce;
+      }
 
       const message = await stringifyAndEncrypt(publicKey, {
         call: {
@@ -50,12 +62,24 @@ export const useProxyAccountTx: MutationHook<
         password,
         nonce,
       });
+      try {
+        const req = await client.request('sendTransactionByProxy', {
+          message,
+        });
 
-      const req = await client.request('sendTransactionByProxy', {
-        message,
-      });
+        return req;
+      } catch (error: any) {
+        if (error?.message?.includes(HubErrorMessage[HubErrorCode['InvalidSimpleAccountNonce']])) {
+          const nonceResponse = await client.request('getNonce', {});
+          sessionStore.setCachedNonce(nonceResponse.nonce);
 
-      return req;
+          return await client.request('sendTransactionByProxy', {
+            message,
+          });
+        } else {
+          throw error;
+        }
+      }
     },
   });
 };

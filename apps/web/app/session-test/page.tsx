@@ -6,6 +6,7 @@ import {
   erc20Abi,
   fetchBundlerClient,
   SmartWalletConnectorWagmiType,
+  useBundlerClient,
   useCreateSessionV2,
   useCurrentAccount,
   useProxyAccountTx,
@@ -36,6 +37,14 @@ export default function SessionTest() {
   const web3Connectors = connectors.filter(
     (connector) => connector.type !== SmartWalletConnectorWagmiType
   );
+
+  // const bundlerClient = useBundlerClient();
+
+/*   const handleLogout = async () => {
+    bundlerClient?.client?.request('unauthorize', {
+      message
+    })
+  }; */
 
   const handleConnect = async (connector: Connector) => {
     localStorage?.clear();
@@ -102,11 +111,24 @@ export default function SessionTest() {
         onClick={async () => {
           await createSessionV2.mutateAsync({
             signerAddress: currentAccount.rootAddress!,
-            pin: '1234',
+            pin: '123456',
           });
         }}
       >
         Create Session
+      </button>
+      <button
+        style={{
+          background: 'red',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: '5px',
+        }}
+        onClick={async () => {
+          localStorage.clear();
+        }}
+      >
+        logout
       </button>
       <button
         style={{
@@ -144,7 +166,7 @@ export default function SessionTest() {
             walletAddress: currentAccount.address!,
           });
  */
-/*           await sendTx.mutateAsync({
+          /*           await sendTx.mutateAsync({
             target: MOCK_TOKEN,
             encodedTxData: encodeFunctionData({
               abi: erc20Abi,
