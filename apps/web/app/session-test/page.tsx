@@ -38,14 +38,6 @@ export default function SessionTest() {
     (connector) => connector.type !== SmartWalletConnectorWagmiType
   );
 
-  // const bundlerClient = useBundlerClient();
-
-/*   const handleLogout = async () => {
-    bundlerClient?.client?.request('unauthorize', {
-      message
-    })
-  }; */
-
   const handleConnect = async (connector: Connector) => {
     localStorage?.clear();
 

@@ -166,14 +166,20 @@ export const useCreateSessionV2: MutationHook<
         throw new Error('Wallet client not found');
       }
 
+      console.log('request', request);
+
       const message = await stringifyAndEncrypt(serverPublicKey, {
         owner: request.signerAddress,
         publicKey: clientKeyPair.publicKey,
       });
 
+      console.log(message, 'message');
+
       const response = await client.request('handshake', {
         message,
       });
+
+      console.log(response, 'response handshake');
 
       const { publicKey: sessionPublicKey } = await decryptAndParse<{ publicKey: string }>(
         clientKeyPair.privateKey,
@@ -190,6 +196,8 @@ export const useCreateSessionV2: MutationHook<
         password: pin,
         nonce: nonceResponse.nonce,
       });
+
+      console.log(_message, 'message');
 
       const permitTypedMessageResponse = await client.request('permitTypedMessage', {
         message: _message,
