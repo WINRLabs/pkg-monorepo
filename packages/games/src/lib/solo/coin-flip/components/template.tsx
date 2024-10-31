@@ -33,7 +33,6 @@ type TemplateProps = CoinFlipGameProps & {
   onSubmitGameForm: (data: CoinFlipFormFields) => void;
   onFormChange?: (fields: CoinFlipFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
-
   onError?: (error: any) => void;
   onLogin?: () => void;
 };

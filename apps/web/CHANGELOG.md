@@ -1,5 +1,58 @@
 # web
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [19c27e9]
+- Updated dependencies [19c27e9]
+  - @winrlabs/games@4.0.2
+  - @winrlabs/web3-games@12.0.2
+  - @winrlabs/web3@0.11.59
+  - @winrlabs/ui@10.0.59
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [7497929]
+- Updated dependencies [7497929]
+  - @winrlabs/games@4.0.1
+  - @winrlabs/web3@0.11.58
+  - @winrlabs/web3-games@12.0.1
+  - @winrlabs/ui@10.0.58
+
+## 2.0.0
+
+### Major Changes
+
+- 0482481: (controller.tsx): reorganize imports and add IncreaseByInput component
+  (controller.tsx): refactor BetControllerTitle component for better styling
+  (controller.tsx): update styling for BetCountFormField and AutoBetCountFormField components
+  (controller.tsx): update styling for AutoBetStopGainFormField and AutoBetStopLossFormField components
+  (controller.tsx): update styling for AutoBetIncreaseOnWin and AutoBetIncreaseOnLoss components
+  (controller.tsx): update styling for WagerFormField component
+  (increase-by-input.tsx): add class 'increase-by-input' for styling
+  (pre-bet-button.tsx): add class 'submit-button' for styling
+  (wager.tsx): update styling for WagerInput and WagerSetterButtons components
+  (wager.tsx): update styling for TotalWager and MaxPayout components
+  (auto-controller.tsx): update styling for PreBetButton component
+  (index.tsx): refactor BetController component for better styling and remove backgroundColor prop
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (template.tsx): Remove unused backgroundColor property from options
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (tailwind.config.ts): Update animation keyframes to include border-bottom-width property
+  (index.tsx): Add formClassName prop to BetController component for custom styling
+- 0482481: Add backgroundColor to the controller component, wheel, plinko, and coinflip-2d
+
+### Patch Changes
+
+- Updated dependencies [0482481]
+- Updated dependencies [0482481]
+  - @winrlabs/web3-games@12.0.0
+  - @winrlabs/games@4.0.0
+  - @winrlabs/ui@10.0.57
+
 ## 1.0.240
 
 ### Patch Changes

@@ -125,6 +125,7 @@ export type BundlerMethods<T extends BundlerVersion = 'v1'> = {
     hash: Hex;
     status: string;
   };
+  'multiplayerGameState'(params: { gameName: 'horserace' | 'wheel' | 'moon' }): any;
 };
 
 export enum BundlerNetwork {
@@ -233,6 +234,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
         network,
       }),
     enabled: !!address && !!rpcUrl && !!network,
+    refetchOnWindowFocus: false,
   });
 
   React.useEffect(() => {

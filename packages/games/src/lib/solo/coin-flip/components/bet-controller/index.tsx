@@ -23,8 +23,8 @@ export const BetController: React.FC<Props> = (props) => {
   const [tab, setTab] = React.useState<string>('manual');
 
   return (
-    <BetControllerContainer className="wr-z-30">
-      <div className="wr-max-lg:flex wr-max-lg:flex-col">
+    <BetControllerContainer className={cn('wr-z-30')}>
+      <div className={cn('wr-max-lg:flex wr-max-lg:flex-col')}>
         <Tabs.Root
           defaultValue="manual"
           value={tab}
@@ -33,7 +33,7 @@ export const BetController: React.FC<Props> = (props) => {
             setTab(v);
           }}
         >
-          <Tabs.List className="wr-flex wr-w-full wr-justify-between wr-items-center wr-gap-2 wr-font-semibold wr-mb-3">
+          <Tabs.List className="tabs-list wr-flex wr-w-full wr-justify-between wr-items-center wr-gap-2 wr-font-semibold wr-mb-3">
             <Tabs.Trigger
               className={cn('wr-w-full wr-px-4 wr-py-2 wr-bg-zinc-700 wr-rounded-md', {
                 'wr-bg-zinc-800 wr-text-grey-500': tab !== 'manual',

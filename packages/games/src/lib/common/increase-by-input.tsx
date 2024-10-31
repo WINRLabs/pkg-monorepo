@@ -21,7 +21,7 @@ export const IncreaseByInput = ({
     <NumberInput.Root {...rest}>
       <NumberInput.Container
         className={cn(
-          'wr-border-none wr-bg-zinc-950 wr-px-2 wr-py-[10px]',
+          'wr-border-none wr-bg-zinc-950 wr-px-2 wr-py-[10px] increase-by-input',
           {
             ['wr-border wr-border-solid wr-border-red-600']: !!hasError,
           },

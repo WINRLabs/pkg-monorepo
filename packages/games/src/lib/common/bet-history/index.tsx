@@ -3,7 +3,7 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import React, { useEffect, useState } from 'react';
 
-import { Document, IconCoin, IconStars, Person } from '../../svgs';
+import { Document, IconCoin, IconStar, IconStars, Person } from '../../svgs';
 import { AnimatedTabContent } from '../animated-tab-content';
 import BetTable from './bet-table';
 import Loading from './loading';
@@ -46,7 +46,7 @@ export const BetHistoryTemplate = ({
   }, [filter]);
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 bet-history">
       <Tabs.Root
         defaultValue="bets"
         value={filter.type}
@@ -57,35 +57,35 @@ export const BetHistoryTemplate = ({
           });
         }}
       >
-        <div className="wr-flex wr-justify-between wr-items-center wr-w-full">
+        <div className="wr-flex wr-justify-between wr-items-center wr-w-full bet-history-tabs">
           <div className="wr-flex wr-items-center wr-gap-1.5 wr-text-md wr-font-bold">
             <IconCoin className="wr-h-5 wr-w-5 wr-text-white" />
             Bets
           </div>
-          <Tabs.List className="wr-flex wr-items-center wr-border-none wr-font-semibold wr-mt-1">
+          <Tabs.List className="wr-flex wr-items-center wr-border-none wr-font-semibold wr-mt-1 bet-history-tabs-list">
             <Tabs.Trigger
-              className="wr-flex wr-items-center wr-gap-1 wr-pl-0 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              className="wr-flex wr-items-center wr-gap-1 wr-pl-0 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white bet-history-tab-trigger"
               value="bets"
             >
               <Document className="wr-h-5 wr-w-5" /> All{' '}
               <span className="wr-hidden md:wr-block">Bets</span>
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white bet-history-tab-trigger"
               value="player"
             >
               <Person className="wr-size-5" /> My{' '}
               <span className="wr-hidden md:wr-block">Bets</span>
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white bet-history-tab-trigger"
               value="high"
             >
-              <Person className="wr-size-5" /> High{' '}
+              <IconStar className="wr-size-5" /> High{' '}
               <span className="wr-hidden md:wr-block">Rollers</span>
             </Tabs.Trigger>
             <Tabs.Trigger
-              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white"
+              className="wr-flex wr-items-center wr-gap-1 wr-px-2.5 wr-py-3 wr-text-zinc-500 data-[state=active]:wr-text-white bet-history-tab-trigger"
               value="lucky"
             >
               <IconStars className="wr-size-5" /> Lucky{' '}

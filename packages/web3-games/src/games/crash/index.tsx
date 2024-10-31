@@ -29,13 +29,14 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex 
 import { BaseGameProps } from '../../type';
 import {
   Badge,
+  SocketMultiplayerGameType,
   useBetHistory,
   useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
-import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
+import { prepareGameTransaction } from '../utils';
 
 const log = debug('worker:CrashWeb3');
 
@@ -116,7 +117,9 @@ const CrashGame = (props: CrashTemplateProps) => {
     'setIsGamblerParticipant',
   ]);
 
-  const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.crash);
+  const gameEvent = useListenMultiplayerGameEvent({
+    gameType: SocketMultiplayerGameType.moon,
+  });
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,

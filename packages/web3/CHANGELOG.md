@@ -1,5 +1,18 @@
 # @winrlabs/web3
 
+## 0.11.59
+
+### Patch Changes
+
+- 19c27e9: new socket implementation
+
+## 0.11.58
+
+### Patch Changes
+
+- 7497929: new socket implementation
+- 7497929: new socket implementation
+
 ## 0.11.57
 
 ### Patch Changes

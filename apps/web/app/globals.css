@@ -1,72 +1,68 @@
-/* 
-WHEEL CUSTOM UNIT COLORS
-
-div[data-wheel-color='blue'],
-div[data-wheel-color='blue'] div::after,
-div[data-wheel-color='blue'] div::before {
-  background: #ffcb67;
+.bet-controller {
+  background-color: #20202a;
 }
 
-div[data-wheel-color='grey'],
-div[data-wheel-color='grey'] div::after,
-div[data-wheel-color='grey'] div::before {
-  background: #10283c;
+.bet-controller .tabs-list > button,
+.autobet-increase-on-win > div,
+.autobet-increase-on-loss > div,
+.audio-loader > button,
+.wager-input > fieldset button {
+  background-color: #373745;
 }
 
-div[data-wheel-color='green'],
-div[data-wheel-color='green'] div::after,
-div[data-wheel-color='green'] div::before {
-  background: #fe9a4c;
-} */
-
-/*
-WHEEL PARTICIPANT DETAIL COLORS
-div[data-wheel-participant-detail='red'] {
-  background: #ff443340;
-  color: #ff4433;
-} */
-
-/* 
-WHEEL BET CONTROOLLER MULTIPLER BUTTONS
-button[data-wheel-controller-multiplier='48x'] {
-  background: blue;
-  color: blue;
-} */
-
-/* multiplerStyles: {
-  '2x': {
-    backgroundColor: '#FFFFFF26',
-  },
-  '3x': {
-    backgroundColor: '#FFCB67',
-    color: '#141416',
-  },
-  '6x': {
-    backgroundColor: '#FE9A4C',
-    color: '#141416',
-  },
-  '48x': {
-    backgroundColor: '#FF4433',
-    color: '#141416',
-  }, */
-/* 
-WHEEL LAST BETS MULTIPLER
-
-div[data-wheel-last-bets-multiplier='2x'] {
-  background-color: #ffffff26;
+.submit-button {
+  background: linear-gradient(270.62deg, #5dfcce 0.59%, #3254d9 96.56%);
 }
 
-div[data-wheel-last-bets-multiplier='3x'] {
-  background-color: #ffcb67;
-  color: #141416;
+.bet-controller .total-wager,
+.max-payout,
+.increase-by-input,
+.wager-input > fieldset > div:first-of-type,
+.autobet-stop-gain > fieldset div:first-of-type,
+.autobet-stop-loss > fieldset div:first-of-type,
+.autobet-form-field fieldset div:first-of-type {
+  background-color: transparent;
+  border: 1px solid #37373a;
+  border-radius: 10px;
 }
 
-div[data-wheel-last-bets-multiplier='6x'] {
-  background-color: #fe9a4c;
-  color: #141416;
+.bet-history .bet-table .table-header,
+.bet-history .bet-table .table-row {
+  background-color: transparent;
+  border-bottom: 1px solid #37373a;
 }
 
-div[data-wheel-last-bets-multiplier='48x'] {
-  background-color: #ff4433;
-  color: #141416;
-} */
+.bet-table {
+  border-collapse: collapse;
+}
+
+.wrapper .table-header {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
+.bet-table td {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-top: 1px solid #37373a;
+}
+
+.table-header th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.bet-history .bet-history-tabs {
+  border-bottom: 1px solid #37373a;
+}
+
+.bet-history .bet-history-tabs > div:first-of-type {
+  display: none;
+}
+
+.bet-history .bet-history-tabs button[data-state='active'] {
+  border-style: solid;
+  border-bottom: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #facc15 6.45%, #ffe26d 31.6%, #facc15 51.59%) 1;
+}

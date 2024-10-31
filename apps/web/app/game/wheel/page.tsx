@@ -6,7 +6,7 @@ export default function WheelPage() {
   return (
     <>
       <WheelGame
-        minWager={1}
+        minWager={0.1}
         maxWager={1}
         theme={{
           controllerFooter: <div>Custom Footer</div>,
@@ -14,6 +14,7 @@ export default function WheelPage() {
           // hideWager: true,
           // controllerHeader: <div>D</div>,
           // hideMaxPayout: true,
+          betControllerBackground: '#20202A',
         }}
       />
       ;
