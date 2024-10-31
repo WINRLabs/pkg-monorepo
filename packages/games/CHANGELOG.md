@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 4.0.3
+
+### Patch Changes
+
+- 721e165: nonce fix
+
 ## 4.0.2
 
 ### Patch Changes

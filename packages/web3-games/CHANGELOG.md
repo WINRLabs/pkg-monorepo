@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.4
+
+### Patch Changes
+
+- 721e165: nonce fix
+- Updated dependencies [721e165]
+  - @winrlabs/web3@0.11.61
+  - @winrlabs/games@4.0.3
+  - @winrlabs/web3-games@12.0.4
+
 ## 12.0.3
 
 ### Patch Changes
