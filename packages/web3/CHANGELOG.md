@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.60
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+
 ## 0.11.59
 
 ### Patch Changes

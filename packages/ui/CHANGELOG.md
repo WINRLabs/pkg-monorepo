@@ -1,5 +1,13 @@
 # @winrlabs/ui
 
+## 10.0.60
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+- Updated dependencies [9e0e4d6]
+  - @winrlabs/web3@0.11.60
+
 ## 10.0.59
 
 ### Patch Changes

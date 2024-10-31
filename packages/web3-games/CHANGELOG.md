@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 12.0.3
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+- Updated dependencies [9e0e4d6]
+  - @winrlabs/web3@0.11.60
+  - @winrlabs/web3-games@12.0.3
+
 ## 12.0.2
 
 ### Patch Changes
