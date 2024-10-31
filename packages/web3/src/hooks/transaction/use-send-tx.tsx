@@ -46,11 +46,11 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           customAccountApi,
           customBundlerClient,
           encodedTxData,
-          method,
+          method: bundlerVersion === 'v2' ? 'sendUserOperation' : method,
           value,
         });
       } else {
-           try {
+        try {
           await switchChainAsync({ chainId: networkId! });
         } catch (error) {
           throw new SwitchChainError(error as Error);
