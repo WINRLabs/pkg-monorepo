@@ -11,15 +11,18 @@ import debug from 'debug';
 
 const log = debug('worker:UseBundlerClient');
 
-const BundlerClientContext = createContext<UseBundlerClient>({
+export type BundlerVersion = 'v1' | 'v2';
+
+const BundlerClientContext = createContext<UseBundlerClient<BundlerVersion>>({
   client: undefined,
   isLoading: false,
   error: undefined,
   changeBundlerNetwork: () => {},
+  bundlerVersion: 'v1' as BundlerVersion, // Default version
 });
 
-export const useBundlerClient = () => {
-  return useContext(BundlerClientContext);
+export const useBundlerClient = <T extends BundlerVersion = 'v1'>() => {
+  return useContext(BundlerClientContext) as UseBundlerClient<T>;
 };
 
 interface CallParams {
@@ -38,7 +41,7 @@ interface CreateSessionParams {
   until: number;
 }
 
-export type BundlerMethods = {
+export type BundlerMethods<T extends BundlerVersion = 'v1'> = {
   'preparePaymasterAndData'(params: { callData?: Hex }): {
     paymaster: string;
     paymasterData?: Hex;
@@ -74,9 +77,15 @@ export type BundlerMethods = {
     hashKey: Hex;
   };
 
-  'permitTypedMessage'(params: { owner: Address }): {
-    typedMessage: string;
-  };
+  'permitTypedMessage'(
+    params: T extends 'v1' ? { owner: Address } : { message: string }
+  ): T extends 'v1'
+    ? {
+        typedMessage: string;
+      }
+    : {
+        message: string;
+      };
 
   'reIterate'(params: { game: string; player: Address }): {
     status: string;
@@ -86,6 +95,36 @@ export type BundlerMethods = {
     status: string;
   };
 
+  'getAddress'(params: {}): {
+    address: Address;
+  };
+
+  'getNonce'(params: {}): {
+    nonce: number;
+  };
+
+  'handshake'(params: { message: string }): {
+    message: string;
+  };
+
+  'sendTransactionByProxy'(params: { message: string }): {
+    hash: Hex;
+    status: string;
+  };
+
+  'unauthorize'(params: { message: string }): {
+    status: string;
+  };
+
+  'authorize'(params: { message: string }): {
+    message: string;
+    status: string;
+  };
+
+  'sendTransactionByProxy'(params: { message: string }): {
+    hash: Hex;
+    status: string;
+  };
   'multiplayerGameState'(params: { gameName: 'horserace' | 'wheel' | 'moon' }): any;
 };
 
@@ -105,26 +144,29 @@ interface JSONPCClientRequestParams {
   network: BundlerNetwork;
 }
 
-export type WinrBundlerClient = TypedJSONRPCClient<BundlerMethods>;
+export type WinrBundlerClient<T extends BundlerVersion = 'v1'> = TypedJSONRPCClient<
+  BundlerMethods<T>
+>;
 
-interface UseBundlerClient {
-  client?: WinrBundlerClient;
+interface UseBundlerClient<T extends BundlerVersion = 'v1'> {
+  client?: WinrBundlerClient<T>;
   isLoading: boolean;
   error?: Error;
   changeBundlerNetwork: (network: BundlerNetwork) => void;
   globalChainId?: number;
+  bundlerVersion: T; // Add bundlerVersion
 }
 
-export const fetchBundlerClient = async ({
+export const fetchBundlerClient = async <T extends BundlerVersion = 'v1'>({
   rpcUrl,
   walletAddress,
   network,
-}: JSONPCClientRequestParams): Promise<WinrBundlerClient> => {
+}: JSONPCClientRequestParams): Promise<WinrBundlerClient<T>> => {
   if (!walletAddress) {
     throw new Error('Wallet address is required');
   }
 
-  const client: WinrBundlerClient | undefined = new JSONRPCClient((jsonRPCRequest) =>
+  const client: WinrBundlerClient<T> | undefined = new JSONRPCClient((jsonRPCRequest) =>
     fetch(rpcUrl, {
       method: 'POST',
       headers: {
@@ -154,20 +196,27 @@ export const fetchBundlerClient = async ({
   return client;
 };
 
-export const BundlerClientProvider: React.FC<{
+export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
+  children,
+  rpcUrl,
+  initialNetwork = BundlerNetwork.WINR,
+  config,
+  globalChainId,
+  bundlerVersion = 'v1' as T, // Default versionw
+}: {
   children: ReactNode;
   rpcUrl: string;
   initialNetwork?: BundlerNetwork;
   config?: Config;
   globalChainId?: number;
-}> = ({ children, rpcUrl, initialNetwork = BundlerNetwork.WINR, config, globalChainId }) => {
+  bundlerVersion?: T; // Add bundlerVersion
+}) => {
   const { address } = useAccount();
 
   const [network, setNetwork] = React.useState<BundlerNetwork>(initialNetwork);
 
   const changeBundlerNetwork = (network: BundlerNetwork) => {
     setNetwork(network);
-
     refetch();
   };
 
@@ -176,10 +225,10 @@ export const BundlerClientProvider: React.FC<{
     error,
     isLoading,
     refetch,
-  } = useQuery<WinrBundlerClient>({
+  } = useQuery<WinrBundlerClient<T>>({
     queryKey: ['bundler-client', address],
     queryFn: () =>
-      fetchBundlerClient({
+      fetchBundlerClient<T>({
         rpcUrl,
         walletAddress: address,
         network,
@@ -200,6 +249,7 @@ export const BundlerClientProvider: React.FC<{
         error: error as unknown as Error | undefined,
         changeBundlerNetwork,
         globalChainId,
+        bundlerVersion, // Provide bundlerVersion
       }}
     >
       {children}

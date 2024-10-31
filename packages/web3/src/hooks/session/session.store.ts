@@ -7,6 +7,12 @@ interface SessionState {
   permit?: Hex;
   setPart: (part?: Hex) => void;
   setPermit: (permit?: Hex) => void;
+  pin: string;
+  setPin: (pin: string) => void;
+  publicKey: string;
+  setPublicKey: (publicKey: string) => void;
+  cachedNonce: number;
+  setCachedNonce: (cachedNonce: number) => void;
 }
 
 export const useSessionStore = create<SessionState>()(
@@ -16,6 +22,12 @@ export const useSessionStore = create<SessionState>()(
       permit: undefined,
       setPart: (part?: Hex) => set({ part }),
       setPermit: (permit?: Hex) => set({ permit }),
+      pin: '',
+      setPin: (pin: string) => set({ pin }),
+      publicKey: '',
+      setPublicKey: (publicKey: string) => set({ publicKey }),
+      cachedNonce: 0,
+      setCachedNonce: (cachedNonce: number) => set({ cachedNonce }),
     }),
     {
       name: 'session-store',
