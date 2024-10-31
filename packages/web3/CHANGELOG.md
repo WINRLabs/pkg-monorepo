@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.61
+
+### Patch Changes
+
+- 721e165: nonce fix
+
 ## 0.11.60
 
 ### Patch Changes
