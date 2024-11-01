@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.64
+
+### Patch Changes
+
+- 4d56ceb: add validate pin, unauth
+- 4d56ceb: update getAddress
+
 ## 0.11.63
 
 ### Patch Changes
