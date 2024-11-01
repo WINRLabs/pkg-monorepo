@@ -202,11 +202,6 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
