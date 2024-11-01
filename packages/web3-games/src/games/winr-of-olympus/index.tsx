@@ -198,11 +198,6 @@ export default function WinrOfOlympusGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleBet), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(handleBet, errCount + 1, e), 750);
@@ -257,11 +252,6 @@ export default function WinrOfOlympusGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleFreeSpin), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(handleFreeSpin, errCount + 1, e), 750);

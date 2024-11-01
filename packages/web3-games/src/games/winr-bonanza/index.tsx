@@ -255,11 +255,6 @@ export default function WinrBonanzaTemplateWithWeb3({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleFreeSpin), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(handleFreeSpin, errCount + 1, e), 750);
