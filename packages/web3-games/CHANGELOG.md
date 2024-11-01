@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.6
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+- Updated dependencies [021cbb9]
+  - @winrlabs/web3@0.11.63
+  - @winrlabs/games@5.0.1
+  - @winrlabs/web3-games@12.0.6
+
 ## 12.0.5
 
 ### Patch Changes

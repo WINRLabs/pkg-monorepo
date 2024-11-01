@@ -205,6 +205,7 @@ export const useCreateSessionV2: MutationHook<
 
       sessionStore.setSessionCreatedAt(Date.now());
 
+
       sessionStore.setCachedNonce(nonceResponse.nonce);
 
       sessionStore.setPublicKey(sessionPublicKey);
