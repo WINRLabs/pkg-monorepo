@@ -224,6 +224,8 @@ export const useCreateSessionV2: MutationHook<
         }),
       });
 
+      sessionStore.setSessionCreatedAt(Date.now());
+
       return {
         message: authResponse.message,
         status: authResponse.status,

@@ -95,8 +95,8 @@ export type BundlerMethods<T extends BundlerVersion = 'v1'> = {
     status: string;
   };
 
-  'getAddress'(params: {}): {
-    address: Address;
+  'getAddress'(params: { message: string }): {
+    message: string;
   };
 
   'getNonce'(params: {}): {
