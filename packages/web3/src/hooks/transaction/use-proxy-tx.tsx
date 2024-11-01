@@ -1,14 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { Hex } from 'viem';
+import { useShallow } from 'zustand/react/shallow';
 
 import { MutationHook } from '../../utils/types';
 import { useSessionStore } from '../session';
-import {
-  getHashedPassword,
-  HubErrorCode,
-  HubErrorMessage,
-  stringifyAndEncrypt,
-} from '../session/lib';
+import { HubError, HubErrorCode, HubErrorMessage, stringifyAndEncrypt } from '../session/lib';
 import { useBundlerClient } from '../use-bundler-client';
 import { BundlerClientNotFoundError } from './error';
 import { Web3AccountTxRequest } from './types';
@@ -18,7 +14,7 @@ export const useProxyAccountTx: MutationHook<
   { status: string; hash: Hex }
 > = (options = {}) => {
   const { client: defaultClient } = useBundlerClient();
-  const sessionStore = useSessionStore();
+  const [pin, publicKey] = useSessionStore(useShallow((state) => [state.pin, state.publicKey]));
 
   return useMutation({
     ...options,
@@ -26,9 +22,7 @@ export const useProxyAccountTx: MutationHook<
       const client = customBundlerClient || defaultClient;
       if (!client) throw new BundlerClientNotFoundError();
 
-      const publicKey = sessionStore.publicKey;
-
-      if (!sessionStore.pin) {
+      if (!pin) {
         return {
           hash: '0x0',
           status: 'Enter pin',
@@ -42,8 +36,6 @@ export const useProxyAccountTx: MutationHook<
         };
       }
 
-      const password = getHashedPassword(sessionStore.pin);
-
       const { nonce } = await client.request('getNonce', {});
 
       const message = await stringifyAndEncrypt(publicKey, {
@@ -52,7 +44,7 @@ export const useProxyAccountTx: MutationHook<
           data: encodedTxData,
           value: value ? (value.toString() as any) : '0',
         },
-        password,
+        password: pin,
         nonce,
       });
       try {
@@ -61,13 +53,24 @@ export const useProxyAccountTx: MutationHook<
         });
 
         return req;
-      } catch (error: any) {
-        if (error?.message?.includes(HubErrorMessage[HubErrorCode['InvalidSimpleAccountNonce']])) {
+      } catch (error: unknown) {
+        const _error = error as HubError;
+
+        if (_error?.message?.includes(HubErrorMessage[HubErrorCode['InvalidSimpleAccountNonce']])) {
           const nonceResponse = await client.request('getNonce', {});
-          sessionStore.setCachedNonce(nonceResponse.nonce);
+
+          const newMessage = await stringifyAndEncrypt(publicKey, {
+            call: {
+              dest: target,
+              data: encodedTxData,
+              value: value ? (value.toString() as any) : '0',
+            },
+            password: pin,
+            nonce: nonceResponse.nonce,
+          });
 
           return await client.request('sendTransactionByProxy', {
-            message,
+            message: newMessage,
           });
         } else {
           throw error;

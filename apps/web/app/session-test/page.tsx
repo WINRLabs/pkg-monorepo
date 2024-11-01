@@ -3,13 +3,14 @@
 import {
   BundlerNetwork,
   controllerAbi,
-  erc20Abi,
   fetchBundlerClient,
   SmartWalletConnectorWagmiType,
   useBundlerClient,
   useCreateSessionV2,
   useCurrentAccount,
   useProxyAccountTx,
+  useUnauthorize,
+  useValidatePin,
 } from '@winrlabs/web3';
 import { Connector, useConnect, useConnectors, useSwitchChain } from 'wagmi';
 import { config, WINR_CHAIN_ID, winrChainParams } from '../wagmi';
@@ -28,7 +29,20 @@ export default function SessionTest() {
 
   const currentAccount = useCurrentAccount();
 
+  const unauthorize = useUnauthorize();
+
   const { switchChainAsync } = useSwitchChain();
+
+  const { client } = useBundlerClient<'v2'>();
+
+  const validatePin = useValidatePin({
+    onSuccess: (data) => {
+      console.log('validatePinsuccess', data);
+    },
+    onError: (error: any) => {
+      console.log('validatePin error', error);
+    },
+  });
 
   const connectors = useConnectors({
     config: config,
@@ -117,11 +131,30 @@ export default function SessionTest() {
           borderRadius: '5px',
         }}
         onClick={async () => {
+          await unauthorize.mutateAsync({
+            pin: '123456',
+          });
           localStorage.clear();
         }}
       >
         logout
       </button>
+      <button
+        style={{
+          background: 'red',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: '5px',
+        }}
+        onClick={async () => {
+          await validatePin.mutateAsync({
+            pin: '123456',
+          });
+        }}
+      >
+        validatePin
+      </button>
+
       <button
         style={{
           background: 'red',

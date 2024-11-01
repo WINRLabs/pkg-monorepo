@@ -15,7 +15,9 @@ export enum HubErrorCode {
 
 export const HubErrorName = Object.keys(HubErrorCode);
 
-export const HubErrorMessage = {
+
+
+export const HubErrorMessage: Record<HubErrorCode, string> = {
   [HubErrorCode.UnverifiedSignature]: 'Signature could not verify',
   [HubErrorCode.KeyPairInitializationFailed]: 'KeyPair could not be initialized',
   [HubErrorCode.InvalidSimpleAccountNonce]: 'Invalid simple account nonce',
@@ -24,6 +26,11 @@ export const HubErrorMessage = {
   [HubErrorCode.Timeout]: 'Timeout',
   [HubErrorCode.InvalidTime]: 'Until cannot be early than now',
   [HubErrorCode.AllowCheckFailed]: 'Allow check is failed',
+};
+
+export type HubError = {
+  message: string;
+  code: HubErrorCode;
 };
 
 export async function keyToHex(key: CryptoKey): Promise<string> {
