@@ -13,6 +13,8 @@ interface SessionState {
   setPublicKey: (publicKey: string) => void;
   cachedNonce: number;
   setCachedNonce: (cachedNonce: number) => void;
+  sessionCreatedAt: number;
+  setSessionCreatedAt: (sessionCreatedAt: number) => void;
 }
 
 export const useSessionStore = create<SessionState>()(
@@ -28,9 +30,13 @@ export const useSessionStore = create<SessionState>()(
       setPublicKey: (publicKey: string) => set({ publicKey }),
       cachedNonce: 0,
       setCachedNonce: (cachedNonce: number) => set({ cachedNonce }),
+      sessionCreatedAt: 0,
+      setSessionCreatedAt: (sessionCreatedAt: number) => set({ sessionCreatedAt }),
     }),
     {
       name: 'session-store',
+      partialize: (state) =>
+        Object.fromEntries(Object.entries(state).filter(([key]) => !['pin'].includes(key))),
     }
   )
 );
