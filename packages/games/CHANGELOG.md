@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.1
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+
 ## 5.0.0
 
 ### Major Changes

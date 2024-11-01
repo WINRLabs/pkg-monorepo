@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.63
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+
 ## 0.11.62
 
 ### Patch Changes
