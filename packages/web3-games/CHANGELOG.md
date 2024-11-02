@@ -1,5 +1,19 @@
 # @winrlabs/web3-games
 
+## 12.0.8
+
+### Patch Changes
+
+- 32452d5: add validate pin, unauth
+- 32452d5: update validate pin
+- 32452d5: update getAddress
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+  - @winrlabs/web3@0.11.65
+  - @winrlabs/games@5.0.3
+  - @winrlabs/web3-games@12.0.8
+
 ## 12.0.7
 
 ### Patch Changes
