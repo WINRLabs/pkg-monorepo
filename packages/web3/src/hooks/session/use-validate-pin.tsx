@@ -16,6 +16,8 @@ export const useValidatePin: MutationHook<UseValidatePinRequest, { message: stri
 ) => {
   const { client: defaultBundlerClient } = useBundlerClient<'v1' | 'v2'>();
 
+  const setPin = useSessionStore(useShallow((state) => state.setPin));
+
   const publicKey = useSessionStore(useShallow((state) => state.publicKey));
 
   return useMutation({
@@ -36,6 +38,8 @@ export const useValidatePin: MutationHook<UseValidatePinRequest, { message: stri
           nonce: nonceResponse.nonce,
         }),
       });
+
+      setPin(_pin);
 
       return {
         message: 'success',
