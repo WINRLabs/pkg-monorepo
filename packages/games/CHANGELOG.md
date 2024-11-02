@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 5.0.3
+
+### Patch Changes
+
+- 32452d5: add validate pin, unauth
+- 32452d5: update validate pin
+- 32452d5: update getAddress
+
 ## 5.0.2
 
 ### Patch Changes
