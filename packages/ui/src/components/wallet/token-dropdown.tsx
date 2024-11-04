@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Token,
@@ -6,30 +6,15 @@ import {
   useCurrentAccount,
   useTokenBalances,
   useTokenStore,
-} from "@winrlabs/web3";
-import Image from "next/image";
-import React from "react";
+} from '@winrlabs/web3';
+import Image from 'next/image';
+import React from 'react';
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-} from "../select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from '../select';
 
-const SelectCurrencyItem = ({
-  balance,
-  token,
-}: {
-  balance: number;
-  token: Token;
-}) => {
+const SelectCurrencyItem = ({ balance, token }: { balance: number; token: Token }) => {
   return (
-    <SelectItem
-      value={token.address}
-      className="wr-flex wr-w-full wr-py-2 wr-font-semibold"
-    >
+    <SelectItem value={token.address} className="wr-flex wr-w-full wr-py-2 wr-font-semibold">
       <Image
         alt="token_icon"
         src={token.icon}
@@ -53,10 +38,12 @@ export const SelectGameCurrency: React.FC<{ triggerClassName?: string }> = ({
     selectedToken: s.selectedToken,
   }));
   const { refetch } = useTokenBalances({
-    account: account?.address || "0x0",
+    account: account?.address || '0x0',
   });
 
   const balances = useBalanceStore((state) => state.balances);
+
+  console.log('balances', balances);
 
   return (
     <Select
@@ -76,9 +63,7 @@ export const SelectGameCurrency: React.FC<{ triggerClassName?: string }> = ({
             height={20}
             className="max-md:mr-1 "
           />
-          <span className="mt-[2px]">
-            {balances[selectedToken.address] ?? 0}
-          </span>
+          <span className="mt-[2px]">{balances[selectedToken.address] ?? 0}</span>
         </SelectTrigger>
       )}
 
@@ -88,10 +73,7 @@ export const SelectGameCurrency: React.FC<{ triggerClassName?: string }> = ({
       >
         <SelectGroup className="wr-w-full">
           {tokens.map((token) => (
-            <SelectCurrencyItem
-              balance={balances[token.address] ?? 0}
-              token={token}
-            />
+            <SelectCurrencyItem balance={balances[token.address] ?? 0} token={token} />
           ))}
         </SelectGroup>
       </SelectContent>

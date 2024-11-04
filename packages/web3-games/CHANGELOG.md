@@ -1,5 +1,156 @@
 # @winrlabs/web3-games
 
+## 12.0.8
+
+### Patch Changes
+
+- 32452d5: add validate pin, unauth
+- 32452d5: update validate pin
+- 32452d5: update getAddress
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+  - @winrlabs/web3@0.11.65
+  - @winrlabs/games@5.0.3
+  - @winrlabs/web3-games@12.0.8
+
+## 12.0.7
+
+### Patch Changes
+
+- 4d56ceb: add validate pin, unauth
+- 4d56ceb: update getAddress
+- Updated dependencies [4d56ceb]
+- Updated dependencies [4d56ceb]
+  - @winrlabs/web3@0.11.64
+  - @winrlabs/games@5.0.2
+  - @winrlabs/web3-games@12.0.7
+
+## 12.0.6
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+- Updated dependencies [021cbb9]
+  - @winrlabs/web3@0.11.63
+  - @winrlabs/games@5.0.1
+  - @winrlabs/web3-games@12.0.6
+
+## 12.0.5
+
+### Patch Changes
+
+- 4ca549e: update transaction method
+- Updated dependencies [4ca549e]
+- Updated dependencies [21606a5]
+  - @winrlabs/web3@0.11.62
+  - @winrlabs/games@5.0.0
+  - @winrlabs/web3-games@12.0.5
+
+## 12.0.4
+
+### Patch Changes
+
+- 721e165: nonce fix
+- Updated dependencies [721e165]
+  - @winrlabs/web3@0.11.61
+  - @winrlabs/games@4.0.3
+  - @winrlabs/web3-games@12.0.4
+
+## 12.0.3
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+- Updated dependencies [9e0e4d6]
+  - @winrlabs/web3@0.11.60
+  - @winrlabs/web3-games@12.0.3
+
+## 12.0.2
+
+### Patch Changes
+
+- 19c27e9: minor ui update
+- 19c27e9: new socket implementation
+- Updated dependencies [19c27e9]
+- Updated dependencies [19c27e9]
+  - @winrlabs/games@4.0.2
+  - @winrlabs/web3-games@12.0.2
+  - @winrlabs/web3@0.11.59
+
+## 12.0.1
+
+### Patch Changes
+
+- 7497929: new socket implementation
+- 7497929: new socket implementation
+- Updated dependencies [7497929]
+- Updated dependencies [7497929]
+  - @winrlabs/games@4.0.1
+  - @winrlabs/web3@0.11.58
+  - @winrlabs/web3-games@12.0.1
+
+## 12.0.0
+
+### Major Changes
+
+- 0482481: (controller.tsx): reorganize imports and add IncreaseByInput component
+  (controller.tsx): refactor BetControllerTitle component for better styling
+  (controller.tsx): update styling for BetCountFormField and AutoBetCountFormField components
+  (controller.tsx): update styling for AutoBetStopGainFormField and AutoBetStopLossFormField components
+  (controller.tsx): update styling for AutoBetIncreaseOnWin and AutoBetIncreaseOnLoss components
+  (controller.tsx): update styling for WagerFormField component
+  (increase-by-input.tsx): add class 'increase-by-input' for styling
+  (pre-bet-button.tsx): add class 'submit-button' for styling
+  (wager.tsx): update styling for WagerInput and WagerSetterButtons components
+  (wager.tsx): update styling for TotalWager and MaxPayout components
+  (auto-controller.tsx): update styling for PreBetButton component
+  (index.tsx): refactor BetController component for better styling and remove backgroundColor prop
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (template.tsx): Remove unused backgroundColor property from options
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (tailwind.config.ts): Update animation keyframes to include border-bottom-width property
+  (index.tsx): Add formClassName prop to BetController component for custom styling
+- 0482481: Add backgroundColor to the controller component, wheel, plinko, and coinflip-2d
+
+### Patch Changes
+
+- Updated dependencies [0482481]
+- Updated dependencies [0482481]
+  - @winrlabs/web3-games@12.0.0
+  - @winrlabs/games@4.0.0
+
+## 11.0.79
+
+### Patch Changes
+
+- Updated dependencies [a8ca036]
+- Updated dependencies [a8ca036]
+  - @winrlabs/web3@0.11.57
+  - @winrlabs/games@3.0.74
+  - @winrlabs/web3-games@11.0.79
+
+## 11.0.78
+
+### Patch Changes
+
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+  - @winrlabs/web3@0.11.56
+  - @winrlabs/web3-games@11.0.78
+  - @winrlabs/games@3.0.73
+
+## 11.0.77
+
+### Patch Changes
+
+- Updated dependencies [c406a31]
+- Updated dependencies [c406a31]
+  - @winrlabs/web3@0.11.55
+  - @winrlabs/web3-games@11.0.77
+  - @winrlabs/games@3.0.72
+
 ## 11.0.76
 
 ### Patch Changes

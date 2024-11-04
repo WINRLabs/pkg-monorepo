@@ -31,7 +31,7 @@ export const RPSChoiceRadio: React.FC<{
     <RadioGroupPrimitive.Item
       disabled={disabled}
       value={choice}
-      className="wr-flex wr-h-9 wr-w-full wr-cursor-pointer wr-items-center wr-justify-center wr-rounded-md wr-bg-zinc-800 wr-text-center data-[state=checked]:wr-bg-red-600 hover:wr-bg-red-600"
+      className="wr-flex wr-h-9 wr-w-full wr-cursor-pointer wr-items-center wr-justify-center wr-rounded-md wr-bg-zinc-800 wr-text-center data-[state=checked]:wr-bg-red-600 hover:wr-bg-red-600 button"
     >
       <FormLabel className="wr-mb-0 wr-cursor-pointer  wr-justify-center wr-text-base wr-font-semibold wr-leading-4 wr-text-white">
         <img alt="icon_item" src={rpsChoiceMap[choice].icon} width={20} height={20} />

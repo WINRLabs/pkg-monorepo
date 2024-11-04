@@ -95,7 +95,7 @@ export const AutoController = ({
               <NumberInput.Root
                 {...field}
                 errorClassName="wr-hidden lg:wr-block"
-                className="wr-relative wr-flex wr-items-center wr-gap-2"
+                className="wr-relative wr-flex wr-items-center wr-gap-2 mines-count"
                 isDisabled={isDisabled}
               >
                 <NumberInput.Container className="wr-bg-zinc-950">

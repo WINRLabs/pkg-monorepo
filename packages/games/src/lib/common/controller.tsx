@@ -28,7 +28,14 @@ interface Props {
 
 export const BetControllerTitle: React.FC<Props> = ({ children, className }) => {
   return (
-    <h1 className={cn('wr-text-lg wr-font-bold  lg:wr-flex wr-hidden', className)}>{children}</h1>
+    <h1
+      className={cn(
+        'wr-text-lg wr-font-bold  lg:wr-flex wr-hidden bet-controller-title',
+        className
+      )}
+    >
+      {children}
+    </h1>
   );
 };
 
@@ -46,7 +53,7 @@ export const BetCountFormField: React.FC<{
         name="betCount"
         render={({ field }) => (
           <FormItem
-            className={cn('wr-mb-3 lg:wr-mb-6', {
+            className={cn('wr-mb-3 lg:wr-mb-6 bet-count', {
               'wr-hidden lg:!wr-block': hideSm,
             })}
           >
@@ -81,7 +88,7 @@ export const AutoBetCountFormField: React.FC<{
         control={form.control}
         name="betCount"
         render={({ field }) => (
-          <FormItem className={cn('wr-mb-3')}>
+          <FormItem className={cn('wr-mb-3 autobet-form-field')}>
             <FormLabel>{isMobile ? '#' : 'Number'} of Bets</FormLabel>
 
             <FormControl>
@@ -118,7 +125,7 @@ export const AutoBetStopGainFormField = ({
       control={form.control}
       name="stopGain"
       render={({ field }) => (
-        <FormItem className="lg:wr-mb-3 wr-mb-0 wr-w-full">
+        <FormItem className="lg:wr-mb-3 wr-mb-0 wr-w-full autobet-stop-gain">
           <FormLabel className={cn(labelClassName)}>Stop on Profit</FormLabel>
           <FormControl>
             <StopGainLossInput
@@ -151,7 +158,7 @@ export const AutoBetStopLossFormField = ({
       control={form.control}
       name="stopLoss"
       render={({ field }) => (
-        <FormItem className="lg:wr-mb-3 wr-mb-0 wr-w-full">
+        <FormItem className="lg:wr-mb-3 wr-mb-0 wr-w-full autobet-stop-loss">
           <FormLabel className={cn(labelClassName)}>Stop on Loss</FormLabel>
           <FormControl>
             <StopGainLossInput
@@ -187,7 +194,7 @@ export const AutoBetIncreaseOnWin = ({
       control={form.control}
       name="increaseOnWin"
       render={({ field }) => (
-        <FormItem className="wr-mb-3">
+        <FormItem className="wr-mb-3 autobet-increase-on-win">
           <FormLabel className={cn(labelClassName)}>On Win</FormLabel>
           <FormControl>
             <div className="wr-flex wr-w-full wr-bg-zinc-800 wr-rounded-md wr-py-0.5 wr-px-2 wr-pr-0.5 wr-items-center">
@@ -246,7 +253,7 @@ export const AutoBetIncreaseOnLoss = ({
       control={form.control}
       name="increaseOnLoss"
       render={({ field }) => (
-        <FormItem className="wr-mb-3">
+        <FormItem className="wr-mb-3 autobet-increase-on-loss">
           <FormLabel className={cn(labelClassName)}>On Loss</FormLabel>
           <FormControl>
             <div className="wr-flex wr-w-full wr-bg-zinc-800 wr-rounded-md wr-py-0.5 wr-px-2 wr-pr-0.5 wr-items-center">
@@ -300,7 +307,7 @@ export const WagerFormField: React.FC<WagerFormFieldProps> = ({
       control={form.control}
       name="wager"
       render={({ field }) => (
-        <FormItem className={cn(className, 'wr-mb-3 lg:wr-mb-6')}>
+        <FormItem className={cn(className, 'wr-mb-3 lg:wr-mb-6 wager-input')}>
           <FormLabel className={cn('wr-leading-4 wr-mb-3 lg:wr-mb-[6px] lg:wr-leading-6')}>
             {customLabel ? customLabel : 'Wager'}
             <div>

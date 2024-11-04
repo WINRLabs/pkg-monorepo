@@ -71,7 +71,7 @@ export const WagerInput = ({
     <NumberInput.Root {...rest}>
       <NumberInput.Container
         className={cn(
-          'wr-border-none wr-bg-zinc-950 wr-px-2 wr-py-[10px] wr-text-md wr-font-semibold wr-leading-4',
+          'wr-border-none wr-bg-zinc-950 wr-px-2 wr-py-[10px] wr-text-md wr-font-semibold wr-leading-4 wager-input',
           {
             ['wr-border wr-border-solid wr-border-red-600']: !!hasError,
           },
@@ -171,7 +171,7 @@ export const WagerSetterButtons = ({
   const balanceAsDollar = account?.balanceAsDollar || 0;
 
   return (
-    <div className="wr-flex wr-items-center wr-gap-1 wr-mt-1.5">
+    <div className="wr-flex wr-items-center wr-gap-1 wr-mt-1.5 wager-setter-buttons">
       <Button
         className={cn('wr-w-full wr-font-[600] wr-text-base', className)}
         type="button"
@@ -244,7 +244,7 @@ export const TotalWager = ({ className, wager, betCount, containerClassName }: T
   return (
     <div
       className={cn(
-        'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]',
+        'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] total-wager',
         containerClassName
       )}
     >
@@ -265,7 +265,7 @@ export const MaxPayout = ({ className, maxPayout, containerClassName }: MaxPayou
   return (
     <div
       className={cn(
-        'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]',
+        'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] max-payout',
         containerClassName
       )}
     >

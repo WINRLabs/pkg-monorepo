@@ -112,7 +112,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     'skipAll',
   ]);
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.singleWheel);
 
   const currentAccount = useCurrentAccount();
   const { priceFeed } = usePriceFeed();

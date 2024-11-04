@@ -31,7 +31,7 @@ export const PreBetButton = ({
     return (
       <Button
         variant={variant}
-        className={cn('wr-w-full wr-uppercase', className)}
+        className={cn('wr-w-full wr-uppercase submit-button', className)}
         size={'xl'}
         type="button"
         onClick={onLogin}
@@ -46,7 +46,7 @@ export const PreBetButton = ({
         disabled
         variant={variant}
         type="button"
-        className={cn('wr-w-full wr-uppercase', className)}
+        className={cn('wr-w-full wr-uppercase submit-button', className)}
         size={'xl'}
       >
         Not enough Balance

@@ -82,7 +82,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     plinkoSize: 10,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.plinko);
 
   const { eventLogic } = useFastOrVerified();
 

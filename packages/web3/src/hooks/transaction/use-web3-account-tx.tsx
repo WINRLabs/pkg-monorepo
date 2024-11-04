@@ -3,7 +3,7 @@ import { Address, Hex } from 'viem';
 
 import { ErrorCode, mmAuthSignErrors, mmAuthSessionErr } from '../../utils/error-codes';
 import { MutationHook } from '../../utils/types';
-import { useCreateSession, useSessionStore } from '../session';
+import { useCreateSession, useCreateSessionV2, useSessionStore } from '../session';
 import { useBundlerClient } from '../use-bundler-client';
 import { useCurrentAccount } from '../use-current-address';
 import { BundlerClientNotFoundError, BundlerRequestError } from './error';

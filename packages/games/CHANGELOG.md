@@ -1,5 +1,127 @@
 # @winrlabs/games
 
+## 5.0.3
+
+### Patch Changes
+
+- 32452d5: add validate pin, unauth
+- 32452d5: update validate pin
+- 32452d5: update getAddress
+
+## 5.0.2
+
+### Patch Changes
+
+- 4d56ceb: add validate pin, unauth
+- 4d56ceb: update getAddress
+
+## 5.0.1
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+
+## 5.0.0
+
+### Major Changes
+
+- 21606a5: (chip-controller/index.tsx, bet-controller/index.tsx, manual-controller.tsx, control.tsx, controller.tsx, index.tsx): Refactor CSS classes and styles for better organization and readability
+  (manual-controller.tsx): Add 'max-payout' class to improve styling consistency
+  (auto-controller.tsx): Add 'button' class to improve styling consistency
+  (index.tsx): Add 'tabs-list' class to improve styling consistency
+  (manual-controller.tsx): Add 'button' class to improve styling consistency
+  (auto-controller.tsx): Add 'multiplier-input' class to improve styling consistency
+  (index.tsx): Add 'tabs-list' class to improve styling consistency
+  (manual-controller.tsx): Add 'multiplier-input' class to improve styling consistency
+  (auto-controller.tsx): Add 'mines-count' class to improve styling consistency
+  (index.tsx): Add 'tabs-list' class to improve styling consistency
+  (manual-controller.tsx): Add CSS class 'max-reward' to improve styling for maxPayout section
+  (manual-controller.tsx): Refactor CSS class 'plinko-input' to include 'plinko-input' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (auto-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (manual-controller.tsx): Refactor CSS class 'button' to include 'button' for better styling
+  (index.tsx): Refactor CSS class 'tabs-list' to include 'tabs-list' for better styling
+  (index.tsx): Refactor CSS class 'max-payout' to include 'max-payout' for better styling
+
+### Patch Changes
+
+- 4ca549e: update transaction method
+
+## 4.0.3
+
+### Patch Changes
+
+- 721e165: nonce fix
+
+## 4.0.2
+
+### Patch Changes
+
+- 19c27e9: minor ui update
+- 19c27e9: new socket implementation
+
+## 4.0.1
+
+### Patch Changes
+
+- 7497929: new socket implementation
+- 7497929: new socket implementation
+
+## 4.0.0
+
+### Major Changes
+
+- 0482481: (controller.tsx): reorganize imports and add IncreaseByInput component
+  (controller.tsx): refactor BetControllerTitle component for better styling
+  (controller.tsx): update styling for BetCountFormField and AutoBetCountFormField components
+  (controller.tsx): update styling for AutoBetStopGainFormField and AutoBetStopLossFormField components
+  (controller.tsx): update styling for AutoBetIncreaseOnWin and AutoBetIncreaseOnLoss components
+  (controller.tsx): update styling for WagerFormField component
+  (increase-by-input.tsx): add class 'increase-by-input' for styling
+  (pre-bet-button.tsx): add class 'submit-button' for styling
+  (wager.tsx): update styling for WagerInput and WagerSetterButtons components
+  (wager.tsx): update styling for TotalWager and MaxPayout components
+  (auto-controller.tsx): update styling for PreBetButton component
+  (index.tsx): refactor BetController component for better styling and remove backgroundColor prop
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (template.tsx): Remove unused backgroundColor property from options
+  (manual-controller.tsx): Add CSS class 'max-payout' for styling consistency
+  (tailwind.config.ts): Update animation keyframes to include border-bottom-width property
+  (index.tsx): Add formClassName prop to BetController component for custom styling
+- 0482481: Add backgroundColor to the controller component, wheel, plinko, and coinflip-2d
+
+## 3.0.74
+
+### Patch Changes
+
+- a8ca036: x
+
+## 3.0.73
+
+### Patch Changes
+
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+  - @winrlabs/types@0.0.3
+
+## 3.0.72
+
+### Patch Changes
+
+- Updated dependencies [c406a31]
+  - @winrlabs/types@0.0.2
+
 ## 3.0.71
 
 ### Patch Changes

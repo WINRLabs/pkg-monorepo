@@ -178,6 +178,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={props.onLogin}
+            scene={options?.scene}
             {...props.options}
           />
           <SceneContainer

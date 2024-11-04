@@ -1,5 +1,90 @@
 # @winrlabs/ui
 
+## 10.0.65
+
+### Patch Changes
+
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+- Updated dependencies [32452d5]
+  - @winrlabs/web3@0.11.65
+
+## 10.0.64
+
+### Patch Changes
+
+- Updated dependencies [4d56ceb]
+- Updated dependencies [4d56ceb]
+  - @winrlabs/web3@0.11.64
+
+## 10.0.63
+
+### Patch Changes
+
+- Updated dependencies [021cbb9]
+  - @winrlabs/web3@0.11.63
+
+## 10.0.62
+
+### Patch Changes
+
+- Updated dependencies [4ca549e]
+  - @winrlabs/web3@0.11.62
+
+## 10.0.61
+
+### Patch Changes
+
+- Updated dependencies [721e165]
+  - @winrlabs/web3@0.11.61
+
+## 10.0.60
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+- Updated dependencies [9e0e4d6]
+  - @winrlabs/web3@0.11.60
+
+## 10.0.59
+
+### Patch Changes
+
+- Updated dependencies [19c27e9]
+  - @winrlabs/web3@0.11.59
+
+## 10.0.58
+
+### Patch Changes
+
+- Updated dependencies [7497929]
+- Updated dependencies [7497929]
+  - @winrlabs/web3@0.11.58
+
+## 10.0.57
+
+### Patch Changes
+
+- Updated dependencies [a8ca036]
+  - @winrlabs/web3@0.11.57
+
+## 10.0.56
+
+### Patch Changes
+
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+- Updated dependencies [37cc888]
+  - @winrlabs/web3@0.11.56
+
+## 10.0.55
+
+### Patch Changes
+
+- Updated dependencies [c406a31]
+- Updated dependencies [c406a31]
+  - @winrlabs/web3@0.11.55
+
 ## 10.0.54
 
 ### Patch Changes

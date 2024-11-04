@@ -2,7 +2,7 @@
 
 import { Config } from 'wagmi';
 
-import { BundlerClientProvider, BundlerNetwork } from '../hooks/use-bundler-client';
+import { BundlerClientProvider, BundlerNetwork, BundlerVersion } from '../hooks/use-bundler-client';
 import { CurrentAccountProvider } from '../hooks/use-current-address';
 import { GameStrategyProvider } from '../hooks/use-game-strategy';
 import { SmartAccountApiProvider } from '../hooks/use-smart-account-api';
@@ -17,6 +17,7 @@ export const WinrLabsWeb3Provider = ({
   wagmiConfig,
   globalChainId,
   apiConfig,
+  bundlerVersion = 'v1',
 }: {
   children: React.ReactNode;
   smartAccountConfig: {
@@ -31,6 +32,7 @@ export const WinrLabsWeb3Provider = ({
   selectedToken: Token;
   globalChainId?: number;
   apiConfig?: ApiContextType;
+  bundlerVersion?: BundlerVersion;
 }) => {
   return (
     <ApiProvider config={apiConfig}>
@@ -38,6 +40,7 @@ export const WinrLabsWeb3Provider = ({
         rpcUrl={smartAccountConfig.bundlerUrl}
         initialNetwork={smartAccountConfig.network}
         globalChainId={globalChainId}
+        bundlerVersion={bundlerVersion}
       >
         <SmartAccountApiProvider
           entryPointAddress={smartAccountConfig.entryPointAddress}

@@ -48,8 +48,14 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
   ]);
 
   const { dictionary } = useGameOptions();
-  const { hideWager, tokenPrefix, controllerHeader, hideMaxPayout, controllerFooter } =
-    useWheelTheme();
+  const {
+    hideWager,
+    tokenPrefix,
+    controllerHeader,
+    hideMaxPayout,
+    controllerFooter,
+    betControllerBackground,
+  } = useWheelTheme();
 
   const form = useFormContext() as WheelForm;
 
@@ -71,7 +77,10 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
   });
 
   return (
-    <BetControllerContainer data-wheel-bet-controller>
+    <BetControllerContainer
+      data-wheel-bet-controller
+      style={{ backgroundColor: betControllerBackground || '' }}
+    >
       <div className="max-lg:wr-flex max-lg:wr-flex-col">
         {controllerHeader ? (
           controllerHeader
@@ -169,12 +178,12 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
           />
         </div>
         {!hideMaxPayout && (
-          <div className="wr-mb-6 lg:!wr-block wr-hidden">
+          <div className="wr-mb-6 lg:!wr-block wr-hidden ">
             <div>
               <FormLabel>{dictionary.maxPayout}</FormLabel>
               <div
                 className={cn(
-                  'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]'
+                  'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] max-reward'
                 )}
               >
                 <WagerCurrencyIcon />

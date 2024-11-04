@@ -70,7 +70,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     stopLoss: 0,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.baccarat);
 
   const { eventLogic } = useFastOrVerified();
 
@@ -185,10 +185,6 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
         target: controllerAddress,
       });
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);

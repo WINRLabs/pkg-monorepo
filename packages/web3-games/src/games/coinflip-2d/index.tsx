@@ -43,6 +43,7 @@ const log = debug('worker:CoinFlipWeb3');
 type TemplateOptions = {
   scene?: {
     backgroundImage?: string;
+    backgroundColor?: string;
   };
 };
 
@@ -51,7 +52,6 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
-
   onAnimationStep?: (step: number) => void;
   onAnimationCompleted?: (result: CoinFlipGameResult[]) => void;
   onPlayerStatusUpdate?: (d: {
@@ -59,6 +59,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  betControllerClassName?: string;
 }
 
 export default function CoinFlipGame(props: TemplateWithWeb3Props) {
@@ -95,7 +96,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     wager: props.minWager || 1,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.coinFlip);
 
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
@@ -206,11 +207,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
         target: controllerAddress,
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);

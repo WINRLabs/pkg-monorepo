@@ -81,7 +81,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           <FormLabel>Max Payout</FormLabel>
           <div
             className={cn(
-              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px]'
+              'wr-flex wr-w-full wr-items-center wr-gap-1 wr-rounded-lg wr-bg-zinc-800 wr-px-2 wr-py-[10px] max-payout'
             )}
           >
             <WagerCurrencyIcon />
@@ -102,6 +102,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           type="button"
           disabled={isFormInProgress}
           onClick={autoPickHandler}
+          className="button"
         >
           <IconMagicStick className="wr-mr-1 wr-h-5 wr-w-5" />
           Auto Pick
@@ -112,6 +113,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           type="button"
           onClick={clearBetHandler}
           disabled={isFormInProgress}
+          className="button"
         >
           <IconTrash className="wr-mr-1 wr-h-5 wr-w-5" />
           Clear

@@ -78,7 +78,7 @@ export interface Participant {
  * Delievered when the game is active and new participants join(to the user, not broadcasted)
  */
 export interface MultiplayerUpdateMessage {
-  is_active: boolean;
+  isActive: boolean;
   participants: Participant[];
   result: {
     joiningFinish: number;

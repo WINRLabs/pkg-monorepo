@@ -69,7 +69,7 @@ export default function WinrOfOlympusGame({
     isDoubleChance: false,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.winrOfOlympus);
 
   const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = React.useRef<boolean>(true);
@@ -162,10 +162,15 @@ export default function WinrOfOlympusGame({
 
   const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
+  const hasAllowance = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
+
+  React.useEffect(() => {
+    hasAllowance.current = allowance.hasAllowance || false;
+  }, [allowance.hasAllowance]);
 
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
@@ -175,19 +180,15 @@ export default function WinrOfOlympusGame({
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    // if (!allowance.hasAllowance) {
-    //   const handledAllowance = await allowance.handleAllowance({
-    //     errorCb: (e: any) => {
-    //       log('error', e);
-    //     },
-    //   });
-
-    //   if (!handledAllowance) return;
-    // }
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          log('error', e);
+        },
+      });
+    }
 
     log('allowance available');
-
-    // await handleTx.mutateAsync();
 
     try {
       if (isPlayerHaltedRef.current) await playerLevelUp();
@@ -197,11 +198,6 @@ export default function WinrOfOlympusGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleBet), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(handleBet, errCount + 1, e), 750);
@@ -214,13 +210,12 @@ export default function WinrOfOlympusGame({
   const handleBuyFreeSpins = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
-    if (!allowance.hasAllowance) {
-      const handledAllowance = await allowance.handleAllowance({
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
         errorCb: (e: any) => {
           log('error', e);
         },
       });
-      if (!handledAllowance) return;
     }
     log('buy feature');
     try {
@@ -239,14 +234,13 @@ export default function WinrOfOlympusGame({
 
   const handleFreeSpin = async (errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
-    // if (!allowance.hasAllowance) {
-    //   const handledAllowance = await allowance.handleAllowance({
-    //     errorCb: (e: any) => {
-    //   log("error", e);
-    //     },
-    //   });
-    //   if (!handledAllowance) return;
-    // }
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          log('error', e);
+        },
+      });
+    }
 
     log('handleFreeSpintx called');
 
@@ -258,11 +252,6 @@ export default function WinrOfOlympusGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleFreeSpin), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(handleFreeSpin, errCount + 1, e), 750);

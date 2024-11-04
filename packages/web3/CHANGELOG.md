@@ -1,5 +1,78 @@
 # @winrlabs/web3
 
+## 0.11.65
+
+### Patch Changes
+
+- 32452d5: add validate pin, unauth
+- 32452d5: update validate pin
+- 32452d5: update getAddress
+
+## 0.11.64
+
+### Patch Changes
+
+- 4d56ceb: add validate pin, unauth
+- 4d56ceb: update getAddress
+
+## 0.11.63
+
+### Patch Changes
+
+- 021cbb9: update getAddress
+
+## 0.11.62
+
+### Patch Changes
+
+- 4ca549e: update transaction method
+
+## 0.11.61
+
+### Patch Changes
+
+- 721e165: nonce fix
+
+## 0.11.60
+
+### Patch Changes
+
+- 9e0e4d6: Auth strategy update
+
+## 0.11.59
+
+### Patch Changes
+
+- 19c27e9: new socket implementation
+
+## 0.11.58
+
+### Patch Changes
+
+- 7497929: new socket implementation
+- 7497929: new socket implementation
+
+## 0.11.57
+
+### Patch Changes
+
+- a8ca036: multicall
+
+## 0.11.56
+
+### Patch Changes
+
+- 37cc888: multicall
+- 37cc888: up
+- 37cc888: add meme
+
+## 0.11.55
+
+### Patch Changes
+
+- c406a31: multicall
+- c406a31: add meme
+
 ## 0.11.54
 
 ### Patch Changes

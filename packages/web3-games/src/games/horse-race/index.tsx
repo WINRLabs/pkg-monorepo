@@ -30,13 +30,14 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits, fromHex 
 import { BaseGameProps } from '../../type';
 import {
   Badge,
+  SocketMultiplayerGameType,
   useBetHistory,
   useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
-import { GAME_HUB_GAMES, prepareGameTransaction } from '../utils';
+import { prepareGameTransaction } from '../utils';
 
 const log = debug('worker:HorseRaceWeb3');
 
@@ -109,7 +110,9 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     'selectedHorse',
   ]);
 
-  const gameEvent = useListenMultiplayerGameEvent(GAME_HUB_GAMES.horse_race);
+  const gameEvent = useListenMultiplayerGameEvent({
+    gameType: SocketMultiplayerGameType.horserace,
+  });
 
   const { handleGetBadges } = useGetBadges({
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,

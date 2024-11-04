@@ -100,6 +100,7 @@ export const AutoController = ({
           type="button"
           disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
           onClick={autoPickHandler}
+          className="button"
         >
           <IconMagicStick className="wr-mr-1 wr-h-5 wr-w-5" />
           Auto Pick
@@ -110,6 +111,7 @@ export const AutoController = ({
           type="button"
           onClick={clearBetHandler}
           disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+          className="button"
         >
           <IconTrash className="wr-mr-1 wr-h-5 wr-w-5" />
           Clear

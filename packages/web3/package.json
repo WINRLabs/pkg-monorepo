@@ -1,6 +1,6 @@
 {
   "name": "@winrlabs/web3",
-  "version": "0.11.54",
+  "version": "0.11.65",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -46,6 +46,8 @@
     "@web3auth/wallet-services-plugin": "^8.4.0",
     "@web3auth/web3auth-wagmi-connector": "^6.0.0",
     "@winrlabs/api": "workspace:*",
+    "browserify": "^17.0.1",
+    "buffer": "^6.0.3",
     "debug": "^4.3.7",
     "json-rpc-2.0": "^1.7.0",
     "superjson": "^2.2.1",

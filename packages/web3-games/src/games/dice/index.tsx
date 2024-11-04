@@ -91,7 +91,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     increaseOnWin: 0,
   });
 
-  const gameEvent = useListenGameEvent();
+  const gameEvent = useListenGameEvent(gameAddresses.dice);
 
   const { eventLogic } = useFastOrVerified();
 
@@ -208,11 +208,6 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
         target: controllerAddress,
       });
-
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v), 2000);
-        iterationTimeoutRef.current.push(t);
-      }
     } catch (e: any) {
       if (isMountedRef.current) {
         const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
