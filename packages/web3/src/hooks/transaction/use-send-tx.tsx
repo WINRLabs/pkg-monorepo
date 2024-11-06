@@ -23,7 +23,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
 
   const { switchChainAsync } = useSwitchChain();
 
-  const { globalChainId, bundlerVersion } = useBundlerClient<'v1' | 'v2'>();
+  const { globalChainId, bundlerVersion: globalBundlerVersion } = useBundlerClient<'v1' | 'v2'>();
 
   return useMutation({
     ...options,
@@ -36,9 +36,12 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         value,
         customBundlerClient,
         enforceSign,
+        customBundlerVersion,
       } = request;
 
       const networkId = request.networkId || globalChainId || 777777;
+
+      const bundlerVersion = customBundlerVersion || globalBundlerVersion;
 
       if (isSocialLogin) {
         return await sendSocialAccountTx({

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.4
+
+### Patch Changes
+
+- 721513d: update
+
 ## 5.0.3
 
 ### Patch Changes
