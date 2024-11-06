@@ -29,7 +29,7 @@ import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, useGameStrategy, useGetBadges, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import {
@@ -92,6 +92,8 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   });
 
   const gameEvent = useListenGameEvent(gameAddresses.dice);
+
+  const { handleCreateStrategy, isCreatingStrategy } = useGameStrategy();
 
   const { eventLogic } = useFastOrVerified();
 
@@ -319,6 +321,10 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         onFormChange={setFormValues}
         onAutoBetModeChange={onAutoBetModeChange}
         options={props.options}
+        strategy={{
+          create: handleCreateStrategy,
+          isCreating: isCreatingStrategy,
+        }}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

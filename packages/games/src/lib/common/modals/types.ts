@@ -1,7 +1,8 @@
-export type TWeb3GamesModals = 'refund';
+export type TWeb3GamesModals = 'refund' | 'createStrategy';
 
 export type Web3GamesModalPropsStore = {
   refund: Web3GamesRefundModalProps;
+  createStrategy: Web3GamesCreateStrategyModalProps;
 };
 
 export interface Web3GamesModalsStoreState {
@@ -18,6 +19,11 @@ export interface Web3GamesRefundModalProps {
   isRefunding?: boolean;
   isRefundable?: boolean;
   playerRefund?: () => Promise<void>;
+}
+
+export interface Web3GamesCreateStrategyModalProps {
+  createStrategy?: (strategyName: string) => Promise<void>;
+  isCreatingStrategy?: boolean;
 }
 
 export type Web3GamesModalsStore = Web3GamesModalsStoreState & Web3GamesModalsStoreActions;

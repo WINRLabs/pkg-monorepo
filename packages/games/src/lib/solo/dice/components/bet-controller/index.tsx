@@ -5,11 +5,13 @@ import * as React from 'react';
 import { AnimatedTabContent } from '../../../../common/animated-tab-content';
 import { AudioController } from '../../../../common/audio-controller';
 import { BetControllerContainer } from '../../../../common/containers';
+import { StrategyStruct } from '../../../../strategist/types';
 import { IconStrategy } from '../../../../svgs';
 import { cn } from '../../../../utils/style';
 import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
 import { StrategyController } from './strategy-controller';
+import { StrategyProps } from '../../types';
 
 interface Props {
   minWager: number;
@@ -18,11 +20,24 @@ interface Props {
   isGettingResults?: boolean;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+  onBetModeChange: React.Dispatch<React.SetStateAction<'MANUAL' | 'AUTO' | 'AUTO_CUSTOM_STRATEGY'>>;
+  customBetStrategy: {
+    allStrategies: StrategyStruct[];
+    selectedStrategy: StrategyStruct;
+    change: (strategy: StrategyStruct) => void;
+  };
+  strategy: StrategyProps;
   onLogin?: () => void;
 }
 
 export const BetController: React.FC<Props> = (props) => {
   const [tab, setTab] = React.useState<string>('manual');
+
+  React.useEffect(() => {
+    if (tab == 'manual') props.onBetModeChange('MANUAL');
+    else if (tab == 'auto') props.onBetModeChange('AUTO');
+    else if (tab == 'strategy') props.onBetModeChange('AUTO_CUSTOM_STRATEGY');
+  }, [tab]);
 
   return (
     <BetControllerContainer>

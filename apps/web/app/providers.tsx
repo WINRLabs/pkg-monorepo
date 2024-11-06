@@ -22,7 +22,7 @@ export const factoryAddress = allAddresses.factory;
 export const controllerAddress = allAddresses.controller;
 export const cashierAddress = allAddresses.cashier;
 export const uiOperatorAddress = allAddresses.uiOperator;
-export const strategyStoreAddress = '0x00';
+export const strategyStoreAddress = allAddresses.strategyStore;
 
 export const rankMiddlewareAddress = allAddresses.rankMiddleware;
 
@@ -65,11 +65,10 @@ export function Providers(props: { children: ReactNode }) {
     <WagmiProvider reconnectOnMount={isPreviouslyConnected} config={config}>
       <QueryClientProvider client={queryClient}>
         <WinrLabsWeb3Provider
-          bundlerVersion="v2"
+          bundlerVersion="v1"
           // apiConfig={{
           //   baseUrl: 'https://abc.com',
           // }}
-          globalChainId={66666666}
           apiConfig={{}}
           smartAccountConfig={{
             bundlerUrl,
@@ -108,6 +107,7 @@ export function Providers(props: { children: ReactNode }) {
                   cashierAddress,
                   uiOperatorAddress,
                   rankMiddlewareAddress,
+                  strategyStoreAddress,
                 },
               }}
             >

@@ -12,6 +12,7 @@ import { BetCountSlider } from './containers';
 import { IncreaseByInput } from './increase-by-input';
 import { StopGainLossInput } from './stop-gain-loss-input';
 import { WagerBalance, WagerCurrency, WagerInput, WagerSetterButtons } from './wager';
+import { StrategyStruct } from '../strategist/types';
 
 interface WagerFormFieldProps {
   customLabel?: string;
@@ -434,13 +435,15 @@ export const UnityFullscreenButton: React.FC<{
 };
 
 export const StrategySelector = ({
+  isDisabled,
   strategies,
   selectedStrategy,
   onChange,
 }: {
-  strategies: string[];
-  selectedStrategy: string;
-  onChange: (strategy: string) => void;
+  isDisabled?: boolean;
+  strategies: StrategyStruct[];
+  selectedStrategy: StrategyStruct;
+  onChange: (strategy: StrategyStruct) => void;
 }) => {
   return (
     <>
@@ -448,19 +451,20 @@ export const StrategySelector = ({
         Select Strategy
       </FormLabel>
       <Select
-        value={selectedStrategy}
+        value={selectedStrategy.name}
         onValueChange={(val) => {
           if (!val.length) return;
-          onChange(val);
+          onChange(strategies.find((s) => s.name === val) as StrategyStruct);
         }}
+        disabled={isDisabled}
       >
         <SelectTrigger className="wr-mb-3 wr-bg-zinc-950 wr-border-none">
-          {selectedStrategy}
+          {selectedStrategy.name}
         </SelectTrigger>
         <SelectContent className="wr-bg-zinc-950 wr-border-none">
           {strategies.map((strategy) => (
-            <SelectItem value={strategy} key={strategy}>
-              <span className="wr-font-semibold">{strategy}</span>
+            <SelectItem value={strategy.name} key={strategy.name}>
+              <span className="wr-font-semibold">{strategy.name}</span>
             </SelectItem>
           ))}
         </SelectContent>

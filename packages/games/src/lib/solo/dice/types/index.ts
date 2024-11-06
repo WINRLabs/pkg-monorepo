@@ -29,3 +29,8 @@ export type DiceTemplateOptions = {
     background?: string;
   };
 };
+
+export interface StrategyProps {
+  create: (strategyName: string) => Promise<void>;
+  isCreating: boolean;
+}

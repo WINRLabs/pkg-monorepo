@@ -18,6 +18,9 @@ export type Input = {
   balance: bigint;
 };
 
+export const NORMALIZED_PRECISION = 6;
+export const WAGER_PRECISION = 8;
+
 export const load = (input: Input) => {
   let bet = 0;
   let win = 0;

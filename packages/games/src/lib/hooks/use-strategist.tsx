@@ -17,7 +17,7 @@ interface IUseStrategist {
   isAutoBetMode: boolean;
 }
 
-export const useStrategist = ({
+export const useAutoBetStrategist = ({
   wager,
   increasePercentageOnWin,
   increasePercentageOnLoss,

@@ -130,12 +130,6 @@ export default function SessionTest() {
           padding: '10px 20px',
           borderRadius: '5px',
         }}
-        onClick={async () => {
-          await unauthorize.mutateAsync({
-            pin: '123456',
-          });
-          localStorage.clear();
-        }}
       >
         logout
       </button>

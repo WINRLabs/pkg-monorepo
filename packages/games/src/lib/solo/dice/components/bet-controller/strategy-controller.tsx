@@ -3,16 +3,17 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   AutoBetCountFormField,
-  StrategyConditions,
   StrategySelector,
   WagerFormField,
 } from '../../../../common/controller';
+import { useWeb3GamesModalsStore } from '../../../../common/modals';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
+import { NormalizedStrategyStruct } from '../../../../strategist/types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { DiceForm, StrategyProps } from '../../types';
 import { BetLoader } from './bet-loader';
 
 interface StrategyControllerProps {
@@ -21,16 +22,22 @@ interface StrategyControllerProps {
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
+  customBetStrategy: {
+    allStrategies: NormalizedStrategyStruct[];
+    selectedStrategy: NormalizedStrategyStruct;
+    change: (strategy: NormalizedStrategyStruct) => void;
+  };
+  strategy: StrategyProps;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
 }
-
-const mockStrategies = ['Martingale', 'Delayed Martingale'];
 
 export const StrategyController = ({
   minWager,
   maxWager,
   isAutoBetMode,
+  customBetStrategy,
+  strategy,
   onAutoBetModeChange,
   onLogin,
 }: StrategyControllerProps) => {
@@ -38,7 +45,7 @@ export const StrategyController = ({
   const form = useFormContext() as DiceForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
-  const [selectedStrategy, setSelectedStrategy] = React.useState<string>('Martingale');
+  const { openModal } = useWeb3GamesModalsStore();
 
   return (
     <div className="wr-flex wr-flex-col">
@@ -53,11 +60,28 @@ export const StrategyController = ({
           isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         />
         <StrategySelector
-          selectedStrategy={selectedStrategy}
-          onChange={setSelectedStrategy}
-          strategies={mockStrategies}
+          selectedStrategy={customBetStrategy.selectedStrategy}
+          onChange={customBetStrategy.change}
+          strategies={customBetStrategy.allStrategies}
+          isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         />
-        <StrategyConditions conditions={['1', '2', '3']} />
+        {/* <StrategyConditions conditions={['1', '2', '3']} /> */}
+        <Button
+          type="button"
+          variant="secondary"
+          size="xl"
+          className="wr-mb-3 wr-uppercase"
+          onClick={() => {
+            openModal('createStrategy', {
+              createStrategy: {
+                createStrategy: strategy.create,
+                isCreatingStrategy: strategy.isCreating,
+              },
+            });
+          }}
+        >
+          Create Strategy
+        </Button>
       </div>
 
       <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
