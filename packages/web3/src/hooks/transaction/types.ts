@@ -30,4 +30,5 @@ export interface SendTxRequest extends TxRequest {
   method?: 'sendUserOperation' | 'sendGameOperation';
   networkId?: number;
   enforceSign?: boolean;
+  customBundlerVersion?: 'v1' | 'v2';
 }
