@@ -51,10 +51,6 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
       const bundlerVersion = customBundlerVersion || globalBundlerVersion;
 
       if (isSocialLogin) {
-        if (!pin) {
-          onSessionNotFound?.();
-          throw new Error('Session not found.');
-        }
         return await sendSocialAccountTx({
           target,
           customAccountApi,
@@ -71,6 +67,10 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         }
 
         if (bundlerVersion === 'v2') {
+          if (!pin) {
+            onSessionNotFound?.();
+            throw new Error('Session not found.');
+          }
           return await sendProxyTx({
             customAccountApi,
             customBundlerClient,
