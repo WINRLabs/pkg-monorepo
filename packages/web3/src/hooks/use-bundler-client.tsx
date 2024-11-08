@@ -1,13 +1,13 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import debug from 'debug';
 import { JSONRPCClient, TypedJSONRPCClient } from 'json-rpc-2.0';
 import React, { createContext, ReactNode, useContext } from 'react';
 import { Address, Hex } from 'viem';
 import { Config, useAccount } from 'wagmi';
 
 import { UserOperation } from '../smart-wallet';
-import debug from 'debug';
 
 const log = debug('worker:UseBundlerClient');
 
@@ -19,6 +19,7 @@ const BundlerClientContext = createContext<UseBundlerClient<BundlerVersion>>({
   error: undefined,
   changeBundlerNetwork: () => {},
   bundlerVersion: 'v1' as BundlerVersion, // Default version
+  onSessionNotFound: () => {},
 });
 
 export const useBundlerClient = <T extends BundlerVersion = 'v1'>() => {
@@ -155,6 +156,7 @@ interface UseBundlerClient<T extends BundlerVersion = 'v1'> {
   changeBundlerNetwork: (network: BundlerNetwork) => void;
   globalChainId?: number;
   bundlerVersion: T; // Add bundlerVersion
+  onSessionNotFound?: () => void;
 }
 
 export const fetchBundlerClient = async <T extends BundlerVersion = 'v1'>({
@@ -203,6 +205,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
   config,
   globalChainId,
   bundlerVersion = 'v1' as T, // Default versionw
+  onSessionNotFound,
 }: {
   children: ReactNode;
   rpcUrl: string;
@@ -210,6 +213,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
   config?: Config;
   globalChainId?: number;
   bundlerVersion?: T; // Add bundlerVersion
+  onSessionNotFound?: () => void;
 }) => {
   const { address } = useAccount();
 
@@ -250,6 +254,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
         changeBundlerNetwork,
         globalChainId,
         bundlerVersion, // Provide bundlerVersion
+        onSessionNotFound,
       }}
     >
       {children}

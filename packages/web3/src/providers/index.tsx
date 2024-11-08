@@ -18,6 +18,7 @@ export const WinrLabsWeb3Provider = ({
   globalChainId,
   apiConfig,
   bundlerVersion = 'v1',
+  onSessionNotFound,
 }: {
   children: React.ReactNode;
   smartAccountConfig: {
@@ -33,6 +34,7 @@ export const WinrLabsWeb3Provider = ({
   globalChainId?: number;
   apiConfig?: ApiContextType;
   bundlerVersion?: BundlerVersion;
+  onSessionNotFound?: () => void;
 }) => {
   return (
     <ApiProvider config={apiConfig}>
@@ -41,6 +43,7 @@ export const WinrLabsWeb3Provider = ({
         initialNetwork={smartAccountConfig.network}
         globalChainId={globalChainId}
         bundlerVersion={bundlerVersion}
+        onSessionNotFound={onSessionNotFound}
       >
         <SmartAccountApiProvider
           entryPointAddress={smartAccountConfig.entryPointAddress}

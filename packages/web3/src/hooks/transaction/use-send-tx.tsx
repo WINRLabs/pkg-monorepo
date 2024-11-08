@@ -3,12 +3,13 @@ import { Hex, SwitchChainError } from 'viem';
 import { useSwitchChain } from 'wagmi';
 
 import { MutationHook } from '../../utils/types';
+import { useSessionStore } from '../session';
 import { useBundlerClient } from '../use-bundler-client';
 import { useCurrentAccount } from '../use-current-address';
 import { SendTxRequest } from './types';
+import { useProxyAccountTx } from './use-proxy-tx';
 import { useSocialAccountTx } from './use-social-account-tx';
 import { useWeb3AccountTx } from './use-web3-account-tx';
-import { useProxyAccountTx } from './use-proxy-tx';
 
 export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex }> = (
   options = {}
@@ -23,7 +24,16 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
 
   const { switchChainAsync } = useSwitchChain();
 
-  const { globalChainId, bundlerVersion: globalBundlerVersion } = useBundlerClient<'v1' | 'v2'>();
+  const {
+    globalChainId,
+    bundlerVersion: globalBundlerVersion,
+    onSessionNotFound,
+  } = useBundlerClient<'v1' | 'v2'>();
+
+  const { pin, createdAt } = useSessionStore((state) => ({
+    pin: state.pin,
+    createdAt: state.sessionCreatedAt,
+  }));
 
   return useMutation({
     ...options,
@@ -44,6 +54,10 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
       const bundlerVersion = customBundlerVersion || globalBundlerVersion;
 
       if (isSocialLogin) {
+        if (!pin) {
+          onSessionNotFound?.();
+          throw new Error('Session not found');
+        }
         return await sendSocialAccountTx({
           target,
           customAccountApi,
