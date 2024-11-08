@@ -50,6 +50,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           customBundlerClient,
           encodedTxData,
           method: bundlerVersion === 'v2' ? 'sendUserOperation' : method,
+          networkId,
           value,
         });
       } else {

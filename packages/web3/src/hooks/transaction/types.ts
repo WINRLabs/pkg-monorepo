@@ -19,6 +19,7 @@ export interface TxRequest {
 }
 
 export interface SocialAccountTxRequest extends TxRequest {
+  networkId?: number;
   method?: 'sendUserOperation' | 'sendGameOperation';
 }
 
