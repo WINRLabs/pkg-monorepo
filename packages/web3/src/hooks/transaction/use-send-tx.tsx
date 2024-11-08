@@ -30,10 +30,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
     onSessionNotFound,
   } = useBundlerClient<'v1' | 'v2'>();
 
-  const { pin, createdAt } = useSessionStore((state) => ({
-    pin: state.pin,
-    createdAt: state.sessionCreatedAt,
-  }));
+  const pin = useSessionStore((state) => state.pin);
 
   return useMutation({
     ...options,
@@ -56,7 +53,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
       if (isSocialLogin) {
         if (!pin) {
           onSessionNotFound?.();
-          throw new Error('Session not found');
+          throw new Error('Session not found.');
         }
         return await sendSocialAccountTx({
           target,
