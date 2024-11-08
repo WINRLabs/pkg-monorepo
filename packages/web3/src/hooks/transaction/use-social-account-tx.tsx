@@ -71,8 +71,9 @@ export const useSocialAccountTx: MutationHook<
           factory: userOp.factory,
           factoryData: userOp.factoryData,
           callData: userOp.callData,
-          callGasLimit: request.networkId === 1 ? '800000' : userOp.callGasLimit.toString(),
-          verificationGasLimit: userOp.verificationGasLimit.toString(),
+          callGasLimit: userOp.callGasLimit.toString(),
+          verificationGasLimit:
+            request.networkId === 1 ? '800000' : userOp.verificationGasLimit.toString(),
           preVerificationGas: userOp.preVerificationGas.toString(),
           maxFeePerGas: userOp.maxFeePerGas.toString(),
           maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(),
