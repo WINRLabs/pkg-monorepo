@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.5
+
+### Patch Changes
+
+- cd2cf55: update call gas limit
+
 ## 5.0.4
 
 ### Patch Changes

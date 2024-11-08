@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.67
+
+### Patch Changes
+
+- cd2cf55: update call gas limit
+
 ## 0.11.66
 
 ### Patch Changes
