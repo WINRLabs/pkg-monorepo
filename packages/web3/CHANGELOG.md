@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.71
+
+### Patch Changes
+
+- f0693ea: session not found function
+
 ## 0.11.70
 
 ### Patch Changes

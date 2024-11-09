@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.14
+
+### Patch Changes
+
+- f0693ea: session not found function
+- Updated dependencies [f0693ea]
+  - @winrlabs/web3@0.11.71
+  - @winrlabs/games@5.0.8
+  - @winrlabs/web3-games@12.0.14
+
 ## 12.0.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.8
+
+### Patch Changes
+
+- f0693ea: session not found function
+
 ## 5.0.7
 
 ### Patch Changes
