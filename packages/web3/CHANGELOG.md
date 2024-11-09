@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.73
+
+### Patch Changes
+
+- cc90035: up
+
 ## 0.11.72
 
 ### Patch Changes
