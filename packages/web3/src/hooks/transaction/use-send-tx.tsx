@@ -37,13 +37,14 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         customBundlerClient,
         enforceSign,
         customBundlerVersion,
+        isBridgeRequest = false,
       } = request;
 
       const networkId = request.networkId || globalChainId || 777777;
 
       const bundlerVersion = customBundlerVersion || globalBundlerVersion;
 
-      if (isSocialLogin) {
+      if (isSocialLogin || isBridgeRequest) {
         return await sendSocialAccountTx({
           target,
           customAccountApi,
