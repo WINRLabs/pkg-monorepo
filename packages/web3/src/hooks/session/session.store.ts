@@ -1,6 +1,7 @@
 import { Hex } from 'viem';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { getHashedPassword } from './lib';
 
 interface SessionState {
   part?: Hex;
@@ -25,7 +26,7 @@ export const useSessionStore = create<SessionState>()(
       setPart: (part?: Hex) => set({ part }),
       setPermit: (permit?: Hex) => set({ permit }),
       pin: '',
-      setPin: (pin: string) => set({ pin }),
+      setPin: (pin: string) => set({ pin: getHashedPassword(pin) }),
       publicKey: '',
       setPublicKey: (publicKey: string) => set({ publicKey }),
       cachedNonce: 0,
@@ -35,8 +36,6 @@ export const useSessionStore = create<SessionState>()(
     }),
     {
       name: 'session-store',
-      partialize: (state) =>
-        Object.fromEntries(Object.entries(state).filter(([key]) => !['pin'].includes(key))),
     }
   )
 );

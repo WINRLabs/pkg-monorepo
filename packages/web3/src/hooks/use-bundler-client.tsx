@@ -155,6 +155,7 @@ interface UseBundlerClient<T extends BundlerVersion = 'v1'> {
   changeBundlerNetwork: (network: BundlerNetwork) => void;
   globalChainId?: number;
   bundlerVersion: T; // Add bundlerVersion
+  onPinNotFound?: () => void;
 }
 
 export const fetchBundlerClient = async <T extends BundlerVersion = 'v1'>({
@@ -203,6 +204,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
   config,
   globalChainId,
   bundlerVersion = 'v1' as T, // Default versionw
+  onPinNotFound,
 }: {
   children: ReactNode;
   rpcUrl: string;
@@ -210,6 +212,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
   config?: Config;
   globalChainId?: number;
   bundlerVersion?: T; // Add bundlerVersion
+  onPinNotFound?: () => void;
 }) => {
   const { address } = useAccount();
 
@@ -250,6 +253,7 @@ export const BundlerClientProvider = <T extends BundlerVersion = 'v1'>({
         changeBundlerNetwork,
         globalChainId,
         bundlerVersion, // Provide bundlerVersion
+        onPinNotFound,
       }}
     >
       {children}

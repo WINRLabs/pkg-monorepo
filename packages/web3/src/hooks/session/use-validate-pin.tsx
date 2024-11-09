@@ -39,7 +39,7 @@ export const useValidatePin: MutationHook<UseValidatePinRequest, { message: stri
         }),
       });
 
-      setPin(_pin);
+      setPin(request.pin);
 
       return {
         message: 'success',
