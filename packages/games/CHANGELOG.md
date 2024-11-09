@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.9
+
+### Patch Changes
+
+- bd30b08: session fix
+
 ## 5.0.8
 
 ### Patch Changes

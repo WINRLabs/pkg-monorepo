@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.15
+
+### Patch Changes
+
+- bd30b08: session fix
+- Updated dependencies [bd30b08]
+  - @winrlabs/web3@0.11.72
+  - @winrlabs/games@5.0.9
+  - @winrlabs/web3-games@12.0.15
+
 ## 12.0.14
 
 ### Patch Changes
