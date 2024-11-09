@@ -89,6 +89,9 @@ export function Providers(props: { children: ReactNode }) {
             playable: true,
             priceKey: 'usdc',
           }}
+          onPinNotFound={() => {
+            console.log('Pin not found');
+          }}
         >
           <AppUiProviders wagmiConfig={config}>
             <WinrLabsWeb3GamesProvider

@@ -71,7 +71,8 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         if (bundlerVersion === 'v2') {
           if (!sessionStore.pin) {
             onPinNotFound?.();
-            throw new Error('Please create a session first');
+
+            return { status: 'pin not found', hash: '0x0' };
           }
           return await sendProxyTx({
             customAccountApi,
