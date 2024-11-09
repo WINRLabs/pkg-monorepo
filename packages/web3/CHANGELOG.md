@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.72
+
+### Patch Changes
+
+- bd30b08: session fix
+
 ## 0.11.71
 
 ### Patch Changes
