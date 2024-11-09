@@ -69,7 +69,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         }
 
         if (bundlerVersion === 'v2') {
-          if (!sessionStore.pin) {
+          if (!sessionStore.pin || !localStorage['session-store']) {
             onPinNotFound?.();
 
             return { status: 'pin not found', hash: '0x0' };
