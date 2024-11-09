@@ -32,4 +32,5 @@ export interface SendTxRequest extends TxRequest {
   networkId?: number;
   enforceSign?: boolean;
   customBundlerVersion?: 'v1' | 'v2';
+  isBridgeRequest?: boolean;
 }

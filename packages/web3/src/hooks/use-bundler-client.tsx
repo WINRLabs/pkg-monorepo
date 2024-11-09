@@ -133,7 +133,7 @@ export enum BundlerNetwork {
   ARBITRUM = 'ARBITRUM',
   BLAST = 'BLAST',
   OPTIMISM = 'OPTIMISM',
-  ETH = 'ETH',
+  MAINNET = 'MAINNET',
   BASE = 'BASE',
   BSC = 'BSC',
 }
