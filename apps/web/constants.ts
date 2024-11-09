@@ -101,7 +101,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       winrOfOlympus: '0x51a7845AC638e4CF01999fD8014e63d0234744A4',
       princessWinr: '0xd782D71551FEC8E4e87656559cDDd7c414c00D43',
       singleWheel: '0x',
-      strategyStore: '0x890C99909E04253ff826A714fe1Ca58d36b11F1F',
+      strategyStore: '0xCc54aCF2256a4cAB181470B8fE856223d7cb9DAf',
     },
     testnet: {
       coinFlip: '0x46214AE77915631c804be51F3f547588Cd217141',
@@ -148,7 +148,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       winrOfOlympus: '0xFA66633EA0F06740afc96eB2d68822dF230a964D',
       princessWinr: '0x75f9D513080118E289dF48Ddf1F2722971191874',
       singleWheel: '0x',
-      strategyStore: '0x890C99909E04253ff826A714fe1Ca58d36b11F1F',
+      strategyStore: '0xe36E3C2A781EB889b9E36ed32401448F76106b6A',
     },
   },
 };

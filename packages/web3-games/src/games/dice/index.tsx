@@ -93,7 +93,14 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
 
   const gameEvent = useListenGameEvent(gameAddresses.dice);
 
-  const { handleCreateStrategy, isCreatingStrategy } = useGameStrategy();
+  const {
+    createdStrategies,
+    handleCreateStrategy,
+    handleAddDefaultBetCondition,
+    handleRemoveCondition,
+    handleUpdateBetCondition,
+    handleUpdateProfitCondition,
+  } = useGameStrategy();
 
   const { eventLogic } = useFastOrVerified();
 
@@ -322,18 +329,22 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         onAutoBetModeChange={onAutoBetModeChange}
         options={props.options}
         strategy={{
+          createdStrategies,
           create: handleCreateStrategy,
-          isCreating: isCreatingStrategy,
+          addDefaultCondition: handleAddDefaultBetCondition,
+          removeCondition: handleRemoveCondition,
+          updateBetCondition: handleUpdateBetCondition,
+          updateProfitCondition: handleUpdateProfitCondition,
         }}
       />
-      {!props.hideBetHistory && (
+      {/* {!props.hideBetHistory && (
         <BetHistoryTemplate
           betHistory={betHistory || []}
           loading={isHistoryLoading}
           onChangeFilter={(filter) => setHistoryFilter(filter)}
           currencyList={mapHistoryTokens}
         />
-      )}
+      )} */}
     </>
   );
 }

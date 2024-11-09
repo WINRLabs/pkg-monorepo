@@ -5,6 +5,7 @@ import React from 'react';
 import { CreateStrategyModal } from './create-strategy';
 import { useWeb3GamesModalsStore } from './modals.store';
 import { RefundModal } from './refund';
+import { EditStrategyModal } from './edit-strategy-modal';
 
 const Web3GamesModalsTemplate = () => {
   const { modal, props } = useWeb3GamesModalsStore();
@@ -16,6 +17,9 @@ const Web3GamesModalsTemplate = () => {
 
       case 'createStrategy':
         return <CreateStrategyModal {...props?.createStrategy} />;
+
+      case 'editStrategy':
+        return <EditStrategyModal {...props?.editStrategy} />;
       default:
         return <></>;
     }

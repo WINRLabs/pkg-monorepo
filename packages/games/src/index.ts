@@ -34,5 +34,6 @@ export * from './lib/solo/rps';
 export * from './lib/solo/single-blackjack';
 export * from './lib/solo/slots';
 export * from './lib/solo/video-poker';
+export * from './lib/strategist';
 export * from './lib/utils/number';
 export * from './lib/utils/web3';

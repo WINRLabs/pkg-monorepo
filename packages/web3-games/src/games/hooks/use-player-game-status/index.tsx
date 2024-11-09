@@ -93,13 +93,13 @@ export const usePlayerGameStatus = ({
         abi: rankMiddlewareAbi,
         address: rankMiddlewareAddress,
         functionName: 'getPlayerStatus',
-        args: ['0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x'],
+        args: [currentAccount.address || '0x'],
       },
       {
         abi: controllerAbi,
         address: controllerAddress,
         functionName: 'getSessionByClient',
-        args: [gameAddress, '0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x'],
+        args: [gameAddress, currentAccount.address || '0x'],
       },
       {
         abi: controllerAbi,
@@ -119,7 +119,7 @@ export const usePlayerGameStatus = ({
     batchSize: 0,
     allowFailure: false,
     query: {
-      enabled: !!'0xe2B708357D627b1e3569b25c1559DDC0ec61f247',
+      enabled: !!currentAccount.address,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
@@ -179,7 +179,7 @@ export const usePlayerGameStatus = ({
   const handlePlayerLevelUp = async () => {
     const mutation = (await playerLevelUp.mutateAsync({
       body: {
-        player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247' || '0x',
+        player: currentAccount.address || '0x',
       },
       baseUrl: baseUrl,
     })) as any;
@@ -197,7 +197,7 @@ export const usePlayerGameStatus = ({
 
     const refund = await client.request('refund', {
       game: gameTypeEnvironmentStoreMap[gameType],
-      player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247'!,
+      player: currentAccount.address!,
     });
 
     refetch();
@@ -210,12 +210,12 @@ export const usePlayerGameStatus = ({
 
     await client.request('reIterate', {
       game: gameTypeEnvironmentStoreMap[gameType],
-      player: '0xe2B708357D627b1e3569b25c1559DDC0ec61f247'!,
+      player: currentAccount.address!,
     });
   };
 
   React.useEffect(() => {
-    if (!client || !'0xe2B708357D627b1e3569b25c1559DDC0ec61f247') return;
+    if (!client || !currentAccount.address) return;
     if (isRefundable)
       if (forceRefund) {
         handlePlayerRefund();
@@ -228,7 +228,7 @@ export const usePlayerGameStatus = ({
           },
         });
       }
-  }, [isRefundable, client, '0xe2B708357D627b1e3569b25c1559DDC0ec61f247']);
+  }, [isRefundable, client, currentAccount.address]);
 
   const handleRefetchPlayerGameStatus = () => {
     refetch();

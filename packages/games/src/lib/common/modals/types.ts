@@ -1,8 +1,11 @@
-export type TWeb3GamesModals = 'refund' | 'createStrategy';
+import { BetConditionFormValues, ProfitConditionFormValues } from '../../strategist';
+
+export type TWeb3GamesModals = 'refund' | 'createStrategy' | 'editStrategy';
 
 export type Web3GamesModalPropsStore = {
   refund: Web3GamesRefundModalProps;
   createStrategy: Web3GamesCreateStrategyModalProps;
+  editStrategy: Web3GamesEditStrategyModalProps;
 };
 
 export interface Web3GamesModalsStoreState {
@@ -23,7 +26,21 @@ export interface Web3GamesRefundModalProps {
 
 export interface Web3GamesCreateStrategyModalProps {
   createStrategy?: (strategyName: string) => Promise<void>;
-  isCreatingStrategy?: boolean;
+}
+
+export interface Web3GamesEditStrategyModalProps {
+  addDefaultCondition?: (strategyId: number) => Promise<void>;
+  removeCondition?: (strategyId: number, index: number) => Promise<void>;
+  updateBetCondition?: (
+    strategyId: number,
+    itemId: number,
+    condition: BetConditionFormValues
+  ) => Promise<void>;
+  updateProfitCondition?: (
+    strategyId: number,
+    itemId: number,
+    condition: ProfitConditionFormValues
+  ) => Promise<void>;
 }
 
 export type Web3GamesModalsStore = Web3GamesModalsStoreState & Web3GamesModalsStoreActions;

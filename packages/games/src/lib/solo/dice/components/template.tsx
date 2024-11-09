@@ -123,14 +123,10 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     isAutoBetMode,
   });
 
-  const {
-    strategist: customBetStrategist,
-    allStrategies,
-    selectedStrategy,
-    setSelectedStrategy,
-  } = useCustomBetStrategist({
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
     wager,
     isAutoBetMode,
+    createdStrategies: props.strategy.createdStrategies,
   });
 
   const processStrategy = (result: DiceGameResult[]) => {
@@ -190,7 +186,6 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
             onAutoBetModeChange={setIsAutoBetMode}
             onBetModeChange={setBetMode}
             onLogin={props.onLogin}
-            customBetStrategy={{ allStrategies, selectedStrategy, change: setSelectedStrategy }}
             strategy={props.strategy}
           />
           <SceneContainer

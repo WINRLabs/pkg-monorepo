@@ -5,6 +5,8 @@ import { ProfitCondition } from './items/profit';
 
 export * as Items from './items';
 
+export * from './types';
+
 export type Strategist = ReturnType<typeof load>;
 
 export type Item = {

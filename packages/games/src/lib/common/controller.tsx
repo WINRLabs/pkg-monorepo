@@ -12,7 +12,7 @@ import { BetCountSlider } from './containers';
 import { IncreaseByInput } from './increase-by-input';
 import { StopGainLossInput } from './stop-gain-loss-input';
 import { WagerBalance, WagerCurrency, WagerInput, WagerSetterButtons } from './wager';
-import { StrategyStruct } from '../strategist/types';
+import { NormalizedStrategyStruct } from '../strategist/types';
 
 interface WagerFormFieldProps {
   customLabel?: string;
@@ -441,9 +441,9 @@ export const StrategySelector = ({
   onChange,
 }: {
   isDisabled?: boolean;
-  strategies: StrategyStruct[];
-  selectedStrategy: StrategyStruct;
-  onChange: (strategy: StrategyStruct) => void;
+  strategies: NormalizedStrategyStruct[];
+  selectedStrategy: NormalizedStrategyStruct;
+  onChange: (strategy: NormalizedStrategyStruct) => void;
 }) => {
   return (
     <>
@@ -454,7 +454,7 @@ export const StrategySelector = ({
         value={selectedStrategy.name}
         onValueChange={(val) => {
           if (!val.length) return;
-          onChange(strategies.find((s) => s.name === val) as StrategyStruct);
+          onChange(strategies.find((s) => s.name === val) as NormalizedStrategyStruct);
         }}
         disabled={isDisabled}
       >

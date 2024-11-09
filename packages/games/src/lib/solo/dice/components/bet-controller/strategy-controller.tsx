@@ -10,11 +10,11 @@ import { useWeb3GamesModalsStore } from '../../../../common/modals';
 import { PreBetButton } from '../../../../common/pre-bet-button';
 import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
-import { NormalizedStrategyStruct } from '../../../../strategist/types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
 import { DiceForm, StrategyProps } from '../../types';
 import { BetLoader } from './bet-loader';
+import { useCustomBetStrategistStore } from '../../../../hooks/use-custom-bet-strategist/store';
 
 interface StrategyControllerProps {
   winMultiplier: number;
@@ -22,11 +22,6 @@ interface StrategyControllerProps {
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
-  customBetStrategy: {
-    allStrategies: NormalizedStrategyStruct[];
-    selectedStrategy: NormalizedStrategyStruct;
-    change: (strategy: NormalizedStrategyStruct) => void;
-  };
   strategy: StrategyProps;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
@@ -36,7 +31,6 @@ export const StrategyController = ({
   minWager,
   maxWager,
   isAutoBetMode,
-  customBetStrategy,
   strategy,
   onAutoBetModeChange,
   onLogin,
@@ -46,7 +40,11 @@ export const StrategyController = ({
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { openModal } = useWeb3GamesModalsStore();
-
+  const { allStrategies, selectedStrategy, setSelectedStrategy } = useCustomBetStrategistStore([
+    'allStrategies',
+    'selectedStrategy',
+    'setSelectedStrategy',
+  ]);
   return (
     <div className="wr-flex wr-flex-col">
       <WagerFormField
@@ -60,9 +58,9 @@ export const StrategyController = ({
           isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         />
         <StrategySelector
-          selectedStrategy={customBetStrategy.selectedStrategy}
-          onChange={customBetStrategy.change}
-          strategies={customBetStrategy.allStrategies}
+          selectedStrategy={selectedStrategy}
+          onChange={setSelectedStrategy}
+          strategies={allStrategies}
           isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         />
         {/* <StrategyConditions conditions={['1', '2', '3']} /> */}
@@ -71,17 +69,39 @@ export const StrategyController = ({
           variant="secondary"
           size="xl"
           className="wr-mb-3 wr-uppercase"
+          disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
           onClick={() => {
             openModal('createStrategy', {
               createStrategy: {
                 createStrategy: strategy.create,
-                isCreatingStrategy: strategy.isCreating,
               },
             });
           }}
         >
           Create Strategy
         </Button>
+
+        {!selectedStrategy?.isPredefined && (
+          <Button
+            type="button"
+            variant="secondary"
+            size="xl"
+            className="wr-mb-3 wr-uppercase"
+            disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+            onClick={() => {
+              openModal('editStrategy', {
+                editStrategy: {
+                  addDefaultCondition: strategy.addDefaultCondition,
+                  removeCondition: strategy.removeCondition,
+                  updateBetCondition: strategy.updateBetCondition,
+                  updateProfitCondition: strategy.updateProfitCondition,
+                },
+              });
+            }}
+          >
+            Edit Strategy
+          </Button>
+        )}
       </div>
 
       <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
