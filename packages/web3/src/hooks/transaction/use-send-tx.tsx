@@ -9,6 +9,7 @@ import { SendTxRequest } from './types';
 import { useSocialAccountTx } from './use-social-account-tx';
 import { useWeb3AccountTx } from './use-web3-account-tx';
 import { useProxyAccountTx } from './use-proxy-tx';
+import { useSessionStore } from '../session';
 
 export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex }> = (
   options = {}
@@ -23,7 +24,13 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
 
   const { switchChainAsync } = useSwitchChain();
 
-  const { globalChainId, bundlerVersion: globalBundlerVersion } = useBundlerClient<'v1' | 'v2'>();
+  const {
+    globalChainId,
+    bundlerVersion: globalBundlerVersion,
+    onPinNotFound,
+  } = useBundlerClient<'v1' | 'v2'>();
+
+  const sessionStore = useSessionStore();
 
   return useMutation({
     ...options,
@@ -62,6 +69,10 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
         }
 
         if (bundlerVersion === 'v2') {
+          if (!sessionStore.pin) {
+            onPinNotFound?.();
+            throw new Error('Please create a session first');
+          }
           return await sendProxyTx({
             customAccountApi,
             customBundlerClient,

@@ -209,7 +209,7 @@ export const useCreateSessionV2: MutationHook<
 
       sessionStore.setPublicKey(sessionPublicKey);
 
-      sessionStore.setPin(hashedPin);
+      sessionStore.setPin(request.pin);
 
       return {
         message: authResponse.message,
