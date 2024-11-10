@@ -26,3 +26,8 @@ export function parseToBigInt(floatValue: number, precision: number) {
 
   return BigInt(integerValue);
 }
+
+export function parseToNumber(bigIntValue: bigint, precision: number) {
+  const divisor = Math.pow(10, precision);
+  return Number(bigIntValue) / divisor;
+}

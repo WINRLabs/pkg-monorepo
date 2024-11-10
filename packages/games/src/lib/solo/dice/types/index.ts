@@ -1,5 +1,10 @@
 import { UseFormReturn } from 'react-hook-form';
 
+import {
+  BetConditionFormValues,
+  CreatedStrategy,
+  ProfitConditionFormValues,
+} from '../../../strategist';
 import { SliderTrackOptions } from '../components/slider';
 
 export interface DiceFormFields {
@@ -29,3 +34,20 @@ export type DiceTemplateOptions = {
     background?: string;
   };
 };
+
+export interface StrategyProps {
+  createdStrategies: CreatedStrategy[];
+  create: (strategyName: string) => Promise<void>;
+  addDefaultCondition: (strategyId: number) => Promise<void>;
+  removeCondition: (strategyId: number, index: number) => Promise<void>;
+  updateBetCondition: (
+    strategyId: number,
+    itemId: number,
+    newValues: BetConditionFormValues
+  ) => Promise<void>;
+  updateProfitCondition: (
+    strategyId: number,
+    itemId: number,
+    newValues: ProfitConditionFormValues
+  ) => Promise<void>;
+}

@@ -7,7 +7,7 @@ import z from 'zod';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { WinAnimation } from '../../../common/win-animation';
 import { useGameOptions } from '../../../game-provider';
-import { useStrategist } from '../../../hooks/use-strategist';
+import { useAutoBetStrategist } from '../../../hooks/use-strategist';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { toDecimals } from '../../../utils/web3';
@@ -158,7 +158,7 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useStrategist({
+  const strategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,

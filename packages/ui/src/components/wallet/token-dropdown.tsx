@@ -43,8 +43,6 @@ export const SelectGameCurrency: React.FC<{ triggerClassName?: string }> = ({
 
   const balances = useBalanceStore((state) => state.balances);
 
-  console.log('balances', balances);
-
   return (
     <Select
       onValueChange={(val) => {

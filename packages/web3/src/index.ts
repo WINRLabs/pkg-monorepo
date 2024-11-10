@@ -8,7 +8,6 @@ export * from './hooks/transaction';
 export * from './hooks/use-bundler-client';
 export * from './hooks/use-current-address';
 export * from './hooks/use-fast-or-verified';
-export * from './hooks/use-game-strategy';
 export * from './hooks/use-handle-tx';
 export * from './hooks/use-handle-tx-uncached';
 export * from './hooks/use-native-token-balance';

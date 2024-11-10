@@ -22,7 +22,7 @@ export const factoryAddress = allAddresses.factory;
 export const controllerAddress = allAddresses.controller;
 export const cashierAddress = allAddresses.cashier;
 export const uiOperatorAddress = allAddresses.uiOperator;
-export const strategyStoreAddress = '0x00';
+export const strategyStoreAddress = allAddresses.strategyStore;
 
 export const rankMiddlewareAddress = allAddresses.rankMiddleware;
 
@@ -111,6 +111,7 @@ export function Providers(props: { children: ReactNode }) {
                   cashierAddress,
                   uiOperatorAddress,
                   rankMiddlewareAddress,
+                  strategyStoreAddress,
                 },
               }}
             >

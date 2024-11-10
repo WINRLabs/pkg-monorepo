@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 import { Config } from 'wagmi';
 
-import { GameSocketProvider } from '../games/hooks';
+import { GameSocketProvider, GameStrategyProvider } from '../games/hooks';
 import { ContractConfig, ContractConfigProvider } from '../games/hooks/use-contract-config';
 
 type WinrLabsWeb3GamesConfig = {
@@ -61,14 +61,16 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
         }}
         readyToPlay={connected}
       >
-        <GameSocketProvider
-          network={config.network}
-          bundlerWsUrl={config.bundlerWsUrl}
-          connected={connected}
-          setConnected={setConnected}
-        >
-          {children}
-        </GameSocketProvider>
+        <GameStrategyProvider>
+          <GameSocketProvider
+            network={config.network}
+            bundlerWsUrl={config.bundlerWsUrl}
+            connected={connected}
+            setConnected={setConnected}
+          >
+            {children}
+          </GameSocketProvider>
+        </GameStrategyProvider>
       </GameProvider>
     </ContractConfigProvider>
   );

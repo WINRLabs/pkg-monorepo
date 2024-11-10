@@ -19,7 +19,7 @@ import { GameTypesEnvironmentStore } from '../../../type';
 import { useContractConfigContext } from '../use-contract-config';
 import { Badge } from '../use-get-badges';
 
-const log = debug('UsePlayerGameStatus');
+const log = debug('worker:UsePlayerGameStatus');
 
 const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> = {
   [GameType.BACCARAT]: GameTypesEnvironmentStore.baccarat,
@@ -77,7 +77,6 @@ export const usePlayerGameStatus = ({
   const [refundCooldown, setRefundCooldown] = React.useState<number>(0);
   const [reIterateCooldown, setReIterateCooldown] = React.useState<number>(0);
 
-  log('user session', sessionStatus);
   const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();

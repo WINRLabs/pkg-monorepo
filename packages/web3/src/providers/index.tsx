@@ -4,7 +4,6 @@ import { Config } from 'wagmi';
 
 import { BundlerClientProvider, BundlerNetwork, BundlerVersion } from '../hooks/use-bundler-client';
 import { CurrentAccountProvider } from '../hooks/use-current-address';
-import { GameStrategyProvider } from '../hooks/use-game-strategy';
 import { SmartAccountApiProvider } from '../hooks/use-smart-account-api';
 import { ApiContextType, ApiProvider } from './api';
 import { Token, TokenProvider } from './token';
@@ -51,11 +50,9 @@ export const WinrLabsWeb3Provider = ({
           paymasterAddress={smartAccountConfig.paymasterAddress}
           config={wagmiConfig}
         >
-          <GameStrategyProvider strategyStoreAddress="0x890C99909E04253ff826A714fe1Ca58d36b11F1F">
-            <TokenProvider tokens={tokens} selectedToken={selectedToken}>
-              <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
-            </TokenProvider>
-          </GameStrategyProvider>
+          <TokenProvider tokens={tokens} selectedToken={selectedToken}>
+            <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
+          </TokenProvider>
         </SmartAccountApiProvider>
       </BundlerClientProvider>
     </ApiProvider>

@@ -11,7 +11,7 @@ import { WinAnimation } from '../../../common/win-animation';
 import { CDN_URL } from '../../../constants';
 import { useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
-import { useStrategist } from '../../../hooks/use-strategist';
+import { useAutoBetStrategist } from '../../../hooks/use-strategist';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { MULTIPLIER_BANKER, MULTIPLIER_PLAYER, MULTIPLIER_TIE } from '../constants';
@@ -242,7 +242,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useStrategist({
+  const strategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,

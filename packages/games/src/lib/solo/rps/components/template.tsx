@@ -7,7 +7,7 @@ import z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
-import { useStrategist } from '../../../hooks/use-strategist';
+import { useAutoBetStrategist } from '../../../hooks/use-strategist';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { Rps } from '..';
@@ -89,7 +89,7 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useStrategist({
+  const strategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,

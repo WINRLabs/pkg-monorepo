@@ -8,13 +8,15 @@ import z from 'zod';
 import { cn } from '../../../../lib/utils/style';
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
-import { useStrategist } from '../../../hooks/use-strategist';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
+import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { toDecimals } from '../../../utils/web3';
 import { LUCK_MULTIPLIER, MAX_VALUE, MIN_BET_COUNT, MIN_VALUE } from '../constant';
 import { Dice } from '../index';
-import { DiceFormFields, DiceGameResult, DiceTemplateOptions } from '../types';
+import { DiceFormFields, DiceGameResult, DiceTemplateOptions, StrategyProps } from '../types';
 import { BetController } from './bet-controller';
 import { RangeGameProps } from './game';
 
@@ -27,6 +29,8 @@ type TemplateProps = RangeGameProps & {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (e: any) => void;
   onLogin?: () => void;
+
+  strategy: StrategyProps;
 };
 
 const defaultOptions: DiceTemplateOptions = {
@@ -41,9 +45,13 @@ const defaultOptions: DiceTemplateOptions = {
   },
 };
 
+type BetMode = 'MANUAL' | 'AUTO' | 'AUTO_CUSTOM_STRATEGY';
+
 const DiceTemplate = ({ ...props }: TemplateProps) => {
   const options = { ...defaultOptions, ...props.options };
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
+  const [betMode, setBetMode] = React.useState<BetMode>('MANUAL');
+
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
 
@@ -107,7 +115,7 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useStrategist({
+  const autoBetStrategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,
@@ -116,9 +124,29 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     isAutoBetMode,
   });
 
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
+    wager,
+    isAutoBetMode,
+    createdStrategies: props.strategy.createdStrategies,
+  });
+
   const processStrategy = (result: DiceGameResult[]) => {
+    if (betMode == 'MANUAL') return;
+    let p;
     const payout = result[0]?.payoutInUsd || 0;
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+
+    if (betMode == 'AUTO') {
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    } else {
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    }
+
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;
 
@@ -137,6 +165,13 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     if (newWager > (props.maxWager || 0)) {
       form.setValue('wager', props.maxWager || 0);
       return;
+    }
+
+    // EXTERNAL OPTIONS
+    if (p.action && p.action.isSwitchOverUnder()) {
+      const rollType = form.getValues('rollType');
+
+      form.setValue('rollType', rollType == 'UNDER' ? 'OVER' : 'UNDER');
     }
 
     if (p.action && !p.action.isStop()) {
@@ -163,7 +198,9 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={winMultiplier}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onBetModeChange={setBetMode}
             onLogin={props.onLogin}
+            strategy={props.strategy}
           />
           <SceneContainer
             className={cn(
