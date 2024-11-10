@@ -10,6 +10,7 @@ import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
 import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { toDecimals } from '../../../utils/web3';
@@ -135,9 +136,15 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     const payout = result[0]?.payoutInUsd || 0;
 
     if (betMode == 'AUTO') {
-      p = autoBetStrategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
     } else {
-      p = customBetStrategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
     }
 
     const newWager = Number(p.wager) / 1e8;
@@ -158,6 +165,13 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
     if (newWager > (props.maxWager || 0)) {
       form.setValue('wager', props.maxWager || 0);
       return;
+    }
+
+    // EXTERNAL OPTIONS
+    if (p.action && p.action.isSwitchOverUnder()) {
+      const rollType = form.getValues('rollType');
+
+      form.setValue('rollType', rollType == 'UNDER' ? 'OVER' : 'UNDER');
     }
 
     if (p.action && !p.action.isStop()) {

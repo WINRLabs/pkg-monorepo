@@ -29,6 +29,7 @@ export const load = (input: Input) => {
   let lose = 0;
   let cumulativeProfit = 0n;
   let cumulativeLoss = 0n;
+  let balance = input.balance;
   const getNextWagerOrAction = (
     wager: bigint,
     profit: bigint,
@@ -43,7 +44,7 @@ export const load = (input: Input) => {
         return { wager: item.action.applyTo(input.wager, wager), action: item.action };
       } else if (
         item.condition.t == 'profit' &&
-        item.condition.satisfy(input.balance, profit, loss, cumulativeProfit, cumulativeLoss)
+        item.condition.satisfy(balance, profit, loss, cumulativeProfit, cumulativeLoss)
       ) {
         return { wager: item.action.applyTo(input.wager, wager), action: item.action };
       }
@@ -63,6 +64,7 @@ export const load = (input: Input) => {
 
       profit = payout - wager;
       cumulativeProfit = cumulativeProfit + profit;
+      balance = balance + profit;
     } else {
       bet += 1;
       lose += 1;
@@ -70,6 +72,7 @@ export const load = (input: Input) => {
 
       loss = wager - payout;
       cumulativeLoss = cumulativeLoss + loss;
+      balance = balance - loss;
     }
 
     return getNextWagerOrAction(wager, profit, loss, cumulativeProfit, cumulativeLoss);
@@ -81,6 +84,7 @@ export const load = (input: Input) => {
     lose = 0;
     cumulativeLoss = 0n;
     cumulativeProfit = 0n;
+    balance = 0n;
   };
 
   return {

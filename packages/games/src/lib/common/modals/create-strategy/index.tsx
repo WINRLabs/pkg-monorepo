@@ -15,28 +15,28 @@ export const CreateStrategyModal = ({ createStrategy }: Web3GamesCreateStrategyM
   const { modal, closeModal } = useWeb3GamesModalsStore();
   const [strategyName, setStrategyName] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isStrategyAdded, setIsStrategyAdded] = React.useState(false);
-
   const { allStrategies, setSelectedStrategy } = useCustomBetStrategistStore([
     'allStrategies',
     'setSelectedStrategy',
   ]);
+
+  const prevAllStrategiesLengthRef = React.useRef(allStrategies.length);
 
   const handleClick = async () => {
     if (strategyName.length <= 0) return;
     setIsLoading(true);
     createStrategy && (await createStrategy(strategyName));
     setIsLoading(false);
-    setIsStrategyAdded(true);
   };
 
   React.useEffect(() => {
-    if (isStrategyAdded && allStrategies.length > 0) {
+    if (allStrategies.length > prevAllStrategiesLengthRef.current) {
       setSelectedStrategy(allStrategies[allStrategies.length - 1] as NormalizedStrategyStruct);
-      setIsStrategyAdded(false);
       closeModal();
     }
-  }, [isStrategyAdded, allStrategies, setSelectedStrategy]);
+
+    prevAllStrategiesLengthRef.current = allStrategies.length;
+  }, [allStrategies, setSelectedStrategy]);
 
   return (
     <Dialog open={modal === 'createStrategy'}>

@@ -155,7 +155,7 @@ const StrategyItem: React.FC<
               <div className="wr-flex wr-gap-1 wr-items-center">
                 <p className="wr-text-white"> {getActionOptionString(action.option)} </p>
                 <p className="wr-text-yellow-500">
-                  {getOptionAmount(action.option, action.amount)}
+                  {getOptionAmount(action.option, action.amount) || ''}
                 </p>
               </div>
             </div>
