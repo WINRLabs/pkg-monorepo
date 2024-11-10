@@ -337,14 +337,14 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
           updateProfitCondition: handleUpdateProfitCondition,
         }}
       />
-      {/* {!props.hideBetHistory && (
+      {!props.hideBetHistory && (
         <BetHistoryTemplate
           betHistory={betHistory || []}
           loading={isHistoryLoading}
           onChangeFilter={(filter) => setHistoryFilter(filter)}
           currencyList={mapHistoryTokens}
         />
-      )} */}
+      )}
     </>
   );
 }
