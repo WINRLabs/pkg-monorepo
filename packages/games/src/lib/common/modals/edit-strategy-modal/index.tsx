@@ -232,8 +232,6 @@ export const ConditionEditor: React.FC<{
     } else if (initialCondition.type_ == ConditionType.PROFIT) {
       setSelectedCondition(ConditionType.PROFIT);
     }
-
-    console.log(initialCondition.type_, 'initial condition');
   }, [initialCondition.type_]);
 
   return (
@@ -286,10 +284,6 @@ export const BetConditionEditor: React.FC<{
     setIsUpdating(false);
     onChangeIsEditable(false);
   };
-
-  React.useEffect(() => {
-    console.log(formValues, 'formval bet');
-  }, [formValues]);
 
   return (
     <div className="wr-w-full">
@@ -402,11 +396,6 @@ export const ProfitConditionEditor: React.FC<{
     setIsUpdating(false);
     onChangeIsEditable(false);
   };
-
-  React.useEffect(() => {
-    console.log(initialCondition, 'initial condition');
-    console.log(formValues, 'formval profit');
-  }, [formValues]);
 
   return (
     <div className="wr-w-full">

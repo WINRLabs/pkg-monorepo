@@ -77,10 +77,6 @@ export const useCustomBetStrategist = ({
     isAutoBetMode && strategist.reset();
   }, [isAutoBetMode]);
 
-  React.useEffect(() => {
-    console.log(allStrategies, 'allStrategies');
-  }, [allStrategies]);
-
   return {
     strategist,
   };

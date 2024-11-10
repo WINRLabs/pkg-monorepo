@@ -117,8 +117,6 @@ export const GameStrategyProvider: React.FC<{
   };
 
   const handleRemoveCondition = async (strategyId: number, itemId: number) => {
-    console.log(strategyId, itemId);
-
     await removeCondition.mutateAsync({
       target: strategyStoreAddress,
       encodedTxData: encodeFunctionData({

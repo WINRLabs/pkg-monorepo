@@ -4,16 +4,15 @@ import React from 'react';
 
 import { ConditionType } from '../../../../strategist';
 import { Label } from '../../../../ui/label';
+import { INumberInputContext, NumberInput } from '../../../../ui/number-input';
 import { RadioGroup, RadioGroupItem } from '../../../../ui/radio';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '../../../../ui/select';
 import { cn } from '../../../../utils/style';
-import { INumberInputContext, NumberInput } from '../../../../ui/number-input';
 
 export const ConditionSelector: React.FC<{
   selectedCondition: ConditionType;
   onChange: (condition: ConditionType) => void;
 }> = ({ selectedCondition, onChange }) => {
-  console.log(selectedCondition, 'selectedCondition');
   return (
     <RadioGroup
       defaultValue={`${selectedCondition}`}
