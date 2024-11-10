@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.76
+
+### Patch Changes
+
+- 4e9fba9: add pricefeed variable
+
 ## 0.11.75
 
 ### Patch Changes

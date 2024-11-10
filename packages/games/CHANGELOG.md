@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 5.0.13
+
+### Patch Changes
+
+- 4e9fba9: add pricefeed variable
+- Updated dependencies [4e9fba9]
+  - @winrlabs/types@0.0.4
+
 ## 5.0.12
 
 ### Patch Changes
