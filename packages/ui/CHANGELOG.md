@@ -1,5 +1,15 @@
 # @winrlabs/ui
 
+## 10.0.75
+
+### Patch Changes
+
+- 126cfa5: strategies
+- 8dc14b2: strategies
+- Updated dependencies [126cfa5]
+- Updated dependencies [8dc14b2]
+  - @winrlabs/web3@0.11.75
+
 ## 10.0.74
 
 ### Patch Changes
