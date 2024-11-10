@@ -15,7 +15,8 @@ export type PriceFeedVariable =
   | 'spx'
   | 'brett'
   | 'mog'
-  | 'toshi';
+  | 'toshi'
+  | 'klaus';
 
 export type TPriceFeed = Record<PriceFeedVariable, number>;
 
@@ -44,6 +45,7 @@ export const defaultPriceFeedValues = {
   brett: 1,
   mog: 1,
   toshi: 1,
+  klaus: 1,
 };
 
 export const usePriceFeedStore = create(

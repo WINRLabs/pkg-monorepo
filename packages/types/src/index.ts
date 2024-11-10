@@ -14,7 +14,8 @@ export type PriceFeedVariable =
   | 'spx'
   | 'brett'
   | 'mog'
-  | 'toshi';
+  | 'toshi'
+  | 'klaus';
 
 export interface Token {
   address: Address;
