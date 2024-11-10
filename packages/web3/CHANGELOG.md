@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.75
+
+### Patch Changes
+
+- 126cfa5: strategies
+- 8dc14b2: strategies
+
 ## 0.11.74
 
 ### Patch Changes

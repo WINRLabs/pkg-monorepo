@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 5.0.12
+
+### Patch Changes
+
+- 126cfa5: strategies
+- 8dc14b2: strategies
+
 ## 5.0.11
 
 ### Patch Changes

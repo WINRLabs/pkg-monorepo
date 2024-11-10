@@ -1,5 +1,17 @@
 # @winrlabs/web3-games
 
+## 12.0.18
+
+### Patch Changes
+
+- 126cfa5: strategies
+- 8dc14b2: strategies
+- Updated dependencies [126cfa5]
+- Updated dependencies [8dc14b2]
+  - @winrlabs/web3-games@12.0.18
+  - @winrlabs/games@5.0.12
+  - @winrlabs/web3@0.11.75
+
 ## 12.0.17
 
 ### Patch Changes
