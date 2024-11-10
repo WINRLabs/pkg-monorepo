@@ -1,5 +1,11 @@
 # @winrlabs/types
 
+## 0.0.4
+
+### Patch Changes
+
+- 4e9fba9: add pricefeed variable
+
 ## 0.0.3
 
 ### Patch Changes

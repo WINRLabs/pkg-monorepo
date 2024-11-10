@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.19
+
+### Patch Changes
+
+- 4e9fba9: add pricefeed variable
+- Updated dependencies [4e9fba9]
+  - @winrlabs/web3@0.11.76
+  - @winrlabs/games@5.0.13
+  - @winrlabs/web3-games@12.0.19
+
 ## 12.0.18
 
 ### Patch Changes
