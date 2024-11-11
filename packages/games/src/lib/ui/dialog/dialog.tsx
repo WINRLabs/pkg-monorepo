@@ -19,8 +19,10 @@ DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
+    onClickOverlay?: () => void;
+  }
+>(({ className, onClickOverlay, ...props }, ref) => {
   const { closeModal } = useWeb3GamesModalsStore();
 
   const handleClickOverlay = (e: any) => {
@@ -29,6 +31,8 @@ const DialogOverlay = React.forwardRef<
     const parentContainer = target.closest('#modal-content');
 
     if (!parentContainer) {
+      onClickOverlay?.();
+
       closeModal();
     }
   };
@@ -50,16 +54,19 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    onClickOverlay?: () => void;
+  }
+>(({ className, children, onClickOverlay, ...props }, ref) => {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogOverlay onClickOverlay={onClickOverlay} />
       <DialogPrimitive.Content
         ref={ref}
+        onOpenAutoFocus={(event) => event.preventDefault()}
         id="modal-content"
         className={cn(
-          'wr-fixed wr-left-[50%] wr-top-[50%] wr-z-50 wr-grid wr-w-full wr-max-w-[420px] wr-translate-x-[-50%] wr-translate-y-[-50%] wr-border wr-border-zinc-800 wr-bg-zinc-950 wr-p-0 wr-shadow-lg wr-duration-200 data-[state=open]:wr-animate-in data-[state=closed]:wr-animate-out data-[state=closed]:wr-fade-out-0 data-[state=open]:wr-fade-in-0 data-[state=closed]:wr-zoom-out-95 data-[state=open]:wr-zoom-in-95 data-[state=closed]:wr-slide-out-to-left-1/2 data-[state=closed]:wr-slide-out-to-top-[48%] data-[state=open]:wr-slide-in-from-left-1/2 data-[state=open]:wr-slide-in-from-top-[48%] max-md:wr-bottom-0 max-md:wr-top-[unset] max-md:wr-translate-y-[-14px] max-md:wr-overflow-y-scroll sm:wr-max-w-[420px] sm:wr-rounded-lg md:wr-w-full',
+          'wr-fixed wr-left-[50%] wr-top-[50%] wr-z-50 wr-grid wr-w-full wr-max-w-[420px] wr-translate-x-[-50%] wr-translate-y-[-50%] wr-bg-onyx-900 wr-p-0 wr-shadow-lg wr-duration-200 data-[state=open]:wr-animate-in data-[state=closed]:wr-animate-out data-[state=closed]:wr-fade-out-0 data-[state=open]:wr-fade-in-0 data-[state=closed]:wr-zoom-out-95 data-[state=open]:wr-zoom-in-95 data-[state=closed]:wr-slide-out-to-left-1/2 data-[state=closed]:wr-slide-out-to-top-[48%] data-[state=open]:wr-slide-in-from-left-1/2 data-[state=open]:wr-slide-in-from-top-[48%] max-md:wr-bottom-0 max-md:wr-top-[unset] max-md:wr-translate-y-[-14px] max-md:wr-overflow-y-scroll sm:wr-max-w-[420px] sm:wr-rounded-lg md:wr-w-full',
           className
         )}
         {...props}
@@ -72,34 +79,29 @@ const DialogContent = React.forwardRef<
 
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-interface IDialogHeader {
-  isCloseButtonDisabled?: boolean;
-}
-
-type TDialogHeader = React.HTMLAttributes<HTMLDivElement> & IDialogHeader;
-
-const DialogHeader = ({ className, isCloseButtonDisabled, ...props }: TDialogHeader) => {
+const DialogHeader = ({
+  className,
+  closeModalCb,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { closeModalCb?: () => void }) => {
   const { closeModal } = useWeb3GamesModalsStore();
 
   return (
     <div
-      className={cn(
-        'wr-border-b-zinc-800 wr-flex wr-items-center wr-justify-between wr-border-b wr-p-4 sm:wr-text-left',
-        className
-      )}
+      className={cn('wr-flex wr-items-center wr-justify-between wr-p-4 sm:wr-text-left', className)}
       {...props}
     >
       {props.children}
-      {!isCloseButtonDisabled && (
-        <DialogPrimitive.Close
-          className="wr-outline-none wr-appearance-none wr-ring-offset-background data-[state=open]:wr-bg-accent data-[state=open]:wr-text-muted-foreground focus:wr-ring-ring wr-border-zinc-800 wr-rounded-sm wr-border wr-p-2 wr-opacity-70 wr-transition-opacity hover:wr-opacity-100 focus:wr-outline-none focus:wr-ring-2 focus:wr-ring-offset-2 disabled:wr-pointer-events-none"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          <IconClose className="wr-w-5 wr-h-5" />
-        </DialogPrimitive.Close>
-      )}
+      <DialogPrimitive.Close
+        className="ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring wr-bg-onyx-400 wr-bg-opacity-70 wr-rounded-sm wr-p-2 wr-opacity-70 wr-transition-opacity hover:wr-opacity-100 focus:wr-outline-none focus:wr-ring-2 focus:wr-ring-offset-2 disabled:wr-pointer-events-none"
+        onClick={() => {
+          closeModalCb?.();
+
+          closeModal();
+        }}
+      >
+        <IconClose className="h-5 w-5" />
+      </DialogPrimitive.Close>
     </div>
   );
 };
@@ -108,7 +110,7 @@ DialogHeader.displayName = 'DialogHeader';
 
 const DialogBody = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className={cn('wr-p-4 wr-pt-6', className)} {...props}>
+    <div className={cn('wr-p-4', className)} {...props}>
       {props.children}
     </div>
   );
@@ -144,7 +146,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('wr-text-muted-foreground wr-text-sm', className)}
+    className={cn('text-muted-foreground wr-text-base', className)}
     {...props}
   />
 ));
