@@ -60,6 +60,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           method: bundlerVersion === 'v2' ? 'sendUserOperation' : method,
           networkId,
           value,
+          customVerificationGasLimit: request.customVerificationGasLimit,
         });
       } else {
         try {
