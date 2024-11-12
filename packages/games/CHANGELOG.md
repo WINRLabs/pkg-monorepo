@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.15
+
+### Patch Changes
+
+- b2a072c: up
+
 ## 5.0.14
 
 ### Patch Changes
