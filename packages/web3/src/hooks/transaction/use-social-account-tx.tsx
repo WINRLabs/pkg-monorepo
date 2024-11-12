@@ -71,7 +71,9 @@ export const useSocialAccountTx: MutationHook<
           factory: userOp.factory,
           factoryData: userOp.factoryData,
           callData: userOp.callData,
-          callGasLimit: userOp.callGasLimit.toString(),
+          callGasLimit: request.customCallGasLimit
+            ? request.customCallGasLimit
+            : userOp.callGasLimit.toString(),
           verificationGasLimit: request.customVerificationGasLimit
             ? request.customVerificationGasLimit
             : userOp.verificationGasLimit.toString(),

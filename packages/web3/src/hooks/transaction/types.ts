@@ -21,6 +21,7 @@ export interface TxRequest {
 export interface SocialAccountTxRequest extends TxRequest {
   networkId?: number;
   customVerificationGasLimit?: string;
+  customCallGasLimit?: string;
   method?: 'sendUserOperation' | 'sendGameOperation';
 }
 
@@ -35,4 +36,5 @@ export interface SendTxRequest extends TxRequest {
   customBundlerVersion?: 'v1' | 'v2';
   isBridgeRequest?: boolean;
   customVerificationGasLimit?: string;
+  customCallGasLimit?: string;
 }
