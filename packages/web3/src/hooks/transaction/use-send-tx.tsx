@@ -61,6 +61,7 @@ export const useSendTx: MutationHook<SendTxRequest, { status: string; hash: Hex 
           networkId,
           value,
           customVerificationGasLimit: request.customVerificationGasLimit,
+          customCallGasLimit: request.customCallGasLimit,
         });
       } else {
         try {
