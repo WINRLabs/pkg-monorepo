@@ -52,13 +52,13 @@ export const CreateStrategyModal = ({ createStrategy }: Web3GamesCreateStrategyM
             value={strategyName}
             onChange={(e) => setStrategyName(e.target.value)}
             placeholder="Strategy Name"
-            className="wr-w-full wr-h-[48px] wr-bg-black wr-rounded-lg wr-font-semibold wr-px-4"
+            className="wr-w-full wr-h-[40px] wr-bg-black wr-rounded-lg wr-font-semibold wr-px-4"
           />
           <Button
             className="wr-w-full wr-mt-3 wr-uppercase"
             variant="success"
-            size="xl"
             onClick={handleClick}
+            disabled={isLoading}
             isLoading={isLoading}
           >
             Get Started

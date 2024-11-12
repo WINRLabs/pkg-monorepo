@@ -164,6 +164,11 @@ export default [
             name: 'strategyId',
             type: 'uint256',
           },
+          {
+            internalType: 'bool',
+            name: 'removed',
+            type: 'bool',
+          },
         ],
         internalType: 'struct Strategy.Props',
         name: '',
@@ -372,6 +377,11 @@ export default [
             name: 'strategyId',
             type: 'uint256',
           },
+          {
+            internalType: 'bool',
+            name: 'removed',
+            type: 'bool',
+          },
         ],
         internalType: 'struct Strategy.Props[]',
         name: '',
@@ -426,6 +436,19 @@ export default [
   {
     inputs: [
       {
+        internalType: 'uint64',
+        name: 'id',
+        type: 'uint64',
+      },
+    ],
+    name: 'removeStrategy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
@@ -447,6 +470,11 @@ export default [
         internalType: 'uint256',
         name: 'strategyId',
         type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'removed',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',

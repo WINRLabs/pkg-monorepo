@@ -20,6 +20,7 @@ import { useStrategyMulticall } from './use-strategy-multicall';
 interface UseGameStrategy {
   createdStrategies: CreatedStrategy[];
   handleCreateStrategy: (strategyName: string) => Promise<void>;
+  handleRemoveStrategy: (strategyId: number) => Promise<void>;
   handleAddDefaultBetCondition: (strategyId: number) => Promise<void>;
   handleRemoveCondition: (strategyId: number, index: number) => Promise<void>;
   handleUpdateBetCondition: (
@@ -37,6 +38,7 @@ interface UseGameStrategy {
 const GameStrategyContext = React.createContext<UseGameStrategy>({
   createdStrategies: [],
   handleCreateStrategy: async () => {},
+  handleRemoveStrategy: async () => {},
   handleAddDefaultBetCondition: async () => {},
   handleRemoveCondition: async () => {},
   handleUpdateBetCondition: async () => {},
@@ -72,6 +74,7 @@ export const GameStrategyProvider: React.FC<{
   );
 
   const create = useSendTx();
+  const deleteStrategy = useSendTx();
   const addBetCondition = useSendTx();
   const removeCondition = useSendTx();
   const updateBetCondition = useSendTx();
@@ -84,6 +87,19 @@ export const GameStrategyProvider: React.FC<{
         abi: strategyStoreAbi,
         functionName: 'create',
         args: [strategyName],
+      }),
+    });
+
+    refetchList();
+  };
+
+  const handleRemoveStrategy = async (strategyId: number) => {
+    await deleteStrategy.mutateAsync({
+      target: strategyStoreAddress,
+      encodedTxData: encodeFunctionData({
+        abi: strategyStoreAbi,
+        functionName: 'removeStrategy',
+        args: [BigInt(strategyId)],
       }),
     });
 
@@ -192,19 +208,23 @@ export const GameStrategyProvider: React.FC<{
 
   const parsedStrategyList = React.useMemo(() => {
     if (!strategyList?.length || !strategyItems?.length) return [];
+    let _strategyList: CreatedStrategy[] = [];
 
-    return strategyList.map((item, idx) => {
+    strategyList.forEach((item, idx) => {
       const itemsData = strategyItems[idx] || ([] as StrategyItem[]);
 
-      return {
-        strategyId: item.strategyId,
-        name: item.name,
-        items: itemsData.map((i, idx) => ({
-          ...i,
-          itemId: item.itemIds[idx] as number,
-        })),
-      };
+      if (!item.removed)
+        _strategyList.push({
+          strategyId: item.strategyId,
+          name: item.name,
+          items: itemsData.map((i, idx) => ({
+            ...i,
+            itemId: item.itemIds[idx] as number,
+          })),
+        });
     });
+
+    return _strategyList;
   }, [strategyList, strategyItems]);
 
   return (
@@ -212,6 +232,7 @@ export const GameStrategyProvider: React.FC<{
       value={{
         createdStrategies: parsedStrategyList,
         handleCreateStrategy,
+        handleRemoveStrategy,
         handleAddDefaultBetCondition,
         handleRemoveCondition,
         handleUpdateBetCondition,

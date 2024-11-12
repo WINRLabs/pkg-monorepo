@@ -458,7 +458,7 @@ export const StrategySelector = ({
         }}
         disabled={isDisabled}
       >
-        <SelectTrigger className="wr-mb-3 wr-bg-zinc-950 wr-border-none">
+        <SelectTrigger type="button" className="wr-mb-3 wr-bg-zinc-950 wr-border-none">
           {selectedStrategy.name}
         </SelectTrigger>
         <SelectContent className="wr-bg-zinc-950 wr-border-none">
