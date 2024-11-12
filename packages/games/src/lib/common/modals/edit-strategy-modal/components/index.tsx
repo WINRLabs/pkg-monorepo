@@ -55,8 +55,13 @@ export const FieldSelector = <T extends string | number>({
       onValueChange={(e) => onChange(e as T)}
       disabled={isDisabled}
     >
-      <SelectTrigger className="wr-bg-zinc-950 wr-border-none">
-        {valueRenderer ? valueRenderer(selectedValue) : selectedValue}
+      <SelectTrigger
+        type="button"
+        className="wr-bg-zinc-950 wr-border-none wr-whitespace-nowrap max-md:wr-max-w-[50%]"
+      >
+        <span className="wr-max-w-full wr-overflow-hidden">
+          {valueRenderer ? valueRenderer(selectedValue) : selectedValue}
+        </span>
       </SelectTrigger>
       <SelectContent className="wr-bg-zinc-950 wr-border-none">
         {values.map((v, i) => (

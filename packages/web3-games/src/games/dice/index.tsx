@@ -96,6 +96,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   const {
     createdStrategies,
     handleCreateStrategy,
+    handleRemoveStrategy,
     handleAddDefaultBetCondition,
     handleRemoveCondition,
     handleUpdateBetCondition,
@@ -331,6 +332,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         strategy={{
           createdStrategies,
           create: handleCreateStrategy,
+          remove: handleRemoveStrategy,
           addDefaultCondition: handleAddDefaultBetCondition,
           removeCondition: handleRemoveCondition,
           updateBetCondition: handleUpdateBetCondition,
