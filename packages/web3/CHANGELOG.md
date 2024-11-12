@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.80
+
+### Patch Changes
+
+- ced5b1c: introduce new enum value 'SX' to represent a new network type
+
 ## 0.11.79
 
 ### Patch Changes
