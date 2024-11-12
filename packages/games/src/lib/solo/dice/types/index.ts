@@ -38,6 +38,7 @@ export type DiceTemplateOptions = {
 export interface StrategyProps {
   createdStrategies: CreatedStrategy[];
   create: (strategyName: string) => Promise<void>;
+  remove: (strategyId: number) => Promise<void>;
   addDefaultCondition: (strategyId: number) => Promise<void>;
   removeCondition: (strategyId: number, index: number) => Promise<void>;
   updateBetCondition: (

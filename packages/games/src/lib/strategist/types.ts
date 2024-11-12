@@ -5,6 +5,7 @@ export interface StrategyStruct {
   name: string;
   owner: `0x${string}`;
   strategyId: bigint;
+  removed: boolean;
 }
 
 export interface StrategyItem {

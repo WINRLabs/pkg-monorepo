@@ -165,7 +165,7 @@ const StrategyItem: React.FC<
               onClick={() => setIsEditable(true)}
               variant="secondary"
               type="button"
-              className="wr-max-w-[55px] wr-w-full wr-h-full"
+              className="wr-max-w-[55px] wr-w-full wr-h-full max-md:wr-p-0 max-md:max-w-[30px] max-md:h-[30px] max-md:wr-bg-transparent"
             >
               <IconEdit className="wr-h-5 wr-w-5 wr-text-white" />
             </Button>
@@ -176,7 +176,7 @@ const StrategyItem: React.FC<
               type="button"
               isLoading={isRemoving}
               disabled={isRemoving}
-              className="wr-max-w-[55px] wr-w-full wr-h-full"
+              className="wr-max-w-[55px] wr-w-full wr-h-full max-md:wr-p-0 max-md:max-w-[30px] max-md:h-[30px] max-md:wr-bg-transparent"
             >
               <IconTrash className="wr-h-5 wr-w-5 wr-text-white" />
             </Button>
@@ -257,6 +257,17 @@ export const ConditionEditor: React.FC<{
   );
 };
 
+const options = [
+  Option.IncreaseByPercentage,
+  Option.DecreaseByPercentage,
+  Option.AddToAmount,
+  Option.SubtractFromAmount,
+  Option.SetAmount,
+  Option.ResetAmount,
+  Option.SwitchOverUnder,
+  Option.Stop,
+];
+
 export const BetConditionEditor: React.FC<{
   initialCondition: CreatedStrategyItem;
   strategyId?: number;
@@ -315,7 +326,7 @@ export const BetConditionEditor: React.FC<{
       <div className="wr-flex wr-gap-3 wr-items-center wr-mt-1.5">
         <FieldSelector<Option>
           selectedValue={formValues.actionOption}
-          values={Object.values(Option).filter((v) => typeof v == 'number')}
+          values={options}
           onChange={(val) => setFormValues({ ...formValues, actionOption: val })}
           valueRenderer={getActionOptionString}
         />
@@ -430,7 +441,7 @@ export const ProfitConditionEditor: React.FC<{
       <div className="wr-flex wr-gap-3 wr-items-center wr-mt-1.5">
         <FieldSelector<Option>
           selectedValue={formValues.actionOption}
-          values={Object.values(Option).filter((v) => typeof v == 'number')}
+          values={options}
           onChange={(val) => setFormValues({ ...formValues, actionOption: val })}
           valueRenderer={getActionOptionString}
         />
