@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 12.0.22
+
+### Patch Changes
+
+- fdd9ae2: strategies mobile design
+- Updated dependencies [fdd9ae2]
+  - @winrlabs/web3-games@12.0.22
+  - @winrlabs/games@5.0.16
+  - @winrlabs/web3@0.11.79
+
 ## 12.0.21
 
 ### Patch Changes

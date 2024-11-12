@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.0.16
+
+### Patch Changes
+
+- fdd9ae2: strategies mobile design
+
 ## 5.0.15
 
 ### Patch Changes
