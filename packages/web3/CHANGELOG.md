@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.79
+
+### Patch Changes
+
+- fdd9ae2: strategies mobile design
+
 ## 0.11.78
 
 ### Patch Changes
