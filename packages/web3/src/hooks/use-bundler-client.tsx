@@ -136,6 +136,7 @@ export enum BundlerNetwork {
   MAINNET = 'MAINNET',
   BASE = 'BASE',
   BSC = 'BSC',
+  SX = 'SX',
 }
 
 interface JSONPCClientRequestParams {
