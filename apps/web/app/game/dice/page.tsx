@@ -19,7 +19,7 @@ export default function DicePage() {
             // },
           }
         }
-        minWager={0.1}
+        minWager={0.001}
         maxWager={2000}
       />
       <LiveResults />

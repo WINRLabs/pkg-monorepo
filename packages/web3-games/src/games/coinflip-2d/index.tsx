@@ -28,7 +28,7 @@ import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import {
@@ -104,8 +104,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   const { priceFeed } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
-  const isMountedRef = React.useRef<boolean>(true);
 
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
@@ -208,36 +206,18 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
       });
     } catch (e: any) {
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
-        iterationTimeoutRef.current.push(t);
-      }
+      handleErrorLogic(v, errCount, e);
     }
   };
 
-  const retryGame = async (v: CoinFlipFormFields, errCount = 0) => onGameSubmit(v, errCount);
-
-  const handleFail = async (v: CoinFlipFormFields, errCount = 0, e?: any) => {
-    log('error', e, e?.code);
-    refetchPlayerGameStatus();
-    setIsLoading(false); // Set loading state to false
-
-    if (errCount > 3) {
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-      return;
-    }
-
-    if (e?.code == ErrorCode.UserRejectedRequest) return;
-
-    if (e?.code == ErrorCode.SessionWaitingIteration) {
-      log('SESSION WAITING ITERATION');
-      await playerReIterate();
-      return;
-    }
-
-    log('RETRY GAME CALLED AFTER 750MS');
-    retryGame(v, errCount);
-  };
+  const { handleErrorLogic, clearIterationIntervals } = useRetryLogic<CoinFlipFormFields>({
+    onSubmit: onGameSubmit,
+    playerReIterate,
+    cb: () => {
+      refetchPlayerGameStatus();
+      setIsLoading(false);
+    },
+  });
 
   React.useEffect(() => {
     const finalResult = gameEvent;
@@ -250,8 +230,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       log(eventLogic, 'curr event log');
 
       setCoinFlipResult(finalResult);
-      // clearIterationTimeout
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      clearIterationIntervals();
 
       updateGame({
         wager: formValues.wager || 0,
@@ -295,14 +274,10 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     [coinFlipResult]
   );
 
-  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+  const onAutoBetModeChange = () => clearIterationIntervals();
 
   React.useEffect(() => {
-    isMountedRef.current = true;
     return () => {
-      isMountedRef.current = false;
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-
       clearLiveResults();
     };
   }, []);
