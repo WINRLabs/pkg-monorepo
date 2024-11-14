@@ -9,7 +9,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
   ErrorCode,
   useCurrentAccount,
   usePriceFeed,
@@ -27,7 +26,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
@@ -70,9 +69,6 @@ export default function WinrOfOlympusGame({
   });
 
   const gameEvent = useListenGameEvent(gameAddresses.winrOfOlympus);
-
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
-  const isMountedRef = React.useRef<boolean>(true);
 
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
@@ -199,13 +195,19 @@ export default function WinrOfOlympusGame({
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleBet, errCount + 1, e), 750);
-        iterationTimeoutRef.current.push(t);
-      }
+      handleErrorLogicBet({}, errCount, e);
       throw new Error(e);
     }
   };
+
+  const {
+    handleErrorLogic: handleErrorLogicBet,
+    clearIterationIntervals: clearIterationIntervalsBet,
+  } = useRetryLogic<any>({
+    onSubmit: (v, errCount) => handleBet(errCount),
+    playerReIterate,
+    cb: () => refetchPlayerGameStatus(),
+  });
 
   const handleBuyFreeSpins = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -253,34 +255,19 @@ export default function WinrOfOlympusGame({
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(handleFreeSpin, errCount + 1, e), 750);
-        iterationTimeoutRef.current.push(t);
-      }
+      handleErrorLogicFreeSpin({}, errCount, e);
       throw new Error(e);
     }
   };
 
-  const handleFail = async (submit: (e?: number) => void, errCount = 0, e?: any) => {
-    log('error', e, e?.code);
-    refetchPlayerGameStatus();
-
-    if (errCount > 3) {
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-      return;
-    }
-
-    if (e?.code == ErrorCode.UserRejectedRequest) return;
-
-    if (e?.code == ErrorCode.SessionWaitingIteration) {
-      log('SESSION WAITING ITERATION');
-      await playerReIterate();
-      return;
-    }
-
-    log('RETRY GAME CALLED AFTER 750MS');
-    submit(errCount);
-  };
+  const {
+    handleErrorLogic: handleErrorLogicFreeSpin,
+    clearIterationIntervals: clearIterationIntervalsFreeSpin,
+  } = useRetryLogic<any>({
+    onSubmit: (v, errCount) => handleFreeSpin(errCount),
+    playerReIterate,
+    cb: () => refetchPlayerGameStatus(),
+  });
 
   const gameDataRead = useReadContract({
     config: wagmiConfig,
@@ -312,8 +299,8 @@ export default function WinrOfOlympusGame({
       const betAmount =
         Number(formatUnits(data.wager, selectedToken.decimals)) * priceFeed[selectedToken.priceKey];
 
-      // clearIterationTimeout
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      clearIterationIntervalsFreeSpin();
+      clearIterationIntervalsBet();
 
       setSettledResult({
         betAmount: betAmount,
@@ -353,15 +340,10 @@ export default function WinrOfOlympusGame({
     });
   };
 
-  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-
-  React.useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-    };
-  }, []);
+  const onAutoBetModeChange = () => {
+    clearIterationIntervalsFreeSpin();
+    clearIterationIntervalsBet();
+  };
 
   return (
     <>

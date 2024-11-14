@@ -11,7 +11,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
   ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
@@ -28,7 +27,7 @@ import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import {
@@ -101,8 +100,6 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
   const { priceFeed } = usePriceFeed();
 
   const [rpsResult, setRpsResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
-  const iterationTimeoutRef = React.useRef<NodeJS.Timeout[]>([]);
-  const isMountedRef = React.useRef<boolean>(true);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -201,35 +198,15 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
       });
     } catch (e: any) {
-      if (isMountedRef.current) {
-        const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
-        iterationTimeoutRef.current.push(t);
-      }
+      handleErrorLogic(v, errCount, e);
     }
   };
 
-  const retryGame = async (v: RpsFormFields, errCount = 0) => onGameSubmit(v, errCount);
-
-  const handleFail = async (v: RpsFormFields, errCount = 0, e?: any) => {
-    log('error', e, e?.code);
-    refetchPlayerGameStatus();
-
-    if (errCount > 3) {
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-      return;
-    }
-
-    if (e?.code == ErrorCode.UserRejectedRequest) return;
-
-    if (e?.code == ErrorCode.SessionWaitingIteration) {
-      log('SESSION WAITING ITERATION');
-      await playerReIterate();
-      return;
-    }
-
-    log('RETRY GAME CALLED AFTER 500MS');
-    retryGame(v, errCount);
-  };
+  const { handleErrorLogic, clearIterationIntervals } = useRetryLogic<RpsFormFields>({
+    onSubmit: onGameSubmit,
+    playerReIterate,
+    cb: () => refetchPlayerGameStatus(),
+  });
 
   React.useEffect(() => {
     const finalResult = gameEvent;
@@ -239,8 +216,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
       finalResult?.program[0]?.type === GAME_HUB_EVENT_TYPES.Settled
     ) {
       setRpsResult(finalResult);
-      // clearIterationTimeout
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+      clearIterationIntervals();
       updateGame({
         wager: formValues.wager || 0,
       });
@@ -299,14 +275,10 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     [rpsResult]
   );
 
-  const onAutoBetModeChange = () => iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
+  const onAutoBetModeChange = () => clearIterationIntervals();
 
   React.useEffect(() => {
-    isMountedRef.current = true;
     return () => {
-      isMountedRef.current = false;
-      iterationTimeoutRef.current.forEach((t) => clearTimeout(t));
-
       clearLiveResults();
     };
   }, []);
