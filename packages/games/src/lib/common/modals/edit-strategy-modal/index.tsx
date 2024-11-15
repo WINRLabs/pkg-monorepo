@@ -36,6 +36,7 @@ export const EditStrategyModal = ({
   removeCondition,
   updateBetCondition,
   updateProfitCondition,
+  withoutExternalOption,
 }: Web3GamesEditStrategyModalProps) => {
   const { selectedStrategy: strategy } = useCustomBetStrategistStore(['selectedStrategy']);
   const { modal } = useWeb3GamesModalsStore();
@@ -66,6 +67,7 @@ export const EditStrategyModal = ({
               updateBetCondition={updateBetCondition}
               updateProfitCondition={updateProfitCondition}
               strategyId={strategy.strategyId}
+              withoutExternalOption={withoutExternalOption}
               idx={idx}
               key={idx}
             />
@@ -99,6 +101,7 @@ const StrategyItem: React.FC<
       condition: ProfitConditionFormValues
     ) => Promise<void>;
     strategyId?: number;
+    withoutExternalOption?: boolean;
     idx: number;
   }
 > = ({
@@ -109,6 +112,7 @@ const StrategyItem: React.FC<
   itemId,
   idx,
   strategyId,
+  withoutExternalOption,
   removeCondition,
   updateBetCondition,
   updateProfitCondition,
@@ -192,6 +196,7 @@ const StrategyItem: React.FC<
             itemId: itemId,
           }}
           strategyId={strategyId}
+          withoutExternalOption={withoutExternalOption}
           onChangeIsEditable={setIsEditable}
           updateBetCondition={updateBetCondition}
           updateProfitCondition={updateProfitCondition}
@@ -215,9 +220,11 @@ export const ConditionEditor: React.FC<{
     itemId: number,
     condition: ProfitConditionFormValues
   ) => Promise<void>;
+  withoutExternalOption?: boolean;
 }> = ({
   initialCondition,
   strategyId,
+  withoutExternalOption,
   onChangeIsEditable,
   updateBetCondition,
   updateProfitCondition,
@@ -241,6 +248,7 @@ export const ConditionEditor: React.FC<{
         <BetConditionEditor
           initialCondition={initialCondition}
           strategyId={strategyId}
+          withoutExternalOption={withoutExternalOption}
           onChangeIsEditable={onChangeIsEditable}
           updateBetCondition={updateBetCondition}
         />
@@ -249,6 +257,7 @@ export const ConditionEditor: React.FC<{
         <ProfitConditionEditor
           initialCondition={initialCondition}
           strategyId={strategyId}
+          withoutExternalOption={withoutExternalOption}
           onChangeIsEditable={onChangeIsEditable}
           updateProfitCondition={updateProfitCondition}
         />
@@ -268,16 +277,25 @@ const options = [
   Option.Stop,
 ];
 
+const optionsWithoutExternals = options.filter((o) => o != Option.SwitchOverUnder);
+
 export const BetConditionEditor: React.FC<{
   initialCondition: CreatedStrategyItem;
   strategyId?: number;
+  withoutExternalOption?: boolean;
   onChangeIsEditable: (b: boolean) => void;
   updateBetCondition?: (
     strategyId: number,
     itemId: number,
     condition: BetConditionFormValues
   ) => Promise<void>;
-}> = ({ initialCondition, strategyId, onChangeIsEditable, updateBetCondition }) => {
+}> = ({
+  initialCondition,
+  strategyId,
+  withoutExternalOption,
+  onChangeIsEditable,
+  updateBetCondition,
+}) => {
   const [isUpdating, setIsUpdating] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<BetConditionFormValues>({
     onTerm: initialCondition.bet.term,
@@ -326,7 +344,7 @@ export const BetConditionEditor: React.FC<{
       <div className="wr-flex wr-gap-3 wr-items-center wr-mt-1.5">
         <FieldSelector<Option>
           selectedValue={formValues.actionOption}
-          values={options}
+          values={withoutExternalOption ? optionsWithoutExternals : options}
           onChange={(val) => setFormValues({ ...formValues, actionOption: val })}
           valueRenderer={getActionOptionString}
         />
@@ -383,13 +401,20 @@ export const BetConditionEditor: React.FC<{
 export const ProfitConditionEditor: React.FC<{
   initialCondition: CreatedStrategyItem;
   strategyId?: number;
+  withoutExternalOption?: boolean;
   onChangeIsEditable: (b: boolean) => void;
   updateProfitCondition?: (
     strategyId: number,
     itemId: number,
     condition: ProfitConditionFormValues
   ) => Promise<void>;
-}> = ({ initialCondition, strategyId, onChangeIsEditable, updateProfitCondition }) => {
+}> = ({
+  initialCondition,
+  strategyId,
+  withoutExternalOption,
+  onChangeIsEditable,
+  updateProfitCondition,
+}) => {
   const [isUpdating, setIsUpdating] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<ProfitConditionFormValues>({
     onTerm: initialCondition.profit.term,
@@ -441,7 +466,7 @@ export const ProfitConditionEditor: React.FC<{
       <div className="wr-flex wr-gap-3 wr-items-center wr-mt-1.5">
         <FieldSelector<Option>
           selectedValue={formValues.actionOption}
-          values={options}
+          values={withoutExternalOption ? optionsWithoutExternals : options}
           onChange={(val) => setFormValues({ ...formValues, actionOption: val })}
           valueRenderer={getActionOptionString}
         />

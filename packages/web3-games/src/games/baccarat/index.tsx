@@ -10,7 +10,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -26,7 +25,14 @@ import React, { useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
+import {
+  Badge,
+  useBetHistory,
+  useGameStrategy,
+  useGetBadges,
+  usePlayerGameStatus,
+  useRetryLogic,
+} from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { BaccaratSettledEvent, GAME_HUB_EVENT_TYPES, prepareGameTransaction } from '../utils';
@@ -71,6 +77,16 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
   });
 
   const gameEvent = useListenGameEvent(gameAddresses.baccarat);
+
+  const {
+    createdStrategies,
+    handleCreateStrategy,
+    handleRemoveStrategy,
+    handleAddDefaultBetCondition,
+    handleRemoveCondition,
+    handleUpdateBetCondition,
+    handleUpdateProfitCondition,
+  } = useGameStrategy();
 
   const { eventLogic } = useFastOrVerified();
 
@@ -251,6 +267,15 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
         onAnimationCompleted={onGameCompleted}
         onFormChange={setFormValues}
         onAutoBetModeChange={onAutoBetModeChange}
+        strategy={{
+          createdStrategies,
+          create: handleCreateStrategy,
+          remove: handleRemoveStrategy,
+          addDefaultCondition: handleAddDefaultBetCondition,
+          removeCondition: handleRemoveCondition,
+          updateBetCondition: handleUpdateBetCondition,
+          updateProfitCondition: handleUpdateProfitCondition,
+        }}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

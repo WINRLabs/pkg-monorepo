@@ -15,11 +15,11 @@ import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { PlinkoForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import { PlinkoRowFormField } from './manual-controller';
 
 interface StrategyControllerProps {
-  winMultiplier: number;
   isGettingResults?: boolean;
   minWager: number;
   maxWager: number;
@@ -38,10 +38,11 @@ export const StrategyController = ({
   onLogin,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as PlinkoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { openModal } = useWeb3GamesModalsStore();
+
   const { allStrategies, selectedStrategy, setSelectedStrategy } = useCustomBetStrategistStore([
     'allStrategies',
     'selectedStrategy',
@@ -54,12 +55,23 @@ export const StrategyController = ({
     setSelectedStrategy((allStrategies[idx - 1] || allStrategies[0]) as NormalizedStrategyStruct);
   };
 
+  React.useEffect(() => {
+    form.setValue('betCount', 0);
+  }, []);
+
   return (
     <div className="wr-flex wr-flex-col">
       <WagerFormField
         minWager={minWager}
         maxWager={maxWager}
         className="wr-order-0 lg:!wr-mb-3"
+        isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+      />
+
+      <PlinkoRowFormField
+        minValue={6}
+        maxValue={12}
+        className="wr-mb-3 lg:wr-mb-3"
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
       />
 
@@ -105,6 +117,7 @@ export const StrategyController = ({
                 removeCondition: strategy.removeCondition,
                 updateBetCondition: strategy.updateBetCondition,
                 updateProfitCondition: strategy.updateProfitCondition,
+                withoutExternalOption: true,
               },
             });
           }}

@@ -14,6 +14,9 @@ import { Rps } from '..';
 import { RockPaperScissors, RpsFormFields, RPSGameResult } from '../types';
 import { BetController } from './bet-controller';
 import { RpsGameProps } from './game';
+import { BetMode, StrategyProps } from '../../../types';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
 
 type TemplateOptions = {
   scene?: {
@@ -31,11 +34,14 @@ type TemplateProps = RpsGameProps & {
 
   onError?: (e: any) => void;
   onLogin?: () => void;
+
+  strategy: StrategyProps;
 };
 
 const RpsTemplate = ({ ...props }: TemplateProps) => {
   const options = { ...props.options };
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
+  const [betMode, setBetMode] = React.useState<BetMode>('MANUAL');
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
 
@@ -89,7 +95,7 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useAutoBetStrategist({
+  const autoBetStrategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,
@@ -98,9 +104,29 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
     isAutoBetMode,
   });
 
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
+    wager,
+    isAutoBetMode,
+    createdStrategies: props.strategy.createdStrategies,
+  });
+
   const processStrategy = (result: RPSGameResult[]) => {
+    if (betMode == 'MANUAL') return;
+    let p;
     const payout = result[0]?.payoutInUsd || 0;
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+
+    if (betMode == 'AUTO') {
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    } else {
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    }
+
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;
 
@@ -145,7 +171,9 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={1.96}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onBetModeChange={setBetMode}
             onLogin={props.onLogin}
+            strategy={props.strategy}
           />
           <SceneContainer
             className="wr-relative wr-h-[640px] wr-overflow-hidden !wr-p-0 max-md:wr-h-[300px]"

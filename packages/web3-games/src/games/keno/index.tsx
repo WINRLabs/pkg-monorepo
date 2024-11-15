@@ -11,8 +11,6 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
-  ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -28,7 +26,14 @@ import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
+import {
+  Badge,
+  useBetHistory,
+  useGameStrategy,
+  useGetBadges,
+  usePlayerGameStatus,
+  useRetryLogic,
+} from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import {
@@ -90,6 +95,16 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
   } = useLiveResultStore(['addResult', 'clear', 'updateGame']);
 
   const { updateGameStatus } = useKenoGameStore(['updateGameStatus']);
+
+  const {
+    createdStrategies,
+    handleCreateStrategy,
+    handleRemoveStrategy,
+    handleAddDefaultBetCondition,
+    handleRemoveCondition,
+    handleUpdateBetCondition,
+    handleUpdateProfitCondition,
+  } = useGameStrategy();
 
   const gameEvent = useListenGameEvent(gameAddresses.keno);
 
@@ -290,6 +305,15 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
         onFormChange={setFormValues}
         onAnimationStep={onAnimationStep}
         onAutoBetModeChange={onAutoBetModeChange}
+        strategy={{
+          createdStrategies,
+          create: handleCreateStrategy,
+          remove: handleRemoveStrategy,
+          addDefaultCondition: handleAddDefaultBetCondition,
+          removeCondition: handleRemoveCondition,
+          updateBetCondition: handleUpdateBetCondition,
+          updateProfitCondition: handleUpdateProfitCondition,
+        }}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

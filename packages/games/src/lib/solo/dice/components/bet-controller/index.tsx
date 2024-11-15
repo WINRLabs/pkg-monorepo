@@ -5,10 +5,9 @@ import * as React from 'react';
 import { AnimatedTabContent } from '../../../../common/animated-tab-content';
 import { AudioController } from '../../../../common/audio-controller';
 import { BetControllerContainer } from '../../../../common/containers';
-import { NormalizedStrategyStruct } from '../../../../strategist/types';
 import { IconStrategy } from '../../../../svgs';
+import { BetMode, StrategyProps } from '../../../../types';
 import { cn } from '../../../../utils/style';
-import { StrategyProps } from '../../types';
 import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
 import { StrategyController } from './strategy-controller';
@@ -20,7 +19,7 @@ interface Props {
   isGettingResults?: boolean;
   isAutoBetMode: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
-  onBetModeChange: React.Dispatch<React.SetStateAction<'MANUAL' | 'AUTO' | 'AUTO_CUSTOM_STRATEGY'>>;
+  onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   strategy: StrategyProps;
   onLogin?: () => void;
 }

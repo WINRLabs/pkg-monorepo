@@ -1,3 +1,4 @@
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -14,9 +15,12 @@ import { useCustomBetStrategistStore } from '../../../../hooks/use-custom-bet-st
 import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
+import { FormControl, FormField, FormItem } from '../../../../ui/form';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { ALL_RPS_CHOICES } from '../../constant';
+import { RPSForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import { RPSChoiceRadio } from './manual-controller';
 
 interface StrategyControllerProps {
   winMultiplier: number;
@@ -38,8 +42,9 @@ export const StrategyController = ({
   onLogin,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as RPSForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const { openModal } = useWeb3GamesModalsStore();
   const { allStrategies, selectedStrategy, setSelectedStrategy } = useCustomBetStrategistStore([
@@ -61,6 +66,45 @@ export const StrategyController = ({
         maxWager={maxWager}
         className="wr-order-0 lg:!wr-mb-3"
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+      />
+
+      <FormField
+        control={form.control}
+        name="rpsChoice"
+        render={({ field }) => (
+          <FormItem className="wr-mb-3 lg:wr-mb-3">
+            <FormControl>
+              <RadioGroupPrimitive.Root
+                {...field}
+                disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+                onValueChange={(e) => {
+                  digitalClickEffect.play();
+                  field.onChange(e);
+                }}
+                className={cn(
+                  'wr-grid wr-w-full wr-grid-cols-3 wr-grid-rows-1 wr-items-center wr-justify-between wr-gap-1',
+                  {
+                    'wr-cursor-default wr-pointer-events-none':
+                      form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode,
+                  }
+                )}
+              >
+                {ALL_RPS_CHOICES.map((item) => (
+                  <FormItem className="wr-mb-0 wr-cursor-pointer" key={item}>
+                    <FormControl>
+                      <RPSChoiceRadio
+                        disabled={
+                          form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode
+                        }
+                        choice={item}
+                      />
+                    </FormControl>
+                  </FormItem>
+                ))}
+              </RadioGroupPrimitive.Root>
+            </FormControl>
+          </FormItem>
+        )}
       />
 
       <AutoBetCountFormField
