@@ -13,6 +13,7 @@ import { CDN_URL } from '../../../constants';
 import { useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { Roulette } from '..';
@@ -25,6 +26,8 @@ import {
 } from '../constants';
 import { RouletteFormFields, RouletteGameProps, RouletteGameResult } from '../types';
 import { MobileController } from './mobile-controller';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
 
 const log = debug('worker:RouletteTemplate');
 
@@ -36,12 +39,15 @@ type TemplateProps = RouletteGameProps & {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (e: any) => void;
   onLogin?: () => void;
+
+  strategy: StrategyProps;
 };
 
 const RouletteTemplate: React.FC<TemplateProps> = ({
   gameResults,
   minWager,
   maxWager,
+  strategy,
   onSubmitGameForm,
   onAutoBetModeChange,
   onFormChange,
@@ -61,6 +67,8 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   >([]);
 
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
+  const [betMode, setBetMode] = React.useState<BetMode>('MANUAL');
+
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
   const chipEffect = useAudioEffect(SoundEffects.CHIP_EFFECT);
@@ -202,7 +210,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useAutoBetStrategist({
+  const autoBetStrategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,
@@ -211,10 +219,29 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
     isAutoBetMode,
   });
 
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
+    wager,
+    isAutoBetMode,
+    createdStrategies: strategy.createdStrategies,
+  });
+
   const processStrategy = (result: RouletteGameResult[]) => {
+    if (betMode == 'MANUAL') return;
+    let p;
     const payout = result[0]?.payoutInUsd || 0;
-    log(result, 'result');
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+
+    if (betMode == 'AUTO') {
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    } else {
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    }
+
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - totalWager + payout;
 
@@ -261,7 +288,9 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
             maxWager={maxWager || 2000}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onBetModeChange={setBetMode}
             onLogin={onLogin}
+            strategy={strategy}
           />
           <SceneContainer
             style={{

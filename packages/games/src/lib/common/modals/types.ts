@@ -41,6 +41,7 @@ export interface Web3GamesEditStrategyModalProps {
     itemId: number,
     condition: ProfitConditionFormValues
   ) => Promise<void>;
+  withoutExternalOption?: boolean;
 }
 
 export type Web3GamesModalsStore = Web3GamesModalsStoreState & Web3GamesModalsStoreActions;

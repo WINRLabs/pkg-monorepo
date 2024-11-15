@@ -12,15 +12,16 @@ import { useGame } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { useCustomBetStrategistStore } from '../../../../hooks/use-custom-bet-strategist/store';
 import { NormalizedStrategyStruct } from '../../../../strategist';
+import { IconMagicStick, IconTrash } from '../../../../svgs';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { kenoMultipliers } from '../../constants';
+import useKenoGameStore from '../../store';
+import { KenoForm } from '../../types';
 import { BetLoader } from './bet-loader';
 
 interface StrategyControllerProps {
-  winMultiplier: number;
-  isGettingResults?: boolean;
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
@@ -38,8 +39,9 @@ export const StrategyController = ({
   onLogin,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as KenoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
 
   const { openModal } = useWeb3GamesModalsStore();
   const { allStrategies, selectedStrategy, setSelectedStrategy } = useCustomBetStrategistStore([
@@ -47,6 +49,48 @@ export const StrategyController = ({
     'selectedStrategy',
     'setSelectedStrategy',
   ]);
+
+  const wager = form.watch('wager');
+  const selections = form.watch('selections');
+
+  const { updateKenoGameResults } = useKenoGameStore([
+    'gameStatus',
+    'updateKenoGameResults',
+    'kenoGameResults',
+  ]);
+
+  const currentMultipliers = kenoMultipliers[selections.length] || [];
+  const maxMultiplier = Math.max(...currentMultipliers);
+  const maxPayout = wager * maxMultiplier;
+
+  const clearBetHandler = () => {
+    digitalClickEffect.play();
+    form.setValue('selections', []);
+    updateKenoGameResults([]);
+  };
+
+  const getRandomNumber = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const autoPickHandler = () => {
+    digitalClickEffect.play();
+    clearBetHandler();
+
+    var randomNumbers: number[] = [];
+
+    for (var i = 0; i < 10; i++) {
+      var randomNumber;
+
+      do {
+        randomNumber = getRandomNumber(1, 40);
+      } while (randomNumbers.includes(randomNumber));
+
+      randomNumbers.push(randomNumber);
+    }
+
+    form.setValue('selections', randomNumbers);
+  };
 
   const handleRemoveStrategy = async () => {
     const idx = allStrategies.findIndex((s) => s.strategyId === selectedStrategy?.strategyId);
@@ -62,6 +106,31 @@ export const StrategyController = ({
         className="wr-order-0 lg:!wr-mb-3"
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
       />
+
+      <div className="wr-mb-3 wr-grid wr-grid-cols-2 wr-gap-2">
+        <Button
+          size={'xl'}
+          variant={'secondary'}
+          type="button"
+          disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+          onClick={autoPickHandler}
+          className="button"
+        >
+          <IconMagicStick className="wr-mr-1 wr-h-5 wr-w-5" />
+          Auto Pick
+        </Button>
+        <Button
+          size={'xl'}
+          variant={'secondary'}
+          type="button"
+          onClick={clearBetHandler}
+          disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+          className="button"
+        >
+          <IconTrash className="wr-mr-1 wr-h-5 wr-w-5" />
+          Clear
+        </Button>
+      </div>
 
       <AutoBetCountFormField
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
@@ -105,6 +174,7 @@ export const StrategyController = ({
                 removeCondition: strategy.removeCondition,
                 updateBetCondition: strategy.updateBetCondition,
                 updateProfitCondition: strategy.updateProfitCondition,
+                withoutExternalOption: true,
               },
             });
           }}
@@ -134,7 +204,10 @@ export const StrategyController = ({
             'wr-w-full wr-uppercase wr-transition-all wr-duration-300 active:wr-scale-[85%] wr-select-none wr-mb-3 lg:wr-mb-0 -wr-order-1 md:wr-order-1 lg:wr-order-none',
             {
               'wr-cursor-default wr-pointer-events-none':
-                !form.formState.isValid || form.formState.isSubmitting || form.formState.isLoading,
+                !form.formState.isValid ||
+                form.formState.isSubmitting ||
+                form.formState.isLoading ||
+                maxPayout == 0,
             }
           )}
           size={'xl'}

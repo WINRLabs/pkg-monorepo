@@ -15,8 +15,8 @@ import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import { RollForm } from '../../types';
 
 interface StrategyControllerProps {
   winMultiplier: number;
@@ -38,7 +38,7 @@ export const StrategyController = ({
   onLogin,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as RollForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { openModal } = useWeb3GamesModalsStore();
@@ -105,6 +105,7 @@ export const StrategyController = ({
                 removeCondition: strategy.removeCondition,
                 updateBetCondition: strategy.updateBetCondition,
                 updateProfitCondition: strategy.updateProfitCondition,
+                withoutExternalOption: true,
               },
             });
           }}

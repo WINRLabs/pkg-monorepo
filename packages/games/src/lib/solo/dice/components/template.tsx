@@ -11,12 +11,13 @@ import { useGameOptions } from '../../../game-provider';
 import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
 import { WAGER_PRECISION } from '../../../strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { toDecimals } from '../../../utils/web3';
 import { LUCK_MULTIPLIER, MAX_VALUE, MIN_BET_COUNT, MIN_VALUE } from '../constant';
 import { Dice } from '../index';
-import { DiceFormFields, DiceGameResult, DiceTemplateOptions, StrategyProps } from '../types';
+import { DiceFormFields, DiceGameResult, DiceTemplateOptions } from '../types';
 import { BetController } from './bet-controller';
 import { RangeGameProps } from './game';
 
@@ -44,8 +45,6 @@ const defaultOptions: DiceTemplateOptions = {
     background: '#111113',
   },
 };
-
-type BetMode = 'MANUAL' | 'AUTO' | 'AUTO_CUSTOM_STRATEGY';
 
 const DiceTemplate = ({ ...props }: TemplateProps) => {
   const options = { ...defaultOptions, ...props.options };

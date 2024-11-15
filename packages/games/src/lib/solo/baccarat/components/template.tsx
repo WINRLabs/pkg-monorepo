@@ -11,7 +11,10 @@ import { WinAnimation } from '../../../common/win-animation';
 import { CDN_URL } from '../../../constants';
 import { useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { MULTIPLIER_BANKER, MULTIPLIER_PLAYER, MULTIPLIER_TIE } from '../constants';
@@ -30,6 +33,8 @@ type TemplateProps = BaccaratGameProps & {
   minWager?: number;
   maxWager?: number;
 
+  strategy: StrategyProps;
+
   onSubmitGameForm: (data: BaccaratFormFields) => void;
   onFormChange?: (fields: BaccaratFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -45,6 +50,8 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   baccaratResults,
   baccaratSettledResults,
 
+  strategy,
+
   onAnimationCompleted = () => {},
   onAutoBetModeChange,
   onSubmitGameForm,
@@ -57,9 +64,8 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
 
   const [maxPayout, setMaxPayout] = React.useState<number>(0);
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
-
+  const [betMode, setBetMode] = React.useState<BetMode>('MANUAL');
   const [isGamePlaying, setIsGamePlaying] = React.useState<boolean>(false);
-
   const [lastSelections, setLastSelections] = React.useState<
     {
       type: BaccaratBetType;
@@ -242,7 +248,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useAutoBetStrategist({
+  const autoBetStrategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,
@@ -251,9 +257,29 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
     isAutoBetMode,
   });
 
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
+    wager,
+    isAutoBetMode,
+    createdStrategies: strategy.createdStrategies,
+  });
+
   const processStrategy = (result: BaccaratGameSettledResult) => {
+    if (betMode == 'MANUAL') return;
+    let p;
     const payout = result.payout;
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+
+    if (betMode == 'AUTO') {
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    } else {
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    }
+
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - totalWager + payout;
 
@@ -303,6 +329,8 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
             onLogin={onLogin}
+            onBetModeChange={setBetMode}
+            strategy={strategy}
           />
           <SceneContainer
             className="wr-relative wr-flex wr-h-[340px] lg:wr-h-[640px] wr-overflow-hidden"

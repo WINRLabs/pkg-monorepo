@@ -8,7 +8,10 @@ import z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { cn } from '../../../utils/style';
@@ -35,11 +38,14 @@ type TemplateProps = CoinFlipGameProps & {
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
   onError?: (error: any) => void;
   onLogin?: () => void;
+
+  strategy: StrategyProps;
 };
 
 const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
   const options = { ...props.options };
   const [isAutoBetMode, setIsAutoBetMode] = React.useState<boolean>(false);
+  const [betMode, setBetMode] = React.useState<BetMode>('MANUAL');
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
 
@@ -93,7 +99,7 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
   const stopProfit = form.watch('stopGain');
   const stopLoss = form.watch('stopLoss');
 
-  const strategist = useAutoBetStrategist({
+  const autoBetStrategist = useAutoBetStrategist({
     wager,
     increasePercentageOnLoss,
     increasePercentageOnWin,
@@ -102,10 +108,29 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
     isAutoBetMode,
   });
 
+  const { strategist: customBetStrategist } = useCustomBetStrategist({
+    wager,
+    isAutoBetMode,
+    createdStrategies: props.strategy.createdStrategies,
+  });
+
   const processStrategy = (result: CoinFlipGameResult[]) => {
+    if (betMode == 'MANUAL') return;
+    let p;
     const payout = result[0]?.payoutInUsd || 0;
-    log(result, 'result');
-    const p = strategist.process(parseToBigInt(wager, 8), parseToBigInt(payout, 8));
+
+    if (betMode == 'AUTO') {
+      p = autoBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    } else {
+      p = customBetStrategist.process(
+        parseToBigInt(wager, WAGER_PRECISION),
+        parseToBigInt(payout, WAGER_PRECISION)
+      );
+    }
+
     const newWager = Number(p.wager) / 1e8;
     const currentBalance = balanceAsDollar - wager + payout;
 
@@ -150,7 +175,9 @@ const CoinFlipTemplate = ({ ...props }: TemplateProps) => {
             winMultiplier={WIN_MULTIPLIER}
             isAutoBetMode={isAutoBetMode}
             onAutoBetModeChange={setIsAutoBetMode}
+            onBetModeChange={setBetMode}
             onLogin={props.onLogin}
+            strategy={props.strategy}
           />
           <SceneContainer
             className={cn(

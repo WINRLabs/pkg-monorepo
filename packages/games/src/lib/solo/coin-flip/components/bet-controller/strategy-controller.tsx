@@ -15,8 +15,9 @@ import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { CoinFlipForm } from '../../types';
 import { BetLoader } from './bet-loader';
+import { CoinFlipController } from './controller';
 
 interface StrategyControllerProps {
   winMultiplier: number;
@@ -38,7 +39,7 @@ export const StrategyController = ({
   onLogin,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as CoinFlipForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { openModal } = useWeb3GamesModalsStore();
@@ -62,6 +63,8 @@ export const StrategyController = ({
         className="wr-order-0 lg:!wr-mb-3"
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
       />
+
+      <CoinFlipController className="wr-mb-3" />
 
       <AutoBetCountFormField
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
@@ -105,6 +108,7 @@ export const StrategyController = ({
                 removeCondition: strategy.removeCondition,
                 updateBetCondition: strategy.updateBetCondition,
                 updateProfitCondition: strategy.updateProfitCondition,
+                withoutExternalOption: true,
               },
             });
           }}

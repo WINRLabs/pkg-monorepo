@@ -1,6 +1,8 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { ChipController } from '../../../../common/chip-controller';
+import { Chip } from '../../../../common/chip-controller/types';
 import {
   AutoBetCountFormField,
   StrategySelector,
@@ -8,38 +10,51 @@ import {
 } from '../../../../common/controller';
 import { useWeb3GamesModalsStore } from '../../../../common/modals';
 import { PreBetButton } from '../../../../common/pre-bet-button';
-import { useGame } from '../../../../game-provider';
+import { useGame, useGameOptions } from '../../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { useCustomBetStrategistStore } from '../../../../hooks/use-custom-bet-strategist/store';
 import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { DiceForm } from '../../types';
+import { BaccaratForm } from '../../types';
+import Control from '../control';
 import { BetLoader } from './bet-loader';
 
 interface StrategyControllerProps {
-  winMultiplier: number;
-  isGettingResults?: boolean;
+  totalWager: number;
+  maxPayout: number;
+  selectedChip: Chip;
+  isDisabled: boolean;
   minWager: number;
   maxWager: number;
-  isAutoBetMode: boolean;
-  strategy: StrategyProps;
-  onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
+  onSelectedChipChange: (chip: Chip) => void;
+  undoBet: () => void;
+  isAutoBetMode: boolean;
+  onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
+
+  strategy: StrategyProps;
 }
 
 export const StrategyController = ({
+  totalWager,
+  isDisabled,
+  selectedChip,
   minWager,
   maxWager,
   isAutoBetMode,
-  strategy,
-  onAutoBetModeChange,
   onLogin,
+  onSelectedChipChange,
+  undoBet,
+  onAutoBetModeChange,
+  strategy,
 }: StrategyControllerProps) => {
   const { readyToPlay } = useGame();
-  const form = useFormContext() as DiceForm;
+  const form = useFormContext() as BaccaratForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
+  const { account } = useGameOptions();
+  const wager = form.watch('wager');
 
   const { openModal } = useWeb3GamesModalsStore();
   const { allStrategies, selectedStrategy, setSelectedStrategy } = useCustomBetStrategistStore([
@@ -61,6 +76,28 @@ export const StrategyController = ({
         maxWager={maxWager}
         className="wr-order-0 lg:!wr-mb-3"
         isDisabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
+      />
+
+      <ChipController
+        chipAmount={wager}
+        totalWager={totalWager}
+        balance={account?.balanceAsDollar || 0}
+        isDisabled={
+          isDisabled || form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode
+        }
+        selectedChip={selectedChip}
+        onSelectedChipChange={onSelectedChipChange}
+        className="lg:wr-mb-3"
+      />
+
+      <Control
+        totalWager={totalWager}
+        isDisabled={
+          isDisabled || form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode
+        }
+        undoBet={undoBet}
+        reset={form.reset}
+        className="wr-mb-3 lg:wr-mb-3"
       />
 
       <AutoBetCountFormField
@@ -105,6 +142,7 @@ export const StrategyController = ({
                 removeCondition: strategy.removeCondition,
                 updateBetCondition: strategy.updateBetCondition,
                 updateProfitCondition: strategy.updateProfitCondition,
+                withoutExternalOption: true,
               },
             });
           }}
