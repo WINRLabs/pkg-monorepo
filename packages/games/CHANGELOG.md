@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 5.0.17
+
+### Patch Changes
+
+- 35caf16: strategies to all autobet games
+- 35caf16: rps fix
+
 ## 5.0.16
 
 ### Patch Changes

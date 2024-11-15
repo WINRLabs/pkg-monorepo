@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 12.0.25
+
+### Patch Changes
+
+- 35caf16: strategies to all autobet games
+- 35caf16: rps fix
+- Updated dependencies [35caf16]
+- Updated dependencies [35caf16]
+  - @winrlabs/web3-games@12.0.25
+  - @winrlabs/games@5.0.17
+
 ## 12.0.24
 
 ### Patch Changes
