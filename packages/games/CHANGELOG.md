@@ -1,5 +1,17 @@
 # @winrlabs/games
 
+## 5.0.18
+
+### Patch Changes
+
+- 5af9632: (globals.css): Update styles for secondary buttons in the application
+  (next-env.d.ts): Update comment with correct link for more information
+  (controller.tsx): Refactor class names for better readability and consistency
+  (strategy-controller.tsx): Refactor class names for better readability and consistency
+  (auto-controller.tsx): Remove duplicate class name 'button' for buttons
+  (manual-controller.tsx): Remove duplicate class name 'button' for buttons
+  (auto-controller.tsx): Remove unnecessary class name 'button' for buttons(button.tsx): Fix typo in button variants class names to correctly identify button types and improve code readability.
+
 ## 5.0.17
 
 ### Patch Changes
