@@ -1,5 +1,20 @@
 # web
 
+## 3.0.21
+
+### Patch Changes
+
+- 5af9632: (globals.css): Update styles for secondary buttons in the application
+  (next-env.d.ts): Update comment with correct link for more information
+  (controller.tsx): Refactor class names for better readability and consistency
+  (strategy-controller.tsx): Refactor class names for better readability and consistency
+  (auto-controller.tsx): Remove duplicate class name 'button' for buttons
+  (manual-controller.tsx): Remove duplicate class name 'button' for buttons
+  (auto-controller.tsx): Remove unnecessary class name 'button' for buttons(button.tsx): Fix typo in button variants class names to correctly identify button types and improve code readability.
+- Updated dependencies [5af9632]
+  - @winrlabs/games@5.0.18
+  - @winrlabs/web3-games@12.0.26
+
 ## 3.0.20
 
 ### Patch Changes
