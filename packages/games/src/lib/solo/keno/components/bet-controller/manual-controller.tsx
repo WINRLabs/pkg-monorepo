@@ -102,7 +102,6 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           type="button"
           disabled={isFormInProgress}
           onClick={autoPickHandler}
-          className="button"
         >
           <IconMagicStick className="wr-mr-1 wr-h-5 wr-w-5" />
           Auto Pick
@@ -113,7 +112,6 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           type="button"
           onClick={clearBetHandler}
           disabled={isFormInProgress}
-          className="button"
         >
           <IconTrash className="wr-mr-1 wr-h-5 wr-w-5" />
           Clear

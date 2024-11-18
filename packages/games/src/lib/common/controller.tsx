@@ -458,10 +458,13 @@ export const StrategySelector = ({
         }}
         disabled={isDisabled}
       >
-        <SelectTrigger type="button" className="wr-mb-3 wr-bg-zinc-950 wr-border-none">
+        <SelectTrigger
+          type="button"
+          className="wr-mb-3 wr-bg-zinc-950 wr-border-none select-trigger "
+        >
           {selectedStrategy.name}
         </SelectTrigger>
-        <SelectContent className="wr-bg-zinc-950 wr-border-none">
+        <SelectContent className="wr-border-none wr-bg-zinc-950 select-content">
           {strategies.map((strategy) => (
             <SelectItem value={strategy.name} key={strategy.name}>
               <span className="wr-font-semibold">{strategy.name}</span>
@@ -481,7 +484,7 @@ export const StrategyConditions = ({ conditions }: { conditions: string[] }) => 
       </FormLabel>
       <div className="wr-flex wr-gap-2 wr-items-center wr-justify-start wr-mb-3">
         {conditions.map((c, idx) => (
-          <Button className="wr-w-full wr-max-w-[75px]" variant="secondary">
+          <Button className="wr-w-full wr-max-w-[75px] button" variant="secondary">
             {idx + 1}
           </Button>
         ))}
