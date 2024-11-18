@@ -464,7 +464,7 @@ export const StrategySelector = ({
         >
           {selectedStrategy.name}
         </SelectTrigger>
-        <SelectContent className="wr-border-none wr-bg-red-500 select-content">
+        <SelectContent className="wr-border-none wr-bg-zinc-950 select-content">
           {strategies.map((strategy) => (
             <SelectItem value={strategy.name} key={strategy.name}>
               <span className="wr-font-semibold">{strategy.name}</span>
