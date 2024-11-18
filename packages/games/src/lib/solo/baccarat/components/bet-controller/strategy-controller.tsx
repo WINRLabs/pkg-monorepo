@@ -115,7 +115,7 @@ export const StrategyController = ({
         type="button"
         variant="secondary"
         size="xl"
-        className="wr-mb-3 wr-uppercase"
+        className="wr-mb-3 wr-uppercase button"
         disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
         onClick={() => {
           openModal('createStrategy', {
@@ -133,7 +133,7 @@ export const StrategyController = ({
           type="button"
           variant="secondary"
           size="xl"
-          className="wr-mb-3 wr-uppercase"
+          className="wr-mb-3 wr-uppercase button"
           disabled={form.formState.isSubmitting || form.formState.isLoading || isAutoBetMode}
           onClick={() => {
             openModal('editStrategy', {

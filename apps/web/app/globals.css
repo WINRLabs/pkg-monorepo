@@ -1,4 +1,4 @@
-/* .bet-controller {
+.bet-controller {
   background-color: #20202a;
 }
 
@@ -20,6 +20,13 @@
   background: linear-gradient(270.62deg, #5dfcce 0.59%, #3254d9 96.56%);
 }
 
+.secondary-button {
+  background-color: #373745;
+}
+.secondary-button:hover {
+  background-color: #37374570;
+}
+
 .bet-controller .total-wager,
 .max-payout,
 .increase-by-input,
@@ -30,10 +37,16 @@
 .plinko-input fieldset div:first-of-type,
 .max-reward,
 .mines-count div:first-of-type,
-.multiplier-input {
+.multiplier-input,
+.bet-controller .select-trigger,
+.bet-controller .select-trigger .select-content {
   background-color: transparent;
   border: 1px solid #37373a;
   border-radius: 10px;
+}
+
+.select-content {
+  background: #373745;
 }
 
 .bet-history .bet-table .table-header,
@@ -75,4 +88,4 @@
   border-bottom: 2px;
   border-style: solid;
   border-image: linear-gradient(to right, #facc15 6.45%, #ffe26d 31.6%, #facc15 51.59%) 1;
-} */
+}

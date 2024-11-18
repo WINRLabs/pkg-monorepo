@@ -13,23 +13,23 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'wr-bg-red-600 wr-text-white wr-transition-all wr-duration-200 hover:wr-bg-red-700 disabled:wr-bg-red-950 disabled:wr-text-zinc-500',
+          'wr-bg-red-600 wr-text-white wr-transition-all wr-duration-200 hover:wr-bg-red-700 disabled:wr-bg-red-950 disabled:wr-text-zinc-500 default-button',
         secondary:
-          'wr-bg-zinc-800 wr-text-zinc-100 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800 disabled:wr-text-zinc-500',
+          'wr-bg-zinc-800 wr-text-zinc-100 hover:wr-bg-zinc-700 disabled:wr-bg-zinc-800 disabled:wr-text-zinc-500 secondary-button',
         third:
-          'wr-bg-unity-white-15 wr-font-semibold wr-text-unity-white-50 wr-backdrop-blur-md hover:wr-bg-unity-white-50 hover:wr-text-white disabled:wr-bg-unity-white-5',
+          'wr-bg-unity-white-15 wr-font-semibold wr-text-unity-white-50 wr-backdrop-blur-md hover:wr-bg-unity-white-50 hover:wr-text-white disabled:wr-bg-unity-white-5 thirt-button',
         outline:
-          'wr-border wr-border-zinc-800 wr-bg-transparent wr-text-zinc-100 hover:wr-bg-zinc-800 disabled:wr-text-zinc-500',
+          'wr-border wr-border-zinc-800 wr-bg-transparent wr-text-zinc-100 hover:wr-bg-zinc-800 disabled:wr-text-zinc-500 outline-button',
         success:
-          'wr-bg-green-500 wr-transition-all wr-duration-200 hover:wr-bg-green-600 disabled:wr-bg-green-800 disabled:wr-text-zinc-400 disabled:wr-opacity-90',
+          'wr-bg-green-500 wr-transition-all wr-duration-200 hover:wr-bg-green-600 disabled:wr-bg-green-800 disabled:wr-text-zinc-400 disabled:wr-opacity-90 success-button',
         coinflip:
-          'wr-bg-gradient-to-t wr-from-unity-coinflip-purple-700 wr-to-unity-coinflip-purple-400 bg-[size:wr-_200%] bg-[position:wr-_0%_0%] wr-font-furore wr-transition-all wr-duration-300 hover:wr-from-unity-coinflip-purple-400 hover:wr-to-unity-coinflip-purple-700 hover:wr-bg-[position',
+          'wr-bg-gradient-to-t wr-from-unity-coinflip-purple-700 wr-to-unity-coinflip-purple-400 bg-[size:wr-_200%] bg-[position:wr-_0%_0%] wr-font-furore wr-transition-all wr-duration-300 hover:wr-from-unity-coinflip-purple-400 hover:wr-to-unity-coinflip-purple-700 hover:wr-bg-[position coinflip-button',
         'horse-race':
-          'wr-bg-horse-race-bet-button wr-bg-cover md:bg-[size:wr-100%] wr-bg-no-repeat wr-font-barlowCondensed wr-text-[22px] wr-font-[900] wr-uppercase wr-italic wr-leading-8 wr-tracking-wider wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-horse-race-bet-button-bg-disabled md:wr-bg-contain',
+          'wr-bg-horse-race-bet-button wr-bg-cover md:bg-[size:wr-100%] wr-bg-no-repeat wr-font-barlowCondensed wr-text-[22px] wr-font-[900] wr-uppercase wr-italic wr-leading-8 wr-tracking-wider wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-horse-race-bet-button-bg-disabled md:wr-bg-contain horse-race-button',
         crash:
-          'wr-bg-[#5B6CFF] wr-transition-all wr-duration-300 hover:wr-bg-[#3C4DE1] disabled:wr-bg-zinc-700',
-        plinko: `!wr-rounded-none wr-bg-plinko-button bg-[size:wr-100%] wr-bg-no-repeat wr-font-furore wr-text-2xl wr-leading-6 wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] [box-shadow:wr-0px_2.7px_0px_0px_#004265] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-plinko-button-disabled lg:wr-bg-contain`,
-        ghost: 'wr-bg-transparent wr-text-white',
+          'wr-bg-[#5B6CFF] wr-transition-all wr-duration-300 hover:wr-bg-[#3C4DE1] disabled:wr-bg-zinc-700 crash-button ',
+        plinko: `!wr-rounded-none wr-bg-plinko-button bg-[size:wr-100%] wr-bg-no-repeat wr-font-furore wr-text-2xl wr-leading-6 wr-transition-all wr-duration-300 [text-shadow:wr-_0px_2px_0px_#054352] [box-shadow:wr-0px_2.7px_0px_0px_#004265] hover:wr-scale-110 hover:wr-ease-in disabled:wr-bg-plinko-button-disabled lg:wr-bg-contain plinko-button`,
+        ghost: 'wr-bg-transparent wr-text-white ghost-button',
       },
       size: {
         sm: 'wr-h-7 wr-rounded-sm',
