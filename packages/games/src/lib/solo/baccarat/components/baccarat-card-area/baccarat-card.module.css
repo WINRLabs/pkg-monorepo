@@ -24,11 +24,11 @@
   border-radius: 15px;
 }
 
-.card[data-state="unflipped"] .innerWrapper {
+.card[data-state='unflipped'] .innerWrapper {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
-.card[data-state="flipped"] .innerWrapper {
+.card[data-state='flipped'] .innerWrapper {
   transform: rotateY(180deg);
 }
 
@@ -77,6 +77,8 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -moz-backface-visibility: hidden;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .cardSuitArea {
@@ -108,7 +110,7 @@
   font-size: 21px;
   line-height: 32px;
   font-weight: 700;
-  font-family: "Oswald", var(--default-font-family);
+  font-family: 'Oswald', var(--default-font-family);
 }
 
 .cardValue.upsideDown {

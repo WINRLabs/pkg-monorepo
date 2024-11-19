@@ -1,6 +1,7 @@
 'use client';
 
 import { Player } from '@lottiefiles/react-lottie-player';
+import debug from 'debug';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -10,6 +11,7 @@ import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect
 import { useWinAnimation } from '../../../../hooks/use-win-animation';
 import { wait } from '../../../../utils/promise';
 import { cn } from '../../../../utils/style';
+import { useBaccaratTheme } from '../../provider/theme';
 import {
   BaccaratForm,
   BaccaratFormFields,
@@ -20,7 +22,6 @@ import {
 import styles from './baccarat-card.module.css';
 import { BaccaratCard, countCalculator, generateBaccaratSuits, getBaccaratIcon } from './card';
 import Confetti from './lottie/confetti.json';
-import debug from 'debug';
 
 const log = debug('worker:BaccaratCardArea');
 
@@ -288,6 +289,8 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
     if (isBankerWinner) setTimeout(() => bankerLottieRef.current.play(), 100);
   }, [isBankerWinner]);
   // 110 -> 400
+
+  const theme = useBaccaratTheme();
   return (
     <div className="wr-absolute wr-left-[47%] wr-top-[45%] wr-z-[5] wr-flex -wr-translate-x-1/2 -wr-translate-y-1/2 wr-items-start wr-justify-center">
       <div className="wr-absolute wr-left-[-175px] lg:wr-left-[-325px] wr-top-[50px] lg:!wr-top-[380px] wr-h-[200px] wr-w-[160px]">
@@ -379,7 +382,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
             'wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2 wr-hidden md:wr-block',
             styles.playerFirstCard
           )}
-          src={`${CDN_URL}/baccarat/stack.svg`}
+          src={theme.idleCardImage}
           alt="Justbet Baccarat Game"
         />
 
@@ -390,7 +393,7 @@ export const CardArea: React.FC<BaccaratCardAreaProps> = ({
             'wr-absolute wr-z-[0] wr-max-h-[150px] wr-max-w-[100px] -wr-translate-x-1/2 -wr-translate-y-1/2 wr-hidden md:wr-block',
             styles.bankerFirstCard
           )}
-          src={`${CDN_URL}/baccarat/stack.svg`}
+          src={theme.idleCardImage}
           alt="Justbet Baccarat Game"
         />
       </div>
@@ -461,6 +464,8 @@ const Card: React.FC<{
 }> = ({ card, flipped, isWinner, className }) => {
   const [flippedWithDelay, setFlippedWithDelay] = React.useState<boolean>(true);
 
+  const theme = useBaccaratTheme();
+
   React.useEffect(() => {
     if (!flipped) setTimeout(() => setFlippedWithDelay(false), 500);
 
@@ -481,7 +486,7 @@ const Card: React.FC<{
               isUpsideDown={false}
             />
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/baccarat/card-front-logo.svg`} alt="Justbet Baccarat" />
+              <img src={theme.cardFrontLogoImage} alt="Justbet Baccarat" />
             </div>
           </div>
           <div
@@ -494,7 +499,7 @@ const Card: React.FC<{
           </div>
           <div className={styles.cardSuitArea}>
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/baccarat/card-front-logo.svg`} alt="Justbet Baccarat" />
+              <img src={theme.cardFrontLogoImage} alt="Justbet Baccarat" />
             </div>
             <CardValue
               suit={card?.suit || BaccaratSuit.CLUBS}
@@ -506,7 +511,7 @@ const Card: React.FC<{
         <div
           className={styles.back}
           style={{
-            backgroundImage: `url(${CDN_URL}/baccarat/jb-card-bg.svg)`,
+            backgroundImage: `url(${theme.cardBackImage})`,
           }}
         />
       </div>
