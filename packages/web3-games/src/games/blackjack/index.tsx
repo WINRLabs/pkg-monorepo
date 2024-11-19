@@ -8,6 +8,7 @@ import {
   BlackjackGameStatus,
   BlackjackHandStatus,
   BlackjackTemplate,
+  BlackjackTheme,
   GameStruct,
   GameType,
   toDecimals,
@@ -70,6 +71,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  theme?: Partial<BlackjackTheme>;
 }
 
 const defaultActiveGameHands = {

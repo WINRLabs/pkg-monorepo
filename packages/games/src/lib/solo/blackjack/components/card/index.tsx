@@ -2,11 +2,11 @@
 
 import React from 'react';
 
-import { CDN_URL } from '../../../../constants';
 import { cn } from '../../../../utils/style';
+import { TIMEOUT } from '../../constants';
+import { useBlackjackTheme } from '../../provider/theme';
 import { BlackjackCard, BlackjackSuit, getBlackjackIcon } from '../../utils';
 import styles from './card.module.css';
-import { TIMEOUT } from '../../constants';
 
 interface CardProps {
   card: BlackjackCard | null;
@@ -37,6 +37,8 @@ export const Card: React.FC<CardProps> = ({
     if (flipped) setFlippedWithDelay(true);
   }, [flipped, card, removeDelayFromFlipped]);
 
+  const theme = useBlackjackTheme();
+
   return (
     <div
       data-state={flippedWithDelay ? 'flipped' : 'unflipped'}
@@ -51,20 +53,20 @@ export const Card: React.FC<CardProps> = ({
               isUpsideDown={false}
             />
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/blackjack/card-front-logo.svg`} alt="Justbet Blackjack" />
+              <img src={theme.cardFrontLogo} alt="Justbet Blackjack" />
             </div>
           </div>
           <div
             className={styles.mainIcon}
             style={{
-              backgroundImage: `url(${CDN_URL}/blackjack/card-bg-black.png)`,
+              backgroundImage: `url(${theme.cardBg})`,
             }}
           >
             {getBlackjackIcon(card?.suit || BlackjackSuit.CLUBS)?.main}
           </div>
           <div className={styles.cardSuitArea}>
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/blackjack/card-front-logo.svg`} alt="Justbet Blackjack" />
+              <img src={theme.cardFrontLogo} alt="Justbet Blackjack" />
             </div>
             <CardValue
               suit={card?.suit || BlackjackSuit.CLUBS}
@@ -76,7 +78,7 @@ export const Card: React.FC<CardProps> = ({
         <div
           className={styles.back}
           style={{
-            backgroundImage: `url(${CDN_URL}/blackjack/card-bg.svg)`,
+            backgroundImage: `url(${theme.cardBack})`,
           }}
         />
       </div>
