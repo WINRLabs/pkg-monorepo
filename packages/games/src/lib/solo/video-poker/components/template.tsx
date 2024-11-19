@@ -7,9 +7,9 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
-import { CDN_URL } from '../../../constants';
 import { Form, FormField } from '../../../ui/form';
 import { VideoPokerResult } from '../constants';
+import { useVideoPokerTheme, VideoPokerTheme, VideoPokerThemeProvider } from '../provider/theme';
 import useVideoPokerGameStore, { VideoPokerStatus } from '../store';
 import { CardStatus, parseCards, VideoPokerFormFields } from '../types';
 import { VideoPokerBetController } from './bet-controller';
@@ -36,6 +36,7 @@ interface TemplateProps {
   onFormChange?: (fields: VideoPokerFormFields) => void;
   onAnimationCompleted?: (payout: number) => void;
   onLogin?: () => void;
+  theme?: Partial<VideoPokerTheme>;
 }
 
 const VideoPokerTemplate = ({
@@ -49,10 +50,13 @@ const VideoPokerTemplate = ({
   handleStartGame,
   onAnimationCompleted,
   onLogin,
+  theme,
 }: TemplateProps) => {
   const [currentCards, setCurrentCards] = React.useState<any[]>(new Array(5).fill(0));
 
   const { updateState, status } = useVideoPokerGameStore(['updateState', 'status']);
+
+  const { cardStackImage } = useVideoPokerTheme();
 
   const formSchema = z.object({
     wager: z
@@ -173,7 +177,7 @@ const VideoPokerTemplate = ({
   }, [form.watch]);
 
   return (
-    <>
+    <VideoPokerThemeProvider theme={theme || {}}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <GameContainer>
@@ -191,7 +195,7 @@ const VideoPokerTemplate = ({
               }}
             >
               <img
-                src={`${CDN_URL}/video-poker/card-stack.png`}
+                src={theme?.cardStackImage || cardStackImage}
                 width={170}
                 height={234}
                 alt={'card_stack'}
@@ -233,7 +237,7 @@ const VideoPokerTemplate = ({
           </GameContainer>
         </form>
       </Form>
-    </>
+    </VideoPokerThemeProvider>
   );
 };
 
