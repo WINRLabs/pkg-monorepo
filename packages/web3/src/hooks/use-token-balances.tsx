@@ -8,6 +8,7 @@ import { BalanceMap, useBalanceStore } from '../providers/balance';
 import { useTokenStore } from '../providers/token';
 import { toDecimals } from '../utils/number';
 import { useNativeTokenBalance } from './use-native-token-balance';
+import { useSmartAccountApi } from './use-smart-account-api';
 
 const log = debug('worker:UseTokenBalances');
 
@@ -45,6 +46,8 @@ export const useTokenBalances = ({
   account: Address;
   balancesToRead?: Address[];
 }) => {
+  const { multicallAddress } = useSmartAccountApi();
+
   const balanceStore = useBalanceStore((state) => ({
     balances: state.balances,
     updateBalances: state.updateBalances,
@@ -63,7 +66,7 @@ export const useTokenBalances = ({
 
   const result = useReadContracts({
     contracts: contractsToRead,
-    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    multicallAddress,
     batchSize: 0,
     allowFailure: false,
     query: {

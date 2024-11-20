@@ -23,6 +23,7 @@ export const controllerAddress = allAddresses.controller;
 export const cashierAddress = allAddresses.cashier;
 export const uiOperatorAddress = allAddresses.uiOperator;
 export const strategyStoreAddress = allAddresses.strategyStore;
+export const multicallAddress = allAddresses.multicallAddress;
 
 export const rankMiddlewareAddress = allAddresses.rankMiddleware;
 

@@ -10,6 +10,8 @@ import { useBundlerClient } from './use-bundler-client';
 
 const log = debug('worker:UseSmartAccountApi');
 
+const MULTICALL_ADDRESS = '0xca11bde05977b3631167028862be2a173976ca11';
+
 export class Paymaster implements PaymasterAPI {
   client: JSONRPCClient;
   paymasterAddress: `0x${string}`;
@@ -44,6 +46,7 @@ export class Paymaster implements PaymasterAPI {
 
 interface UseSmartAccountApi {
   accountApi?: SimpleAccountAPI;
+  multicallAddress?: `0x${string}`;
 }
 
 const SmartAccountApiContext = React.createContext<UseSmartAccountApi>({
@@ -61,8 +64,16 @@ export const SmartAccountApiProvider: React.FC<{
   entryPointAddress: `0x${string}`;
   factoryAddress: `0x${string}`;
   paymasterAddress: `0x${string}`;
+  multicallAddress?: `0x${string}`;
   config?: Config;
-}> = ({ children, entryPointAddress, factoryAddress, paymasterAddress, config }) => {
+}> = ({
+  children,
+  entryPointAddress,
+  factoryAddress,
+  paymasterAddress,
+  multicallAddress,
+  config,
+}) => {
   const { address } = useAccount();
 
   const { client } = useBundlerClient();
@@ -97,7 +108,12 @@ export const SmartAccountApiProvider: React.FC<{
   }, [client, address, signer, publicClient]);
 
   return (
-    <SmartAccountApiContext.Provider value={{ accountApi }}>
+    <SmartAccountApiContext.Provider
+      value={{
+        accountApi,
+        multicallAddress: multicallAddress ? multicallAddress : MULTICALL_ADDRESS,
+      }}
+    >
       {children}
     </SmartAccountApiContext.Provider>
   );
