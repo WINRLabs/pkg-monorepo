@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.82
+
+### Patch Changes
+
+- ef3e1c6: dynamic multicall
+
 ## 0.11.81
 
 ### Patch Changes
