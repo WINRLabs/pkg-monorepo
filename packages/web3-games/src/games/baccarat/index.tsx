@@ -5,6 +5,7 @@ import {
   BaccaratGameResult,
   BaccaratGameSettledResult,
   BaccaratTemplate,
+  BaccaratTheme,
   BetHistoryTemplate,
   GameType,
 } from '@winrlabs/games';
@@ -43,13 +44,13 @@ interface TemplateWithWeb3Props extends BaseGameProps {
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
-
   onAnimationCompleted?: (result: BaccaratGameSettledResult) => void;
   onPlayerStatusUpdate?: (d: {
     type: 'levelUp' | 'badgeUp';
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  theme?: Partial<BaccaratTheme>;
 }
 
 export default function BaccaratGame(props: TemplateWithWeb3Props) {

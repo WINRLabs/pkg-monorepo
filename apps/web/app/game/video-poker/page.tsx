@@ -1,11 +1,18 @@
-"use client";
+'use client';
 
-import { VideoPokerGame, Web3GamesModals } from "@winrlabs/web3-games";
+import { VideoPokerGame, Web3GamesModals } from '@winrlabs/web3-games';
 
 export default function VideoPokerPage() {
   return (
     <>
-      <VideoPokerGame minWager={0.1} maxWager={2000} />
+      <VideoPokerGame
+        minWager={0.1}
+        maxWager={2000}
+        theme={{
+          cardFrontLogo: '/video-poker/card-front-logo.png',
+          cardStackImage: '/video-poker/card-stack.png',
+        }}
+      />
       <Web3GamesModals />
     </>
   );

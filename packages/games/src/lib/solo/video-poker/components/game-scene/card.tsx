@@ -6,6 +6,7 @@ import { ControllerRenderProps, useFormContext } from 'react-hook-form';
 import { CDN_URL } from '../../../../constants';
 import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { cn } from '../../../../utils/style';
+import { useVideoPokerTheme } from '../../provider/theme';
 import useVideoPokerGameStore, { VideoPokerStatus } from '../../store';
 import { Card, CardStatus, VideoPokerForm } from '../../types';
 import styles from './video-poker-card.module.css';
@@ -71,6 +72,8 @@ export const CardComponent: React.FC<{
     'cardsToSend'
   >;
 }> = ({ card, index }) => {
+  const theme = useVideoPokerTheme();
+
   const [flipped, setFlipped] = React.useState(false);
 
   const flipCardEffect = useAudioEffect(SoundEffects.POKER_CARD_FOLD);
@@ -193,7 +196,10 @@ export const CardComponent: React.FC<{
             <div className={'wr-flex wr-items-center wr-justify-between wr-px-2 wr-py-3'}>
               <CardValue value={card.value} cardType={card.className} isUpsideDown={false} />
               <div className={'wr-relative wr-z-20 wr-h-8 wr-w-8 wr-rounded-full'}>
-                <img src={`${CDN_URL}/baccarat/card-front-logo.svg`} alt="Justbet Video Poker" />
+                <img
+                  src={theme.cardFrontLogo || `${CDN_URL}/baccarat/card-front-logo.svg`}
+                  alt="Justbet Video Poker"
+                />
               </div>
             </div>
             <div
@@ -205,7 +211,10 @@ export const CardComponent: React.FC<{
             </div>
             <div className={'wr-flex wr-items-center wr-justify-between wr-px-2 wr-py-3'}>
               <div className={'wr-relative wr-z-20 wr-h-8 wr-w-8 wr-rounded-full'}>
-                <img src={`${CDN_URL}/baccarat/card-front-logo.svg`} alt="Justbet Video Poker" />
+                <img
+                  src={theme.cardFrontLogo || `${CDN_URL}/baccarat/card-front-logo.svg`}
+                  alt="Justbet Video Poker"
+                />
               </div>
               <CardValue value={card.value} cardType={card.className} isUpsideDown={true} />
             </div>

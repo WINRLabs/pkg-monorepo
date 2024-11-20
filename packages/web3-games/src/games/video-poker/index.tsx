@@ -7,6 +7,7 @@ import {
   VideoPokerResult,
   VideoPokerStatus,
   VideoPokerTemplate,
+  VideoPokerTheme,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -20,6 +21,7 @@ import {
   videoPokerAbi,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 import { useReadContract } from 'wagmi';
@@ -34,7 +36,6 @@ import {
 } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { prepareGameTransaction } from '../utils';
-import debug from 'debug';
 
 const log = debug('worker:VideoPokerWeb3');
 
@@ -48,6 +49,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  theme?: Partial<VideoPokerTheme>;
 }
 
 export default function VideoPokerGame(props: TemplateWithWeb3Props) {

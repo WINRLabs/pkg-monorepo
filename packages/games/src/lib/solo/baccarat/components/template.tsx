@@ -18,6 +18,7 @@ import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { MULTIPLIER_BANKER, MULTIPLIER_PLAYER, MULTIPLIER_TIE } from '../constants';
+import { BaccaratTheme, BaccaratThemeProvider } from '../provider/theme';
 import {
   BaccaratBetType,
   BaccaratFormFields,
@@ -32,32 +33,28 @@ import Control from './control';
 type TemplateProps = BaccaratGameProps & {
   minWager?: number;
   maxWager?: number;
-
   strategy: StrategyProps;
-
   onSubmitGameForm: (data: BaccaratFormFields) => void;
   onFormChange?: (fields: BaccaratFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
-
   onError?: (e: any) => void;
   onLogin?: () => void;
+  theme?: Partial<BaccaratTheme>;
 };
 
 const BaccaratTemplate: React.FC<TemplateProps> = ({
   minWager,
   maxWager,
-
   baccaratResults,
   baccaratSettledResults,
-
   strategy,
-
   onAnimationCompleted = () => {},
   onAutoBetModeChange,
   onSubmitGameForm,
   onFormChange,
   onError,
   onLogin,
+  theme,
 }) => {
   const { account } = useGameOptions();
   const balanceAsDollar = account?.balanceAsDollar || 0;
@@ -314,55 +311,57 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   }, [isAutoBetMode]);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(prepareSubmit)}>
-        <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
-          <BetController
-            maxWager={maxWager || 2000}
-            minWager={minWager || 1}
-            isDisabled={isGamePlaying}
-            totalWager={totalWager}
-            maxPayout={maxPayout}
-            selectedChip={selectedChip}
-            undoBet={undoBet}
-            onSelectedChipChange={setSelectedChip}
-            isAutoBetMode={isAutoBetMode}
-            onAutoBetModeChange={setIsAutoBetMode}
-            onLogin={onLogin}
-            onBetModeChange={setBetMode}
-            strategy={strategy}
-          />
-          <SceneContainer
-            className="wr-relative wr-flex wr-h-[340px] lg:wr-h-[640px] wr-overflow-hidden"
-            style={{
-              backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
-            }}
-          >
-            <BaccaratScene
-              baccaratResults={results}
-              baccaratSettled={settled}
+    <BaccaratThemeProvider theme={theme || {}}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(prepareSubmit)}>
+          <GameContainer className="wr-relative wr-overflow-hidden wr-pt-0">
+            <BetController
+              maxWager={maxWager || 2000}
+              minWager={minWager || 1}
               isDisabled={isGamePlaying}
-              setIsDisabled={setIsGamePlaying}
-              addWager={addWager}
+              totalWager={totalWager}
+              maxPayout={maxPayout}
               selectedChip={selectedChip}
-              onAnimationCompleted={onAnimationCompleted}
-              processStrategy={processStrategy}
-              onSubmitGameForm={prepareSubmit}
+              undoBet={undoBet}
+              onSelectedChipChange={setSelectedChip}
               isAutoBetMode={isAutoBetMode}
               onAutoBetModeChange={setIsAutoBetMode}
+              onLogin={onLogin}
+              onBetModeChange={setBetMode}
+              strategy={strategy}
             />
-            <Control
-              totalWager={totalWager}
-              isDisabled={isGamePlaying}
-              undoBet={undoBet}
-              reset={form.reset}
-              variant="overlay"
-            />
-            <WinAnimation />
-          </SceneContainer>
-        </GameContainer>
-      </form>
-    </Form>
+            <SceneContainer
+              className="wr-relative wr-flex wr-h-[340px] lg:wr-h-[640px] wr-overflow-hidden"
+              style={{
+                backgroundImage: `url(${CDN_URL}/baccarat/baccarat-bg.png)`,
+              }}
+            >
+              <BaccaratScene
+                baccaratResults={results}
+                baccaratSettled={settled}
+                isDisabled={isGamePlaying}
+                setIsDisabled={setIsGamePlaying}
+                addWager={addWager}
+                selectedChip={selectedChip}
+                onAnimationCompleted={onAnimationCompleted}
+                processStrategy={processStrategy}
+                onSubmitGameForm={prepareSubmit}
+                isAutoBetMode={isAutoBetMode}
+                onAutoBetModeChange={setIsAutoBetMode}
+              />
+              <Control
+                totalWager={totalWager}
+                isDisabled={isGamePlaying}
+                undoBet={undoBet}
+                reset={form.reset}
+                variant="overlay"
+              />
+              <WinAnimation />
+            </SceneContainer>
+          </GameContainer>
+        </form>
+      </Form>
+    </BaccaratThemeProvider>
   );
 };
 
