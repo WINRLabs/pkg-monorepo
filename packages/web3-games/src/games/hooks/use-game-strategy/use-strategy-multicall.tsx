@@ -1,13 +1,14 @@
 'use client';
 
-import { strategyStoreAbi } from '@winrlabs/web3';
+import { StrategyStruct } from '@winrlabs/games';
+import { strategyStoreAbi, useSmartAccountApi } from '@winrlabs/web3';
 import React from 'react';
 import { useReadContracts } from 'wagmi';
 
 import { useContractConfigContext } from '../use-contract-config';
-import { StrategyStruct } from './types';
 
 export const useStrategyMulticall = (strategyList?: StrategyStruct[]) => {
+  const { multicallAddress } = useSmartAccountApi();
   const { strategyStoreAddress, wagmiConfig } = useContractConfigContext();
   const strategyIds = React.useMemo(() => {
     if (!strategyList?.length) return [];
@@ -24,7 +25,7 @@ export const useStrategyMulticall = (strategyList?: StrategyStruct[]) => {
       args: [id!],
     })),
     batchSize: 0,
-    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    multicallAddress,
     allowFailure: false,
     query: {
       enabled: !!strategyList?.length && !!strategyStoreAddress,

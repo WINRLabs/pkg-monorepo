@@ -26,6 +26,7 @@ export const WinrLabsWeb3Provider = ({
     factoryAddress: `0x${string}`;
     network: BundlerNetwork;
     paymasterAddress: `0x${string}`;
+    multicallAddress?: `0x${string}`;
   };
   wagmiConfig?: Config;
   tokens: Token[];
@@ -48,6 +49,7 @@ export const WinrLabsWeb3Provider = ({
           entryPointAddress={smartAccountConfig.entryPointAddress}
           factoryAddress={smartAccountConfig.factoryAddress}
           paymasterAddress={smartAccountConfig.paymasterAddress}
+          multicallAddress={smartAccountConfig.multicallAddress}
           config={wagmiConfig}
         >
           <TokenProvider tokens={tokens} selectedToken={selectedToken}>

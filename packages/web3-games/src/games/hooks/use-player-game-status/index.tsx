@@ -8,6 +8,7 @@ import {
   useApiOptions,
   useBundlerClient,
   useCurrentAccount,
+  useSmartAccountApi,
 } from '@winrlabs/web3';
 import dayjs from 'dayjs';
 import debug from 'debug';
@@ -77,6 +78,7 @@ export const usePlayerGameStatus = ({
   const [refundCooldown, setRefundCooldown] = React.useState<number>(0);
   const [reIterateCooldown, setReIterateCooldown] = React.useState<number>(0);
 
+  const { multicallAddress } = useSmartAccountApi();
   const { rankMiddlewareAddress, controllerAddress } = useContractConfigContext();
   const currentAccount = useCurrentAccount();
   const { openModal, closeModal } = useWeb3GamesModalsStore();
@@ -115,7 +117,7 @@ export const usePlayerGameStatus = ({
       },
     ],
     config: wagmiConfig,
-    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+    multicallAddress,
     batchSize: 0,
     allowFailure: false,
     query: {
