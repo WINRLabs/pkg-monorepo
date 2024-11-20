@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 13.0.1
+
+### Patch Changes
+
+- ef3e1c6: dynamic multicall
+- Updated dependencies [ef3e1c6]
+  - @winrlabs/web3-games@13.0.1
+  - @winrlabs/web3@0.11.82
+
 ## 13.0.0
 
 ### Minor Changes
