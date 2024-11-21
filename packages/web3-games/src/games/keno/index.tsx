@@ -28,6 +28,7 @@ import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 import { BaseGameProps } from '../../type';
 import {
   Badge,
+  RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
   useGetBadges,
@@ -221,6 +222,8 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
         target: controllerAddress,
         method: 'sendGameOperation',
       });
+
+      handleErrorLogic(v, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
     } catch (e: any) {
       handleErrorLogic(v, errCount, e);
     }

@@ -26,7 +26,14 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus, useRetryLogic } from '../hooks';
+import {
+  Badge,
+  RETRY_ATTEMPTS,
+  useBetHistory,
+  useGetBadges,
+  usePlayerGameStatus,
+  useRetryLogic,
+} from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
@@ -194,6 +201,8 @@ export default function PrincessWinrGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
+
+      handleErrorLogicBet({}, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
     } catch (e: any) {
       handleErrorLogicBet({}, errCount, e);
       throw new Error(e);
@@ -254,6 +263,8 @@ export default function PrincessWinrGame({
         target: controllerAddress,
         method: 'sendGameOperation',
       });
+
+      handleErrorLogicFreeSpin({}, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
     } catch (e: any) {
       handleErrorLogicFreeSpin({}, errCount, e);
       throw new Error(e);

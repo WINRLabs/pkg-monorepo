@@ -30,6 +30,7 @@ import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 import { BaseGameProps } from '../../type';
 import {
   Badge,
+  RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
   useGetBadges,
@@ -222,6 +223,8 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
         method: 'sendGameOperation',
         target: controllerAddress,
       });
+
+      handleErrorLogic(v, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
     } catch (e: any) {
       handleErrorLogic(v, errCount, e);
     }
