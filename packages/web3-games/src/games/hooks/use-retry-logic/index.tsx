@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
-import debug from 'debug';
 import { ErrorCode } from '@winrlabs/web3';
+import debug from 'debug';
+import React from 'react';
 
 const log = debug('worker:UseRetryLogic');
+
+export const RETRY_ATTEMPTS = 3;
 
 interface UseRetryLogicParams<T> {
   onSubmit: (v: T, errCount?: number) => Promise<void>;
@@ -26,7 +28,7 @@ export const useRetryLogic = <T,>({ onSubmit, playerReIterate, cb }: UseRetryLog
     log('error', e?.code);
     cb && cb();
 
-    if (errCount > 3) {
+    if (errCount > RETRY_ATTEMPTS) {
       clearIterationIntervals();
       return;
     }
@@ -43,9 +45,9 @@ export const useRetryLogic = <T,>({ onSubmit, playerReIterate, cb }: UseRetryLog
     retryGame(v, errCount);
   };
 
-  const handleErrorLogic = async (v: T, errCount = 0, e?: any) => {
+  const handleErrorLogic = async (v: T, errCount = 0, e?: any, duration = 750) => {
     if (isMountedRef.current) {
-      const t = setTimeout(() => handleFail(v, errCount + 1, e), 750);
+      const t = setTimeout(() => handleFail(v, errCount + 1, e), duration);
       iterationTimeoutRef.current.push(t);
     }
   };
