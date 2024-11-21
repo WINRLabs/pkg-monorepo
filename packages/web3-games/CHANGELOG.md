@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 13.0.2
+
+### Patch Changes
+
+- 001a783: retry logic
+- Updated dependencies [001a783]
+  - @winrlabs/web3-games@13.0.2
+
 ## 13.0.1
 
 ### Patch Changes
