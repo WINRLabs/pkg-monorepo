@@ -6,12 +6,14 @@ import { BundlerClientProvider, BundlerNetwork, BundlerVersion } from '../hooks/
 import { CurrentAccountProvider } from '../hooks/use-current-address';
 import { SmartAccountApiProvider } from '../hooks/use-smart-account-api';
 import { ApiContextType, ApiProvider } from './api';
+import { PriceFeedProvider } from './price-feed';
 import { Token, TokenProvider } from './token';
 
 export const WinrLabsWeb3Provider = ({
   children,
   smartAccountConfig,
   tokens,
+  tokenPriceFeed,
   selectedToken,
   wagmiConfig,
   globalChainId,
@@ -30,6 +32,7 @@ export const WinrLabsWeb3Provider = ({
   };
   wagmiConfig?: Config;
   tokens: Token[];
+  tokenPriceFeed: Record<Token['priceKey'], number>;
   selectedToken: Token;
   globalChainId?: number;
   apiConfig?: ApiContextType;
@@ -53,7 +56,9 @@ export const WinrLabsWeb3Provider = ({
           config={wagmiConfig}
         >
           <TokenProvider tokens={tokens} selectedToken={selectedToken}>
-            <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
+            <PriceFeedProvider priceFeed={tokenPriceFeed}>
+              <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
+            </PriceFeedProvider>
           </TokenProvider>
         </SmartAccountApiProvider>
       </BundlerClientProvider>

@@ -139,7 +139,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
 
   const gameEvent = useListenGameEvent(gameAddresses.blackjack);
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<BlackjackFormFields>({
@@ -183,7 +183,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const { firstHandWager, secondHandWager, thirdHandWager } = formValues;
@@ -1073,8 +1073,8 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     const gameResults = results.hands;
     const gamePayout = Number(formatUnits(BigInt(results.payout), selectedToken.decimals));
     const gamePayback = Number(formatUnits(BigInt(results.payback), selectedToken.decimals));
-    const gamePayoutAsDollar = gamePayout * priceFeed[selectedToken.priceKey];
-    const gamePaybackAsDollar = gamePayback * priceFeed[selectedToken.priceKey];
+    const gamePayoutAsDollar = gamePayout * getTokenPrice(selectedToken.priceKey);
+    const gamePaybackAsDollar = gamePayback * getTokenPrice(selectedToken.priceKey);
 
     setActiveGameHands((prev) => ({
       ...prev,

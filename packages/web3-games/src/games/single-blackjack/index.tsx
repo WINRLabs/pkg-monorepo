@@ -116,7 +116,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
 
   const gameEvent = useListenGameEvent(gameAddresses.singleBlackjack);
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formValues, setFormValues] = React.useState<SingleBJDealFormFields>({
@@ -156,7 +156,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedGameData = encodeAbiParameters(
@@ -890,7 +890,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       ?.data as BlackjackDealerCardsEvent;
     const gameResults = results.hands;
     const gamePayout = Number(formatUnits(BigInt(results.payout), selectedToken.decimals));
-    const gamePayoutAsDollar = gamePayout * priceFeed[selectedToken.priceKey];
+    const gamePayoutAsDollar = gamePayout * getTokenPrice(selectedToken.priceKey);
 
     setActiveGameHands((prev) => ({
       ...prev,

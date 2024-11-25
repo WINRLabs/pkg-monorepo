@@ -115,7 +115,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
   const gameEvent = useListenGameEvent(gameAddresses.singleWheel);
 
   const currentAccount = useCurrentAccount();
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
     balancesToRead: [selectedToken.address],
@@ -130,12 +130,12 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
   });
 
   const getEncodedBetTxData = () => {
-    const { wagerInWei, stopGainInWei, stopLossInWei } = prepareGameTransaction({
+    const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

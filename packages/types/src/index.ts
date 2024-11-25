@@ -1,22 +1,5 @@
 import { Address } from 'viem';
 
-export type PriceFeedVariable =
-  | 'winr'
-  | 'arb'
-  | 'btc'
-  | 'eth'
-  | 'usdc'
-  | 'weth'
-  | 'sol'
-  | 'usdt'
-  | 'mck'
-  | 'boop'
-  | 'spx'
-  | 'brett'
-  | 'mog'
-  | 'toshi'
-  | 'klaus';
-
 export interface Token {
   address: Address;
   bankrollIndex: Address;
@@ -25,7 +8,7 @@ export interface Token {
   decimals: number;
   displayDecimals: number;
   playable: boolean;
-  priceKey: PriceFeedVariable;
+  priceKey: string;
 }
 
 export type BalanceMap = Record<Address, number>;

@@ -129,7 +129,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     showDefaultToasts: false,
   });
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const getEncodedBetTxData = () => {
     const { wagerInWei } = prepareGameTransaction({
@@ -137,7 +137,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedGameData = encodeAbiParameters(

@@ -115,7 +115,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [diceResult, setDiceResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
 
@@ -149,7 +149,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       stopGain: v.stopGain,
       stopLoss: v.stopLoss,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

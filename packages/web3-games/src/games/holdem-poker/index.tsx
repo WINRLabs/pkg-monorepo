@@ -112,7 +112,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
 
   const tokens = useTokenStore((s) => s.tokens);
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const gameEvent = useListenGameEvent(gameAddresses.holdemPoker);
 
@@ -132,7 +132,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     const { wagerInWei } = prepareGameTransaction({
       wager: formValues.wager,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const { ante, aaBonus } = formValues;
@@ -290,7 +290,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     const initialToken = tokens.find((t) => t.bankrollIndex == gameDataRead.data.bankroll) as Token;
     const initialWagerAsDollar =
       Number(formatUnits(gameDataRead.data.wager, initialToken.decimals)) *
-      priceFeed[initialToken.priceKey];
+      getTokenPrice(initialToken.priceKey);
 
     const _activeGame = {
       cards: gameDataRead.data.cards as unknown as number[],
@@ -353,9 +353,9 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
         const token = tokens.find((t) => t.bankrollIndex == result.game.bankroll) as Token;
 
         const paybackAmountAsDollar =
-          Number(formatUnits(result.payback, token.decimals)) * priceFeed[token.priceKey];
+          Number(formatUnits(result.payback, token.decimals)) * getTokenPrice(token.priceKey);
         const payoutAmountAsDollar =
-          Number(formatUnits(result.payout, token.decimals)) * priceFeed[token.priceKey];
+          Number(formatUnits(result.payout, token.decimals)) * getTokenPrice(token.priceKey);
 
         setActiveGame((prev) => ({
           ...prev,

@@ -74,7 +74,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       onPlayerStatusUpdate: props.onPlayerStatusUpdate,
     });
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const selectedTokenAddress = useTokenStore((s) => s.selectedToken);
 
@@ -145,7 +145,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       const initialToken = tokens.find((t) => t.bankrollIndex == data.bankroll) as Token;
       const wagerInGameCurrency = formatUnits(data.wager, initialToken.decimals);
 
-      const wager = Number(wagerInGameCurrency) * priceFeed[initialToken.priceKey];
+      const wager = Number(wagerInGameCurrency) * getTokenPrice(initialToken.priceKey);
 
       const _wager = wager < 1 ? Math.ceil(wager) : wager;
 
@@ -191,7 +191,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     const { wagerInWei } = prepareGameTransaction({
       wager: values.wager,
       selectedCurrency: selectedTokenAddress,
-      lastPrice: priceFeed[selectedTokenAddress.priceKey],
+      lastPrice: getTokenPrice(selectedTokenAddress.priceKey),
     });
 
     log(values.selectedCells, 'selectedCells');
