@@ -1,5 +1,13 @@
 # @winrlabs/games
 
+## 5.1.1
+
+### Patch Changes
+
+- 0b5e1bf: price feed refactor
+- Updated dependencies [0b5e1bf]
+  - @winrlabs/types@0.0.5
+
 ## 5.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @winrlabs/types
 
+## 0.0.5
+
+### Patch Changes
+
+- 0b5e1bf: price feed refactor
+
 ## 0.0.4
 
 ### Patch Changes
