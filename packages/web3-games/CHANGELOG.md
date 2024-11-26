@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 13.0.3
+
+### Patch Changes
+
+- 0b5e1bf: price feed refactor
+- Updated dependencies [0b5e1bf]
+  - @winrlabs/games@5.1.1
+  - @winrlabs/web3@0.11.83
+  - @winrlabs/web3-games@13.0.3
+
 ## 13.0.2
 
 ### Patch Changes

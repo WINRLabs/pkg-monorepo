@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.83
+
+### Patch Changes
+
+- 0b5e1bf: price feed refactor
+
 ## 0.11.82
 
 ### Patch Changes
