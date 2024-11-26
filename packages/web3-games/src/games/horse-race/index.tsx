@@ -134,7 +134,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     showDefaultToasts: false,
   });
 
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const getEncodedBetTxData = () => {
     const { wagerInWei } = prepareGameTransaction({
@@ -142,7 +142,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedGameData = encodeAbiParameters(

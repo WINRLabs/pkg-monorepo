@@ -15,6 +15,7 @@ import {
   useTokenAllowance,
   useTokenStore,
 } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
@@ -28,7 +29,6 @@ import {
   prepareGameTransaction,
   SingleStepSettledEvent,
 } from '../utils';
-import debug from 'debug';
 
 const log = debug('worker:CoinFlip3DWeb3');
 
@@ -75,7 +75,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
   const currentAccount = useCurrentAccount();
@@ -104,7 +104,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
       stopGain: formValues.stopGain,
       stopLoss: formValues.stopLoss,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

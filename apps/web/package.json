@@ -33,6 +33,7 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
+    "@winrlabs/api": "workspace:*",
     "@winrlabs/eslint-config": "workspace:*",
     "@winrlabs/tailwind-config": "workspace:*",
     "@winrlabs/typescript-config": "workspace:*",

@@ -1,19 +1,17 @@
 'use client';
 
-import { useCurrencyControllerGetLastPriceFeed } from '@winrlabs/api';
 import React from 'react';
 
-import { useApiOptions } from '../../providers/api';
 import {
   defaultPriceFeedValues,
   PriceFeedVariable,
   TPriceFeed,
   usePriceFeedStore,
 } from './price-feed.store';
+import { useCurrencyControllerGetLastPriceFeed } from '@winrlabs/api';
 
 export const usePriceFeed = () => {
   const { priceFeed, updatePriceFeed } = usePriceFeedStore();
-  const { disablePriceFeed } = useApiOptions();
 
   const { data, dataUpdatedAt } = useCurrencyControllerGetLastPriceFeed(
     {},
@@ -21,7 +19,6 @@ export const usePriceFeed = () => {
       refetchInterval: 10_000,
       refetchOnWindowFocus: false,
       retry: false,
-      enabled: !disablePriceFeed,
     }
   );
 

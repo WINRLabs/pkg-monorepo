@@ -4,7 +4,6 @@ import { createContext, useContext, useRef } from 'react';
 import { Address } from 'viem';
 import { createStore, StoreApi, useStore } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { PriceFeedVariable } from '../hooks/price-feed';
 
 export interface Token {
   address: Address;
@@ -14,7 +13,7 @@ export interface Token {
   decimals: number;
   displayDecimals: number;
   playable: boolean;
-  priceKey: PriceFeedVariable;
+  priceKey: string;
 }
 
 interface TokenProps {

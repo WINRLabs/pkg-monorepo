@@ -117,7 +117,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [coinFlipResult, setCoinFlipResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
 
@@ -151,7 +151,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
       stopGain: v.stopGain,
       stopLoss: v.stopLoss,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

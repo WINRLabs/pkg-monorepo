@@ -2,7 +2,6 @@
 
 export * from './abis';
 export * from './config/smart-wallet-connectors';
-export * from './hooks/price-feed/use-price-feed';
 export * from './hooks/session';
 export * from './hooks/transaction';
 export * from './hooks/use-bundler-client';
@@ -20,6 +19,7 @@ export * from './hooks/use-wrap-winr';
 export * from './providers';
 export * from './providers/api';
 export * from './providers/balance';
+export * from './providers/price-feed';
 export * from './providers/token';
 export * from './smart-wallet';
 export * from './utils/error-codes';

@@ -110,7 +110,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [plinkoResult, setPlinkoResult] =
     useState<DecodedEvent<any, SingleStepSettledEvent<number[]>>>();
@@ -145,7 +145,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
       stopGain: v.stopGain,
       stopLoss: v.stopLoss,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

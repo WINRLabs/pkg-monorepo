@@ -34,10 +34,10 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
   }));
 
   const { balances } = useBalanceStore();
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const balance = balances[selectedToken.address] || 0;
-  const balanceAsDollar = balance * priceFeed[selectedToken.priceKey];
+  const balanceAsDollar = balance * getTokenPrice(selectedToken.priceKey);
   const [connected, setConnected] = useState(false);
 
   return (

@@ -6,24 +6,20 @@ import { WagmiProvider } from 'wagmi';
 
 import { AudioContextProvider } from '@winrlabs/games';
 import { AppUiProviders } from '@winrlabs/ui';
-import { BundlerNetwork, WinrLabsWeb3Provider } from '@winrlabs/web3';
+import { BundlerNetwork } from '@winrlabs/web3';
 import { WinrLabsWeb3GamesProvider } from '@winrlabs/web3-games';
 import { Address } from 'viem';
-import { config } from './wagmi';
-import { allAddresses, appTokens } from '../constants';
+import { config } from '../wagmi';
+import { allAddresses } from '../../constants';
+import { WinrLabsWeb3Providers } from './winrlabs-web3';
 
-const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL || '';
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || '';
 const network = BundlerNetwork.WINR;
-
-export const entryPointAddress = allAddresses.entryPoint;
-export const factoryAddress = allAddresses.factory;
 
 export const controllerAddress = allAddresses.controller;
 export const cashierAddress = allAddresses.cashier;
 export const uiOperatorAddress = allAddresses.uiOperator;
 export const strategyStoreAddress = allAddresses.strategyStore;
-export const multicallAddress = allAddresses.multicallAddress;
 
 export const rankMiddlewareAddress = allAddresses.rankMiddleware;
 
@@ -65,35 +61,7 @@ export function Providers(props: { children: ReactNode }) {
   return (
     <WagmiProvider reconnectOnMount={isPreviouslyConnected} config={config}>
       <QueryClientProvider client={queryClient}>
-        <WinrLabsWeb3Provider
-          bundlerVersion="v2"
-          // apiConfig={{
-          //   baseUrl: 'https://abc.com',
-          // }}
-          globalChainId={66666666}
-          apiConfig={{}}
-          smartAccountConfig={{
-            bundlerUrl,
-            network,
-            entryPointAddress,
-            factoryAddress,
-            paymasterAddress: '0x37C6F569A0d68C8381Eb501b79F501aDc132c144',
-          }}
-          tokens={appTokens}
-          selectedToken={{
-            address: '0xaF31A7E835fA24f13ae1e0be8EB1fb56F906BE11',
-            bankrollIndex: '0x0000000000000000000000000000000000000001',
-            displayDecimals: 2,
-            decimals: 6,
-            icon: '/images/tokens/usdc.png',
-            symbol: 'USDC',
-            playable: true,
-            priceKey: 'usdc',
-          }}
-          onPinNotFound={() => {
-            console.log('Pin not found');
-          }}
-        >
+        <WinrLabsWeb3Providers>
           <AppUiProviders wagmiConfig={config}>
             <WinrLabsWeb3GamesProvider
               config={{
@@ -119,7 +87,7 @@ export function Providers(props: { children: ReactNode }) {
               <AudioContextProvider>{props.children}</AudioContextProvider>
             </WinrLabsWeb3GamesProvider>
           </AppUiProviders>
-        </WinrLabsWeb3Provider>
+        </WinrLabsWeb3Providers>
       </QueryClientProvider>
     </WagmiProvider>
   );

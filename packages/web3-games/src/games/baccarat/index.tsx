@@ -95,7 +95,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [baccaratResults, setBaccaratResults] = useState<BaccaratGameResult | null>(null);
   const [baccaratSettledResult, setBaccaratSettledResult] =
@@ -124,7 +124,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(

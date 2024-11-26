@@ -131,7 +131,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
 
   const currentAccount = useCurrentAccount();
   const allTokens = useTokenStore((s) => s.tokens);
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
     balancesToRead: [selectedToken.address],
@@ -151,7 +151,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       stopGain: 0,
       stopLoss: 0,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedGameData = encodeAbiParameters(

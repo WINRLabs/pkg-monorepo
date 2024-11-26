@@ -121,6 +121,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.3.0
+      '@winrlabs/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@winrlabs/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config

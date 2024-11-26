@@ -115,7 +115,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
   }));
-  const { priceFeed } = usePriceFeed();
+  const { getTokenPrice } = usePriceFeed();
 
   const [rpsResult, setRpsResult] = useState<DecodedEvent<any, SingleStepSettledEvent>>();
   const currentAccount = useCurrentAccount();
@@ -146,7 +146,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     const { wagerInWei, stopGainInWei, stopLossInWei } = prepareGameTransaction({
       wager: v.wager,
       selectedCurrency: selectedToken,
-      lastPrice: priceFeed[selectedToken.priceKey],
+      lastPrice: getTokenPrice(selectedToken.priceKey),
     });
 
     const encodedChoice = encodeAbiParameters(
