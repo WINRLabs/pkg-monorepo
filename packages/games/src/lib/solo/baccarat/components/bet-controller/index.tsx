@@ -24,6 +24,7 @@ interface Props {
   onSelectedChipChange: (chip: Chip) => void;
   undoBet: () => void;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   strategy: StrategyProps;

@@ -22,6 +22,7 @@ interface Props {
   isDisabled: boolean;
   minWager: number;
   maxWager: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
   onSelectedChipChange: (chip: Chip) => void;
   undoBet: () => void;
@@ -34,6 +35,7 @@ export const ManualController: React.FC<Props> = ({
   totalWager,
   selectedChip,
   maxPayout,
+  isPinNotFound,
   onLogin,
   onSelectedChipChange,
   undoBet,
@@ -90,7 +92,7 @@ export const ManualController: React.FC<Props> = ({
       </div>
 
       <div className="wr-w-full lg:wr-order-none lg:wr-mb-6">
-        <PreBetButton onLogin={onLogin} totalWager={totalWager}>
+        <PreBetButton onLogin={onLogin} totalWager={totalWager} isPinNotFound={isPinNotFound}>
           <Button
             type="submit"
             variant="success"

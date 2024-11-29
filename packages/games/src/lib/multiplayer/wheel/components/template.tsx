@@ -18,6 +18,7 @@ type TemplateProps = {
   theme?: Partial<WheelTheme>;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: WheelFormFields) => void;
   onFormChange?: (fields: WheelFormFields) => void;
   onComplete?: () => void;
@@ -70,6 +71,7 @@ const WheelTemplate = (props: TemplateProps) => {
             <BetController
               maxWager={props?.maxWager || 2000}
               minWager={props?.minWager || 1}
+              isPinNotFound={props.isPinNotFound}
               onLogin={props.onLogin}
             />
             <SceneContainer

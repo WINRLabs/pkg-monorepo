@@ -22,12 +22,14 @@ import { BetLoader } from './bet-loader';
 interface Props extends Omit<PlinkoTemplateOptions, 'scene'> {
   minWager: number;
   maxWager: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
 export const ManualController: React.FC<Props> = ({
   minWager,
   maxWager,
+  isPinNotFound,
   onLogin,
   hideWager,
   hideTotalWagerInfo,
@@ -100,7 +102,7 @@ export const ManualController: React.FC<Props> = ({
         )}
       </div>
 
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
         <Button
           type="submit"
           disabled={!readyToPlay}

@@ -26,6 +26,7 @@ interface AutoControllerProps {
   selectedChip: Chip;
   minWager: number;
   maxWager: number;
+  isPinNotFound?: boolean;
   onSelectedChipChange: (c: Chip) => void;
   undoBet: () => void;
   isAutoBetMode: boolean;
@@ -39,6 +40,7 @@ export const AutoController = ({
   minWager,
   maxWager,
   isAutoBetMode,
+  isPinNotFound,
   onSelectedChipChange,
   undoBet,
   onAutoBetModeChange,
@@ -143,7 +145,12 @@ export const AutoController = ({
         />
       </div>
 
-      <PreBetButton onLogin={onLogin} totalWager={totalWager} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton
+        onLogin={onLogin}
+        isPinNotFound={isPinNotFound}
+        totalWager={totalWager}
+        className="wr-mb-3 lg:wr-mb-0"
+      >
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

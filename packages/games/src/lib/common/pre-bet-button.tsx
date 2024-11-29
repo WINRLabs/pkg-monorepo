@@ -9,12 +9,14 @@ export const PreBetButton = ({
   variant = 'success',
   className,
   totalWager,
+  isPinNotFound,
   onLogin,
 }: {
   totalWager?: number;
   children: React.ReactNode;
   variant?: ButtonProps['variant'];
   className?: string;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }) => {
   const form = useFormContext();
@@ -39,6 +41,19 @@ export const PreBetButton = ({
         {dictionary.submitBtn}
       </Button>
     );
+
+  if (account?.isLoggedIn && isPinNotFound) {
+    return (
+      <Button
+        variant={variant}
+        className={cn('wr-w-full wr-uppercase submit-button', className)}
+        size={'xl'}
+        type="submit"
+      >
+        Create a Session
+      </Button>
+    );
+  }
 
   if (account.isLoggedIn && (account.balanceAsDollar <= 0 || account.balanceAsDollar < _totalWager))
     return (

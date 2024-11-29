@@ -22,6 +22,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -494,6 +495,10 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     });
   };
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <MinesTemplate
@@ -509,6 +514,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
         maxWager={props.maxWager}
         isLoading={isWaitingResponse}
         theme={props.theme}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

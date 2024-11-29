@@ -20,6 +20,7 @@ export interface Props {
   maxWager: number;
   isAutoBetMode: boolean;
   strategy: StrategyProps;
+  isPinNotFound?: boolean;
 
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;

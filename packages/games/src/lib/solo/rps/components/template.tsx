@@ -7,16 +7,16 @@ import z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { Rps } from '..';
 import { RockPaperScissors, RpsFormFields, RPSGameResult } from '../types';
 import { BetController } from './bet-controller';
 import { RpsGameProps } from './game';
-import { BetMode, StrategyProps } from '../../../types';
-import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
-import { WAGER_PRECISION } from '../../../strategist';
 
 type TemplateOptions = {
   scene?: {
@@ -28,6 +28,7 @@ type TemplateProps = RpsGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: RpsFormFields) => void;
   onFormChange?: (fields: RpsFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -174,6 +175,7 @@ const RpsTemplate = ({ ...props }: TemplateProps) => {
             onBetModeChange={setBetMode}
             onLogin={props.onLogin}
             strategy={props.strategy}
+            isPinNotFound={props.isPinNotFound}
           />
           <SceneContainer
             className="wr-relative wr-h-[640px] wr-overflow-hidden !wr-p-0 max-md:wr-h-[300px]"

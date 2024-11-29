@@ -14,6 +14,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -277,6 +278,10 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     handleGetBadges({ totalWager: formValues.wager, totalPayout });
   };
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <VideoPokerTemplate
@@ -290,6 +295,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
         activeGame={activeGameData}
         settledCards={settledCards}
         isLoading={gameRead.isLoading}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

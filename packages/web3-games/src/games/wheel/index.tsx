@@ -26,6 +26,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -384,6 +385,10 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     handleGetBadges({ totalWager: formValues.wager, totalPayout: payout });
   };
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <WheelTemplate
@@ -395,6 +400,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
           setFormValues(val);
         }}
         onComplete={onWheelCompleted}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

@@ -29,6 +29,7 @@ interface StrategyControllerProps {
   maxWager: number;
   isAutoBetMode: boolean;
   strategy: StrategyProps;
+  isPinNotFound?: boolean;
   onSelectedChipChange: (c: Chip) => void;
   undoBet: () => void;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,6 +43,7 @@ export const StrategyController = ({
   maxWager,
   isAutoBetMode,
   strategy,
+  isPinNotFound,
   onSelectedChipChange,
   undoBet,
   onAutoBetModeChange,
@@ -198,7 +200,12 @@ export const StrategyController = ({
         </Button>
       )}
 
-      <PreBetButton onLogin={onLogin} totalWager={totalWager} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton
+        onLogin={onLogin}
+        isPinNotFound={isPinNotFound}
+        totalWager={totalWager}
+        className="wr-mb-3 lg:wr-mb-0"
+      >
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

@@ -16,6 +16,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -352,6 +353,10 @@ const CrashGame = (props: CrashTemplateProps) => {
     },
   });
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <CrashTemplate
@@ -361,6 +366,7 @@ const CrashGame = (props: CrashTemplateProps) => {
         onSubmitGameForm={onGameSubmit}
         onFormChange={setFormValues}
         gameUrl={props.gameUrl}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate
