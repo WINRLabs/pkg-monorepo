@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.84
+
+### Patch Changes
+
+- 0219653: create a session text
+
 ## 0.11.83
 
 ### Patch Changes
