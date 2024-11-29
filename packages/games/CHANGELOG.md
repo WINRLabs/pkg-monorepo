@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.2
+
+### Patch Changes
+
+- 0219653: create a session text
+
 ## 5.1.1
 
 ### Patch Changes
