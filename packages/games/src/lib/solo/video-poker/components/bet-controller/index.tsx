@@ -21,6 +21,7 @@ interface Props {
   minWager: number;
   maxWager: number;
   maxPayout: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -28,6 +29,7 @@ export const VideoPokerBetController: React.FC<Props> = ({
   maxPayout,
   maxWager,
   minWager,
+  isPinNotFound,
   onLogin,
 }) => {
   const form = useFormContext() as VideoPokerForm;
@@ -69,7 +71,7 @@ export const VideoPokerBetController: React.FC<Props> = ({
             <TotalWager betCount={1} wager={wager} />
           </div>
         </div>
-        <PreBetButton onLogin={onLogin}>
+        <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
           <Button
             type="submit"
             variant={'success'}

@@ -17,6 +17,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -353,6 +354,10 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     handleGetBadges({ totalPayout: payout, totalWager: formValues.wager });
   };
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <HorseRaceTemplate
@@ -363,6 +368,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
         onSubmitGameForm={onGameSubmit}
         onComplete={onGameCompleted}
         onFormChange={setFormValues}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

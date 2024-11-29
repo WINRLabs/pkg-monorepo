@@ -19,6 +19,7 @@ interface Props extends Omit<PlinkoTemplateOptions, 'scene'> {
   maxWager: number;
   isGettingResults?: boolean;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   strategy: StrategyProps;

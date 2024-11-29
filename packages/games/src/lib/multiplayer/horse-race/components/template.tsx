@@ -26,6 +26,7 @@ type TemplateProps = {
   minWager?: number;
   maxWager?: number;
   currentAccount: `0x${string}`;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (props: HorseRaceFormFields) => void;
   onFormChange?: (fields: HorseRaceFormFields) => void;
   onComplete?: () => void;
@@ -105,6 +106,7 @@ const HorseRaceTemplate = (props: TemplateProps) => {
               maxPayout={maxPayout}
               isGamblerParticipant={isGamblerParticipant}
               logo={props.options.scene?.logo}
+              isPinNotFound={props.isPinNotFound}
               onLogin={props.onLogin}
             />
             <LastBets />

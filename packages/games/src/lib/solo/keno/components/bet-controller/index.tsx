@@ -16,6 +16,7 @@ export interface Props {
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   onLogin?: () => void;

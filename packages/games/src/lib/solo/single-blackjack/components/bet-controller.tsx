@@ -22,6 +22,7 @@ interface Props {
   isDistributionCompleted: boolean;
   isControllerDisabled: boolean;
   wager: number;
+  isPinNotFound?: boolean;
 
   onHit: (handIndex: number) => void;
   onStand: (handIndex: number) => void;
@@ -41,6 +42,7 @@ export const BetController: React.FC<Props> = ({
   isDistributionCompleted,
   isControllerDisabled,
   wager,
+  isPinNotFound,
 
   onHit,
   onStand,
@@ -94,7 +96,7 @@ export const BetController: React.FC<Props> = ({
           }
         />
 
-        <PreBetButton onLogin={onLogin}>
+        <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
           {showInsuranceBox == 'show' && status !== BlackjackGameStatus.FINISHED ? (
             <InsuranceBox
               activeGameIndex={activeHandByIndex.handId || 0}

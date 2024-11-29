@@ -26,6 +26,7 @@ type TemplateProps = LimboGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (props: LimboFormField) => void;
   onFormChange?: (fields: LimboFormField) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -171,6 +172,7 @@ const LimboTemplate = ({ ...props }: TemplateProps) => {
             onLogin={props.onLogin}
             onBetModeChange={setBetMode}
             strategy={props.strategy}
+            isPinNotFound={props.isPinNotFound}
           />
           <SceneContainer className="md:wr-h-[640px] wr-h-[200px] wr-overflow-hidden !wr-p-0">
             <Limbo.Game {...props}>

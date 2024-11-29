@@ -25,6 +25,7 @@ type TemplateProps = {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (props: CrashFormFields) => void;
   onFormChange?: (fields: CrashFormFields) => void;
   onComplete?: (multiplier: number) => void;
@@ -86,6 +87,7 @@ const CrashTemplate = (props: TemplateProps) => {
               maxWager={props?.maxWager || 2000}
               options={props.options}
               onLogin={props.onLogin}
+              isPinNotFound={props.isPinNotFound}
             />
             <LastBets />
             <CrashScene onComplete={onComplete} gameUrl={props.gameUrl} options={props.options} />

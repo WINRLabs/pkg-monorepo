@@ -25,10 +25,11 @@ import { WheelForm } from '../../types';
 interface Props {
   minWager: number;
   maxWager: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
-const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
+const BetController: React.FC<Props> = ({ minWager, maxWager, isPinNotFound, onLogin }) => {
   const {
     cooldownFinish,
     status,
@@ -195,7 +196,7 @@ const BetController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
             </div>
           </div>
         )}
-        <PreBetButton onLogin={onLogin}>
+        <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
           <Button
             type="submit"
             variant={'success'}

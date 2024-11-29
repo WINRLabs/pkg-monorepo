@@ -12,7 +12,9 @@ import { WinAnimation } from '../../../common/win-animation';
 import { CDN_URL } from '../../../constants';
 import { useGameOptions } from '../../../game-provider';
 import { SoundEffects, useAudioEffect } from '../../../hooks/use-audio-effect';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
 import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
@@ -26,14 +28,13 @@ import {
 } from '../constants';
 import { RouletteFormFields, RouletteGameProps, RouletteGameResult } from '../types';
 import { MobileController } from './mobile-controller';
-import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
-import { WAGER_PRECISION } from '../../../strategist';
 
 const log = debug('worker:RouletteTemplate');
 
 type TemplateProps = RouletteGameProps & {
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: RouletteFormFields) => void;
   onFormChange?: (fields: RouletteFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -48,6 +49,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
   minWager,
   maxWager,
   strategy,
+  isPinNotFound,
   onSubmitGameForm,
   onAutoBetModeChange,
   onFormChange,
@@ -291,6 +293,7 @@ const RouletteTemplate: React.FC<TemplateProps> = ({
             onBetModeChange={setBetMode}
             onLogin={onLogin}
             strategy={strategy}
+            isPinNotFound={isPinNotFound}
           />
           <SceneContainer
             style={{

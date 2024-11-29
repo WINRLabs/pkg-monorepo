@@ -29,6 +29,7 @@ type TemplateProps = MinesGameProps & {
   onError?: (error: string) => void;
   gameResults: MinesGameResult[];
   theme?: Partial<MinesTheme>;
+  isPinNotFound?: boolean;
 };
 
 const MinesTemplate = ({ ...props }: TemplateProps) => {
@@ -226,6 +227,7 @@ const MinesTemplate = ({ ...props }: TemplateProps) => {
                 mode={mode}
                 onModeChange={setMode}
                 onGameSubmit={props.onSubmitGameForm}
+                isPinNotFound={props.isPinNotFound}
               />
               <SceneContainer className="lg:wr-h-[740px] lg:wr-py-10 max-lg:!wr-border-0 max-lg:!wr-p-0 max-md:wr-bg-transparent">
                 <Mines.Scene

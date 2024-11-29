@@ -18,6 +18,7 @@ interface Props {
   winMultiplier: number;
   isGettingResults?: boolean;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   strategy: StrategyProps;

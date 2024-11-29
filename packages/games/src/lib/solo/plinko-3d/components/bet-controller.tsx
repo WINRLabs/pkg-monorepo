@@ -28,10 +28,17 @@ type Props = {
   maxWager: number;
   count: number;
   logo: string;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 };
 
-export const BetController: React.FC<Props> = ({ minWager, maxWager, logo, onLogin }) => {
+export const BetController: React.FC<Props> = ({
+  minWager,
+  maxWager,
+  logo,
+  isPinNotFound,
+  onLogin,
+}) => {
   const form = useFormContext() as Plinko3dForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
@@ -116,7 +123,7 @@ export const BetController: React.FC<Props> = ({ minWager, maxWager, logo, onLog
           </div>
         </div>
 
-        <PreBetButton onLogin={onLogin} variant={'plinko'}>
+        <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound} variant={'plinko'}>
           <Button
             type="submit"
             variant="plinko"

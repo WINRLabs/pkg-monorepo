@@ -28,6 +28,7 @@ interface CrashBetControllerProps {
       logo?: string;
     };
   };
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -35,6 +36,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
   minWager,
   maxWager,
   options,
+  isPinNotFound,
   onLogin,
 }) => {
   const form: CrashForm = useFormContext();
@@ -172,7 +174,7 @@ export const CrashBetController: React.FC<CrashBetControllerProps> = ({
             </span>
           </div>
         </div>
-        <PreBetButton onLogin={onLogin}>
+        <PreBetButton isPinNotFound={isPinNotFound} onLogin={onLogin}>
           <Button
             type="submit"
             variant={'crash'}

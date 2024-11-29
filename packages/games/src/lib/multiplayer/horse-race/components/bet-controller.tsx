@@ -24,6 +24,7 @@ interface Props {
   maxPayout: number;
   isGamblerParticipant: boolean;
   logo?: string;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -33,6 +34,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
   maxPayout,
   isGamblerParticipant,
   logo,
+  isPinNotFound,
   onLogin,
 }) => {
   const form = useFormContext() as HorseRaceForm;
@@ -210,6 +212,7 @@ export const HorseRaceBetController: React.FC<Props> = ({
         </div>
         <PreBetButton
           onLogin={onLogin}
+          isPinNotFound={isPinNotFound}
           variant="horse-race"
           className="wr-mb-4 md:wr-mb-0 wr-uppercase"
         >

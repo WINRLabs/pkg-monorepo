@@ -18,6 +18,7 @@ interface ManualControllerProps {
   winMultiplier: number;
   minWager: number;
   maxWager: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -25,6 +26,7 @@ export const ManualController = ({
   winMultiplier,
   minWager,
   maxWager,
+  isPinNotFound,
   onLogin,
 }: ManualControllerProps) => {
   const form = useFormContext() as CoinFlipForm;
@@ -59,7 +61,7 @@ export const ManualController = ({
           <TotalWager betCount={1} wager={form.getValues().wager} />
         </div>
       </div>
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
         <Button
           type="submit"
           variant={'success'}

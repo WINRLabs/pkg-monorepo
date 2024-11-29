@@ -20,6 +20,7 @@ interface BetControllerProps {
   minWager: number;
   maxWager: number;
   winMultiplier: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -45,6 +46,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
   minWager,
   maxWager,
   winMultiplier,
+  isPinNotFound,
   onLogin,
 }) => {
   const form = useFormContext() as RPSForm;
@@ -106,7 +108,7 @@ export const ManualController: React.FC<BetControllerProps> = ({
           <TotalWager betCount={1} wager={form.getValues().wager} />
         </div>
       </div>
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
         <Button
           type="submit"
           variant={'success'}

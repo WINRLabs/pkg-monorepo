@@ -19,7 +19,6 @@ import { Button } from '../../../../ui/button';
 import { FormField, FormItem, FormLabel, FormMessage } from '../../../../ui/form';
 import { NumberInput } from '../../../../ui/number-input';
 import { cn } from '../../../../utils/style';
-import { initialBoard } from '../../constants';
 import useMinesGameStateStore from '../../store';
 import { MINES_GAME_STATUS, MINES_SUBMIT_TYPE, MinesForm, MinesFormField } from '../../types';
 import MinesCountButton from '../count-button';
@@ -30,6 +29,7 @@ interface AutoControllerProps {
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
   onGameSubmit: (values: MinesFormField) => void;
@@ -39,6 +39,7 @@ export const AutoController = ({
   minWager,
   maxWager,
   isAutoBetMode,
+  isPinNotFound,
   onAutoBetModeChange,
   onLogin,
   onGameSubmit,
@@ -153,7 +154,7 @@ export const AutoController = ({
         <AutoBetStopLossFormField isDisabled={isDisabled} />
       </div>
 
-      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton isPinNotFound={isPinNotFound} onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
         <Button
           variant={'success'}
           className={cn(

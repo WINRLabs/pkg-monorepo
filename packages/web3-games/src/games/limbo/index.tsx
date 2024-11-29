@@ -16,6 +16,7 @@ import {
   useFastOrVerified,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -288,6 +289,10 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
 
   const onAutoBetModeChange = () => clearIterationIntervals();
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   React.useEffect(() => {
     return () => {
       clearLiveResults();
@@ -314,6 +319,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
           updateBetCondition: handleUpdateBetCondition,
           updateProfitCondition: handleUpdateProfitCondition,
         }}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

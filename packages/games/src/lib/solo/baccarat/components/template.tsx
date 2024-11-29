@@ -34,6 +34,7 @@ type TemplateProps = BaccaratGameProps & {
   minWager?: number;
   maxWager?: number;
   strategy: StrategyProps;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: BaccaratFormFields) => void;
   onFormChange?: (fields: BaccaratFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -48,6 +49,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
   baccaratResults,
   baccaratSettledResults,
   strategy,
+  isPinNotFound,
   onAnimationCompleted = () => {},
   onAutoBetModeChange,
   onSubmitGameForm,
@@ -329,6 +331,7 @@ const BaccaratTemplate: React.FC<TemplateProps> = ({
               onLogin={onLogin}
               onBetModeChange={setBetMode}
               strategy={strategy}
+              isPinNotFound={isPinNotFound}
             />
             <SceneContainer
               className="wr-relative wr-flex wr-h-[340px] lg:wr-h-[640px] wr-overflow-hidden"

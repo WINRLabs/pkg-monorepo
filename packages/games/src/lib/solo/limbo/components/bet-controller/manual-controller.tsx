@@ -22,6 +22,7 @@ interface Props {
   minWager: number;
   maxWager: number;
   winMultiplier: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -29,6 +30,7 @@ export const ManualController: React.FC<Props> = ({
   minWager,
   maxWager,
   winMultiplier,
+  isPinNotFound,
   onLogin,
 }) => {
   const form = useFormContext() as LimboForm;
@@ -119,7 +121,7 @@ export const ManualController: React.FC<Props> = ({
         </div>
       </div>
 
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton isPinNotFound={isPinNotFound} onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

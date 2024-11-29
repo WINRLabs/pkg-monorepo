@@ -32,6 +32,7 @@ export interface MinesBetControllerProps {
   >;
   onGameSubmit: (values: MinesFormField) => void;
   theme?: Partial<MinesTheme>;
+  isPinNotFound?: boolean;
 }
 
 const MinesBetController: React.FC<MinesBetControllerProps> = (props) => {
