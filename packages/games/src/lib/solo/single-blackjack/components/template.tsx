@@ -21,7 +21,13 @@ import {
   getBlackjackSuit,
   TIMEOUT,
 } from '../../blackjack';
-import { SingleBJDealFormFields, SingleBlackjackGameProps, SingleBlackjackHandIndex } from '..';
+import {
+  SingleBJDealFormFields,
+  SingleBlackjackGameProps,
+  SingleBlackjackHandIndex,
+  SingleBlackjackTheme,
+  SingleBlackjackThemeProvider,
+} from '..';
 import { BetController } from './bet-controller';
 import { CardArea } from './card-area';
 import { DealerCardArea } from './dealer-card-area';
@@ -40,6 +46,7 @@ type TemplateProps = SingleBlackjackGameProps & {
   maxWager?: number;
   isPinNotFound?: boolean;
   onLogin?: () => void;
+  theme?: Partial<SingleBlackjackTheme>;
 };
 
 const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
@@ -51,10 +58,8 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   isControllerDisabled = false,
   isPinNotFound,
   options,
-
   onDeal,
   onReset,
-
   onHit,
   onDoubleDown,
   onSplit,
@@ -63,6 +68,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   onGameCompleted,
   onFormChange,
   onLogin,
+  theme,
 }) => {
   // ui cards
   const [dealerCards, setDealerCards] = React.useState<(BlackjackCard | null)[]>([]);
@@ -336,102 +342,104 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   const wager = form.watch('wager');
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <GameContainer>
-          <BetController
-            minWager={minWager || 2}
-            maxWager={maxWager || 1000}
-            activeHandByIndex={activeHandByIndex}
-            activeHandChipAmount={activeHandChipAmount || 0}
-            canInsure={activeGameData.canInsure}
-            status={activeGameData.status}
-            isControllerDisabled={isControllerDisabled}
-            isDistributionCompleted={isDistributionCompleted}
-            wager={wager}
-            onHit={onHit}
-            onDoubleDown={onDoubleDown}
-            onSplit={onSplit}
-            onStand={onStand}
-            onInsure={onInsure}
-            onLogin={onLogin}
-            isPinNotFound={isPinNotFound}
-          />
-          <SceneContainer
-            className={cn('wr-relative wr-flex !wr-p-0 wr-max-w-full', styles.sceneWrapper)}
-            style={{
-              backgroundPosition: 'center',
-              backgroundImage:
-                options?.scene?.backgroundImage || `url(${CDN_URL}/blackjack/blackjack-bg.png)`,
-            }}
-          >
-            {/* canvas start */}
-            <div
-              className={cn(
-                styles.canvas,
-                'wr-absolute wr-h-full wr-max-w-[750px] wr-w-[calc(100%_-_28px)] wr-select-none wr-left-1/2 wr-top-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 wr-overflow-hidden'
-              )}
+    <SingleBlackjackThemeProvider theme={theme || {}}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <GameContainer>
+            <BetController
+              minWager={minWager || 2}
+              maxWager={maxWager || 1000}
+              activeHandByIndex={activeHandByIndex}
+              activeHandChipAmount={activeHandChipAmount || 0}
+              canInsure={activeGameData.canInsure}
+              status={activeGameData.status}
+              isControllerDisabled={isControllerDisabled}
+              isDistributionCompleted={isDistributionCompleted}
+              wager={wager}
+              onHit={onHit}
+              onDoubleDown={onDoubleDown}
+              onSplit={onSplit}
+              onStand={onStand}
+              onInsure={onInsure}
+              onLogin={onLogin}
+              isPinNotFound={isPinNotFound}
+            />
+            <SceneContainer
+              className={cn('wr-relative wr-flex !wr-p-0 wr-max-w-full', styles.sceneWrapper)}
+              style={{
+                backgroundPosition: 'center',
+                backgroundImage:
+                  options?.scene?.backgroundImage || `url(${CDN_URL}/blackjack/blackjack-bg.png)`,
+              }}
             >
-              <img
-                src={`${CDN_URL}/blackjack/deck.svg`}
-                width={105}
-                height={115}
-                alt="Justbet Blackjack Deck"
-                className="wr-absolute wr-right-0 wr-top-[-20px] wr-z-[5]"
-              />
-              <img
-                src={`${CDN_URL}/blackjack/distributed-deck.svg`}
-                width={80}
-                height={128}
-                alt="Justbet Blackjack Distributed Deck"
-                className="wr-absolute wr-left-0 wr-top-[-20px] wr-z-[5]"
-              />
-
-              {/* dealer card area start */}
-              {activeGameData.status !== BlackjackGameStatus.NONE && (
-                <DealerCardArea
-                  hand={activeGameHands.dealer}
-                  uiCards={dealerCards}
-                  activeGameData={activeGameData}
-                  isDistributionCompleted={isDistributionCompleted}
-                  isLastDistributionCompleted={isLastDistributionCompleted}
+              {/* canvas start */}
+              <div
+                className={cn(
+                  styles.canvas,
+                  'wr-absolute wr-h-full wr-max-w-[750px] wr-w-[calc(100%_-_28px)] wr-select-none wr-left-1/2 wr-top-1/2 -wr-translate-x-1/2 -wr-translate-y-1/2 wr-overflow-hidden'
+                )}
+              >
+                <img
+                  src={theme?.cardDeck || `${CDN_URL}/blackjack/deck.svg`}
+                  width={105}
+                  height={115}
+                  alt="Justbet Blackjack Deck"
+                  className="wr-absolute wr-right-0 wr-top-[-20px] wr-z-[5]"
                 />
-              )}
-              {/* dealer card area end */}
+                <img
+                  src={theme?.cardDeckDistributed || `${CDN_URL}/blackjack/distributed-deck.svg`}
+                  width={80}
+                  height={128}
+                  alt="Justbet Blackjack Distributed Deck"
+                  className="wr-absolute wr-left-0 wr-top-[-20px] wr-z-[5]"
+                />
 
-              {/* card area start */}
-              {activeGameData.status !== BlackjackGameStatus.NONE && (
-                <>
-                  <SplittedCardArea
-                    handType={SingleBlackjackHandIndex.SPLITTED_FIRST}
-                    hand={activeGameHands.splittedFirstHand}
-                    uiCards={splittedFirstHandCards}
+                {/* dealer card area start */}
+                {activeGameData.status !== BlackjackGameStatus.NONE && (
+                  <DealerCardArea
+                    hand={activeGameHands.dealer}
+                    uiCards={dealerCards}
                     activeGameData={activeGameData}
                     isDistributionCompleted={isDistributionCompleted}
                     isLastDistributionCompleted={isLastDistributionCompleted}
-                    isSplitted={activeGameHands.firstHand.hand?.isSplitted}
-                    onClear={handleClear}
                   />
-                  <CardArea
-                    handType={SingleBlackjackHandIndex.FIRST}
-                    hand={activeGameHands.firstHand}
-                    uiCards={firstHandCards}
-                    activeGameData={activeGameData}
-                    splittedCard={firstHandSplittedCard}
-                    isDistributionCompleted={isDistributionCompleted}
-                    isLastDistributionCompleted={isLastDistributionCompleted}
-                    hasSplittedCards={!!activeGameHands.splittedFirstHand.cards?.amountCards}
-                    onClear={handleClear}
-                  />
-                </>
-              )}
-              {/* card area start end */}
-            </div>
-            {/* canvas end */}
-          </SceneContainer>
-        </GameContainer>
-      </form>
-    </Form>
+                )}
+                {/* dealer card area end */}
+
+                {/* card area start */}
+                {activeGameData.status !== BlackjackGameStatus.NONE && (
+                  <>
+                    <SplittedCardArea
+                      handType={SingleBlackjackHandIndex.SPLITTED_FIRST}
+                      hand={activeGameHands.splittedFirstHand}
+                      uiCards={splittedFirstHandCards}
+                      activeGameData={activeGameData}
+                      isDistributionCompleted={isDistributionCompleted}
+                      isLastDistributionCompleted={isLastDistributionCompleted}
+                      isSplitted={activeGameHands.firstHand.hand?.isSplitted}
+                      onClear={handleClear}
+                    />
+                    <CardArea
+                      handType={SingleBlackjackHandIndex.FIRST}
+                      hand={activeGameHands.firstHand}
+                      uiCards={firstHandCards}
+                      activeGameData={activeGameData}
+                      splittedCard={firstHandSplittedCard}
+                      isDistributionCompleted={isDistributionCompleted}
+                      isLastDistributionCompleted={isLastDistributionCompleted}
+                      hasSplittedCards={!!activeGameHands.splittedFirstHand.cards?.amountCards}
+                      onClear={handleClear}
+                    />
+                  </>
+                )}
+                {/* card area start end */}
+              </div>
+              {/* canvas end */}
+            </SceneContainer>
+          </GameContainer>
+        </form>
+      </Form>
+    </SingleBlackjackThemeProvider>
   );
 };
 
