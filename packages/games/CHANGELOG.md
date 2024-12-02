@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.3
+
+### Patch Changes
+
+- 895133e: winr of olympus 1000
+
 ## 5.1.2
 
 ### Patch Changes
