@@ -52,6 +52,7 @@ export type AddressName =
   | 'winrOfOlympus'
   | 'princessWinr'
   | 'singleWheel'
+  | 'winrOfOlympus1000'
   | 'strategyStore'
   | 'multicallAddress';
 
@@ -100,6 +101,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       rewardConditionalRouter: '0x860dec012b577C7fF62b6899581581CB4089AAf7',
       rewardConditionalLottery: '0x8d8Dd780dFa7413ac33aFc79053e4b6ad0c689dc',
       winrOfOlympus: '0x51a7845AC638e4CF01999fD8014e63d0234744A4',
+      winrOfOlympus1000: '0x6b5daf3b492Df4DD89734f95217e8506aFe29d49',
       princessWinr: '0xd782D71551FEC8E4e87656559cDDd7c414c00D43',
       singleWheel: '0x',
       strategyStore: '0x662FB4d9B5d8EAf280af00C2fE8B02f8e5A86e80',
@@ -148,6 +150,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       rewardConditionalRouter: '0x860dec012b577C7fF62b6899581581CB4089AAf7',
       rewardConditionalLottery: '0x8d8Dd780dFa7413ac33aFc79053e4b6ad0c689dc',
       winrOfOlympus: '0xFA66633EA0F06740afc96eB2d68822dF230a964D',
+      winrOfOlympus1000: '0x6b5daf3b492Df4DD89734f95217e8506aFe29d49',
       princessWinr: '0x75f9D513080118E289dF48Ddf1F2722971191874',
       singleWheel: '0x',
       strategyStore: '0xa1a1779BBa12CBa48192b5F8676c3239fa96Bd74',
