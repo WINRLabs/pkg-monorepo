@@ -20,6 +20,7 @@ import {
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -972,6 +973,10 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     log(activeGameData, 'activeGameData', activeGameHands, 'activegaMEhaNDS');
   }, [activeGameData, activeGameHands]);
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <SingleBlackjackTemplate
@@ -992,6 +997,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
         onStand={handleStand}
         onReset={resetGame}
         options={{}}
+        isPinNotFound={isPinNotFound}
       />
       {!props.hideBetHistory && (
         <BetHistoryTemplate

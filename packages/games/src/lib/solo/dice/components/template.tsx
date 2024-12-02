@@ -25,6 +25,7 @@ type TemplateProps = RangeGameProps & {
   options: DiceTemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: DiceFormFields) => void;
   onFormChange: (fields: DiceFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -200,6 +201,7 @@ const DiceTemplate = ({ ...props }: TemplateProps) => {
             onBetModeChange={setBetMode}
             onLogin={props.onLogin}
             strategy={props.strategy}
+            isPinNotFound={props.isPinNotFound}
           />
           <SceneContainer
             className={cn(

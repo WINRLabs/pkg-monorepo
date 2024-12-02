@@ -34,6 +34,7 @@ type TemplateProps = RollGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: RollFormFields) => void;
   onFormChange?: (fields: RollFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -202,6 +203,7 @@ const RollTemplate = ({ ...props }: TemplateProps) => {
             onBetModeChange={setBetMode}
             onLogin={props.onLogin}
             strategy={props.strategy}
+            isPinNotFound={props.isPinNotFound}
           />
 
           <SceneContainer

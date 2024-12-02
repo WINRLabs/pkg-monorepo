@@ -1,5 +1,25 @@
 # @winrlabs/web3-games
 
+## 13.0.5
+
+### Patch Changes
+
+- 895133e: winr of olympus 1000
+- Updated dependencies [895133e]
+  - @winrlabs/games@5.1.3
+  - @winrlabs/web3@0.11.85
+  - @winrlabs/web3-games@13.0.5
+
+## 13.0.4
+
+### Patch Changes
+
+- 0219653: create a session text
+- Updated dependencies [0219653]
+  - @winrlabs/games@5.1.2
+  - @winrlabs/web3@0.11.84
+  - @winrlabs/web3-games@13.0.4
+
 ## 13.0.3
 
 ### Patch Changes

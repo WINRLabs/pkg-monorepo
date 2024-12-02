@@ -13,6 +13,7 @@ import {
   useFastOrVerified,
   usePriceFeed,
   useSendTx,
+  useSessionStore,
   useTokenAllowance,
   useTokenBalances,
   useTokenStore,
@@ -240,6 +241,10 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     handleGetBadges({ totalWager, totalPayout });
   };
 
+  const sessionStore = useSessionStore();
+  const isPinNotFound =
+    (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
+
   return (
     <>
       <div>
@@ -251,6 +256,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
           onFormChange={(val) => {
             setFormValues(val);
           }}
+          isPinNotFound={isPinNotFound}
         />
       </div>
       {!props.hideBetHistory && (

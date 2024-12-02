@@ -19,11 +19,17 @@ type Props = {
   minWager: number;
   maxWager: number;
   isAutoBetMode: boolean;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
 };
 
-export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin }) => {
+export const ManualController: React.FC<Props> = ({
+  minWager,
+  maxWager,
+  isPinNotFound,
+  onLogin,
+}) => {
   const form = useFormContext() as KenoForm;
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
   const digitalClickEffect = useAudioEffect(SoundEffects.BUTTON_CLICK_DIGITAL);
@@ -117,7 +123,7 @@ export const ManualController: React.FC<Props> = ({ minWager, maxWager, onLogin 
           Clear
         </Button>
       </div>
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton isPinNotFound={isPinNotFound} onLogin={onLogin}>
         <Button
           type="submit"
           variant={'success'}

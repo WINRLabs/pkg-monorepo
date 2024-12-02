@@ -45,6 +45,7 @@ export const gameAddresses = {
   singleBlackjackReader: allAddresses.singleBlackjackReader,
   holdemPoker: allAddresses.holdemPoker,
   winrOfOlympus: allAddresses.winrOfOlympus,
+  winrOfOlympus1000: allAddresses.winrOfOlympus1000,
   princessWinr: allAddresses.princessWinr,
   singleWheel: '0x' as Address,
 };

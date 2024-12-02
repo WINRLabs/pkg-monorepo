@@ -27,6 +27,7 @@ interface AutoControllerProps {
   onLogin?: () => void;
   hideWager?: boolean;
   disableStrategy?: boolean;
+  isPinNotFound?: boolean;
 }
 
 export const AutoController = ({
@@ -37,6 +38,7 @@ export const AutoController = ({
   onLogin,
   hideWager,
   disableStrategy,
+  isPinNotFound,
 }: AutoControllerProps) => {
   const { readyToPlay } = useGame();
   const form = useFormContext() as PlinkoForm;
@@ -93,7 +95,7 @@ export const AutoController = ({
         </div>
       )}
 
-      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound} className="wr-mb-3 lg:wr-mb-0">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

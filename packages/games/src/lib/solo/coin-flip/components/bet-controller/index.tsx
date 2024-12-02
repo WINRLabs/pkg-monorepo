@@ -5,11 +5,11 @@ import * as React from 'react';
 import { AnimatedTabContent } from '../../../../common/animated-tab-content';
 import { AudioController } from '../../../../common/audio-controller';
 import { BetControllerContainer } from '../../../../common/containers';
+import { IconStrategy } from '../../../../svgs';
 import { BetMode, StrategyProps } from '../../../../types';
 import { cn } from '../../../../utils/style';
 import { AutoController } from './auto-controller';
 import { ManualController } from './manual-controller';
-import { IconStrategy } from '../../../../svgs';
 import { StrategyController } from './strategy-controller';
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
   isGettingResults?: boolean;
   isAutoBetMode: boolean;
   strategy: StrategyProps;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onBetModeChange: React.Dispatch<React.SetStateAction<BetMode>>;
   onLogin?: () => void;

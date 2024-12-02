@@ -44,6 +44,7 @@ type TemplateProps = SingleBlackjackGameProps & {
   options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
   theme?: Partial<SingleBlackjackTheme>;
 };
@@ -55,6 +56,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
   activeGameHands,
   initialDataFetched,
   isControllerDisabled = false,
+  isPinNotFound,
   options,
   onDeal,
   onReset,
@@ -360,6 +362,7 @@ const SingleBlackjackTemplate: React.FC<TemplateProps> = ({
               onStand={onStand}
               onInsure={onInsure}
               onLogin={onLogin}
+              isPinNotFound={isPinNotFound}
             />
             <SceneContainer
               className={cn('wr-relative wr-flex !wr-p-0 wr-max-w-full', styles.sceneWrapper)}

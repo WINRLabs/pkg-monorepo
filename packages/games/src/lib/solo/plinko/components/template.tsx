@@ -6,7 +6,10 @@ import * as z from 'zod';
 
 import { GameContainer, SceneContainer } from '../../../common/containers';
 import { useGameOptions } from '../../../game-provider';
+import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 import { useAutoBetStrategist } from '../../../hooks/use-strategist';
+import { WAGER_PRECISION } from '../../../strategist';
+import { BetMode, StrategyProps } from '../../../types';
 import { Form } from '../../../ui/form';
 import { parseToBigInt } from '../../../utils/number';
 import { cn } from '../../../utils/style';
@@ -15,9 +18,6 @@ import { MIN_BET_COUNT } from '../constants';
 import { PlinkoFormFields, PlinkoGameResult } from '../types';
 import { BetController } from './bet-controller';
 import { PlinkoGameProps } from './game';
-import { BetMode, StrategyProps } from '../../../types';
-import { WAGER_PRECISION } from '../../../strategist';
-import { useCustomBetStrategist } from '../../../hooks/use-custom-bet-strategist';
 
 const log = debug('worker:PlinkoTemplate');
 
@@ -61,6 +61,7 @@ type TemplateProps = PlinkoGameProps & {
   options: PlinkoTemplateOptions;
   minWager?: number;
   maxWager?: number;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: PlinkoFormFields) => void;
   onFormChange?: (fields: PlinkoFormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
@@ -207,6 +208,7 @@ const PlinkoTemplate = ({ ...props }: TemplateProps) => {
             onLogin={props.onLogin}
             scene={options?.scene}
             strategy={props.strategy}
+            isPinNotFound={props.isPinNotFound}
             {...props.options}
           />
           <SceneContainer

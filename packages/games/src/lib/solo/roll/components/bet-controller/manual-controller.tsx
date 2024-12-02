@@ -19,6 +19,7 @@ interface Props {
   minWager: number;
   maxWager: number;
   winMultiplier: number;
+  isPinNotFound?: boolean;
   onLogin?: () => void;
 }
 
@@ -26,6 +27,7 @@ export const ManualController: React.FC<Props> = ({
   minWager,
   maxWager,
   winMultiplier,
+  isPinNotFound,
   onLogin,
 }) => {
   const form = useFormContext() as RollForm;
@@ -62,7 +64,7 @@ export const ManualController: React.FC<Props> = ({
         </div>
       </div>
 
-      <PreBetButton onLogin={onLogin}>
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound}>
         <Button
           type="submit"
           variant={'success'}

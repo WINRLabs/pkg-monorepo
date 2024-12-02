@@ -31,6 +31,7 @@ interface TemplateProps {
     result: VideoPokerResult;
     payout: number;
   };
+  isPinNotFound?: boolean;
   handleFinishGame: (data: VideoPokerFormFields) => Promise<void>;
   handleStartGame: (data: VideoPokerFormFields) => Promise<void>;
   onFormChange?: (fields: VideoPokerFormFields) => void;
@@ -45,6 +46,7 @@ const VideoPokerTemplate = ({
   isLoading,
   activeGame,
   settledCards,
+  isPinNotFound,
   onFormChange,
   handleFinishGame,
   handleStartGame,
@@ -185,6 +187,7 @@ const VideoPokerTemplate = ({
               maxPayout={maxPayout}
               maxWager={maxWager || 2000}
               minWager={minWager || 1}
+              isPinNotFound={isPinNotFound}
               onLogin={onLogin}
             />
             <SceneContainer

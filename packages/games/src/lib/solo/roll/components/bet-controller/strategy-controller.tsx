@@ -15,8 +15,8 @@ import { NormalizedStrategyStruct } from '../../../../strategist';
 import { StrategyProps } from '../../../../types';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { BetLoader } from './bet-loader';
 import { RollForm } from '../../types';
+import { BetLoader } from './bet-loader';
 
 interface StrategyControllerProps {
   winMultiplier: number;
@@ -25,6 +25,7 @@ interface StrategyControllerProps {
   maxWager: number;
   isAutoBetMode: boolean;
   strategy: StrategyProps;
+  isPinNotFound?: boolean;
   onAutoBetModeChange: React.Dispatch<React.SetStateAction<boolean>>;
   onLogin?: () => void;
 }
@@ -34,6 +35,7 @@ export const StrategyController = ({
   maxWager,
   isAutoBetMode,
   strategy,
+  isPinNotFound,
   onAutoBetModeChange,
   onLogin,
 }: StrategyControllerProps) => {
@@ -127,7 +129,7 @@ export const StrategyController = ({
         </Button>
       )}
 
-      <PreBetButton onLogin={onLogin} className="wr-mb-3 lg:wr-mb-0">
+      <PreBetButton onLogin={onLogin} isPinNotFound={isPinNotFound} className="wr-mb-3 lg:wr-mb-0">
         <Button
           type={!isAutoBetMode ? 'button' : 'submit'}
           variant={'success'}

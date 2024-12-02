@@ -29,6 +29,7 @@ type TemplateProps = Plinko3dGameProps & {
   minWager?: number;
   maxWager?: number;
   buildedGameUrl: string;
+  isPinNotFound?: boolean;
   onSubmitGameForm: (data: Plinko3dFormFields) => void;
   onFormChange?: (fields: Plinko3dFormFields) => void;
   onLogin?: () => void;
@@ -93,6 +94,7 @@ export function PlinkoGame({ ...props }: TemplateProps) {
               minWager={props?.minWager || 1}
               logo={props.options.betController.logo}
               onLogin={props.onLogin}
+              isPinNotFound={props.isPinNotFound}
             />
             <Plinko3d.Scene
               {...props}
