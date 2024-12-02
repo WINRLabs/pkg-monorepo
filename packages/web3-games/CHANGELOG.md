@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 13.0.5
+
+### Patch Changes
+
+- 895133e: winr of olympus 1000
+- Updated dependencies [895133e]
+  - @winrlabs/games@5.1.3
+  - @winrlabs/web3@0.11.85
+  - @winrlabs/web3-games@13.0.5
+
 ## 13.0.4
 
 ### Patch Changes
