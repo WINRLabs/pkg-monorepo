@@ -11,6 +11,7 @@ import {
   SingleBJActiveGameHands,
   SingleBJDealFormFields,
   SingleBlackjackTemplate,
+  SingleBlackjackTheme,
   toDecimals,
 } from '@winrlabs/games';
 import {
@@ -70,6 +71,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
+  theme?: Partial<SingleBlackjackTheme>;
 }
 
 const defaultActiveGameHands: SingleBJActiveGameHands = {

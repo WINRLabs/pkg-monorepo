@@ -5,6 +5,7 @@ import React from 'react';
 import { CDN_URL } from '../../../../constants';
 import { cn } from '../../../../utils/style';
 import { BlackjackCard, BlackjackSuit, getBlackjackIcon } from '../../../blackjack';
+import { useSingleBlackjackTheme } from '../../provider/theme';
 import styles from './single-card.module.css';
 
 interface CardProps {
@@ -27,6 +28,8 @@ export const Card: React.FC<CardProps> = ({
   children,
 }) => {
   const [flippedWithDelay, setFlippedWithDelay] = React.useState<boolean>(true);
+
+  const theme = useSingleBlackjackTheme();
 
   React.useEffect(() => {
     if (!card) return;
@@ -56,7 +59,7 @@ export const Card: React.FC<CardProps> = ({
               isUpsideDown={false}
             />
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/blackjack/card-front-logo.svg`} alt="Justbet Blackjack" />
+              <img src={theme.cardFrontLogo} alt="Justbet Blackjack" />
             </div>
           </div>
           <div
@@ -69,7 +72,7 @@ export const Card: React.FC<CardProps> = ({
           </div>
           <div className={styles.cardSuitArea}>
             <div className={styles.logo}>
-              <img src={`${CDN_URL}/blackjack/card-front-logo.svg`} alt="Justbet Blackjack" />
+              <img src={theme.cardFrontLogo} alt="Justbet Blackjack" />
             </div>
             <CardValue
               suit={card?.suit || BlackjackSuit.CLUBS}
@@ -81,7 +84,7 @@ export const Card: React.FC<CardProps> = ({
         <div
           className={styles.back}
           style={{
-            backgroundImage: `url(${CDN_URL}/blackjack/card-bg.svg)`,
+            backgroundImage: `url(${theme.cardBackBg})`,
           }}
         />
       </div>
