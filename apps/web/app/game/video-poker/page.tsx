@@ -11,6 +11,7 @@ export default function VideoPokerPage() {
         theme={{
           cardFrontLogo: '/video-poker/card-front-logo.png',
           cardStackImage: '/video-poker/card-stack.png',
+          cardBack: '/baccarat/card-back.svg',
         }}
       />
       <Web3GamesModals />

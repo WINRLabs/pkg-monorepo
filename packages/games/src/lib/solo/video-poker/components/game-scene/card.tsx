@@ -144,6 +144,8 @@ export const CardComponent: React.FC<{
     }
   }, [status, index]);
 
+  console.log(theme.cardBack);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -221,8 +223,9 @@ export const CardComponent: React.FC<{
           </div>
           <div
             className={
-              'wr-absolute wr-left-0 wr-top-0 wr-z-50 wr-h-full wr-w-full wr-bg-card-bg wr-bg-cover wr-bg-no-repeat wr-backface-hidden [transform:rotateY(180deg)]'
+              'wr-absolute wr-left-0 wr-top-0 wr-z-50 wr-h-full wr-w-full  wr-bg-cover wr-bg-no-repeat wr-backface-hidden [transform:rotateY(180deg)]'
             }
+            style={{ backgroundImage: `url(${theme.cardBack})` }}
           ></div>
         </CheckboxPrimitive.Root>
       </motion.div>
