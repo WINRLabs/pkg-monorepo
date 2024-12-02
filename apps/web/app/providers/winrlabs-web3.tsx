@@ -17,6 +17,7 @@ export function WinrLabsWeb3Providers(props: { children: React.ReactNode }) {
       // apiConfig={{
       //   baseUrl: 'https://abc.com',
       // }}
+      globalChainId={66666666}
       apiConfig={{}}
       smartAccountConfig={{
         bundlerUrl,
