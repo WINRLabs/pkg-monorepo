@@ -107,9 +107,7 @@ export const useSocialAccountTx: MutationHook<
       } catch (e: any) {
         log('request error', e);
 
-        if (e?.code == ErrorCode.InvalidNonce || e?.code == ErrorCode.FailedOp) {
-          accountApi?.refreshNonce && (await accountApi?.refreshNonce());
-        }
+        accountApi?.refreshNonce && (await accountApi?.refreshNonce());
 
         throw new BundlerRequestError(e.message, e.code);
       }
