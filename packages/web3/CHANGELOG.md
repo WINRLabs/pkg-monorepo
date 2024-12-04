@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.86
+
+### Patch Changes
+
+- 8526a1d: nonce refresh for social acc
+
 ## 0.11.85
 
 ### Patch Changes
