@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.88
+
+### Patch Changes
+
+- bf95db9: remove error code
+
 ## 0.11.87
 
 ### Patch Changes
