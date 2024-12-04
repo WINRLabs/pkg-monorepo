@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 13.0.9
+
+### Patch Changes
+
+- bf95db9: remove error code
+- Updated dependencies [bf95db9]
+  - @winrlabs/web3@0.11.88
+  - @winrlabs/web3-games@13.0.9
+
 ## 13.0.8
 
 ### Patch Changes
