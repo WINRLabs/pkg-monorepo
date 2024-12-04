@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 13.0.7
+
+### Patch Changes
+
+- 8526a1d: nonce refresh for social acc
+- Updated dependencies [8526a1d]
+  - @winrlabs/web3@0.11.86
+  - @winrlabs/web3-games@13.0.7
+
 ## 13.0.6
 
 ### Patch Changes
