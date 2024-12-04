@@ -1,5 +1,12 @@
 # @winrlabs/web3
 
+## 0.11.87
+
+### Patch Changes
+
+- 2be0915: nonce refresh for social acc
+- 2be0915: open nonce logs
+
 ## 0.11.86
 
 ### Patch Changes

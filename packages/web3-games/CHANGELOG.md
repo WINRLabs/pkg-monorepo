@@ -1,5 +1,16 @@
 # @winrlabs/web3-games
 
+## 13.0.8
+
+### Patch Changes
+
+- 2be0915: nonce refresh for social acc
+- 2be0915: open nonce logs
+- Updated dependencies [2be0915]
+- Updated dependencies [2be0915]
+  - @winrlabs/web3@0.11.87
+  - @winrlabs/web3-games@13.0.8
+
 ## 13.0.7
 
 ### Patch Changes
