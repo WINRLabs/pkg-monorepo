@@ -1,5 +1,13 @@
 # @winrlabs/web3-games
 
+## 13.0.10
+
+### Patch Changes
+
+- 369c5e1: new stream implementation
+- Updated dependencies [369c5e1]
+  - @winrlabs/web3-games@13.0.10
+
 ## 13.0.9
 
 ### Patch Changes
