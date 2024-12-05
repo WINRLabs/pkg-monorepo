@@ -1,4 +1,5 @@
 import { useBundlerClient } from '@winrlabs/web3';
+import debug from 'debug';
 import React, { useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import SuperJSON from 'superjson';
@@ -14,7 +15,6 @@ import {
   SessionContext,
 } from '../../multiplayer/type';
 import { useGameSocketContext } from '../use-game-socket';
-import debug from 'debug';
 
 const log = debug('worker:UseListenMpGameEvent');
 
@@ -73,18 +73,17 @@ export const useListenMultiplayerGameEvent = ({ gameType }: IUseListenMultiplaye
     },
   });
 
-  const namespace = React.useMemo(() => {
-    if (!network || !gameType) return undefined;
-    return `${network.toLowerCase()}/${gameType}`;
-  }, [network, gameType]);
-
   React.useEffect(() => {
-    if (!bundlerWsUrl || !namespace || socketRef.current) return;
+    if (!bundlerWsUrl || !gameType || !network || socketRef.current) return;
 
-    const socketURL = `${bundlerWsUrl}/${namespace}`;
+    const socketURL = `${bundlerWsUrl}/justbet/multiplayer-games`;
     const socket = io(socketURL, {
       path: `/socket.io/`,
-      transports: ['websocket', 'webtransport'],
+      transports: ['websocket'],
+      query: {
+        type: gameType,
+        chain: network.toLowerCase(),
+      },
     });
 
     log(socket, 'socket');
@@ -99,16 +98,16 @@ export const useListenMultiplayerGameEvent = ({ gameType }: IUseListenMultiplaye
       log('[MULTIPLAYER] socket disconnected!');
     });
 
-    socket.on(namespace, onGameEvent);
+    socket.on('event', onGameEvent);
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
-      socket.off(namespace, onGameEvent);
+      socket.off('event', onGameEvent);
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [bundlerWsUrl, namespace]);
+  }, [bundlerWsUrl, gameType, network]);
 
   const onGameEvent = (e: string) => {
     const _e = SuperJSON.parse(e) as MultiplayerGameMessage & MultiplayerUpdateMessage;

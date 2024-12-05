@@ -17,18 +17,18 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
   const { address } = useCurrentAccount();
   const { bundlerWsUrl, network, setConnected } = useGameSocketContext();
 
-  const namespace = React.useMemo(() => {
-    if (!network || !gameAddress || !address) return undefined;
-    return `${network.toLowerCase()}/${gameAddress}/${address}`;
-  }, [network, address, gameAddress]);
-
   React.useEffect(() => {
-    if (!bundlerWsUrl || !namespace || socketRef.current) return;
+    if (!bundlerWsUrl || !network || !gameAddress || !address || socketRef.current) return;
 
-    const socketURL = `${bundlerWsUrl}/${namespace}`;
+    const socketURL = `${bundlerWsUrl}/justbet/single-games`;
     const socket = io(socketURL, {
       path: `/socket.io/`,
-      transports: ['websocket', 'webtransport'],
+      transports: ['websocket'],
+      query: {
+        player: address,
+        game: gameAddress,
+        chain: network.toLowerCase(),
+      },
     });
 
     socketRef.current = socket;
@@ -43,16 +43,16 @@ export const useListenGameEvent = (gameAddress: `0x${string}`) => {
       setConnected(false);
     });
 
-    socket.on(namespace, onGameEvent);
+    socket.on('event', onGameEvent);
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
-      socket.off(namespace, onGameEvent);
+      socket.off('event', onGameEvent);
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [bundlerWsUrl, namespace, setConnected]);
+  }, [bundlerWsUrl, network, gameAddress, address, setConnected]);
 
   const onGameEvent = (e: string) => {
     const parsedEvent = SuperJSON.parse(e) as Event;
