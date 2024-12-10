@@ -11,6 +11,7 @@ import {
   controllerAbi,
   ErrorCode,
   useCurrentAccount,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -61,13 +62,12 @@ export default function WinrOfOlympusGame({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.winrOfOlympus,
-      gameType: GameType.WINR_OLYMPUS,
-      wagmiConfig,
-      onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.winrOfOlympus,
+    gameType: GameType.WINR_OLYMPUS,
+    wagmiConfig,
+    onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = React.useState<WinrOfOlympusFormFields>({
     betAmount: 1,
@@ -179,6 +179,8 @@ export default function WinrOfOlympusGame({
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useLevelUp();
+
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -194,7 +196,7 @@ export default function WinrOfOlympusGame({
     log('allowance available');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
@@ -230,7 +232,7 @@ export default function WinrOfOlympusGame({
     }
     log('buy feature');
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
@@ -256,7 +258,7 @@ export default function WinrOfOlympusGame({
     log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),

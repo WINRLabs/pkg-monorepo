@@ -12,6 +12,7 @@ import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -72,13 +73,12 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.roulette,
-      gameType: GameType.ROULETTE,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.roulette,
+    gameType: GameType.ROULETTE,
+    wagmiConfig,
+    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = useState<RouletteFormFields>({
     wager: props.minWager || 1,
@@ -196,7 +196,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-
+  const { onLevelUp } = useLevelUp();
   const onGameSubmit = async (v: RouletteFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -211,7 +211,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),

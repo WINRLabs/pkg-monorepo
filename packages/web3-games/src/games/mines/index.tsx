@@ -20,6 +20,7 @@ import {
   minesAbi,
   Token,
   useCurrentAccount,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -67,13 +68,12 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.mines,
-      gameType: GameType.MINES,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.mines,
+    gameType: GameType.MINES,
+    wagmiConfig,
+    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+  });
 
   const { getTokenPrice } = usePriceFeed();
 
@@ -282,6 +282,8 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useLevelUp();
+
   const onGameSubmit = async (values: MinesFormField, errorCount = 0) => {
     if (selectedTokenAddress.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     props.onTransactionStatusUpdate && props.onTransactionStatusUpdate('awaiting');
@@ -300,7 +302,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       }
       log('submit Type:', submitType);
 
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       if (currentSubmitType.current === MINES_SUBMIT_TYPE.FIRST_REVEAL) {
         await handleFirstReveal(values);

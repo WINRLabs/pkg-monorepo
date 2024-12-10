@@ -19,6 +19,7 @@ export * from './hooks/use-wrap-winr';
 export * from './providers';
 export * from './providers/api';
 export * from './providers/balance';
+export * from './providers/level-up';
 export * from './providers/price-feed';
 export * from './providers/token';
 export * from './smart-wallet';

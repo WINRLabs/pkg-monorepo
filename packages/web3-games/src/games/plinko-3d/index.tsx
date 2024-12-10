@@ -11,6 +11,7 @@ import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -67,7 +68,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.plinko,
       gameType: GameType.PLINKO,
@@ -178,6 +179,8 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useLevelUp();
+
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -192,7 +195,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({

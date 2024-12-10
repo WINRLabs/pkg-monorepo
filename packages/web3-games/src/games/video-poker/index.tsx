@@ -12,6 +12,7 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -57,7 +58,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.videoPoker,
       gameType: GameType.VIDEO_POKER,
@@ -155,7 +156,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-
+  const { onLevelUp } = useLevelUp();
   const handleStartGame = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -171,7 +172,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -199,7 +200,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({

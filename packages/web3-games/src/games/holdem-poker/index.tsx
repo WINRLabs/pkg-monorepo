@@ -11,6 +11,7 @@ import {
   holdemPokerAbi,
   Token,
   useCurrentAccount,
+  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -91,7 +92,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.holdemPoker,
       gameType: GameType.HOLDEM_POKER,
@@ -182,6 +183,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const { onLevelUp } = useLevelUp();
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
@@ -200,7 +202,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -227,7 +229,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
