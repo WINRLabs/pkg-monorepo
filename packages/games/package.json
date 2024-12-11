@@ -91,6 +91,7 @@
     "embla-carousel-react": "^8.1.5",
     "esbuild-plugin-svgr": "^2.1.0",
     "framer-motion": "^10.18.0",
+    "pixi.js": "^8.6.4",
     "react-cool-dimensions": "^3.0.1",
     "react-draggable": "^4.4.6",
     "react-hook-form": "^7.51.2",
