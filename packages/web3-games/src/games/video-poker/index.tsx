@@ -3,6 +3,7 @@
 import {
   BetHistoryTemplate,
   GameType,
+  useGame,
   VideoPokerFormFields,
   VideoPokerResult,
   VideoPokerStatus,
@@ -12,7 +13,6 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -156,7 +156,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const handleStartGame = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 

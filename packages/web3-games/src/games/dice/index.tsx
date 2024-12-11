@@ -9,13 +9,13 @@ import {
   GameType,
   toDecimals,
   useDiceGameStore,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -66,7 +66,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
 }
 
 export default function DiceGame(props: TemplateWithWeb3Props) {
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
@@ -219,7 +219,6 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
 
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
         method: 'sendGameOperation',

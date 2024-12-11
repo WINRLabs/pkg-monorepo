@@ -6,13 +6,13 @@ import {
   RouletteFormFields,
   RouletteGameResult,
   RouletteTemplate,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -196,7 +196,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const onGameSubmit = async (v: RouletteFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -212,7 +212,6 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
 
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
         target: controllerAddress,

@@ -6,12 +6,12 @@ import {
   Plinko3dFormFields,
   Plinko3dGameResult,
   Plinko3dTemplate,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -179,7 +179,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
 
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();

@@ -7,6 +7,7 @@ import {
   PlinkoGameResult,
   PlinkoTemplate,
   PlinkoTemplateOptions,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
@@ -14,7 +15,6 @@ import {
   ErrorCode,
   useCurrentAccount,
   useFastOrVerified,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -200,7 +200,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const onGameSubmit = async (v: PlinkoFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -216,7 +216,6 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
 
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       props.onTransactionStatusUpdate && props.onTransactionStatusUpdate('awaiting');
 
       await sendTx.mutateAsync({

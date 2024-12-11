@@ -5,13 +5,13 @@ import {
   HoldemPokerActiveGame,
   HoldemPokerFormFields,
   HoldemPokerTemplate,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   holdemPokerAbi,
   Token,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -183,7 +183,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });

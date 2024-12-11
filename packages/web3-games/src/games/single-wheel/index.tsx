@@ -7,6 +7,7 @@ import {
   GameType,
   MultiplayerGameStatus,
   useConfigureMultiplayerLiveResultStore,
+  useGame,
   useLiveResultStore,
   useWheelGameStore,
   WheelColor,
@@ -17,7 +18,6 @@ import {
 import {
   controllerAbi,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -185,7 +185,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
 
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();

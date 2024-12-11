@@ -4,13 +4,13 @@ import {
   BetHistoryTemplate,
   GameType,
   ReelSpinSettled,
+  useGame,
   WinrBonanzaFormFields,
   WinrBonanzaTemplate,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -176,7 +176,7 @@ export default function WinrBonanzaTemplateWithWeb3({
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
 
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
@@ -194,7 +194,6 @@ export default function WinrBonanzaTemplateWithWeb3({
 
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
         target: controllerAddress,
@@ -230,7 +229,6 @@ export default function WinrBonanzaTemplateWithWeb3({
     log('buy feature');
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
         target: controllerAddress,
@@ -256,7 +254,6 @@ export default function WinrBonanzaTemplateWithWeb3({
 
     try {
       if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
-
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),
         target: controllerAddress,

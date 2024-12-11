@@ -41,10 +41,6 @@ export function WinrLabsWeb3Providers(props: { children: React.ReactNode }) {
       onPinNotFound={() => {
         console.log('Pin not found');
       }}
-      onLevelUp={() => {
-        console.log('Level up');
-        return Promise.resolve();
-      }}
     >
       {props.children}
     </WinrLabsWeb3Provider>

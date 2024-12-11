@@ -7,6 +7,7 @@ import {
   toDecimals,
   useConfigureMultiplayerLiveResultStore,
   useCrashGameStore,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import { CrashFormFields, CrashTemplate } from '@winrlabs/games';
@@ -14,7 +15,6 @@ import {
   controllerAbi,
   useApiOptions,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -208,7 +208,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     clearLiveResults();

@@ -6,7 +6,6 @@ import { BundlerClientProvider, BundlerNetwork, BundlerVersion } from '../hooks/
 import { CurrentAccountProvider } from '../hooks/use-current-address';
 import { SmartAccountApiProvider } from '../hooks/use-smart-account-api';
 import { ApiContextType, ApiProvider } from './api';
-import { LevelUpProvider } from './level-up';
 import { PriceFeedProvider } from './price-feed';
 import { Token, TokenProvider } from './token';
 
@@ -21,7 +20,6 @@ export const WinrLabsWeb3Provider = ({
   apiConfig,
   bundlerVersion = 'v1',
   onPinNotFound,
-  onLevelUp,
 }: {
   children: React.ReactNode;
   smartAccountConfig: {
@@ -40,33 +38,30 @@ export const WinrLabsWeb3Provider = ({
   apiConfig?: ApiContextType;
   bundlerVersion?: BundlerVersion;
   onPinNotFound?: () => void;
-  onLevelUp?: () => Promise<void>;
 }) => {
   return (
     <ApiProvider config={apiConfig}>
-      <LevelUpProvider onLevelUp={onLevelUp}>
-        <BundlerClientProvider
-          rpcUrl={smartAccountConfig.bundlerUrl}
-          initialNetwork={smartAccountConfig.network}
-          globalChainId={globalChainId}
-          bundlerVersion={bundlerVersion}
-          onPinNotFound={onPinNotFound}
+      <BundlerClientProvider
+        rpcUrl={smartAccountConfig.bundlerUrl}
+        initialNetwork={smartAccountConfig.network}
+        globalChainId={globalChainId}
+        bundlerVersion={bundlerVersion}
+        onPinNotFound={onPinNotFound}
+      >
+        <SmartAccountApiProvider
+          entryPointAddress={smartAccountConfig.entryPointAddress}
+          factoryAddress={smartAccountConfig.factoryAddress}
+          paymasterAddress={smartAccountConfig.paymasterAddress}
+          multicallAddress={smartAccountConfig.multicallAddress}
+          config={wagmiConfig}
         >
-          <SmartAccountApiProvider
-            entryPointAddress={smartAccountConfig.entryPointAddress}
-            factoryAddress={smartAccountConfig.factoryAddress}
-            paymasterAddress={smartAccountConfig.paymasterAddress}
-            multicallAddress={smartAccountConfig.multicallAddress}
-            config={wagmiConfig}
-          >
-            <TokenProvider tokens={tokens} selectedToken={selectedToken}>
-              <PriceFeedProvider priceFeed={tokenPriceFeed}>
-                <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
-              </PriceFeedProvider>
-            </TokenProvider>
-          </SmartAccountApiProvider>
-        </BundlerClientProvider>
-      </LevelUpProvider>
+          <TokenProvider tokens={tokens} selectedToken={selectedToken}>
+            <PriceFeedProvider priceFeed={tokenPriceFeed}>
+              <CurrentAccountProvider config={wagmiConfig}>{children}</CurrentAccountProvider>
+            </PriceFeedProvider>
+          </TokenProvider>
+        </SmartAccountApiProvider>
+      </BundlerClientProvider>
     </ApiProvider>
   );
 };

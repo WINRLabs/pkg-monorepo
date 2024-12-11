@@ -12,13 +12,13 @@ import {
   GameStruct,
   GameType,
   toDecimals,
+  useGame,
 } from '@winrlabs/games';
 import {
   blackjackReaderAbi,
   controllerAbi,
   useBalanceStore,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -336,7 +336,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
   const handleStart = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 

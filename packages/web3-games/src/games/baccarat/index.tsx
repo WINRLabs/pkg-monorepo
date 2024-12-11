@@ -8,12 +8,12 @@ import {
   BaccaratTheme,
   BetHistoryTemplate,
   GameType,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
   useFastOrVerified,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useSessionStore,
@@ -181,7 +181,8 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
+
   const onGameSubmit = async (v: BaccaratFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 

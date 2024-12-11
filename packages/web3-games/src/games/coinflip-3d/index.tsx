@@ -6,11 +6,11 @@ import {
   CoinFlip3dGameResult,
   CoinFlip3DTemplate,
   GameType,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
   useCurrentAccount,
-  useLevelUp,
   usePriceFeed,
   useSendTx,
   useTokenAllowance,
@@ -157,7 +157,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
     isReIterableRef.current = isReIterable;
   }, [isPlayerHalted, isReIterable]);
 
-  const { onLevelUp } = useLevelUp();
+  const { onLevelUp } = useGame();
 
   const onGameSubmit = async () => {
     if (!allowance.hasAllowance) {
