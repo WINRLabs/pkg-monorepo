@@ -12,6 +12,7 @@ import {
   GameStruct,
   GameType,
   toDecimals,
+  useGame,
 } from '@winrlabs/games';
 import {
   blackjackReaderAbi,
@@ -121,7 +122,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.blackjack,
       gameType: GameType.BLACKJACK,
@@ -335,6 +336,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
   const handleStart = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -350,7 +352,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -371,7 +373,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleHit = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -403,7 +405,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleDoubleDown = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -432,7 +434,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({

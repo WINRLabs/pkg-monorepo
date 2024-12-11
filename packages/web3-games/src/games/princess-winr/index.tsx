@@ -6,6 +6,7 @@ import {
   PrincessWinrFormFields,
   PrincessWinrTemplate,
   ReelSpinSettled,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -61,13 +62,12 @@ export default function PrincessWinrGame({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.princessWinr,
-      gameType: GameType.WINR_PRINCESS,
-      wagmiConfig,
-      onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.princessWinr,
+    gameType: GameType.WINR_PRINCESS,
+    wagmiConfig,
+    onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = React.useState<PrincessWinrFormFields>({
     betAmount: 1,
@@ -179,6 +179,7 @@ export default function PrincessWinrGame({
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -194,8 +195,7 @@ export default function PrincessWinrGame({
     log('allowance available');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
         target: controllerAddress,
@@ -230,8 +230,7 @@ export default function PrincessWinrGame({
     }
     log('buy feature');
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
         target: controllerAddress,
@@ -256,8 +255,7 @@ export default function PrincessWinrGame({
     log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),
         target: controllerAddress,

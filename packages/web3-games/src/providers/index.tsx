@@ -25,9 +25,14 @@ type WinrLabsWeb3GamesConfig = {
 type WinrLabsWeb3GamesProviderProps = {
   children: React.ReactNode;
   config: WinrLabsWeb3GamesConfig;
+  onLevelUp?: () => Promise<void>;
 };
 
-export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3GamesProviderProps) => {
+export const WinrLabsWeb3GamesProvider = ({
+  children,
+  config,
+  onLevelUp,
+}: WinrLabsWeb3GamesProviderProps) => {
   const { address } = useCurrentAccount();
   const { selectedToken } = useTokenStore((s) => ({
     selectedToken: s.selectedToken,
@@ -60,6 +65,7 @@ export const WinrLabsWeb3GamesProvider = ({ children, config }: WinrLabsWeb3Game
           },
         }}
         readyToPlay={connected}
+        onLevelUp={onLevelUp}
       >
         <GameStrategyProvider>
           <GameSocketProvider

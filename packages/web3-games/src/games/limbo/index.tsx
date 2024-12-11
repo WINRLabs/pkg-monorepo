@@ -7,6 +7,7 @@ import {
   LimboGameResult,
   LimboTemplate,
   toDecimals,
+  useGame,
   useLimboGameStore,
   useLiveResultStore,
 } from '@winrlabs/games';
@@ -73,13 +74,12 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.limbo,
-      gameType: GameType.LIMBO,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.limbo,
+    gameType: GameType.LIMBO,
+    wagmiConfig,
+    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = useState<LimboFormField>({
     betCount: 0,
@@ -199,6 +199,8 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
+
   const onGameSubmit = async (v: LimboFormField, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -214,8 +216,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
         target: controllerAddress,

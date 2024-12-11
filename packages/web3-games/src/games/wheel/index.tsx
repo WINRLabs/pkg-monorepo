@@ -13,6 +13,7 @@ import {
   toDecimals,
   toFormatted,
   useConfigureMultiplayerLiveResultStore,
+  useGame,
   useLiveResultStore,
   useWheelGameStore,
   WheelColor,
@@ -81,7 +82,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.wheel,
       gameType: GameType.WHEEL,
@@ -221,6 +222,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -247,7 +249,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     log('CLAIM TX SUCCESS, TRYING BET TX');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       setIsGamblerParticipant(true);

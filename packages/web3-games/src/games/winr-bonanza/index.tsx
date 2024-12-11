@@ -4,13 +4,12 @@ import {
   BetHistoryTemplate,
   GameType,
   ReelSpinSettled,
+  useGame,
   WinrBonanzaFormFields,
   WinrBonanzaTemplate,
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
-  ErrorCode,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -62,13 +61,12 @@ export default function WinrBonanzaTemplateWithWeb3({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.winrBonanza,
-      gameType: GameType.WINR_BONANZA,
-      wagmiConfig,
-      onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.winrBonanza,
+    gameType: GameType.WINR_BONANZA,
+    wagmiConfig,
+    onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = React.useState<WinrBonanzaFormFields>({
     betAmount: 1,
@@ -178,6 +176,8 @@ export default function WinrBonanzaTemplateWithWeb3({
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
+  const { onLevelUp } = useGame();
+
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -193,8 +193,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     log('allowance:', hasAllowance.current);
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
         target: controllerAddress,
@@ -229,8 +228,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     }
     log('buy feature');
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
         target: controllerAddress,
@@ -255,8 +253,7 @@ export default function WinrBonanzaTemplateWithWeb3({
     log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),
         target: controllerAddress,

@@ -68,6 +68,10 @@ interface GameContextProps {
     winAnimationTokenPrefix?: string;
   };
   readyToPlay: boolean;
+  /**
+   * Callback when user levels up
+   */
+  onLevelUp?: () => Promise<void>;
 }
 
 interface GameProviderProps extends GameContextProps {
@@ -106,9 +110,10 @@ const GameContext = createContext<
   readyToPlay: false,
   isAnimationSkipped: false,
   updateSkipAnimation: () => null,
+  onLevelUp: () => Promise.resolve(),
 });
 
-export const GameProvider = ({ children, options, readyToPlay }: GameProviderProps) => {
+export const GameProvider = ({ children, options, readyToPlay, onLevelUp }: GameProviderProps) => {
   const [isAnimationSkipped, setIsAnimationSkipped] = React.useState<boolean>(false);
 
   return (
@@ -129,6 +134,7 @@ export const GameProvider = ({ children, options, readyToPlay }: GameProviderPro
         updateSkipAnimation: setIsAnimationSkipped,
         isAnimationSkipped,
         readyToPlay,
+        onLevelUp,
       }}
     >
       {children}
