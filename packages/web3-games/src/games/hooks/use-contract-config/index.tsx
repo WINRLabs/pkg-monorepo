@@ -35,6 +35,7 @@ export interface GameAddresses {
   princessWinr: `0x${string}`;
   singleWheel: `0x${string}`;
   winrOfOlympus1000: `0x${string}`;
+  winrBonanza1000: `0x${string}`;
 }
 
 interface ContractConfigContext extends ContractConfig {
@@ -68,6 +69,7 @@ const ContractConfigContext = React.createContext<ContractConfigContext>({
     princessWinr: '0x',
     singleWheel: '0x',
     winrOfOlympus1000: '0x',
+    winrBonanza1000: '0x',
   },
   controllerAddress: '0x',
   cashierAddress: '0x',

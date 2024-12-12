@@ -48,6 +48,7 @@ export const gameAddresses = {
   winrOfOlympus1000: allAddresses.winrOfOlympus1000,
   princessWinr: allAddresses.princessWinr,
   singleWheel: '0x' as Address,
+  winrBonanza1000: allAddresses.winrBonanza1000,
 };
 
 export function Providers(props: { children: ReactNode }) {

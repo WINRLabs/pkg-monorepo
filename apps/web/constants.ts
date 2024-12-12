@@ -54,7 +54,8 @@ export type AddressName =
   | 'singleWheel'
   | 'winrOfOlympus1000'
   | 'strategyStore'
-  | 'multicallAddress';
+  | 'multicallAddress'
+  | 'winrBonanza1000';
 
 export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressName, Address>>> = {
   winr: {
@@ -106,6 +107,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       singleWheel: '0x',
       strategyStore: '0x662FB4d9B5d8EAf280af00C2fE8B02f8e5A86e80',
       multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+      winrBonanza1000: '0x1f4Dc8Cd50a62F9eC214c3D0448aF9a2629888DA',
     },
     testnet: {
       coinFlip: '0x46214AE77915631c804be51F3f547588Cd217141',
@@ -155,6 +157,7 @@ export const addresses: Record<NetworkName, Record<NetworkMode, Record<AddressNa
       singleWheel: '0x',
       strategyStore: '0xa1a1779BBa12CBa48192b5F8676c3239fa96Bd74',
       multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+      winrBonanza1000: '0x1f4Dc8Cd50a62F9eC214c3D0448aF9a2629888DA',
     },
   },
 };

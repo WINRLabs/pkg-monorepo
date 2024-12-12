@@ -1,7 +1,6 @@
 'use client';
 
 import * as Progress from '@radix-ui/react-progress';
-import { Token } from '@winrlabs/types';
 import debug from 'debug';
 import React from 'react';
 import { Unity } from 'react-unity-webgl';
@@ -13,27 +12,35 @@ import useMediaQuery from '../../../hooks/use-media-query';
 import { wait } from '../../../utils/promise';
 import { cn } from '../../../utils/style';
 import { toDecimals, toFormatted } from '../../../utils/web3';
-import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods } from '../core/types';
-import { useUnityWinrOfOlympus1000 } from './hooks/use-winr-of-olympus-unity';
-import { useWinrOfOlympus1000GameStore } from './store';
-import { WinrOfOlympus1000FormFields } from './types';
+import {
+  Slots_Unity_Events,
+  Slots_Unity_Methods,
+  WinrBonanza1000ReelSpinSettled,
+} from '../core/types';
+import { useUnityBonanza1000 } from './hooks/use-bonanza-1000-unity';
+import { useBonanza1000GameStore } from './store';
+import { WinrBonanza1000FormFields } from './types';
 
 interface TemplateProps {
   onRefresh: () => void;
   bet: () => Promise<void>;
   buyFreeSpins: () => Promise<void>;
+  buySuperFreeSpins: () => Promise<void>;
   freeSpin: () => Promise<void>;
+  superFreeSpin: () => Promise<void>;
   onError?: (e: any) => void;
-  onFormChange: (fields: WinrOfOlympus1000FormFields) => void;
+  onFormChange: (fields: WinrBonanza1000FormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   previousFreeSpinCount: number;
   previousFreeSpinWinnings: number;
-  previousMultiplier: number;
-  gameEvent: ReelSpinSettled;
+
+  previousSuperFreeSpinCount: number;
+  previousSuperFreeSpinWinnings: number;
+
+  gameEvent: WinrBonanza1000ReelSpinSettled;
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
-  selectedToken: Token;
 }
 
 declare global {
@@ -52,13 +59,15 @@ const unityEventDefaultValue: UnityEventData = {
   strParam: '',
 };
 
-const log = debug('worker:WinrOfOlympus1000Template');
+const log = debug('worker:WinrBonanza1000Template');
 
-export const WinrOfOlympus1000Template = ({
+export const WinrBonanza1000Template = ({
   onRefresh,
   bet,
   buyFreeSpins,
+  buySuperFreeSpins,
   freeSpin,
+  superFreeSpin,
   onError,
   onFormChange,
   onAutoBetModeChange,
@@ -66,10 +75,11 @@ export const WinrOfOlympus1000Template = ({
   gameEvent,
   previousFreeSpinCount,
   previousFreeSpinWinnings,
-  previousMultiplier,
+
+  previousSuperFreeSpinCount,
+  previousSuperFreeSpinWinnings,
   buildedGameUrl,
   buildedGameUrlMobile,
-  selectedToken,
 }: TemplateProps) => {
   const {
     sendMessage,
@@ -86,9 +96,8 @@ export const WinrOfOlympus1000Template = ({
     handleExitFreespin,
     handleFreespinAmount,
     hideFreeSpinText,
-    handleUpdateMultiplier,
     handleSpinStatus,
-  } = useUnityWinrOfOlympus1000({ buildedGameUrl, buildedGameUrlMobile });
+  } = useUnityBonanza1000({ buildedGameUrl, buildedGameUrlMobile });
 
   const {
     betAmount,
@@ -103,7 +112,7 @@ export const WinrOfOlympus1000Template = ({
     isInFreeSpinMode,
     isLoggedIn,
     setIsLoggedIn,
-  } = useWinrOfOlympus1000GameStore();
+  } = useBonanza1000GameStore();
 
   const { account } = useGameOptions();
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -116,7 +125,13 @@ export const WinrOfOlympus1000Template = ({
   const percentageRef = React.useRef(0);
 
   const [currentAction, setCurrentAction] = React.useState<
-    'submit' | 'initialAutoplay' | 'buyFeature' | 'freeSpin' | 'autoPlay'
+    | 'submit'
+    | 'initialAutoplay'
+    | 'buyFeature'
+    | 'freeSpin'
+    | 'autoPlay'
+    | 'superFreeSpin'
+    | 'buySuperFeature'
   >();
 
   const currentBalanceInDollar = React.useMemo(
@@ -143,6 +158,17 @@ export const WinrOfOlympus1000Template = ({
     } catch (e: any) {}
   };
 
+  const handleSuperFreeSpin = async () => {
+    log('SUPER FREESPIN');
+    await wait(300);
+    setCurrentTumbleAmount(0);
+    setWonFreeSpins(false);
+    setInitialBuyEvent(undefined);
+    setCurrentAction('superFreeSpin');
+
+    await superFreeSpin();
+  };
+
   const handleBuy = async () => {
     setCurrentPayoutAmount(0);
     setCurrentTumbleAmount(0);
@@ -154,6 +180,26 @@ export const WinrOfOlympus1000Template = ({
 
     try {
       await buyFreeSpins();
+    } catch (e: any) {
+      setInitialBuyEvent(undefined);
+      handleExitFreespin();
+      handleFreespinAmount(0);
+      hideFreeSpinText();
+      setIsInFreeSpinMode(false);
+    }
+  };
+
+  const handleBuySuper = async () => {
+    setCurrentPayoutAmount(0);
+    setCurrentTumbleAmount(0);
+    handleUpdateWinText('0');
+    setInitialBuyEvent(undefined);
+    setWonFreeSpins(false);
+
+    setCurrentAction('buySuperFeature');
+
+    try {
+      await buySuperFreeSpins();
     } catch (e: any) {
       setInitialBuyEvent(undefined);
       handleExitFreespin();
@@ -248,7 +294,7 @@ export const WinrOfOlympus1000Template = ({
         if (obj.name === 'M3_ScatterMatch') {
           log('SCATTER MATCH');
 
-          if (currentAction == 'buyFeature') {
+          if (currentAction == 'buyFeature' || currentAction == 'buySuperFeature') {
             handleEnterFreespinWithoutScatter();
           }
 
@@ -291,7 +337,6 @@ export const WinrOfOlympus1000Template = ({
 
         if (obj.name === Slots_Unity_Events.GRID_ANIMATION_FINISHED) {
           log('GRID ANIMATION FINISHED');
-
           const payout = toDecimals(gameEvent?.payoutMultiplier * gameEvent?.betAmount, 2);
 
           if (payout > 0 && gameEvent.payoutMultiplier > 0) {
@@ -338,12 +383,23 @@ export const WinrOfOlympus1000Template = ({
           onRefresh();
         }
 
+        if (obj.name === Slots_Unity_Events.GRID_ANIMATION_STARTED) {
+          if (!isInFreeSpinMode) handleUpdateWinText('0');
+        }
+
         if (obj.name === Slots_Unity_Events.BUY_FEATURE_CLICK) {
           handleBuy();
 
           setIsInFreeSpinMode(true);
         }
 
+        if (obj.name === Slots_Unity_Events.BUY_SUPER_FEATURE_CLICK) {
+          handleBuySuper();
+
+          setIsInFreeSpinMode(true);
+        }
+
+        // FIXME!
         if (obj.name === Slots_Unity_Events.CLOSED_CONGRATULATIONS_PANEL) {
           if (isInFreeSpinMode && initialBuyEvent && initialBuyEvent?.freeSpinsLeft > 0) {
             const event = initialBuyEvent;
@@ -362,7 +418,8 @@ export const WinrOfOlympus1000Template = ({
           }
 
           if (isInFreeSpinMode && !initialBuyEvent) {
-            handleFreespin();
+            previousFreeSpinCount > 0 && handleFreespin();
+            previousSuperFreeSpinCount > 0 && handleSuperFreeSpin();
           }
         }
 
@@ -402,10 +459,13 @@ export const WinrOfOlympus1000Template = ({
       isDoubleChance,
       wonFreeSpins,
       previousFreeSpinCount,
+      previousSuperFreeSpinCount,
       currentAction,
       handleSubmit,
       handleFreespin,
+      handleSuperFreeSpin,
       handleBuy,
+      handleBuySuper,
       handleAutoPlay,
     ]
   );
@@ -417,11 +477,12 @@ export const WinrOfOlympus1000Template = ({
       onFormChange({ betAmount, actualBetAmount, isDoubleChance });
       log('SUBMIT gameEvent', gameEvent);
 
-      if (gameEvent.freeSpinsLeft > 0) {
+      if (gameEvent.freeSpinsLeft > 0 || gameEvent.superFreeSpinsLeft > 0) {
         setWonFreeSpins(true);
       }
 
-      setFreeSpins(gameEvent.freeSpinsLeft);
+      gameEvent.freeSpinsLeft > 0 && setFreeSpins(gameEvent.freeSpinsLeft);
+      gameEvent.superFreeSpinsLeft > 0 && setFreeSpins(gameEvent.superFreeSpinsLeft);
     }
 
     if (currentAction == 'buyFeature' && gameEvent?.type == 'Game') {
@@ -445,6 +506,30 @@ export const WinrOfOlympus1000Template = ({
       }
 
       setFreeSpins(gameEvent.freeSpinsLeft);
+      onRefresh();
+    }
+
+    if (currentAction == 'buySuperFeature' && gameEvent?.type == 'Game') {
+      if (
+        !window.GetMessageFromUnity ||
+        typeof window.GetMessageFromUnity === 'undefined' ||
+        typeof window.GetMessageFromUnity !== 'function'
+      ) {
+        window.GetMessageFromUnity = handleMessageFromUnity;
+      }
+
+      log('buy super feature event', gameEvent.grid);
+      log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
+
+      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
+
+      handleSendGrid(gameEvent.grid);
+
+      if (gameEvent.superFreeSpinsLeft > 0) {
+        setWonFreeSpins(true);
+      }
+
+      setFreeSpins(gameEvent.superFreeSpinsLeft);
       onRefresh();
     }
 
@@ -477,8 +562,37 @@ export const WinrOfOlympus1000Template = ({
       setFreeSpins(gameEvent.freeSpinsLeft);
     }
 
+    if (currentAction == 'superFreeSpin' && gameEvent?.type == 'Game') {
+      const _betAmount = toDecimals(gameEvent.betAmount, 2);
+
+      if (
+        !window.GetMessageFromUnity ||
+        typeof window.GetMessageFromUnity === 'undefined' ||
+        typeof window.GetMessageFromUnity !== 'function'
+      ) {
+        window.GetMessageFromUnity = handleMessageFromUnity;
+      }
+
+      if (previousSuperFreeSpinCount > 0)
+        sendMessage(
+          'WebGLHandler',
+          'ReceiveMessage',
+          `M3_SetBetValue|${Math.round(_betAmount / 0.1) * 0.1}`
+        );
+
+      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SpinClickAction`);
+
+      log('free spin event', gameEvent);
+
+      log('grid', JSON.stringify(gameEvent.grid).replace(/,/g, ', '));
+
+      handleSendGrid(gameEvent.grid);
+
+      setFreeSpins(gameEvent.superFreeSpinsLeft);
+    }
+
     if (currentAction == 'autoPlay' && gameEvent?.type == 'Game') {
-      log('AUTOPLAY SUCCESS gameEvent', gameEvent);
+      log('AUTOPLAY SUCCESS');
 
       if (
         !window.GetMessageFromUnity ||
@@ -519,21 +633,9 @@ export const WinrOfOlympus1000Template = ({
       }
 
       setFreeSpins(gameEvent.freeSpinsLeft);
+
+      onRefresh();
     }
-
-    // if (gameEvent?.grid) {
-    //   const multipliers = [];
-    //   gameEvent?.grid.forEach((arr) => {
-    //     arr.forEach((n) => n >= 1000 && multipliers.push(n));
-    //   });
-
-    //   if (multipliers.length)
-    //     sendMessage(
-    //       'WebGLHandler',
-    //       'ReceiveMessage',
-    //       WinrOfOlympus_Unity_Methods.ZEUS_ANIMATION_PLAY
-    //     );
-    // }
   }, [gameEvent]);
 
   React.useEffect(() => {
@@ -549,7 +651,14 @@ export const WinrOfOlympus1000Template = ({
         delete window.GetMessageFromUnity;
       }
     };
-  }, [handleMessageFromUnity, isInFreeSpinMode, currentPayoutAmount, freeSpins, wonFreeSpins]);
+  }, [
+    handleMessageFromUnity,
+    isInFreeSpinMode,
+    currentPayoutAmount,
+    currentTumbleAmount,
+    freeSpins,
+    wonFreeSpins,
+  ]);
 
   React.useEffect(() => {
     if (!sendMessage) return;
@@ -568,7 +677,6 @@ export const WinrOfOlympus1000Template = ({
     freeSpins,
     isLoggedIn,
     isInFreeSpinMode,
-    currentTumbleAmount,
     currentPayoutAmount,
     sendMessage,
     wonFreeSpins,
@@ -592,10 +700,19 @@ export const WinrOfOlympus1000Template = ({
   }, [previousFreeSpinWinnings, isLoaded]);
 
   React.useEffect(() => {
-    if (previousMultiplier > 0 && isLoaded) {
-      handleUpdateMultiplier(previousMultiplier.toString());
+    if (previousSuperFreeSpinCount > 0) {
+      setFreeSpins(previousSuperFreeSpinCount || 0);
+
+      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetFreeSpinCount|${freeSpins}`);
     }
-  }, [previousMultiplier, isLoaded]);
+  }, [previousSuperFreeSpinCount]);
+
+  React.useEffect(() => {
+    if (previousSuperFreeSpinWinnings > 0 && isLoaded) {
+      setCurrentPayoutAmount(previousSuperFreeSpinWinnings);
+      handleUpdateWinText(previousSuperFreeSpinWinnings.toString());
+    }
+  }, [previousFreeSpinWinnings, isLoaded]);
 
   React.useEffect(() => {
     if (!sendMessage) return;
@@ -659,7 +776,7 @@ export const WinrOfOlympus1000Template = ({
               value={percentageRef.current}
             >
               <Progress.Indicator
-                className="wr-h-full wr-w-full wr-bg-gradient-to-l wr-from-cyan-400 wr-to-cyan-700"
+                className="wr-h-full wr-w-full wr-bg-gradient-to-t wr-from-unity-coinflip-purple-700 wr-to-unity-coinflip-purple-400"
                 style={{
                   transform: `translateX(-${100 - percentageRef.current}%)`,
                   transition: 'transform 660ms cubic-bezier(0.65, 0, 0.35, 1)',
@@ -672,7 +789,7 @@ export const WinrOfOlympus1000Template = ({
               }}
               className="wr-z-50 wr-text-2xl wr-font-bold wr-text-white"
             >
-              WINR of Olympus 1000
+              WINR Bonanza 1000
             </span>
           </div>
         )}
