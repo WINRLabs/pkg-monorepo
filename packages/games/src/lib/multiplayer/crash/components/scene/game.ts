@@ -1,4 +1,4 @@
-import { Application, Assets, Graphics, Renderer, Sprite } from 'pixi.js';
+import { Application, Assets, Graphics, Renderer, Sprite, Text } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
 import { map } from '../../../../utils/number';
@@ -58,6 +58,9 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
       const targetX = app.canvas.width - 50;
       const targetY = 100;
 
+      const startX = PADDING_LEFT;
+      const startY = app.canvas.height - PADDING_BOTTOM;
+
       const circle = new Graphics();
       const rect = new Graphics();
       const line = new Graphics();
@@ -68,16 +71,27 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
 
       elementRef.appendChild(app.canvas);
 
-      app.ticker.minFPS = 60;
+      // time axis
+
+      // const basicText = new Text({
+      //   text: '1s',
+      //   style: {
+      //     fontSize: 24,
+      //     fill: 'white',
+      //   },
+      // });
+
+      // basicText.x = startX + 30;
+      // basicText.y = startY + 20;
+
+      // app.stage.addChild(basicText);
+      // // #timeaxis
 
       app.ticker.add(() => {
         if (!appRef.current || !isRunningRef.current) return;
 
         rect.clear();
         line.clear();
-
-        const startX = PADDING_LEFT;
-        const startY = appRef.current.canvas.height - PADDING_BOTTOM;
 
         const x = map(currentProgressRef.current / 100, 0, 1, startX, targetX);
         const y = map(currentProgressRef.current / 100, 0, 1, startY, targetY);
@@ -98,6 +112,7 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
 
         line.stroke({ width: 10, color: '#84CC16', cap: 'round' });
 
+        // we are adding 4 to rect height to justify with the line
         rect.moveTo(startX, startY + 4);
         rect.quadraticCurveTo(controlX, controlY, x, y);
         rect.lineTo(x, startY + 4);
@@ -105,7 +120,7 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
 
         if (currentProgressRef.current < 100) {
           const speedF = calculateSpeed(currentProgressRef.current);
-          currentProgressRef.current += speedF * 0.04;
+          currentProgressRef.current += speedF * app.ticker.deltaTime * 0.01;
         }
 
         circle.fill('#84CC16');
