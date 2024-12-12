@@ -84,6 +84,12 @@ export function Providers(props: { children: ReactNode }) {
                   strategyStoreAddress,
                 },
               }}
+              onLevelUp={async () => {
+                console.log('Level up!');
+              }}
+              handleGetBadges={async () => {
+                console.log('Get badges!');
+              }}
             >
               <AudioContextProvider>{props.children}</AudioContextProvider>
             </WinrLabsWeb3GamesProvider>

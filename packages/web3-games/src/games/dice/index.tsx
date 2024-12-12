@@ -9,6 +9,7 @@ import {
   GameType,
   toDecimals,
   useDiceGameStore,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
@@ -34,7 +35,6 @@ import {
   RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
-  useGetBadges,
   usePlayerGameStatus,
   useRetryLogic,
 } from '../hooks';
@@ -65,18 +65,14 @@ interface TemplateWithWeb3Props extends BaseGameProps {
 }
 
 export default function DiceGame(props: TemplateWithWeb3Props) {
+  const { onLevelUp, handleGetBadges } = useGame();
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.dice,
-      gameType: GameType.RANGE,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
-
-  const { handleGetBadges } = useGetBadges({
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.dice,
+    gameType: GameType.RANGE,
+    wagmiConfig,
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
@@ -217,8 +213,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
         method: 'sendGameOperation',
@@ -275,7 +270,13 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
 
     const totalWager = formValues.wager;
     const totalPayout = result.reduce((acc, cur) => acc + cur.payoutInUsd, 0);
-    handleGetBadges({ totalWager, totalPayout });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const onAnimationStep = React.useCallback(

@@ -1,5 +1,5 @@
 import { useBadgeControllerAwardBadge } from '@winrlabs/api';
-import { useCurrentAccount } from '@winrlabs/web3';
+import { useApiOptions, useCurrentAccount } from '@winrlabs/web3';
 import debug from 'debug';
 
 const log = debug('worker:UseGetBadges');
@@ -40,7 +40,9 @@ interface IUseGetBadgesParams {
 }
 
 export const useGetBadges = ({ onPlayerStatusUpdate }: IUseGetBadgesParams) => {
-  const { mutateAsync: getBadgeMutation } = useBadgeControllerAwardBadge({});
+  const { baseUrl } = useApiOptions();
+
+  const { mutateAsync: getBadgeMutation } = useBadgeControllerAwardBadge();
   const currentAccount = useCurrentAccount();
 
   const handleGetBadges = async ({

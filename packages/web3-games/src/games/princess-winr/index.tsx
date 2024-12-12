@@ -6,6 +6,7 @@ import {
   PrincessWinrFormFields,
   PrincessWinrTemplate,
   ReelSpinSettled,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -26,14 +27,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  RETRY_ATTEMPTS,
-  useBetHistory,
-  useGetBadges,
-  usePlayerGameStatus,
-  useRetryLogic,
-} from '../hooks';
+import { Badge, RETRY_ATTEMPTS, useBetHistory, usePlayerGameStatus, useRetryLogic } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
@@ -61,13 +55,12 @@ export default function PrincessWinrGame({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.princessWinr,
-      gameType: GameType.WINR_PRINCESS,
-      wagmiConfig,
-      onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.princessWinr,
+    gameType: GameType.WINR_PRINCESS,
+    wagmiConfig,
+    onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = React.useState<PrincessWinrFormFields>({
     betAmount: 1,
@@ -179,6 +172,7 @@ export default function PrincessWinrGame({
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp, handleGetBadges } = useGame();
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -194,8 +188,7 @@ export default function PrincessWinrGame({
     log('allowance available');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
         target: controllerAddress,
@@ -230,8 +223,7 @@ export default function PrincessWinrGame({
     }
     log('buy feature');
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
         target: controllerAddress,
@@ -256,8 +248,7 @@ export default function PrincessWinrGame({
     log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),
         target: controllerAddress,
@@ -335,10 +326,6 @@ export default function PrincessWinrGame({
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate,
-  });
-
   const handleRefresh = async () => {
     refetchHistory();
     refetchPlayerGameStatus();
@@ -346,10 +333,13 @@ export default function PrincessWinrGame({
 
     const wager = settledResult?.betAmount || 0;
     const payoutMultiplier = settledResult?.payoutMultiplier || 0;
-    handleGetBadges({
-      totalPayout: wager * payoutMultiplier,
-      totalWager: wager,
-    });
+
+    if (handleGetBadges)
+      handleGetBadges({
+        totalPayout: wager * payoutMultiplier,
+        totalWager: wager,
+        onPlayerStatusUpdate,
+      });
   };
 
   const onAutoBetModeChange = () => {
