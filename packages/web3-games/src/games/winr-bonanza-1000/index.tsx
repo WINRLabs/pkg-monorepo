@@ -3,14 +3,12 @@
 import {
   BetHistoryTemplate,
   GameType,
-  ReelSpinSettled,
+  WinrBonanza1000ReelSpinSettled,
+  WinrBonanza1000Template,
   WinrBonanzaFormFields,
-  WinrBonanzaTemplate,
 } from '@winrlabs/games';
 import {
   controllerAbi,
-  delay,
-  ErrorCode,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -19,7 +17,6 @@ import {
   useTokenStore,
   useWrapWinr,
   winrBonanza1000Abi,
-  winrBonanzaAbi,
   WRAPPED_WINR_BANKROLL,
 } from '@winrlabs/web3';
 import debug from 'debug';
@@ -84,9 +81,12 @@ export default function WinrBonanza1000TemplateWithWeb3({
   }));
   const { getTokenPrice } = usePriceFeed();
 
-  const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
+  const [settledResult, setSettledResult] = React.useState<WinrBonanza1000ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
+  const [previousSuperFreeSpinCount, setPreviousSuperFreeSpinCount] = React.useState<number>(0);
   const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
+  const [previousSuperFreeSpinWinnings, setPreviousSuperFreeSpinWinnings] =
+    React.useState<number>(0);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -186,6 +186,19 @@ export default function WinrBonanza1000TemplateWithWeb3({
       ],
     });
 
+  const getEncodedSuperFreeSpinTxData = () =>
+    encodeFunctionData({
+      abi: controllerAbi,
+      functionName: 'perform',
+      args: [
+        gameAddresses.winrBonanza1000 as Address,
+        selectedToken.bankrollIndex,
+        uiOperatorAddress as Address,
+        'superFreeSpin',
+        '0x',
+      ],
+    });
+
   const sendTx = useSendTx();
   const isPlayerHaltedRef = React.useRef<boolean>(false);
   const hasAllowance = React.useRef<boolean>(false);
@@ -281,7 +294,9 @@ export default function WinrBonanza1000TemplateWithWeb3({
       if (isPlayerHaltedRef.current) await playerLevelUp();
 
       await sendTx.mutateAsync({
-        encodedTx,
+        encodedTxData: getEncodedBuySuperFreeSpinTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
       });
     } catch (e: any) {
       refetchPlayerGameStatus();
@@ -325,6 +340,43 @@ export default function WinrBonanza1000TemplateWithWeb3({
     cb: () => refetchPlayerGameStatus(),
   });
 
+  const handleSuperFreeSpin = async (errCount = 0) => {
+    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
+    if (!hasAllowance.current) {
+      await allowance.handleAllowance({
+        errorCb: (e: any) => {
+          log('error', e);
+        },
+      });
+    }
+
+    log('handleSuperFreeSpintx called');
+
+    try {
+      if (isPlayerHaltedRef.current) await playerLevelUp();
+
+      await sendTx.mutateAsync({
+        encodedTxData: getEncodedSuperFreeSpinTxData(),
+        target: controllerAddress,
+        method: 'sendGameOperation',
+      });
+
+      handleErrorLogicSuperFreeSpin({}, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
+    } catch (e: any) {
+      handleErrorLogicSuperFreeSpin({}, errCount, e);
+      throw new Error(e);
+    }
+  };
+
+  const {
+    handleErrorLogic: handleErrorLogicSuperFreeSpin,
+    clearIterationIntervals: clearIterationIntervalsSuperFreeSpin,
+  } = useRetryLogic<any>({
+    onSubmit: (v, errCount) => handleSuperFreeSpin(errCount),
+    playerReIterate,
+    cb: () => refetchPlayerGameStatus(),
+  });
+
   const gameDataRead = useReadContract({
     config: wagmiConfig,
     abi: winrBonanza1000Abi,
@@ -337,11 +389,14 @@ export default function WinrBonanza1000TemplateWithWeb3({
   });
 
   React.useEffect(() => {
-    const gameData = gameDataRead.data as any;
+    const gameData = gameDataRead.data;
 
     if (gameData) {
       setPreviousFreeSpinCount(gameData.freeSpinCount);
       setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
+
+      setPreviousSuperFreeSpinCount(gameData.superFreeSpinCount);
+      setPreviousSuperFreeSpinWinnings((gameData?.bufferedSuperFreeSpinWinnings || 0) / 100);
     }
   }, [gameDataRead.data]);
 
@@ -355,6 +410,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
         getTokenPrice(selectedToken.priceKey);
 
       clearIterationIntervalsFreeSpin();
+      clearIterationIntervalsSuperFreeSpin();
       clearIterationIntervalsBet();
 
       setSettledResult({
@@ -362,6 +418,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
         scatterCount: data.result.scatter,
         tumbleCount: data.result.tumble,
         freeSpinsLeft: data.freeSpinCount,
+        superFreeSpinsLeft: data.superFreeSpinCount,
         payoutMultiplier: data.result.payoutMultiplier / 100,
         grid: data.result.outcomes,
         type: 'Game',
@@ -402,7 +459,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
 
   return (
     <>
-      <WinrBonanzaTemplate
+      <WinrBonanza1000Template
         onRefresh={handleRefresh}
         onFormChange={(val) => setFormValues(val)}
         buildedGameUrl={buildedGameUrl}
@@ -411,9 +468,12 @@ export default function WinrBonanza1000TemplateWithWeb3({
         buyFreeSpins={handleBuyFreeSpins}
         buySuperFreeSpins={handleBuySuperFreeSpins}
         freeSpin={handleFreeSpin}
-        gameEvent={settledResult as ReelSpinSettled}
+        superFreeSpin={handleSuperFreeSpin}
+        gameEvent={settledResult as WinrBonanza1000ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
+        previousSuperFreeSpinCount={previousSuperFreeSpinCount}
         previousFreeSpinWinnings={previousFreeSpinWinnings}
+        previousSuperFreeSpinWinnings={previousSuperFreeSpinWinnings}
         onAutoBetModeChange={onAutoBetModeChange}
       />
       {!hideBetHistory && (

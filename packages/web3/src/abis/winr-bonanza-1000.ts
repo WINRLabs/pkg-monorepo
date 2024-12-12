@@ -774,6 +774,11 @@ export default [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'multiplierIndex',
+        type: 'uint256',
+      },
+      {
         internalType: 'uint16[12][6]',
         name: 'weights',
         type: 'uint16[12][6]',
@@ -787,11 +792,6 @@ export default [
         internalType: 'uint16[6]',
         name: 'remaining',
         type: 'uint16[6]',
-      },
-      {
-        internalType: 'bool',
-        name: 'isFreeSpin',
-        type: 'bool',
       },
     ],
     name: 'fillReels',
@@ -1122,7 +1122,32 @@ export default [
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'enum IWinrBonanza1000.SpinType',
+        name: 'spinType',
+        type: 'uint8',
+      },
+    ],
+    name: 'getMultiplierIndex',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
     name: 'getMultiplierWeights',
     outputs: [
       {
@@ -1237,17 +1262,17 @@ export default [
             type: 'uint32',
           },
           {
-            internalType: 'enum IWinrBonanza.SpinType',
+            internalType: 'enum IWinrBonanza1000.SpinType',
             name: 'spinType',
             type: 'uint8',
           },
           {
-            internalType: 'enum IWinrBonanza.State',
+            internalType: 'enum IWinrBonanza1000.State',
             name: 'state',
             type: 'uint8',
           },
         ],
-        internalType: 'struct IWinrBonanza.Game',
+        internalType: 'struct IWinrBonanza1000.Game',
         name: '',
         type: 'tuple',
       },
@@ -1335,7 +1360,7 @@ export default [
   {
     inputs: [
       {
-        internalType: 'enum IWinrBonanza.SpinType',
+        internalType: 'enum IWinrBonanza1000.SpinType',
         name: 'spinType',
         type: 'uint8',
       },
@@ -1468,6 +1493,11 @@ export default [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'multiplierIndex',
+        type: 'uint256',
+      },
+      {
         internalType: 'uint16[12][6]',
         name: 'weights',
         type: 'uint16[12][6]',
@@ -1491,11 +1521,6 @@ export default [
         internalType: 'uint8',
         name: 'turn',
         type: 'uint8',
-      },
-      {
-        internalType: 'bool',
-        name: 'isSuperFreeSpin',
-        type: 'bool',
       },
     ],
     name: 'processReel',
@@ -1718,8 +1743,18 @@ export default [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+      {
         internalType: 'uint16[15]',
-        name: '_multiplierWeights',
+        name: '_multipliers',
+        type: 'uint16[15]',
+      },
+      {
+        internalType: 'uint16[15]',
+        name: '_weights',
         type: 'uint16[15]',
       },
     ],
@@ -1817,19 +1852,6 @@ export default [
       },
     ],
     name: 'setSuperFreeSpinWeights',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint16[7]',
-        name: '_superMultiplierWeights',
-        type: 'uint16[7]',
-      },
-    ],
-    name: 'setSuperMultiplierWeights',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

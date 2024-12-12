@@ -3,6 +3,7 @@ export enum Slots_Unity_Events {
   CHANGE_BET = 'M3_ChangeBet',
   DOUBLE_CHANCE_CLICK = 'M3_DoubleChanceClick',
   BUY_FEATURE_CLICK = 'M3_BuyFeatureApproved',
+  BUY_SUPER_FEATURE_CLICK = 'M3_BuySuperFeatureApproved',
   GRID_ANIMATION_FINISHED = 'M3_GridEnd',
   CLOSED_CONGRATULATIONS_PANEL = 'M3_OnCongInactive',
   GRID_ANIMATION_STARTED = 'M3_GridStart',
@@ -43,6 +44,10 @@ export interface ReelSpinSettled {
   grid: number[][];
   type: 'Game';
   spinType: SpinType;
+}
+
+export interface WinrBonanza1000ReelSpinSettled extends ReelSpinSettled {
+  superFreeSpinsLeft: number;
 }
 
 export enum SpinType {
