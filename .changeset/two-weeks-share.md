@@ -4,4 +4,4 @@
 'web': patch
 ---
 
-export \* from './providers';
+Remove badge api
