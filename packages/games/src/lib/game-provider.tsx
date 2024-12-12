@@ -112,7 +112,7 @@ interface GameContextProps {
   handleGetBadges?: (params: {
     totalWager: number;
     totalPayout: number;
-    onPlayerStatusUpdate: (d: {
+    onPlayerStatusUpdate?: (d: {
       type: 'levelUp' | 'badgeUp';
       awardBadges: Badge[] | undefined;
       level: number | undefined;

@@ -34,7 +34,6 @@ import {
   Badge,
   SocketMultiplayerGameType,
   useBetHistory,
-  useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
@@ -114,10 +113,6 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
 
   const gameEvent = useListenMultiplayerGameEvent({
     gameType: SocketMultiplayerGameType.horserace,
-  });
-
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
   log('gameEvent', gameEvent);
@@ -213,7 +208,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -353,7 +348,13 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       payout,
     });
 
-    handleGetBadges({ totalPayout: payout, totalWager: formValues.wager });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager: formValues.wager,
+        totalPayout: payout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const sessionStore = useSessionStore();

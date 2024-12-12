@@ -33,7 +33,6 @@ import {
   Badge,
   SocketMultiplayerGameType,
   useBetHistory,
-  useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
@@ -101,10 +100,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     updateGame,
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
-
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
 
   const [formValues, setFormValues] = useState<CrashFormFields>({
     multiplier: 1,
@@ -208,7 +203,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     clearLiveResults();
@@ -331,7 +326,13 @@ const CrashGame = (props: CrashTemplateProps) => {
       won: isWon,
       payout,
     });
-    handleGetBadges({ totalPayout: payout, totalWager: formValues.wager });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager: formValues.wager,
+        totalPayout: payout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   useEffect(() => {

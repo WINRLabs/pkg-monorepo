@@ -35,7 +35,6 @@ import {
   RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
-  useGetBadges,
   usePlayerGameStatus,
   useRetryLogic,
 } from '../hooks';
@@ -66,7 +65,7 @@ interface TemplateWithWeb3Props extends BaseGameProps {
 }
 
 export default function DiceGame(props: TemplateWithWeb3Props) {
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
@@ -74,10 +73,6 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
     gameAddress: gameAddresses.dice,
     gameType: GameType.RANGE,
     wagmiConfig,
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
-  const { handleGetBadges } = useGetBadges({
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
@@ -275,7 +270,13 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
 
     const totalWager = formValues.wager;
     const totalPayout = result.reduce((acc, cur) => acc + cur.payoutInUsd, 0);
-    handleGetBadges({ totalWager, totalPayout });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const onAnimationStep = React.useCallback(

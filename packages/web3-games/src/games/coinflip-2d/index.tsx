@@ -33,7 +33,6 @@ import {
   RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
-  useGetBadges,
   usePlayerGameStatus,
   useRetryLogic,
 } from '../hooks';
@@ -78,10 +77,6 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     gameAddress: gameAddresses.coinFlip,
     gameType: GameType.COINFLIP,
     wagmiConfig,
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
-  const { handleGetBadges } = useGetBadges({
     onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
@@ -200,7 +195,7 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const onGameSubmit = async (v: CoinFlipFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -274,7 +269,12 @@ export default function CoinFlipGame(props: TemplateWithWeb3Props) {
 
     const totalWager = formValues.wager;
     const totalPayout = result.reduce((acc, cur) => acc + cur.payoutInUsd, 0);
-    handleGetBadges({ totalWager, totalPayout });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   const onAnimationStep = React.useCallback(

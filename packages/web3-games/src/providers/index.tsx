@@ -22,7 +22,7 @@ type WinrLabsWeb3GamesConfig = {
   winAnimationTokenPrefix?: string;
 };
 
-export enum Badge {
+enum Badge {
   LuckyWinner = 'LuckyWinner',
   BettingBuddy = 'BettingBuddy',
   BankrollBooster = 'BankrollBooster',
@@ -56,7 +56,7 @@ export type WinrLabsWeb3GamesProviderProps = {
   handleGetBadges?: (params: {
     totalWager: number;
     totalPayout: number;
-    onPlayerStatusUpdate: (d: {
+    onPlayerStatusUpdate?: (d: {
       type: 'levelUp' | 'badgeUp';
       awardBadges: Badge[] | undefined;
       level: number | undefined;

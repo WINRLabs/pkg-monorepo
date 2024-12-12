@@ -26,14 +26,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  RETRY_ATTEMPTS,
-  useBetHistory,
-  useGetBadges,
-  usePlayerGameStatus,
-  useRetryLogic,
-} from '../hooks';
+import { Badge, RETRY_ATTEMPTS, useBetHistory, usePlayerGameStatus, useRetryLogic } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
@@ -178,7 +171,7 @@ export default function WinrOfOlympus1000Game({
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
 
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
@@ -333,10 +326,6 @@ export default function WinrOfOlympus1000Game({
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate,
-  });
-
   const handleRefresh = async () => {
     refetchHistory();
     refetchPlayerGameStatus();
@@ -344,10 +333,12 @@ export default function WinrOfOlympus1000Game({
 
     const wager = settledResult?.betAmount || 0;
     const payoutMultiplier = settledResult?.payoutMultiplier || 0;
-    handleGetBadges({
-      totalPayout: wager * payoutMultiplier,
-      totalWager: wager,
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalPayout: wager * payoutMultiplier,
+        totalWager: wager,
+        onPlayerStatusUpdate,
+      });
   };
 
   const onAutoBetModeChange = () => {

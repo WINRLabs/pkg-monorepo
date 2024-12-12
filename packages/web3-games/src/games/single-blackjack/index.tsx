@@ -44,13 +44,7 @@ import {
   BlackjackSettledEvent,
   BlackjackStandOffEvent,
 } from '../blackjack/types';
-import {
-  Badge,
-  useBetHistory,
-  useGetBadges,
-  useListenGameEvent,
-  usePlayerGameStatus,
-} from '../hooks';
+import { Badge, useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 
@@ -291,7 +285,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const handleStart = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -938,10 +932,6 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const totalWager = React.useMemo(() => {
     let totalChipAmount = 0;
     const { firstHand, splittedFirstHand } = activeGameHands;
@@ -965,10 +955,12 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
     refetchPlayerGameStatus();
     updateBalances();
 
-    handleGetBadges({
-      totalWager,
-      totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager,
+        totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   React.useEffect(() => {

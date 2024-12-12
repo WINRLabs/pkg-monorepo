@@ -26,7 +26,7 @@ import React, { useMemo, useState } from 'react';
 import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import {
@@ -179,7 +179,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
 
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -229,10 +229,6 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const onGameCompleted = (result: Plinko3dGameResult[]) => {
     props.onAnimationCompleted && props.onAnimationCompleted(result);
     refetchHistory();
@@ -241,7 +237,13 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
 
     const totalWager = formValues.wager * formValues.betCount;
     const totalPayout = result.reduce((acc, cur) => acc + cur.payoutInUsd, 0);
-    handleGetBadges({ totalWager, totalPayout });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const sessionStore = useSessionStore();

@@ -36,7 +36,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import { Badge, useBetHistory, useGetBadges, usePlayerGameStatus } from '../hooks';
+import { Badge, useBetHistory, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { useListenGameEvent } from '../hooks/use-listen-game-event';
 import { prepareGameTransaction } from '../utils';
@@ -282,7 +282,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
 
   const onGameSubmit = async (values: MinesFormField, errorCount = 0) => {
     if (selectedTokenAddress.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -480,20 +480,18 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const onGameCompleted = (result: MinesGameResultOnComplete) => {
     props.onAnimationCompleted && props.onAnimationCompleted(result);
     refetchHistory();
     refetchPlayerGameStatus();
     updateBalances();
 
-    handleGetBadges({
-      totalPayout: result.won ? result.currentCashoutAmount : 0,
-      totalWager: formValues.wager,
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalPayout: result.won ? result.currentCashoutAmount : 0,
+        totalWager: formValues.wager,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   const sessionStore = useSessionStore();

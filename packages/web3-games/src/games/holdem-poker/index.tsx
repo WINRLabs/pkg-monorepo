@@ -27,13 +27,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  useBetHistory,
-  useGetBadges,
-  useListenGameEvent,
-  usePlayerGameStatus,
-} from '../hooks';
+import { Badge, useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 import {
@@ -117,10 +111,6 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
 
   const gameEvent = useListenGameEvent(gameAddresses.holdemPoker);
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const allowance = useTokenAllowance({
     amountToApprove: 999,
     owner: currentAccount.address || '0x0000000',
@@ -183,7 +173,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
@@ -401,10 +391,12 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     if (move == 'fold') totalWager = wager * (ante + aaBonus);
     else if (move == 'call') totalWager = wager * (ante + aaBonus + ante * 2);
 
-    handleGetBadges({
-      totalWager,
-      totalPayout: activeGame.payoutAmount,
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager,
+        totalPayout: activeGame.payoutAmount,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   return (

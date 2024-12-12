@@ -29,13 +29,7 @@ import { Address, encodeAbiParameters, encodeFunctionData } from 'viem';
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  useBetHistory,
-  useGetBadges,
-  useListenGameEvent,
-  usePlayerGameStatus,
-} from '../hooks';
+import { Badge, useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { prepareGameTransaction } from '../utils';
 
@@ -156,7 +150,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const handleStartGame = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -263,10 +257,6 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const onGameCompleted = (payout: number) => {
     props.onAnimationCompleted && props.onAnimationCompleted(payout);
     refetchHistory();
@@ -276,7 +266,12 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
     const totalPayout =
       (settledCards?.result !== VideoPokerResult.LOST ? settledCards?.payout : 0) || 0;
 
-    handleGetBadges({ totalWager: formValues.wager, totalPayout });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager: formValues.wager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   const sessionStore = useSessionStore();

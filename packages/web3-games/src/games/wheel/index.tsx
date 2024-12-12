@@ -43,7 +43,6 @@ import {
   Badge,
   SocketMultiplayerGameType,
   useBetHistory,
-  useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
@@ -222,7 +221,7 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -366,10 +365,6 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
     },
   });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const onWheelCompleted = () => {
     refetchBetHistory();
     refetchHistory();
@@ -384,7 +379,12 @@ export default function WheelGame(props: TemplateWithWeb3Props) {
       won: isWon,
       payout,
     });
-    handleGetBadges({ totalWager: formValues.wager, totalPayout: payout });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager: formValues.wager,
+        totalPayout: payout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   const sessionStore = useSessionStore();

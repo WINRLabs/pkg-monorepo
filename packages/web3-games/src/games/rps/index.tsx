@@ -33,7 +33,6 @@ import {
   RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
-  useGetBadges,
   usePlayerGameStatus,
   useRetryLogic,
 } from '../hooks';
@@ -190,7 +189,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
-  const { onLevelUp } = useGame();
+  const { onLevelUp, handleGetBadges } = useGame();
 
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
@@ -252,10 +251,6 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const onGameCompleted = (result: RPSGameResult[]) => {
     props.onAnimationCompleted && props.onAnimationCompleted(result);
     refetchHistory();
@@ -264,7 +259,13 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
 
     const totalWager = formValues.wager;
     const totalPayout = result.reduce((acc, cur) => acc + cur.payoutInUsd, 0);
-    handleGetBadges({ totalWager, totalPayout });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager,
+        totalPayout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const onAnimationStep = React.useCallback(
