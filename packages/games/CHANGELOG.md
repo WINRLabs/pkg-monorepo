@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.5
+
+### Patch Changes
+
+- f482024: winr bonanza 1000
+
 ## 5.1.4
 
 ### Patch Changes
