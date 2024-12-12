@@ -22,16 +22,53 @@ type WinrLabsWeb3GamesConfig = {
   winAnimationTokenPrefix?: string;
 };
 
-type WinrLabsWeb3GamesProviderProps = {
+export enum Badge {
+  LuckyWinner = 'LuckyWinner',
+  BettingBuddy = 'BettingBuddy',
+  BankrollBooster = 'BankrollBooster',
+  StakingStar = 'StakingStar',
+  VolumeUp = 'VolumeUp',
+  StakingTycoon = 'StakingTycoon',
+  ReferralBadge = 'ReferralBadge',
+  BetVeteran = 'BetVeteran',
+  BankrollHyperBooster = 'BankrollHyperBooster',
+  BettingTitan = 'BettingTitan',
+  LuckyStriker = 'LuckyStriker',
+  WeeklyClaimer = 'WeeklyClaimer',
+  LossLegend = 'LossLegend',
+  WinrChainKingpin = 'WinrChainKingpin',
+  BankrollCashCow = 'BankrollCashCow',
+  StakingSage = 'StakingSage',
+  JackpotJamboree = 'JackpotJamboree',
+  VolumeWinner = 'VolumeWinner',
+  LuckyStreak = 'LuckyStreak',
+  GamblingGuru = 'GamblingGuru',
+  DailyStreak = 'DailyStreak',
+  WinrChainer = 'WinrChainer',
+  HighRoller = 'HighRoller',
+  LuckyRoller = 'LuckyRoller',
+}
+
+export type WinrLabsWeb3GamesProviderProps = {
   children: React.ReactNode;
   config: WinrLabsWeb3GamesConfig;
   onLevelUp?: () => Promise<void>;
+  handleGetBadges?: (params: {
+    totalWager: number;
+    totalPayout: number;
+    onPlayerStatusUpdate: (d: {
+      type: 'levelUp' | 'badgeUp';
+      awardBadges: Badge[] | undefined;
+      level: number | undefined;
+    }) => void;
+  }) => Promise<void>;
 };
 
 export const WinrLabsWeb3GamesProvider = ({
   children,
   config,
   onLevelUp,
+  handleGetBadges,
 }: WinrLabsWeb3GamesProviderProps) => {
   const { address } = useCurrentAccount();
   const { selectedToken } = useTokenStore((s) => ({
@@ -66,6 +103,7 @@ export const WinrLabsWeb3GamesProvider = ({
         }}
         readyToPlay={connected}
         onLevelUp={onLevelUp}
+        handleGetBadges={handleGetBadges}
       >
         <GameStrategyProvider>
           <GameSocketProvider

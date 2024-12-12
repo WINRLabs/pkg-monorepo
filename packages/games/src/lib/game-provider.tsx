@@ -30,6 +30,33 @@ export interface GameDictionary {
   gems?: string;
 }
 
+export enum Badge {
+  LuckyWinner = 'LuckyWinner',
+  BettingBuddy = 'BettingBuddy',
+  BankrollBooster = 'BankrollBooster',
+  StakingStar = 'StakingStar',
+  VolumeUp = 'VolumeUp',
+  StakingTycoon = 'StakingTycoon',
+  ReferralBadge = 'ReferralBadge',
+  BetVeteran = 'BetVeteran',
+  BankrollHyperBooster = 'BankrollHyperBooster',
+  BettingTitan = 'BettingTitan',
+  LuckyStriker = 'LuckyStriker',
+  WeeklyClaimer = 'WeeklyClaimer',
+  LossLegend = 'LossLegend',
+  WinrChainKingpin = 'WinrChainKingpin',
+  BankrollCashCow = 'BankrollCashCow',
+  StakingSage = 'StakingSage',
+  JackpotJamboree = 'JackpotJamboree',
+  VolumeWinner = 'VolumeWinner',
+  LuckyStreak = 'LuckyStreak',
+  GamblingGuru = 'GamblingGuru',
+  DailyStreak = 'DailyStreak',
+  WinrChainer = 'WinrChainer',
+  HighRoller = 'HighRoller',
+  LuckyRoller = 'LuckyRoller',
+}
+
 interface GameContextProps {
   options: {
     /**
@@ -72,6 +99,25 @@ interface GameContextProps {
    * Callback when user levels up
    */
   onLevelUp?: () => Promise<void>;
+
+  /**
+   * Handles the retrieval of badges based on the provided parameters.
+   *
+   * @param params - The parameters for retrieving badges.
+   * @param params.totalWager - The total amount wagered by the player.
+   * @param params.totalPayout - The total payout received by the player.
+   * @param params.onPlayerStatusUpdate - Callback function to update the player's status.
+   * @returns A promise that resolves when the badges have been retrieved.
+   */
+  handleGetBadges?: (params: {
+    totalWager: number;
+    totalPayout: number;
+    onPlayerStatusUpdate: (d: {
+      type: 'levelUp' | 'badgeUp';
+      awardBadges: Badge[] | undefined;
+      level: number | undefined;
+    }) => void;
+  }) => Promise<void>;
 }
 
 interface GameProviderProps extends GameContextProps {
@@ -111,9 +157,16 @@ const GameContext = createContext<
   isAnimationSkipped: false,
   updateSkipAnimation: () => null,
   onLevelUp: () => Promise.resolve(),
+  handleGetBadges: async () => {},
 });
 
-export const GameProvider = ({ children, options, readyToPlay, onLevelUp }: GameProviderProps) => {
+export const GameProvider = ({
+  children,
+  options,
+  readyToPlay,
+  onLevelUp,
+  handleGetBadges,
+}: GameProviderProps) => {
   const [isAnimationSkipped, setIsAnimationSkipped] = React.useState<boolean>(false);
 
   return (
@@ -135,6 +188,7 @@ export const GameProvider = ({ children, options, readyToPlay, onLevelUp }: Game
         isAnimationSkipped,
         readyToPlay,
         onLevelUp,
+        handleGetBadges,
       }}
     >
       {children}
