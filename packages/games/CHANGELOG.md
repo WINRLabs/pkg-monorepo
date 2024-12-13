@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.6
+
+### Patch Changes
+
+- 4652f5d: add commitment
+
 ## 5.1.5
 
 ### Patch Changes

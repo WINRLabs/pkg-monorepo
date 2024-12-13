@@ -1,5 +1,15 @@
 # @winrlabs/web3-games
 
+## 13.0.12
+
+### Patch Changes
+
+- 4652f5d: add commitment
+- Updated dependencies [4652f5d]
+  - @winrlabs/web3-games@13.0.12
+  - @winrlabs/web3@0.11.90
+  - @winrlabs/games@5.1.6
+
 ## 13.0.11
 
 ### Patch Changes
