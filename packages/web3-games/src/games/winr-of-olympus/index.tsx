@@ -55,12 +55,13 @@ export default function WinrOfOlympusGame({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
-    gameAddress: gameAddresses.winrOfOlympus,
-    gameType: GameType.WINR_OLYMPUS,
-    wagmiConfig,
-    onPlayerStatusUpdate,
-  });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus, gameStatus } =
+    usePlayerGameStatus({
+      gameAddress: gameAddresses.winrOfOlympus,
+      gameType: GameType.WINR_OLYMPUS,
+      wagmiConfig,
+      onPlayerStatusUpdate,
+    });
 
   const [formValues, setFormValues] = React.useState<WinrOfOlympusFormFields>({
     betAmount: 1,
