@@ -57,7 +57,7 @@ export enum Badge {
   LuckyRoller = 'LuckyRoller',
 }
 
-interface GameContextProps {
+export interface GameContextProps {
   options: {
     /**
      * Selected currency for the games
