@@ -11,6 +11,7 @@ import {
   controllerAbi,
   delay,
   ErrorCode,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -120,6 +121,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -142,6 +144,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'buyFreeSpins',
@@ -156,6 +159,7 @@ export default function WinrBonanzaTemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'freeSpin',

@@ -8,6 +8,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   holdemPokerAbi,
   Token,
   useCurrentAccount,
@@ -151,6 +152,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.holdemPoker as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -167,6 +169,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.holdemPoker as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'decide',

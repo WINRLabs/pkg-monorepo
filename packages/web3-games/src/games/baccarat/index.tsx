@@ -11,6 +11,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -162,6 +163,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.baccarat as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

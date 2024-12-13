@@ -12,6 +12,7 @@ import {
 import { CrashFormFields, CrashTemplate } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useApiOptions,
   useCurrentAccount,
   usePriceFeed,
@@ -154,6 +155,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       functionName: 'perform',
       args: [
         gameAddresses.crash as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -188,6 +190,7 @@ const CrashGame = (props: CrashTemplateProps) => {
       functionName: 'perform',
       args: [
         gameAddresses.crash as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'claim',

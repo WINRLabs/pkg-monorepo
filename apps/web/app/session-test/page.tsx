@@ -4,6 +4,7 @@ import {
   BundlerNetwork,
   controllerAbi,
   fetchBundlerClient,
+  generateCommitmentHash,
   SmartWalletConnectorWagmiType,
   useBundlerClient,
   useCreateSessionV2,
@@ -226,6 +227,7 @@ export default function SessionTest() {
 
               args: [
                 addresses.winr.testnet.coinFlip,
+                generateCommitmentHash(),
                 BANKROLL_INDEX,
                 OPERATOR,
                 'bet',

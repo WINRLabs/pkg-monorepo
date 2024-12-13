@@ -17,6 +17,7 @@ import {
   controllerAbi,
   delay,
   ErrorCode,
+  generateCommitmentHash,
   minesAbi,
   Token,
   useCurrentAccount,
@@ -174,6 +175,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: 'perform',
       args: [
         gameAddresses.mines as Address,
+        generateCommitmentHash(),
         selectedTokenAddress.bankrollIndex,
         uiOperatorAddress as Address,
         'endGame',
@@ -217,6 +219,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: 'perform',
       args: [
         gameAddresses.mines as Address,
+        generateCommitmentHash(), 
         selectedTokenAddress.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -250,6 +253,7 @@ const MinesTemplateWithWeb3 = ({ ...props }: TemplateWithWeb3Props) => {
       functionName: 'perform',
       args: [
         gameAddresses.mines as Address,
+        generateCommitmentHash(),
         selectedTokenAddress.bankrollIndex,
         uiOperatorAddress as Address,
         'revealCells',

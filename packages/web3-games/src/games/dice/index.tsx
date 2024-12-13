@@ -13,6 +13,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -183,6 +184,7 @@ export default function DiceGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.dice as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

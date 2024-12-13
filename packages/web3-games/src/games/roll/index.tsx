@@ -10,6 +10,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -176,6 +177,7 @@ export default function RollGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.roll as Address,
+        generateCommitmentHash(), 
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

@@ -9,6 +9,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -119,6 +120,7 @@ export default function WinrOfOlympus1000Game({
       functionName: 'perform',
       args: [
         gameAddresses.winrOfOlympus1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -141,6 +143,7 @@ export default function WinrOfOlympus1000Game({
       functionName: 'perform',
       args: [
         gameAddresses.winrOfOlympus1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'buyFreeSpins',
@@ -155,6 +158,7 @@ export default function WinrOfOlympus1000Game({
       functionName: 'perform',
       args: [
         gameAddresses.winrOfOlympus1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'freeSpin',

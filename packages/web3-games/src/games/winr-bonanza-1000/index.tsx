@@ -9,6 +9,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -121,6 +122,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -143,6 +145,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'buyFreeSpins',
@@ -165,6 +168,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'buySuperFreeSpins',
@@ -179,6 +183,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'freeSpin',
@@ -192,6 +197,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
       functionName: 'perform',
       args: [
         gameAddresses.winrBonanza1000 as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'superFreeSpin',
