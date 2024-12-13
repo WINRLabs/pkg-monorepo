@@ -4,6 +4,7 @@ import {
   BetHistoryTemplate,
   GameType,
   ReelSpinSettled,
+  useGame,
   WinrOfOlympusFormFields,
   WinrOfOlympusTemplate,
 } from '@winrlabs/games';
@@ -61,7 +62,7 @@ export default function WinrOfOlympusGame({
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus, gameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.winrOfOlympus,
       gameType: GameType.WINR_OLYMPUS,
@@ -179,6 +180,8 @@ export default function WinrOfOlympusGame({
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
+
   const handleBet = async (errCount = 0) => {
     log('spin button called!');
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
@@ -194,8 +197,7 @@ export default function WinrOfOlympusGame({
     log('allowance available');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBetTxData(),
         target: controllerAddress,
@@ -230,8 +232,7 @@ export default function WinrOfOlympusGame({
     }
     log('buy feature');
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedBuyFreeSpinTxData(),
         target: controllerAddress,
@@ -256,8 +257,7 @@ export default function WinrOfOlympusGame({
     log('handleFreeSpintx called');
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedFreeSpinTxData(),
         target: controllerAddress,

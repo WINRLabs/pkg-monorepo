@@ -7,6 +7,7 @@ import {
   toDecimals,
   useConfigureMultiplayerLiveResultStore,
   useCrashGameStore,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import { CrashFormFields, CrashTemplate } from '@winrlabs/games';
@@ -66,7 +67,7 @@ const CrashGame = (props: CrashTemplateProps) => {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.crash,
       gameType: GameType.MOON,
@@ -207,6 +208,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     clearLiveResults();
@@ -230,7 +232,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({

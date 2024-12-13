@@ -6,12 +6,13 @@ import { WagmiProvider } from 'wagmi';
 
 import { AudioContextProvider } from '@winrlabs/games';
 import { AppUiProviders } from '@winrlabs/ui';
-import { BundlerNetwork } from '@winrlabs/web3';
+import { BundlerNetwork, useCurrentAccount } from '@winrlabs/web3';
 import { WinrLabsWeb3GamesProvider } from '@winrlabs/web3-games';
 import { Address } from 'viem';
 import { config } from '../wagmi';
 import { allAddresses } from '../../constants';
 import { WinrLabsWeb3Providers } from './winrlabs-web3';
+import { baseUrl, useRankControllerTakeLevelupSnapshot } from '@winrlabs/api';
 
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || '';
 const network = BundlerNetwork.WINR;
@@ -60,6 +61,19 @@ export function Providers(props: { children: ReactNode }) {
     setIsPreviouslyConnected(localStorage['isConnected']);
   }, []);
 
+  const currentAccount = useCurrentAccount();
+
+  const playerLevelUp = useRankControllerTakeLevelupSnapshot({});
+
+  const handlePlayerLevelUp = async () => {
+    (await playerLevelUp.mutateAsync({
+      body: {
+        player: currentAccount.address || '0x',
+      },
+      baseUrl: baseUrl,
+    })) as any;
+  };
+
   return (
     <WagmiProvider reconnectOnMount={isPreviouslyConnected} config={config}>
       <QueryClientProvider client={queryClient}>
@@ -84,6 +98,9 @@ export function Providers(props: { children: ReactNode }) {
                   rankMiddlewareAddress,
                   strategyStoreAddress,
                 },
+              }}
+              onLevelUp={async () => {
+                await handlePlayerLevelUp();
               }}
             >
               <AudioContextProvider>{props.children}</AudioContextProvider>

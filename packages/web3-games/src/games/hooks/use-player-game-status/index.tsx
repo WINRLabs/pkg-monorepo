@@ -247,7 +247,7 @@ export const usePlayerGameStatus = ({
   return {
     isPlayerHalted: isHalted,
     isReIterable,
-
+    gameStatus,
     playerLevelUp: handlePlayerLevelUp,
     playerReIterate: handlePlayerReIterate,
 

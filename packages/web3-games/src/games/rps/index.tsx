@@ -7,6 +7,7 @@ import {
   RpsFormFields,
   RPSGameResult,
   RpsTemplate,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import {
@@ -73,13 +74,12 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.rps,
-      gameType: GameType.RPS,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.rps,
+    gameType: GameType.RPS,
+    wagmiConfig,
+    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = useState<RpsFormFields>({
     betCount: 0,
@@ -190,6 +190,8 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const { onLevelUp } = useGame();
+
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
@@ -208,8 +210,7 @@ export default function RpsGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
         target: controllerAddress,
