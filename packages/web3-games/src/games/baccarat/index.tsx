@@ -8,6 +8,7 @@ import {
   BaccaratTheme,
   BetHistoryTemplate,
   GameType,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -32,7 +33,6 @@ import {
   RETRY_ATTEMPTS,
   useBetHistory,
   useGameStrategy,
-  useGetBadges,
   usePlayerGameStatus,
   useRetryLogic,
 } from '../hooks';
@@ -59,13 +59,12 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
-    usePlayerGameStatus({
-      gameAddress: gameAddresses.baccarat,
-      gameType: GameType.BACCARAT,
-      wagmiConfig,
-      onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-    });
+  const { isPlayerHalted, playerReIterate, refetchPlayerGameStatus } = usePlayerGameStatus({
+    gameAddress: gameAddresses.baccarat,
+    gameType: GameType.BACCARAT,
+    wagmiConfig,
+    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+  });
 
   const [formValues, setFormValues] = useState<BaccaratFormFields>({
     wager: props?.minWager || 1,
@@ -106,9 +105,6 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
     balancesToRead: [selectedToken.address],
-  });
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
   });
 
   const allowance = useTokenAllowance({
@@ -181,6 +177,8 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp, handleGetBadges } = useGame();
+
   const onGameSubmit = async (v: BaccaratFormFields, errCount = 0) => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -195,7 +193,7 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
 
       await sendTx.mutateAsync({
         encodedTxData: getEncodedTxData(v),
@@ -254,10 +252,13 @@ export default function BaccaratGame(props: TemplateWithWeb3Props) {
     refetchHistory();
     refetchPlayerGameStatus();
     updateBalances();
-    handleGetBadges({
-      totalWager: result.wager,
-      totalPayout: result.payout,
-    });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager: result.wager,
+        totalPayout: result.payout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   const onAutoBetModeChange = () => clearIterationIntervals();

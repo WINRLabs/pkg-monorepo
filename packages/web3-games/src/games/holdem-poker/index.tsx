@@ -5,6 +5,7 @@ import {
   HoldemPokerActiveGame,
   HoldemPokerFormFields,
   HoldemPokerTemplate,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -26,13 +27,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  useBetHistory,
-  useGetBadges,
-  useListenGameEvent,
-  usePlayerGameStatus,
-} from '../hooks';
+import { Badge, useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 import {
@@ -91,7 +86,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.holdemPoker,
       gameType: GameType.HOLDEM_POKER,
@@ -115,10 +110,6 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
   const { getTokenPrice } = usePriceFeed();
 
   const gameEvent = useListenGameEvent(gameAddresses.holdemPoker);
-
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
 
   const allowance = useTokenAllowance({
     amountToApprove: 999,
@@ -182,6 +173,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     isPlayerHaltedRef.current = isPlayerHalted;
   }, [isPlayerHalted]);
 
+  const { onLevelUp, handleGetBadges } = useGame();
   const wrapWinrTx = useWrapWinr({
     account: currentAccount.address || '0x',
   });
@@ -200,7 +192,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -227,7 +219,7 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -399,10 +391,12 @@ export default function HoldemPokerGame(props: TemplateWithWeb3Props) {
     if (move == 'fold') totalWager = wager * (ante + aaBonus);
     else if (move == 'call') totalWager = wager * (ante + aaBonus + ante * 2);
 
-    handleGetBadges({
-      totalWager,
-      totalPayout: activeGame.payoutAmount,
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager,
+        totalPayout: activeGame.payoutAmount,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   return (

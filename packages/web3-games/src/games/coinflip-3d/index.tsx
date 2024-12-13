@@ -6,6 +6,7 @@ import {
   CoinFlip3dGameResult,
   CoinFlip3DTemplate,
   GameType,
+  useGame,
 } from '@winrlabs/games';
 import {
   controllerAbi,
@@ -55,7 +56,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.coinFlip,
       gameType: GameType.COINFLIP,
@@ -156,6 +157,8 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
     isReIterableRef.current = isReIterable;
   }, [isPlayerHalted, isReIterable]);
 
+  const { onLevelUp } = useGame();
+
   const onGameSubmit = async () => {
     if (!allowance.hasAllowance) {
       const handledAllowance = await allowance.handleAllowance({
@@ -168,7 +171,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({

@@ -6,12 +6,17 @@ import { WagmiProvider } from 'wagmi';
 
 import { AudioContextProvider } from '@winrlabs/games';
 import { AppUiProviders } from '@winrlabs/ui';
-import { BundlerNetwork } from '@winrlabs/web3';
-import { WinrLabsWeb3GamesProvider } from '@winrlabs/web3-games';
+import { BundlerNetwork, useCurrentAccount } from '@winrlabs/web3';
+import { Badge, WinrLabsWeb3GamesProvider } from '@winrlabs/web3-games';
 import { Address } from 'viem';
 import { config } from '../wagmi';
 import { allAddresses } from '../../constants';
 import { WinrLabsWeb3Providers } from './winrlabs-web3';
+import {
+  baseUrl,
+  useBadgeControllerAwardBadge,
+  useRankControllerTakeLevelupSnapshot,
+} from '@winrlabs/api';
 
 const bundlerWsUrl = process.env.NEXT_PUBLIC_BUNDLER_WS_URL || '';
 const network = BundlerNetwork.WINR;
@@ -60,6 +65,76 @@ export function Providers(props: { children: ReactNode }) {
     setIsPreviouslyConnected(localStorage['isConnected']);
   }, []);
 
+  const currentAccount = useCurrentAccount();
+
+  const playerLevelUp = useRankControllerTakeLevelupSnapshot({});
+
+  const handlePlayerLevelUp = async () => {
+    (await playerLevelUp.mutateAsync({
+      body: {
+        player: currentAccount.address || '0x',
+      },
+      baseUrl: baseUrl,
+    })) as any;
+  };
+  const { mutateAsync: getBadgeMutation } = useBadgeControllerAwardBadge();
+
+  const handleGetBadges = async ({
+    totalWager,
+    totalPayout,
+  }: {
+    totalWager: number;
+    totalPayout: number;
+  }) => {
+    const multiplier = totalPayout / totalWager;
+    const totalProfit = totalPayout - totalWager;
+    const awardBadges = [];
+
+    if (totalWager >= 1000) {
+      const mutation = await getBadgeMutation({
+        body: {
+          type: Badge.HighRoller,
+          player: currentAccount.address || '0x',
+        },
+      });
+
+      if (mutation.awarded) awardBadges.push(Badge.HighRoller);
+    }
+
+    if (totalProfit <= -1000) {
+      const mutation = await getBadgeMutation({
+        body: {
+          type: Badge.LossLegend,
+          player: currentAccount.address || '0x',
+        },
+      });
+
+      if (mutation.awarded) awardBadges.push(Badge.LossLegend);
+    }
+
+    if (multiplier >= 10) {
+      const mutation = await getBadgeMutation({
+        body: {
+          type: Badge.LuckyRoller,
+          player: currentAccount.address || '0x',
+        },
+      });
+
+      if (mutation.awarded) awardBadges.push(Badge.LuckyRoller);
+    }
+
+    if (multiplier >= 1000) {
+      const mutation = await getBadgeMutation({
+        body: {
+          type: Badge.BettingTitan,
+          player: currentAccount.address || '0x',
+        },
+      });
+
+      if (mutation.awarded) awardBadges.push(Badge.BettingTitan);
+    }
+  };
+
   return (
     <WagmiProvider reconnectOnMount={isPreviouslyConnected} config={config}>
       <QueryClientProvider client={queryClient}>
@@ -84,6 +159,12 @@ export function Providers(props: { children: ReactNode }) {
                   rankMiddlewareAddress,
                   strategyStoreAddress,
                 },
+              }}
+              onLevelUp={async () => {
+                await handlePlayerLevelUp();
+              }}
+              handleGetBadges={async ({ totalWager, totalPayout }) => {
+                await handleGetBadges({ totalWager, totalPayout });
               }}
             >
               <AudioContextProvider>{props.children}</AudioContextProvider>

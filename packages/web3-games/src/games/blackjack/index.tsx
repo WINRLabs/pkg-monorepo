@@ -12,6 +12,7 @@ import {
   GameStruct,
   GameType,
   toDecimals,
+  useGame,
 } from '@winrlabs/games';
 import {
   blackjackReaderAbi,
@@ -32,13 +33,7 @@ import { Address, encodeAbiParameters, encodeFunctionData, formatUnits } from 'v
 import { useReadContract } from 'wagmi';
 
 import { BaseGameProps } from '../../type';
-import {
-  Badge,
-  useBetHistory,
-  useGetBadges,
-  useListenGameEvent,
-  usePlayerGameStatus,
-} from '../hooks';
+import { Badge, useBetHistory, useListenGameEvent, usePlayerGameStatus } from '../hooks';
 import { useContractConfigContext } from '../hooks/use-contract-config';
 import { DecodedEvent, prepareGameTransaction } from '../utils';
 import {
@@ -121,7 +116,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.blackjack,
       gameType: GameType.BLACKJACK,
@@ -335,6 +330,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp, handleGetBadges } = useGame();
   const handleStart = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
 
@@ -350,7 +346,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -371,7 +367,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleHit = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -403,7 +399,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
   const handleDoubleDown = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -432,7 +428,7 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterableRef.current) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -1163,10 +1159,6 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
       },
     });
 
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
-
   const totalWager = React.useMemo(() => {
     let totalChipAmount = 0;
     const {
@@ -1202,11 +1194,12 @@ export default function BlackjackTemplateWithWeb3(props: TemplateWithWeb3Props) 
     refetchHistory();
     refetchPlayerGameStatus();
     updateBalances();
-
-    handleGetBadges({
-      totalWager,
-      totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
-    });
+    if (handleGetBadges)
+      handleGetBadges({
+        totalWager,
+        totalPayout: (activeGameData.payout || 0) + (activeGameData.payback || 0),
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
   };
 
   return (

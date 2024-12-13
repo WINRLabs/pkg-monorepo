@@ -7,6 +7,7 @@ import {
   toDecimals,
   useConfigureMultiplayerLiveResultStore,
   useCrashGameStore,
+  useGame,
   useLiveResultStore,
 } from '@winrlabs/games';
 import { CrashFormFields, CrashTemplate } from '@winrlabs/games';
@@ -32,7 +33,6 @@ import {
   Badge,
   SocketMultiplayerGameType,
   useBetHistory,
-  useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
 } from '../hooks';
@@ -66,7 +66,7 @@ const CrashGame = (props: CrashTemplateProps) => {
   const { gameAddresses, controllerAddress, cashierAddress, uiOperatorAddress, wagmiConfig } =
     useContractConfigContext();
 
-  const { isPlayerHalted, isReIterable, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
+  const { isPlayerHalted, isReIterable, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.crash,
       gameType: GameType.MOON,
@@ -100,10 +100,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     updateGame,
     clear: clearLiveResults,
   } = useLiveResultStore(['addResult', 'clear', 'updateGame', 'skipAll']);
-
-  const { handleGetBadges } = useGetBadges({
-    onPlayerStatusUpdate: props.onPlayerStatusUpdate,
-  });
 
   const [formValues, setFormValues] = useState<CrashFormFields>({
     multiplier: 1,
@@ -207,6 +203,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     account: currentAccount.address || '0x',
   });
 
+  const { onLevelUp, handleGetBadges } = useGame();
   const onGameSubmit = async () => {
     if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
     clearLiveResults();
@@ -230,7 +227,7 @@ const CrashGame = (props: CrashTemplateProps) => {
     }
 
     try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
+      if (isPlayerHaltedRef.current && onLevelUp) await onLevelUp();
       if (isReIterable) await playerReIterate();
 
       await sendTx.mutateAsync({
@@ -329,7 +326,13 @@ const CrashGame = (props: CrashTemplateProps) => {
       won: isWon,
       payout,
     });
-    handleGetBadges({ totalPayout: payout, totalWager: formValues.wager });
+    if (handleGetBadges) {
+      handleGetBadges({
+        totalWager: formValues.wager,
+        totalPayout: payout,
+        onPlayerStatusUpdate: props.onPlayerStatusUpdate,
+      });
+    }
   };
 
   useEffect(() => {
