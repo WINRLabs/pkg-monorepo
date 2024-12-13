@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.90
+
+### Patch Changes
+
+- 4652f5d: add commitment
+
 ## 0.11.89
 
 ### Patch Changes
