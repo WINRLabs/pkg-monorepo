@@ -11,6 +11,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -182,6 +183,7 @@ export default function KenoGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.keno as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

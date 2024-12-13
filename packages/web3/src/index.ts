@@ -23,3 +23,4 @@ export * from './providers/price-feed';
 export * from './providers/token';
 export * from './smart-wallet';
 export * from './utils/error-codes';
+export * from './utils/hash';

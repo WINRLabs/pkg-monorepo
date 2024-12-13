@@ -11,6 +11,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -111,6 +112,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.videoPoker as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'start',
@@ -137,6 +139,7 @@ export default function VideoPokerGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.videoPoker as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'finish',

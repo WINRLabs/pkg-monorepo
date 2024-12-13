@@ -9,6 +9,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -139,6 +140,7 @@ export default function CoinFlip3DGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.coinFlip as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

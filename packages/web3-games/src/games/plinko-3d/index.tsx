@@ -9,6 +9,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -159,6 +160,7 @@ export default function Plinko3DGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.plinko as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

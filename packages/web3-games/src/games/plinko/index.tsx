@@ -12,6 +12,7 @@ import {
 import {
   controllerAbi,
   ErrorCode,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -181,6 +182,7 @@ export default function PlinkoGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.plinko as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

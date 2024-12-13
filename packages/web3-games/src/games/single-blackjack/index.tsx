@@ -17,6 +17,7 @@ import {
 import {
   blackjackReaderAbi,
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -176,6 +177,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -195,6 +197,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'hitAnotherCard',
@@ -214,6 +217,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'standOff',
@@ -233,6 +237,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'doubleDown',
@@ -252,6 +257,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'splitHand',
@@ -271,6 +277,7 @@ export default function SingleBlackjackGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.singleBlackjack as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'buyInsurance',

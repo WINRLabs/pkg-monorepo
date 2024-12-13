@@ -12,6 +12,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -180,6 +181,7 @@ export default function LimboGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.limbo as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

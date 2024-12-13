@@ -10,6 +10,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   useFastOrVerified,
   usePriceFeed,
@@ -178,6 +179,7 @@ export default function RouletteGame(props: TemplateWithWeb3Props) {
       functionName: 'perform',
       args: [
         gameAddresses.roulette as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',

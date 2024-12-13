@@ -14,6 +14,7 @@ import {
 } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -159,6 +160,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: 'perform',
       args: [
         gameAddresses.horseRace as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'bet',
@@ -193,6 +195,7 @@ const HorseRaceGame = (props: TemplateWithWeb3Props) => {
       functionName: 'perform',
       args: [
         gameAddresses.horseRace as Address,
+        generateCommitmentHash(),
         selectedToken.bankrollIndex,
         uiOperatorAddress as Address,
         'claim',
