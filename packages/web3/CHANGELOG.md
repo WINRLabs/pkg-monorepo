@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.92
+
+### Patch Changes
+
+- f1251d0: winr bonanza 1000
+
 ## 0.11.91
 
 ### Patch Changes
