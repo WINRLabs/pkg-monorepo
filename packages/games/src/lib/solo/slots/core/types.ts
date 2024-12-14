@@ -46,13 +46,12 @@ export interface ReelSpinSettled {
   spinType: SpinType;
 }
 
-export interface WinrBonanza1000ReelSpinSettled extends ReelSpinSettled {
-  superFreeSpinsLeft: number;
-}
-
 export enum SpinType {
   NONE,
   NORMAL_SPIN,
-  FREE_SPIN,
+  NORMAL_FREE_SPIN,
   DOUBLE_CHANCE,
+  DOUBLE_CHANCE_FREE_SPIN,
+  PAID_FREE_INITIAL_SPIN,
+  PAID_FREE_SPIN,
 }
