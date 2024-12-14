@@ -87,7 +87,7 @@ export type BundlerMethods<T extends BundlerVersion = 'v1'> = {
         message: string;
       };
 
-  'reIterate'(params: { game: string; player: Address }): {
+  'reIterate'(params: { game: string; player: Address; commitment: Address }): {
     status: string;
   };
 
