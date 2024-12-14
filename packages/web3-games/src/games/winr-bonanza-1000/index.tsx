@@ -3,7 +3,8 @@
 import {
   BetHistoryTemplate,
   GameType,
-  WinrBonanza1000ReelSpinSettled,
+  ReelSpinSettled,
+  SpinType,
   WinrBonanza1000Template,
   WinrBonanzaFormFields,
 } from '@winrlabs/games';
@@ -82,12 +83,10 @@ export default function WinrBonanza1000TemplateWithWeb3({
   }));
   const { getTokenPrice } = usePriceFeed();
 
-  const [settledResult, setSettledResult] = React.useState<WinrBonanza1000ReelSpinSettled>();
+  const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
-  const [previousSuperFreeSpinCount, setPreviousSuperFreeSpinCount] = React.useState<number>(0);
   const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
-  const [previousSuperFreeSpinWinnings, setPreviousSuperFreeSpinWinnings] =
-    React.useState<number>(0);
+  const [previousSpinType, setPreviousSpinType] = React.useState<SpinType>(SpinType.NONE);
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -400,9 +399,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
     if (gameData) {
       setPreviousFreeSpinCount(gameData.freeSpinCount);
       setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
-
-      setPreviousSuperFreeSpinCount(gameData.superFreeSpinCount);
-      setPreviousSuperFreeSpinWinnings((gameData?.bufferedSuperFreeSpinWinnings || 0) / 100);
+      setPreviousSpinType(gameData.spinType);
     }
   }, [gameDataRead.data]);
 
@@ -424,7 +421,6 @@ export default function WinrBonanza1000TemplateWithWeb3({
         scatterCount: data.result.scatter,
         tumbleCount: data.result.tumble,
         freeSpinsLeft: data.freeSpinCount,
-        superFreeSpinsLeft: data.superFreeSpinCount,
         payoutMultiplier: data.result.payoutMultiplier / 100,
         grid: data.result.outcomes,
         type: 'Game',
@@ -475,11 +471,10 @@ export default function WinrBonanza1000TemplateWithWeb3({
         buySuperFreeSpins={handleBuySuperFreeSpins}
         freeSpin={handleFreeSpin}
         superFreeSpin={handleSuperFreeSpin}
-        gameEvent={settledResult as WinrBonanza1000ReelSpinSettled}
+        gameEvent={settledResult as ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
-        previousSuperFreeSpinCount={previousSuperFreeSpinCount}
         previousFreeSpinWinnings={previousFreeSpinWinnings}
-        previousSuperFreeSpinWinnings={previousSuperFreeSpinWinnings}
+        previousSpinType={previousSpinType}
         onAutoBetModeChange={onAutoBetModeChange}
       />
       {!hideBetHistory && (

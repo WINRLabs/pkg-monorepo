@@ -12,11 +12,7 @@ import useMediaQuery from '../../../hooks/use-media-query';
 import { wait } from '../../../utils/promise';
 import { cn } from '../../../utils/style';
 import { toDecimals, toFormatted } from '../../../utils/web3';
-import {
-  Slots_Unity_Events,
-  Slots_Unity_Methods,
-  WinrBonanza1000ReelSpinSettled,
-} from '../core/types';
+import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods, SpinType } from '../core/types';
 import { useUnityBonanza1000 } from './hooks/use-bonanza-1000-unity';
 import { useBonanza1000GameStore } from './store';
 import { WinrBonanza1000FormFields } from './types';
@@ -34,11 +30,9 @@ interface TemplateProps {
 
   previousFreeSpinCount: number;
   previousFreeSpinWinnings: number;
+  previousSpinType: SpinType;
 
-  previousSuperFreeSpinCount: number;
-  previousSuperFreeSpinWinnings: number;
-
-  gameEvent: WinrBonanza1000ReelSpinSettled;
+  gameEvent: ReelSpinSettled;
   buildedGameUrl: string;
   buildedGameUrlMobile: string;
 }
@@ -75,9 +69,7 @@ export const WinrBonanza1000Template = ({
   gameEvent,
   previousFreeSpinCount,
   previousFreeSpinWinnings,
-
-  previousSuperFreeSpinCount,
-  previousSuperFreeSpinWinnings,
+  previousSpinType,
   buildedGameUrl,
   buildedGameUrlMobile,
 }: TemplateProps) => {
@@ -418,8 +410,14 @@ export const WinrBonanza1000Template = ({
           }
 
           if (isInFreeSpinMode && !initialBuyEvent) {
-            previousFreeSpinCount > 0 && handleFreespin();
-            previousSuperFreeSpinCount > 0 && handleSuperFreeSpin();
+            if (
+              previousSpinType == SpinType.PAID_FREE_INITIAL_SPIN ||
+              previousSpinType == SpinType.PAID_FREE_SPIN
+            ) {
+              previousFreeSpinCount > 0 && handleSuperFreeSpin();
+            } else {
+              previousFreeSpinCount > 0 && handleFreespin();
+            }
           }
         }
 
@@ -459,7 +457,7 @@ export const WinrBonanza1000Template = ({
       isDoubleChance,
       wonFreeSpins,
       previousFreeSpinCount,
-      previousSuperFreeSpinCount,
+      previousSpinType,
       currentAction,
       handleSubmit,
       handleFreespin,
@@ -477,12 +475,11 @@ export const WinrBonanza1000Template = ({
       onFormChange({ betAmount, actualBetAmount, isDoubleChance });
       log('SUBMIT gameEvent', gameEvent);
 
-      if (gameEvent.freeSpinsLeft > 0 || gameEvent.superFreeSpinsLeft > 0) {
+      if (gameEvent.freeSpinsLeft > 0) {
         setWonFreeSpins(true);
       }
 
       gameEvent.freeSpinsLeft > 0 && setFreeSpins(gameEvent.freeSpinsLeft);
-      gameEvent.superFreeSpinsLeft > 0 && setFreeSpins(gameEvent.superFreeSpinsLeft);
     }
 
     if (currentAction == 'buyFeature' && gameEvent?.type == 'Game') {
@@ -525,11 +522,11 @@ export const WinrBonanza1000Template = ({
 
       handleSendGrid(gameEvent.grid);
 
-      if (gameEvent.superFreeSpinsLeft > 0) {
+      if (gameEvent.freeSpinsLeft > 0) {
         setWonFreeSpins(true);
       }
 
-      setFreeSpins(gameEvent.superFreeSpinsLeft);
+      setFreeSpins(gameEvent.freeSpinsLeft);
       onRefresh();
     }
 
@@ -573,7 +570,7 @@ export const WinrBonanza1000Template = ({
         window.GetMessageFromUnity = handleMessageFromUnity;
       }
 
-      if (previousSuperFreeSpinCount > 0)
+      if (previousFreeSpinCount > 0)
         sendMessage(
           'WebGLHandler',
           'ReceiveMessage',
@@ -588,7 +585,7 @@ export const WinrBonanza1000Template = ({
 
       handleSendGrid(gameEvent.grid);
 
-      setFreeSpins(gameEvent.superFreeSpinsLeft);
+      setFreeSpins(gameEvent.freeSpinsLeft);
     }
 
     if (currentAction == 'autoPlay' && gameEvent?.type == 'Game') {
@@ -696,21 +693,6 @@ export const WinrBonanza1000Template = ({
     if (previousFreeSpinWinnings > 0 && isLoaded) {
       setCurrentPayoutAmount(previousFreeSpinWinnings);
       handleUpdateWinText(previousFreeSpinWinnings.toString());
-    }
-  }, [previousFreeSpinWinnings, isLoaded]);
-
-  React.useEffect(() => {
-    if (previousSuperFreeSpinCount > 0) {
-      setFreeSpins(previousSuperFreeSpinCount || 0);
-
-      sendMessage('WebGLHandler', 'ReceiveMessage', `M3_SetFreeSpinCount|${freeSpins}`);
-    }
-  }, [previousSuperFreeSpinCount]);
-
-  React.useEffect(() => {
-    if (previousSuperFreeSpinWinnings > 0 && isLoaded) {
-      setCurrentPayoutAmount(previousSuperFreeSpinWinnings);
-      handleUpdateWinText(previousSuperFreeSpinWinnings.toString());
     }
   }, [previousFreeSpinWinnings, isLoaded]);
 

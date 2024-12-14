@@ -16,6 +16,11 @@ export default [
         name: '_budget',
         type: 'address',
       },
+      {
+        internalType: 'contract GeneralSlotConfig',
+        name: '_slotConfig',
+        type: 'address',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -67,34 +72,12 @@ export default [
   {
     inputs: [
       {
-        internalType: 'uint8',
-        name: 'index',
-        type: 'uint8',
-      },
-    ],
-    name: 'InSuperFreeSpin',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint16',
         name: 'index',
         type: 'uint16',
       },
     ],
     name: 'IndexOutOfBound',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint8',
-        name: 'spinType',
-        type: 'uint8',
-      },
-    ],
-    name: 'InvalidSpinType',
     type: 'error',
   },
   {
@@ -122,17 +105,6 @@ export default [
       },
     ],
     name: 'NoFreeSpin',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'client',
-        type: 'address',
-      },
-    ],
-    name: 'NoSuperFreeSpin',
     type: 'error',
   },
   {
@@ -1137,7 +1109,7 @@ export default [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -1242,11 +1214,6 @@ export default [
             type: 'uint8',
           },
           {
-            internalType: 'uint8',
-            name: 'superFreeSpinCount',
-            type: 'uint8',
-          },
-          {
             internalType: 'uint128',
             name: 'wager',
             type: 'uint128',
@@ -1254,11 +1221,6 @@ export default [
           {
             internalType: 'uint32',
             name: 'bufferedFreeSpinWinnings',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint32',
-            name: 'bufferedSuperFreeSpinWinnings',
             type: 'uint32',
           },
           {
@@ -1857,95 +1819,16 @@ export default [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'client',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'bytes',
-        name: '',
-        type: 'bytes',
-      },
-    ],
-    name: 'superFreeSpin',
+    inputs: [],
+    name: 'slotConfig',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint128',
-            name: 'escrow',
-            type: 'uint128',
-          },
-          {
-            internalType: 'uint128',
-            name: 'payback',
-            type: 'uint128',
-          },
-          {
-            internalType: 'uint128',
-            name: 'payout',
-            type: 'uint128',
-          },
-          {
-            internalType: 'uint32',
-            name: 'delay',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint8',
-            name: 'iterate',
-            type: 'uint8',
-          },
-          {
-            internalType: 'enum ControllerUtils.Signal',
-            name: 'signal',
-            type: 'uint8',
-          },
-        ],
-        internalType: 'struct ControllerUtils.Response',
+        internalType: 'contract GeneralSlotConfig',
         name: '',
-        type: 'tuple',
-      },
-      {
-        components: [
-          {
-            components: [
-              {
-                components: [
-                  {
-                    internalType: 'string',
-                    name: 'key',
-                    type: 'string',
-                  },
-                  {
-                    internalType: 'bytes',
-                    name: 'value',
-                    type: 'bytes',
-                  },
-                ],
-                internalType: 'struct EventUtils.BytesKeyValue[]',
-                name: 'items',
-                type: 'tuple[]',
-              },
-            ],
-            internalType: 'struct EventUtils.BytesItems',
-            name: 'list',
-            type: 'tuple',
-          },
-        ],
-        internalType: 'struct EventUtils.Log',
-        name: '',
-        type: 'tuple',
+        type: 'address',
       },
     ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
