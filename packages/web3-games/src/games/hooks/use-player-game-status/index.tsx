@@ -4,6 +4,7 @@ import { useRankControllerTakeLevelupSnapshot } from '@winrlabs/api';
 import { GameType, useGameOptions, useWeb3GamesModalsStore } from '@winrlabs/games';
 import {
   controllerAbi,
+  generateCommitmentHash,
   rankMiddlewareAbi,
   useApiOptions,
   useBundlerClient,
@@ -213,6 +214,7 @@ export const usePlayerGameStatus = ({
     await client.request('reIterate', {
       game: gameTypeEnvironmentStoreMap[gameType],
       player: currentAccount.address!,
+      commitment: generateCommitmentHash(),
     });
   };
 
