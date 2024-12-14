@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.91
+
+### Patch Changes
+
+- 50cce48: reiterate commitment
+
 ## 0.11.90
 
 ### Patch Changes

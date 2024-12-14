@@ -1,5 +1,14 @@
 # @winrlabs/web3-games
 
+## 13.0.13
+
+### Patch Changes
+
+- 50cce48: reiterate commitment
+- Updated dependencies [50cce48]
+  - @winrlabs/web3@0.11.91
+  - @winrlabs/web3-games@13.0.13
+
 ## 13.0.12
 
 ### Patch Changes
