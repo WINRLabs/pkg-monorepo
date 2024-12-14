@@ -5,7 +5,8 @@ import { useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { SoundEffects } from '../../../../hooks/use-audio-effect';
 import { Button } from '../../../../ui/button';
 import { cn } from '../../../../utils/style';
-import { useCrashStore } from '../../crash.store';
+import { MultiplayerGameStatus } from '../../../core/type';
+import { useCrashGameStore } from '../../crash.store';
 import Participants from './participants';
 
 interface CrashBetControllerProps {
@@ -16,8 +17,9 @@ interface CrashBetControllerProps {
   isPinNotFound?: boolean;
 }
 export default function CrashBetController({ minWager, maxWager }: CrashBetControllerProps) {
-  const setIsRunning = useCrashStore((state) => state.setIsRunning);
-
+  const { updateState } = useCrashGameStore((state) => ({
+    updateState: state.updateState,
+  }));
   const clickEffect = useAudioEffect(SoundEffects.BET_BUTTON_CLICK);
 
   const { readyToPlay } = useGame();
@@ -36,8 +38,8 @@ export default function CrashBetController({ minWager, maxWager }: CrashBetContr
           // disabled={!readyToPlay}
           size={'xl'}
           onClick={() => {
+            updateState({ status: MultiplayerGameStatus.Start, finalMultiplier: 50 });
             clickEffect.play();
-            setIsRunning(true);
           }}
         >
           Start Game

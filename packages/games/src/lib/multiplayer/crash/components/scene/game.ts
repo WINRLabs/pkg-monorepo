@@ -1,8 +1,9 @@
-import { Application, Assets, Graphics, Renderer, Sprite, Text } from 'pixi.js';
-import { useEffect, useRef } from 'react';
+import { Application, Graphics, Renderer, Text } from 'pixi.js';
+import { RefObject, useEffect, useRef } from 'react';
 
 import { map } from '../../../../utils/number';
-import { useCrashStore } from '../../crash.store';
+import { MultiplayerGameStatus } from '../../../core/type';
+import { useCrashGameStore } from '../../crash.store';
 
 const calculateSpeed = (progress: number) => {
   if (progress < 70) return 15;
@@ -11,85 +12,176 @@ const calculateSpeed = (progress: number) => {
   return 1;
 };
 
-const PADDING_LEFT = 100;
-const PADDING_BOTTOM = 75;
+const CIRCLE_RADIUS = 10;
+const SCENE_HEIGHT = 600;
 
-export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null }) => {
-  const isRunning = useCrashStore((state) => state.isRunning);
+const PADDING_LEFT = 140;
+const PADDING_BOTTOM = 40;
 
+const startX = PADDING_LEFT;
+const startY = SCENE_HEIGHT - PADDING_BOTTOM;
+
+export const useCrashGame = ({
+  canvasRef,
+  elapsedTime,
+  multiplier,
+}: {
+  canvasRef: RefObject<HTMLCanvasElement>;
+  elapsedTime?: number;
+  multiplier: number;
+}) => {
   const appRef = useRef<Application<Renderer> | null>(null);
-
-  const isRunningRef = useRef<boolean>(false);
+  const timeTotalRef = useRef<Text | null>(null);
+  const timePortionsRef = useRef<Text[]>([]);
+  const multipliersRef = useRef<Text[]>([]);
   const currentProgressRef = useRef<number>(0);
 
   useEffect(() => {
-    isRunningRef.current = isRunning;
-    if (!isRunning) {
-      currentProgressRef.current = 0;
+    if (!timeTotalRef.current) return;
+
+    timeTotalRef.current.text = `Total ${elapsedTime}s`;
+
+    if (
+      timePortionsRef.current &&
+      timePortionsRef.current.length === 4 &&
+      elapsedTime &&
+      elapsedTime > 12 &&
+      elapsedTime % 2 === 0
+    ) {
+      for (let i = 0; i < timePortionsRef.current.length - 1; i++) {
+        let current = timePortionsRef.current[i];
+        let next = timePortionsRef.current[i + 1];
+        if (!current || !next) continue;
+        current.text = timePortionsRef.current[i + 1]?.text || '';
+      }
+
+      let prev = timePortionsRef.current[timePortionsRef.current.length - 1];
+      if (!prev) return;
+
+      prev.text = `${elapsedTime}s`;
     }
-  }, [isRunning]);
+  }, [elapsedTime]);
 
   useEffect(() => {
-    if (!elementRef || appRef.current) return;
+    if (!multipliersRef.current || multiplier < 2) return;
+    const baseMultiplier = multiplier; // Current multiplier
+    const gap = 0.2; // Gap between numbers
+    // const totalPortions = 6; // Number of portions to display
 
-    const init = async () => {
-      const app = new Application();
+    multipliersRef.current.forEach((portion, index) => {
+      portion.text = `${(baseMultiplier - gap * index).toFixed(1)}×`;
+    });
+  }, [multiplier]);
 
-      const backgroundAsset = await Assets.load('/crash/bg.png');
-      const background = Sprite.from(backgroundAsset);
+  const addYAxis = async () => {
+    const line = new Graphics();
 
-      await app.init({
-        background: 'black',
-        resolution: 1,
-        antialias: true,
-        resizeTo: elementRef,
+    for (let i = 0; i < 20; i += 1) {
+      line.beginPath();
+      line.moveTo(20, 100 + i * 25);
+      const values = {
+        19: '1.0x',
+        15: '1.2x',
+        11: '1.3x',
+        7: '1.5x',
+        3: '1.7x',
+        0: '1.8x',
+      };
+      if (i === 0 || i === 3 || i === 7 || i === 11 || i === 15 || i === 19) {
+        const text = new Text({
+          text: values[i],
+          x: 85,
+          y: 100 + i * 25 - 10,
+          style: {
+            fill: '#FFFFFF80',
+            fontSize: 18,
+          },
+        });
+
+        appRef.current?.stage.addChild(text);
+        multipliersRef.current.push(text);
+        line.lineTo(80, 100 + i * 25);
+      } else {
+        line.lineTo(50, 100 + i * 25);
+      }
+      line.stroke({ width: 3, color: '#FFFFFF30' });
+      line.closePath();
+    }
+
+    appRef.current?.stage.addChild(line);
+  };
+
+  const addXAxis = async () => {
+    if (!appRef.current || !canvasRef.current) return;
+
+    const timeFrames = ['2s', '4s', '6s', '8s'];
+
+    let lastTimeFrameXPos = startX + 100;
+
+    const timePortions = timeFrames.map((timeFrame) => {
+      const newText = new Text({
+        text: timeFrame,
+        x: lastTimeFrameXPos,
+        y: SCENE_HEIGHT - PADDING_BOTTOM + 20,
+        style: {
+          fill: '#FFFFFF80',
+          fontSize: 18,
+        },
       });
 
-      background.anchor.set(0.5);
+      lastTimeFrameXPos += 125;
 
-      background.x = app.canvas.width / 2;
-      background.y = app.canvas.height / 2;
+      return newText;
+    });
 
-      background.width = 800;
-      background.height = 800;
+    appRef.current.stage.addChild(...timePortions);
+    timePortionsRef.current = timePortions;
 
-      app.stage.addChild(background);
+    const timeTotal = new Text({
+      text: 'Total 0s',
+      x: canvasRef.current.clientWidth - 100,
+      y: SCENE_HEIGHT - PADDING_BOTTOM + 20,
+      style: {
+        fill: '#FFFFFF80',
+        fontSize: 18,
+      },
+    });
 
-      const targetX = app.canvas.width - 50;
+    appRef.current.stage.addChild(timeTotal);
+    timeTotalRef.current = timeTotal;
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      if (!canvasRef.current || appRef.current) return;
+
+      const app = new Application();
+
+      appRef.current = app;
+
+      await app.init({
+        resolution: 2,
+        canvas: canvasRef.current,
+        backgroundAlpha: 0,
+      });
+
+      const targetX = canvasRef.current.clientWidth - 50;
       const targetY = 100;
-
-      const startX = PADDING_LEFT;
-      const startY = app.canvas.height - PADDING_BOTTOM;
 
       const circle = new Graphics();
       const rect = new Graphics();
       const line = new Graphics();
 
-      app.stage.addChild(rect);
+      circle.circle(startX, startY, CIRCLE_RADIUS);
+      circle.fill('#84CC16');
       app.stage.addChild(circle);
-      app.stage.addChild(line);
-
-      elementRef.appendChild(app.canvas);
-
-      // time axis
-
-      // const basicText = new Text({
-      //   text: '1s',
-      //   style: {
-      //     fontSize: 24,
-      //     fill: 'white',
-      //   },
-      // });
-
-      // basicText.x = startX + 30;
-      // basicText.y = startY + 20;
-
-      // app.stage.addChild(basicText);
-      // // #timeaxis
 
       app.ticker.add(() => {
-        if (!appRef.current || !isRunningRef.current) return;
+        const currentState = useCrashGameStore.getState();
 
+        if (!appRef.current || currentState.status !== MultiplayerGameStatus.Start) return;
+
+        circle.clear();
         rect.clear();
         line.clear();
 
@@ -99,6 +191,9 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
         const normalizedProgress = Math.min((currentProgressRef.current - 70) / 30, 1);
 
         let bendStrength = normalizedProgress > 0 ? normalizedProgress : 0;
+
+        // if (currentProgressRef.current >= 100) {
+        // }
 
         const controlOffsetX = 0;
         const controlOffsetY = bendStrength * -100;
@@ -122,18 +217,19 @@ export const useCrashGame = ({ elementRef }: { elementRef: HTMLElement | null })
           const speedF = calculateSpeed(currentProgressRef.current);
           currentProgressRef.current += speedF * app.ticker.deltaTime * 0.01;
         }
-
+        circle.circle(x, y, CIRCLE_RADIUS);
         circle.fill('#84CC16');
-        circle.circle(0, 0, 12);
-        circle.position.x = x;
-        circle.position.y = y;
       });
 
-      appRef.current = app;
+      app.stage.addChild(rect);
+      app.stage.addChild(line);
+
+      addYAxis();
+      addXAxis();
     };
 
     init();
-  }, [elementRef]);
+  }, [canvasRef?.current]);
 
   return {};
 };
