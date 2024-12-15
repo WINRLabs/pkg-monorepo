@@ -64,9 +64,8 @@ export const useCrashGame = ({
 
   useEffect(() => {
     if (!multipliersRef.current || multiplier < 2) return;
-    const baseMultiplier = multiplier; // Current multiplier
-    const gap = 0.2; // Gap between numbers
-    // const totalPortions = 6; // Number of portions to display
+    const baseMultiplier = multiplier;
+    const gap = 0.2;
 
     multipliersRef.current.forEach((portion, index) => {
       portion.text = `${(baseMultiplier - gap * index).toFixed(1)}×`;
