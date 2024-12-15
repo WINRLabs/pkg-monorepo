@@ -20,6 +20,7 @@ import {
   IconRps,
   IconSlot,
   IconSweetBonanza,
+  IconSweetBonanza1000,
   IconVideoPoker,
   IconWheel,
   IconWinrOfOlympus,
@@ -134,6 +135,16 @@ const gameMap: Record<
   [GameType.SINGLE_WHEEL]: {
     title: 'Wheel',
     icon: <IconWheel className="wr-h-4 wr-w-4" />,
+  },
+  [GameType.WINR_BONANZA_1000]: {
+    title: 'WINR Bonanza 1000',
+    smTitle: 'Bonanza 1000',
+    icon: <IconSweetBonanza1000 className="wr-h-4 wr-w-4" />,
+  },
+  [GameType.WINR_OLYMPUS_1000]: {
+    title: 'WINR of Olympus 1000',
+    smTitle: 'Olympus 1000',
+    icon: <IconSweetBonanza1000 className="wr-h-4 wr-w-4" />,
   },
 };
 
