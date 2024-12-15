@@ -1,5 +1,11 @@
 # @winrlabs/web3
 
+## 0.11.93
+
+### Patch Changes
+
+- 8e55667: update
+
 ## 0.11.92
 
 ### Patch Changes

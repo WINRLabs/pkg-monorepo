@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.10
+
+### Patch Changes
+
+- 8e55667: update
+
 ## 5.1.9
 
 ### Patch Changes
