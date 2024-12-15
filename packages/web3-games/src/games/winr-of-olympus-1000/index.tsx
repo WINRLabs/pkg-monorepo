@@ -64,7 +64,7 @@ export default function WinrOfOlympus1000Game({
   const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.winrOfOlympus1000,
-      gameType: GameType.WINR_OLYMPUS,
+      gameType: GameType.WINR_OLYMPUS_1000,
       wagmiConfig,
       onPlayerStatusUpdate,
     });

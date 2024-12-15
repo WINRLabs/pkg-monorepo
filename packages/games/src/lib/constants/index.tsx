@@ -24,6 +24,8 @@ export enum GameType {
   WINR_OLYMPUS = 'WINR_OLYMPUS',
   WINR_PRINCESS = 'WINR_PRINCESS',
   SINGLE_WHEEL = 'SINGLE_WHEEL',
+  WINR_OLYMPUS_1000 = 'WINR_OLYMPUS_1000',
+  WINR_BONANZA_1000 = 'WINR_BONANZA_1000',
 }
 
 // TODO: move this levels into centralized place, it is used at consumer apps

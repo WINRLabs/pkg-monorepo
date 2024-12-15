@@ -12,7 +12,7 @@ import useMediaQuery from '../../../hooks/use-media-query';
 import { wait } from '../../../utils/promise';
 import { cn } from '../../../utils/style';
 import { toDecimals, toFormatted } from '../../../utils/web3';
-import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods, SpinType } from '../core/types';
+import { ReelSpinSettled, Slots_Unity_Events, Slots_Unity_Methods } from '../core/types';
 import { useUnityBonanza1000 } from './hooks/use-bonanza-1000-unity';
 import { useBonanza1000GameStore } from './store';
 import { WinrBonanza1000FormFields } from './types';
@@ -23,14 +23,12 @@ interface TemplateProps {
   buyFreeSpins: () => Promise<void>;
   buySuperFreeSpins: () => Promise<void>;
   freeSpin: () => Promise<void>;
-  superFreeSpin: () => Promise<void>;
   onError?: (e: any) => void;
   onFormChange: (fields: WinrBonanza1000FormFields) => void;
   onAutoBetModeChange?: (isAutoBetMode: boolean) => void;
 
   previousFreeSpinCount: number;
   previousFreeSpinWinnings: number;
-  previousSpinType: SpinType;
 
   gameEvent: ReelSpinSettled;
   buildedGameUrl: string;
@@ -61,7 +59,6 @@ export const WinrBonanza1000Template = ({
   buyFreeSpins,
   buySuperFreeSpins,
   freeSpin,
-  superFreeSpin,
   onError,
   onFormChange,
   onAutoBetModeChange,
@@ -69,7 +66,6 @@ export const WinrBonanza1000Template = ({
   gameEvent,
   previousFreeSpinCount,
   previousFreeSpinWinnings,
-  previousSpinType,
   buildedGameUrl,
   buildedGameUrlMobile,
 }: TemplateProps) => {
@@ -148,17 +144,6 @@ export const WinrBonanza1000Template = ({
     try {
       await freeSpin();
     } catch (e: any) {}
-  };
-
-  const handleSuperFreeSpin = async () => {
-    log('SUPER FREESPIN');
-    await wait(300);
-    setCurrentTumbleAmount(0);
-    setWonFreeSpins(false);
-    setInitialBuyEvent(undefined);
-    setCurrentAction('superFreeSpin');
-
-    await superFreeSpin();
   };
 
   const handleBuy = async () => {
@@ -410,14 +395,7 @@ export const WinrBonanza1000Template = ({
           }
 
           if (isInFreeSpinMode && !initialBuyEvent) {
-            if (
-              previousSpinType == SpinType.PAID_FREE_INITIAL_SPIN ||
-              previousSpinType == SpinType.PAID_FREE_SPIN
-            ) {
-              previousFreeSpinCount > 0 && handleSuperFreeSpin();
-            } else {
-              previousFreeSpinCount > 0 && handleFreespin();
-            }
+            handleFreespin();
           }
         }
 
@@ -457,11 +435,9 @@ export const WinrBonanza1000Template = ({
       isDoubleChance,
       wonFreeSpins,
       previousFreeSpinCount,
-      previousSpinType,
       currentAction,
       handleSubmit,
       handleFreespin,
-      handleSuperFreeSpin,
       handleBuy,
       handleBuySuper,
       handleAutoPlay,

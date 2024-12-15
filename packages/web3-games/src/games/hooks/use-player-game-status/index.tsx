@@ -47,6 +47,8 @@ const gameTypeEnvironmentStoreMap: Record<GameType, GameTypesEnvironmentStore> =
   [GameType.WINR_OLYMPUS]: GameTypesEnvironmentStore.gateofolympos,
   [GameType.WINR_PRINCESS]: GameTypesEnvironmentStore.princesswinr,
   [GameType.SINGLE_WHEEL]: GameTypesEnvironmentStore.singlewheel,
+  [GameType.WINR_OLYMPUS_1000]: GameTypesEnvironmentStore.gateofolympos1000,
+  [GameType.WINR_BONANZA_1000]: GameTypesEnvironmentStore.winrbonanza1000,
 };
 
 interface IUsePlayerStatusParams {
