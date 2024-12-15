@@ -27,4 +27,5 @@ export enum GameTypesEnvironmentStore {
   princesswinr = 'princesswinr',
   singlewheel = 'singlewheel',
   gateofolympos1000 = 'gateofolympos1000',
+  winrbonanza1000 = 'winrbonanza1000',
 }

@@ -4,7 +4,6 @@ import {
   BetHistoryTemplate,
   GameType,
   ReelSpinSettled,
-  SpinType,
   WinrBonanza1000Template,
   WinrBonanzaFormFields,
 } from '@winrlabs/games';
@@ -65,7 +64,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
   const { isPlayerHalted, playerLevelUp, playerReIterate, refetchPlayerGameStatus } =
     usePlayerGameStatus({
       gameAddress: gameAddresses.winrBonanza1000,
-      gameType: GameType.WINR_BONANZA,
+      gameType: GameType.WINR_BONANZA_1000,
       wagmiConfig,
       onPlayerStatusUpdate,
     });
@@ -86,7 +85,7 @@ export default function WinrBonanza1000TemplateWithWeb3({
   const [settledResult, setSettledResult] = React.useState<ReelSpinSettled>();
   const [previousFreeSpinCount, setPreviousFreeSpinCount] = React.useState<number>(0);
   const [previousFreeSpinWinnings, setPreviousFreeSpinWinnings] = React.useState<number>(0);
-  const [previousSpinType, setPreviousSpinType] = React.useState<SpinType>(SpinType.NONE);
+
   const currentAccount = useCurrentAccount();
   const { refetch: updateBalances } = useTokenBalances({
     account: currentAccount.address || '0x',
@@ -345,43 +344,6 @@ export default function WinrBonanza1000TemplateWithWeb3({
     cb: () => refetchPlayerGameStatus(),
   });
 
-  const handleSuperFreeSpin = async (errCount = 0) => {
-    if (selectedToken.bankrollIndex == WRAPPED_WINR_BANKROLL) await wrapWinrTx();
-    if (!hasAllowance.current) {
-      await allowance.handleAllowance({
-        errorCb: (e: any) => {
-          log('error', e);
-        },
-      });
-    }
-
-    log('handleSuperFreeSpintx called');
-
-    try {
-      if (isPlayerHaltedRef.current) await playerLevelUp();
-
-      await sendTx.mutateAsync({
-        encodedTxData: getEncodedSuperFreeSpinTxData(),
-        target: controllerAddress,
-        method: 'sendGameOperation',
-      });
-
-      handleErrorLogicSuperFreeSpin({}, RETRY_ATTEMPTS - 2 + errCount, null, 2000);
-    } catch (e: any) {
-      handleErrorLogicSuperFreeSpin({}, errCount, e);
-      throw new Error(e);
-    }
-  };
-
-  const {
-    handleErrorLogic: handleErrorLogicSuperFreeSpin,
-    clearIterationIntervals: clearIterationIntervalsSuperFreeSpin,
-  } = useRetryLogic<any>({
-    onSubmit: (v, errCount) => handleSuperFreeSpin(errCount),
-    playerReIterate,
-    cb: () => refetchPlayerGameStatus(),
-  });
-
   const gameDataRead = useReadContract({
     config: wagmiConfig,
     abi: winrBonanza1000Abi,
@@ -399,7 +361,6 @@ export default function WinrBonanza1000TemplateWithWeb3({
     if (gameData) {
       setPreviousFreeSpinCount(gameData.freeSpinCount);
       setPreviousFreeSpinWinnings((gameData?.bufferedFreeSpinWinnings || 0) / 100);
-      setPreviousSpinType(gameData.spinType);
     }
   }, [gameDataRead.data]);
 
@@ -413,7 +374,6 @@ export default function WinrBonanza1000TemplateWithWeb3({
         getTokenPrice(selectedToken.priceKey);
 
       clearIterationIntervalsFreeSpin();
-      clearIterationIntervalsSuperFreeSpin();
       clearIterationIntervalsBet();
 
       setSettledResult({
@@ -470,11 +430,9 @@ export default function WinrBonanza1000TemplateWithWeb3({
         buyFreeSpins={handleBuyFreeSpins}
         buySuperFreeSpins={handleBuySuperFreeSpins}
         freeSpin={handleFreeSpin}
-        superFreeSpin={handleSuperFreeSpin}
         gameEvent={settledResult as ReelSpinSettled}
         previousFreeSpinCount={previousFreeSpinCount}
         previousFreeSpinWinnings={previousFreeSpinWinnings}
-        previousSpinType={previousSpinType}
         onAutoBetModeChange={onAutoBetModeChange}
       />
       {!hideBetHistory && (
