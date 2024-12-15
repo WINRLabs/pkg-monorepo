@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.8
+
+### Patch Changes
+
+- 409c723: update
+
 ## 5.1.7
 
 ### Patch Changes
