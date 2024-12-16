@@ -1,5 +1,12 @@
 # @winrlabs/games
 
+## 5.1.12
+
+### Patch Changes
+
+- e04e449: fix
+- e04e449: fix video poker card bg
+
 ## 5.1.11
 
 ### Patch Changes
