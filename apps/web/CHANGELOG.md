@@ -1,5 +1,15 @@
 # web
 
+## 3.1.19
+
+### Patch Changes
+
+- e04e449: fix video poker card bg
+- Updated dependencies [e04e449]
+- Updated dependencies [e04e449]
+  - @winrlabs/games@5.1.12
+  - @winrlabs/web3-games@13.0.19
+
 ## 3.1.18
 
 ### Patch Changes
