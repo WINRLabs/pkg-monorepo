@@ -1,5 +1,14 @@
 # web
 
+## 3.1.18
+
+### Patch Changes
+
+- c191b25: fix video poker card bg
+- Updated dependencies [c191b25]
+  - @winrlabs/games@5.1.11
+  - @winrlabs/web3-games@13.0.18
+
 ## 3.1.17
 
 ### Patch Changes

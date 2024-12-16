@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.11
+
+### Patch Changes
+
+- c191b25: fix video poker card bg
+
 ## 5.1.10
 
 ### Patch Changes
