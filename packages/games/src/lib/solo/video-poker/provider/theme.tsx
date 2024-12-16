@@ -11,7 +11,7 @@ export interface VideoPokerTheme {
 const defaultTheme: Partial<VideoPokerTheme> = {
   cardStackImage: `${CDN_URL}/video-poker/card-stack.png`,
   cardFrontLogo: `${CDN_URL}/baccarat/card-front-logo.svg`,
-  cardBack: `${CDN_URL}/video-poker/card-back.png`,
+  cardBack: `${CDN_URL}/blackjack/card-bg.svg`,
 };
 
 const VideoPokerThemeContext = createContext<Partial<VideoPokerTheme>>(defaultTheme);
