@@ -28,58 +28,6 @@ export enum GameType {
   WINR_BONANZA_1000 = 'WINR_BONANZA_1000',
 }
 
-// TODO: move this levels into centralized place, it is used at consumer apps
-export const profileLevels = [
-  {
-    level: 1,
-    name: 'McDonalds',
-    xp: 50000,
-    xpValue: 50000 * 1000,
-    rakebackExtraPercentage: '2.50',
-    levelColor: '#fff',
-  },
-  {
-    level: 2,
-    xp: 250000,
-    xpValue: 250000 * 1000,
-    name: 'NGMI',
-    rakebackExtraPercentage: '3.75',
-    levelColor: '#93C5FD',
-  },
-  {
-    level: 3,
-    xp: 500000,
-    xpValue: 500000 * 1000,
-    name: 'WAGMI',
-    rakebackExtraPercentage: '5.00',
-    levelColor: '#F9A8D4',
-  },
-  {
-    level: 4,
-    xp: 1000000,
-    xpValue: 1000000 * 1000,
-    name: 'Wen Lambo',
-    rakebackExtraPercentage: '6.25',
-    levelColor: '#FDBA74',
-  },
-  {
-    level: 5,
-    xp: 2000000,
-    xpValue: 2000000 * 1000,
-    name: 'Moon Boy',
-    rakebackExtraPercentage: '7.50',
-    levelColor: '#FCA5A5',
-  },
-  {
-    level: 6,
-    xp: 5000000,
-    xpValue: 5000000 * 1000,
-    name: 'Degen',
-    rakebackExtraPercentage: '10.00',
-    levelColor: '#C4B5FD',
-  },
-] as const;
-
 export const wagerLevels = [
   {
     level: 1,

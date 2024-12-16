@@ -217,8 +217,8 @@ const BetTable = ({
                       {/* TODO: ADD DYNAMIC ROUTE TO EXPLORER */}
                       <a target="_blank" href={`https://explorer.winr.games/tx/${bet.hash}`}>
                         <div className="wr-flex wr-gap-2 wr-items-center wr-justify-start">
-                          <span className="wr-p-1 wr-border wr-border-zinc-800 wr-rounded-sm">
-                            <LinkIcon className="wr-w-4 wr-h-4 wr-text-zinc-500" />
+                          <span className="wr-rounded-sm wr-bg-onyx-400 wr-p-1.5">
+                            <LinkIcon className="wr-h-4 wr-w-5 wr-text-zinc-500" />
                           </span>
                           <span className="wr-hidden lg:wr-flex">
                             {dayjs(bet.time * 1000).format('HH:mm')}
