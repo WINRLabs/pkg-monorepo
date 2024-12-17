@@ -1,5 +1,11 @@
 # @winrlabs/games
 
+## 5.1.13
+
+### Patch Changes
+
+- 6e37f48: title fix
+
 ## 5.1.12
 
 ### Patch Changes
