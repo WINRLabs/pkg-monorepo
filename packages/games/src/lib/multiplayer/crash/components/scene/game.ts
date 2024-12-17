@@ -1,6 +1,7 @@
-import { Application, Graphics, Renderer, Text } from 'pixi.js';
+import { Application, Assets, Graphics, Renderer, Sprite, Text } from 'pixi.js';
 import { RefObject, useEffect, useRef } from 'react';
 
+import { SoundEffects, useAudioEffect } from '../../../../hooks/use-audio-effect';
 import { map } from '../../../../utils/number';
 import { MultiplayerGameStatus } from '../../../core/type';
 import { useCrashGameStore } from '../../crash.store';
@@ -35,6 +36,7 @@ export const useCrashGame = ({
   const timePortionsRef = useRef<Text[]>([]);
   const multipliersRef = useRef<Text[]>([]);
   const currentProgressRef = useRef<number>(0);
+  const bombEffect = useAudioEffect(SoundEffects.MINES_BOMB);
 
   useEffect(() => {
     if (!timeTotalRef.current) return;
@@ -164,6 +166,8 @@ export const useCrashGame = ({
         backgroundAlpha: 0,
       });
 
+      const crashEffectImage = await Assets.load('/crash/crash-effect.png');
+
       const targetX = canvasRef.current.clientWidth - 50;
       const targetY = 100;
 
@@ -218,6 +222,21 @@ export const useCrashGame = ({
         }
         circle.circle(x, y, CIRCLE_RADIUS);
         circle.fill('#84CC16');
+
+        if (currentState.currentMultiplier >= currentState.finalMultiplier) {
+          currentState.updateState({ status: MultiplayerGameStatus.Finish });
+          bombEffect.play();
+
+          const effect = Sprite.from(crashEffectImage);
+          effect.anchor.set(0.5);
+
+          effect.x = x;
+          effect.y = y;
+          effect.scale.set(0.5);
+          app.stage.addChild(effect);
+
+          return;
+        }
       });
 
       app.stage.addChild(rect);

@@ -36,7 +36,7 @@ export const useCrashGameStore = create<CrashGameStore>()((set) => ({
   lastBets: [],
   cooldownFinish: 0,
   participants: [],
-  finalMultiplier: 0,
+  finalMultiplier: 1.5,
   gamblerBet: null,
   setIsGamblerParticipant: (isGamblerParticipant: boolean) =>
     set((state) => ({ ...state, isGamblerParticipant })),

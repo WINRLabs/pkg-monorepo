@@ -8,6 +8,7 @@ export default function Scene() {
   const ref = useRef<HTMLCanvasElement>(null);
   const elapsedTime = useCrashGameStore((state) => state.elapsedTime);
   const multiplier = useCrashGameStore((state) => state.currentMultiplier);
+
   useCrashGame({ canvasRef: ref, elapsedTime, multiplier });
 
   // todo: what the heck is this?
