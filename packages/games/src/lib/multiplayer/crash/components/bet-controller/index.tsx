@@ -38,7 +38,7 @@ export default function CrashBetController({ minWager, maxWager }: CrashBetContr
           // disabled={!readyToPlay}
           size={'xl'}
           onClick={() => {
-            updateState({ status: MultiplayerGameStatus.Start, finalMultiplier: 10 });
+            updateState({ status: MultiplayerGameStatus.Start, finalMultiplier: 1.2 });
             clickEffect.play();
           }}
         >

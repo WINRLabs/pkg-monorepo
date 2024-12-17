@@ -195,9 +195,6 @@ export const useCrashGame = ({
 
         let bendStrength = normalizedProgress > 0 ? normalizedProgress : 0;
 
-        // if (currentProgressRef.current >= 100) {
-        // }
-
         const controlOffsetX = 0;
         const controlOffsetY = bendStrength * -100;
 
@@ -223,16 +220,31 @@ export const useCrashGame = ({
         circle.circle(x, y, CIRCLE_RADIUS);
         circle.fill('#84CC16');
 
-        if (currentState.currentMultiplier >= currentState.finalMultiplier) {
-          currentState.updateState({ status: MultiplayerGameStatus.Finish });
+        const hasCrashed = currentState.currentMultiplier >= currentState.finalMultiplier;
+
+        if (hasCrashed) {
+          currentState.updateState({
+            status: MultiplayerGameStatus.Finish,
+            currentMultiplier: currentState.finalMultiplier,
+          });
           bombEffect.play();
 
           const effect = Sprite.from(crashEffectImage);
           effect.anchor.set(0.5);
-
           effect.x = x;
           effect.y = y;
           effect.scale.set(0.5);
+          effect.alpha = 0;
+
+          const animate = () => {
+            effect.alpha += 0.02;
+
+            if (effect.alpha < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+
+          animate();
           app.stage.addChild(effect);
 
           return;
