@@ -137,12 +137,12 @@ const gameMap: Record<
     icon: <IconWheel className="wr-h-4 wr-w-4" />,
   },
   [GameType.WINR_BONANZA_1000]: {
-    title: 'WINR Bonanza 1000',
+    title: 'Bonanza 1000x',
     smTitle: 'Bonanza 1000',
     icon: <IconSweetBonanza1000 className="wr-h-4 wr-w-4" />,
   },
   [GameType.WINR_OLYMPUS_1000]: {
-    title: 'WINR of Olympus 1000',
+    title: 'Olympus 1000x',
     smTitle: 'Olympus 1000',
     icon: <IconSweetBonanza1000 className="wr-h-4 wr-w-4" />,
   },
