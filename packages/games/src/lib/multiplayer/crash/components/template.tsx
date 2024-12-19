@@ -56,7 +56,7 @@ export const CrashTemplate = (props: CrashTemplateProps) => {
           />
           <SceneContainer
             className={cn(
-              'wr-h-[640px] max-lg:wr-h-[500px] max-md:wr-h-[500px] !wr-p-0 wr-overflow-hidden'
+              'wr-h-[640px] max-lg:wr-h-[500px] max-md:wr-h-[320px] !wr-p-0 wr-overflow-hidden'
             )}
           >
             <Scene />

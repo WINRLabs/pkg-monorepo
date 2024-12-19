@@ -16,7 +16,7 @@ const calculateSpeed = (progress: number) => {
 const CIRCLE_RADIUS = 10;
 const SCENE_HEIGHT = 600;
 
-const PADDING_LEFT = 140;
+const PADDING_LEFT = 150;
 const PADDING_BOTTOM = 40;
 
 const startX = PADDING_LEFT;
@@ -74,6 +74,26 @@ export const useCrashGame = ({
     });
   }, [multiplier]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (!appRef.current || !timeTotalRef.current) return;
+
+      const app = appRef.current;
+      const canvasWidth = app.screen.width;
+
+      timeTotalRef.current.x = canvasWidth - timeTotalRef.current.width - 50;
+      timeTotalRef.current.y = SCENE_HEIGHT - PADDING_BOTTOM + 20;
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [canvasRef?.current, timeTotalRef.current]);
+
   const addYAxis = async () => {
     const line = new Graphics();
 
@@ -96,6 +116,7 @@ export const useCrashGame = ({
           style: {
             fill: '#FFFFFF80',
             fontSize: 18,
+            fontFamily: '__Noto_Sans_2fdae7',
           },
         });
 
@@ -237,8 +258,9 @@ export const useCrashGame = ({
           effect.alpha = 0;
 
           const animate = () => {
-            effect.alpha += 0.02;
-
+            effect.alpha += 0.03;
+            effect.scale.x += 0.001;
+            effect.scale.y += 0.001;
             if (effect.alpha < 1) {
               requestAnimationFrame(animate);
             }
