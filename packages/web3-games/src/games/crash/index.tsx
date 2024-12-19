@@ -1,7 +1,5 @@
 'use client';
-import { useGameControllerGetMultiplayerGameHistory } from '@winrlabs/api';
 import {
-  BetHistoryTemplate,
   GameType,
   MultiplayerGameStatus,
   toDecimals,
@@ -13,7 +11,6 @@ import { CrashFormFields, CrashTemplate } from '@winrlabs/games';
 import {
   controllerAbi,
   generateCommitmentHash,
-  useApiOptions,
   useCurrentAccount,
   usePriceFeed,
   useSendTx,
@@ -32,7 +29,6 @@ import { BaseGameProps } from '../../type';
 import {
   Badge,
   SocketMultiplayerGameType,
-  useBetHistory,
   useGetBadges,
   useListenMultiplayerGameEvent,
   usePlayerGameStatus,
@@ -42,15 +38,7 @@ import { prepareGameTransaction } from '../utils';
 
 const log = debug('worker:CrashWeb3');
 
-type TemplateOptions = {
-  scene?: {
-    loader?: string;
-    logo?: string;
-  };
-};
-
 interface CrashTemplateProps extends BaseGameProps {
-  options: TemplateOptions;
   minWager?: number;
   maxWager?: number;
   hideBetHistory?: boolean;
@@ -60,7 +48,6 @@ interface CrashTemplateProps extends BaseGameProps {
     awardBadges: Badge[] | undefined;
     level: number | undefined;
   }) => void;
-  gameUrl?: string;
 }
 
 const CrashGame = (props: CrashTemplateProps) => {
@@ -79,17 +66,7 @@ const CrashGame = (props: CrashTemplateProps) => {
   const allTokens = useTokenStore((s) => s.tokens);
   const selectedToken = useTokenStore((s) => s.selectedToken);
   const selectedTokenAddress = selectedToken.address;
-  const { baseUrl } = useApiOptions();
-  const { data: betHistory, refetch: refetchBetHistory } =
-    useGameControllerGetMultiplayerGameHistory({
-      queryParams: {
-        game: GameType.MOON,
-        // TODO: swagger does not include the pagination params. ask be to fix it.
-        // @ts-ignore
-        limit: 7,
-      },
-      baseUrl: baseUrl,
-    });
+
   const { refetch: refetchBalances } = useTokenBalances({
     account: currentAccount.address || '0x0000000',
     balancesToRead: [selectedToken.address],
@@ -113,11 +90,11 @@ const CrashGame = (props: CrashTemplateProps) => {
 
   const maxWagerBySelection = toDecimals((props.maxWager || 100) / formValues.multiplier, 2);
 
-  const { updateState, addParticipant, setIsGamblerParticipant } = useCrashGameStore([
-    'updateState',
-    'addParticipant',
-    'setIsGamblerParticipant',
-  ]);
+  const { updateState, addParticipant, setIsGamblerParticipant } = useCrashGameStore((state) => ({
+    updateState: state.updateState,
+    addParticipant: state.addParticipant,
+    setIsGamblerParticipant: state.setIsGamblerParticipant,
+  }));
 
   const gameEvent = useListenMultiplayerGameEvent({
     gameType: SocketMultiplayerGameType.moon,
@@ -323,8 +300,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     const isWon = userMultiplier <= multiplier;
 
     refetchBalances();
-    refetchBetHistory();
-    refetchHistory();
     refetchPlayerGameStatus();
 
     const payout = isWon ? formValues.wager * userMultiplier : 0;
@@ -335,27 +310,6 @@ const CrashGame = (props: CrashTemplateProps) => {
     handleGetBadges({ totalPayout: payout, totalWager: formValues.wager });
   };
 
-  useEffect(() => {
-    if (betHistory && betHistory?.length > 0) {
-      updateState({
-        lastBets: betHistory.map((data) => Number(data.result) / 100),
-      });
-    }
-  }, [betHistory]);
-
-  const {
-    betHistory: allBetHistory,
-    isHistoryLoading,
-    mapHistoryTokens,
-    setHistoryFilter,
-    refetchHistory,
-  } = useBetHistory({
-    gameType: GameType.MOON,
-    options: {
-      enabled: !props.hideBetHistory,
-    },
-  });
-
   const sessionStore = useSessionStore();
   const isPinNotFound =
     (!sessionStore.pin || !localStorage['session-store']) && !currentAccount.isSocialLogin;
@@ -365,20 +319,11 @@ const CrashGame = (props: CrashTemplateProps) => {
       <CrashTemplate
         {...props}
         maxWager={maxWagerBySelection}
-        onComplete={onComplete}
+        // onComplete={onComplete}
         onSubmitGameForm={onGameSubmit}
-        onFormChange={setFormValues}
-        gameUrl={props.gameUrl}
+        // onFormChange={setFormValues}
         isPinNotFound={isPinNotFound}
       />
-      {!props.hideBetHistory && (
-        <BetHistoryTemplate
-          betHistory={allBetHistory || []}
-          loading={isHistoryLoading}
-          onChangeFilter={(filter) => setHistoryFilter(filter)}
-          currencyList={mapHistoryTokens}
-        />
-      )}
     </>
   );
 };
